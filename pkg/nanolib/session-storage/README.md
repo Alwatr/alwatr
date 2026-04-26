@@ -22,3 +22,81 @@ yarn add @alwatr/session-storage
 
 # Using npm
 npm install @alwatr/session-storage
+
+```
+
+---
+
+## API and Usage
+
+### Creating a Storage Provider
+
+```typescript
+import {createSessionStorageProvider} from '@alwatr/session-storage';
+
+interface FormDraft {
+  name: string;
+  email: string;
+  message: string;
+}
+
+const formDraft = createSessionStorageProvider<FormDraft>({
+  name: 'contact-form-draft',
+  schemaVersion: 1,
+});
+```
+
+### Writing, Reading, and Removing Data
+
+```typescript
+// Write
+formDraft.write({name: 'Ali', email: 'ali@example.com', message: 'Hello!'});
+
+// Read (returns null if not found or invalid JSON)
+const draft = formDraft.read();
+
+// Check existence without reading
+if (formDraft.has()) {
+  console.log('Draft exists');
+}
+
+// Remove
+formDraft.remove();
+```
+
+---
+
+## 🌊 Part of Alwatr Flux
+
+`@alwatr/session-storage` is the **Session Persistence Layer** of the [Alwatr Flux](https://github.com/Alwatr/alwatr/tree/next/pkg/flux) architecture — a complete Unidirectional Data Flow system for building scalable Progressive Web Applications.
+
+In the Flux architecture, `@alwatr/session-storage` provides **tab-scoped persistence**. It is used internally by `SessionStateSignal` from `@alwatr/signal` to automatically sync signal state with `sessionStorage` — perfect for form drafts, wizard steps, and temporary UI state that should survive page refreshes but not new tabs.
+
+```typescript
+// Use @alwatr/flux for the complete architecture (includes SessionStateSignal)
+import {SessionStateSignal} from '@alwatr/flux';
+
+const formDraft = new SessionStateSignal({
+  name: 'contact-form',
+  schemaVersion: 1,
+  initialValue: {name: '', email: '', message: ''},
+});
+
+// Automatically persisted to sessionStorage on every set()
+formDraft.set({name: 'Ali', email: 'ali@example.com', message: ''});
+
+// Or use @alwatr/session-storage standalone for direct storage access
+import {createSessionStorageProvider} from '@alwatr/session-storage';
+```
+
+→ [View the complete Flux documentation](https://github.com/Alwatr/alwatr/tree/next/pkg/flux)
+
+---
+
+## Contributing
+
+Contributions are welcome! Please read our [contribution guidelines](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) before submitting a pull request.
+
+## License
+
+MPL-2.0 — see [LICENSE](./LICENSE).
