@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.17.0](https://github.com/Alwatr/alwatr/compare/v9.16.0...v9.17.0) (2026-04-27)
+
+### ✨ Features
+
+* **action:** define Alwatr Flux Standard Action (AFSA) ([a6bf3e1](https://github.com/Alwatr/alwatr/commit/a6bf3e1ee0aba3695c709aeacfdff8560a44aeb3))
+* **action:** document AFSA pattern and context scoping in JSDoc ([e09a251](https://github.com/Alwatr/alwatr/commit/e09a251988863957a7ef2acc3ea361375788947b))
+* **action:** implement context scoping and mutable action object in delegation ([cc499ee](https://github.com/Alwatr/alwatr/commit/cc499ee8f5612ac8df83cafe81604c66ea6b8827))
+* **action:** refactor API to dispatch and receive full Action objects ([d533dad](https://github.com/Alwatr/alwatr/commit/d533dada94028d5b90259c8cd068c09707f812c4))
+* **action:** update internal channel to use full Action objects ([df9011d](https://github.com/Alwatr/alwatr/commit/df9011d3a34f87045cb2629b6b8e551bffe8b129))
+* **action:** update registry documentation for AFSA pattern ([dbbfe8a](https://github.com/Alwatr/alwatr/commit/dbbfe8aef1d377d1643626b7d0bd2018ea26490a))
+
+### 🧹 Miscellaneous Chores
+
+* **action:** document AFSA object structure and context scoping ([2bfee56](https://github.com/Alwatr/alwatr/commit/2bfee5695ef0907f8ec89f0e1994e278265ea702))
+
 ## [9.16.0](https://github.com/Alwatr/alwatr/compare/v9.15.0...v9.16.0) (2026-04-27)
 
 ### ✨ Features
