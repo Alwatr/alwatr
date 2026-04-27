@@ -1,6 +1,12 @@
 /**
  * @alwatr/action — Declarative DOM action-dispatch for Unidirectional Data Flow.
  *
+ * Implements the **Alwatr Flux Standard Action (AFSA)** pattern: every action
+ * flowing through the bus is a single, typed `Action<K>` object carrying
+ * `type`, `payload`, `context`, and optional `meta`. This replaces the previous
+ * two-argument `(id, payload)` API with a unified structure that is extensible
+ * without breaking existing call sites.
+ *
  * ## Activating `on-<eventType>` attributes
  *
  * Call `setupActionDelegation()` once at bootstrap. A single capture-phase
@@ -11,7 +17,7 @@
  * import {setupActionDelegation, onAction} from '@alwatr/action';
  *
  * setupActionDelegation();
- * onAction('open_drawer', (panel) => openDrawer(panel));
+ * onAction('open_drawer', (action) => openDrawer(action.payload));
  * ```
  *
  * ## Attribute syntax
@@ -26,12 +32,31 @@
  * <form on-submit="submit_form:$formdata; prevent,validate" novalidate>…</form>
  * ```
  *
+ * ## Context scoping
+ *
+ * Wrap elements in an `[action-context]` container to scope their actions.
+ * The delegation handler resolves the nearest ancestor and attaches its value
+ * to `action.context`:
+ *
+ * ```html
+ * <section action-context="product-list">
+ *   <button on-click="add_to_cart:42">Add</button>
+ * </section>
+ * ```
+ *
+ * ```ts
+ * onAction('add_to_cart', (action) => {
+ *   console.log(action.context); // 'product-list'
+ *   console.log(action.payload); // '42'
+ * });
+ * ```
+ *
  * ## Programmatic dispatch
  *
  * ```ts
  * import {dispatchAction} from '@alwatr/action';
  *
- * dispatchAction('navigate', '/dashboard');
+ * dispatchAction({type: 'navigate', payload: '/dashboard'});
  * ```
  *
  * ## Registering typed actions
@@ -51,7 +76,8 @@
  *
  * ## Public API
  *
- * - `ActionRecord` — extend this interface to register typed actions
+ * - `Action`          — the AFSA object interface (`type`, `payload`, `context`, `meta`)
+ * - `ActionRecord`    — extend this interface to register typed actions
  * - `setupActionDelegation` / `teardownActionDelegation` — global delegation lifecycle
  * - `DEFAULT_DELEGATED_EVENTS` — default event types covered by delegation
  * - `onAction` / `dispatchAction` — subscribe to and dispatch named actions
@@ -62,5 +88,6 @@
  * For page-ready signals in SSG/SSR apps, use `@alwatr/page-ready` instead.
  */
 export type {ActionRecord} from './action-record.js';
+export type {Action} from './action.js';
 export * from './method.js';
 export * from './delegate.js';
