@@ -910,7 +910,7 @@ onAction('remove_todo', (id) => {
 
 // view.html
 <div id="app">
-  <input id="new-todo" on-input="add_todo:$value" placeholder="What needs to be done?" />
+<input id="new-todo" on-change="add_todo:$value" placeholder="What needs to be done?" />
   <ul id="todo-list"></ul>
 </div>
 
