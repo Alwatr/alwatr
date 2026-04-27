@@ -1,38 +1,51 @@
+import type {Action} from './action.js';
+
 // ─── Type Definitions ────────────────────────────────────────────────────────
 
 /**
- * A modifier handler used in `on-action` attribute syntax.
+ * A modifier handler used in `on-<eventType>` attribute syntax.
  *
- * Receives the triggering DOM `event` and the `element` that owns the
- * `on-action` attribute. Return `true` (or any truthy value) to allow the
- * action to proceed, or `false` to cancel the dispatch.
+ * Receives the triggering DOM `event`, the `element` that owns the
+ * `on-<eventType>` attribute, and the **mutable** `action` object being built.
+ * The handler may mutate `action.meta` to attach cross-cutting data (e.g. a
+ * trace ID, a timestamp, or an A/B flag) before the action reaches subscribers.
+ *
+ * Return `true` (or any truthy value) to allow the action to proceed, or
+ * `false` to cancel the dispatch entirely.
  *
  * Using explicit parameters instead of `this` binding makes handlers
  * compatible with arrow functions and easier to test in isolation.
  *
- * @example
+ * @example — a modifier that stamps a timestamp into meta
  * ```ts
- * // A modifier that only allows the action when the element is not disabled
+ * const timestampHandler: ModifierHandler = (_event, _element, action) => {
+ *   action.meta ??= {};
+ *   action.meta['timestamp'] = Date.now();
+ *   return true;
+ * };
+ * ```
+ *
+ * @example — a modifier that cancels dispatch when the element is disabled
+ * ```ts
  * const notDisabledHandler: ModifierHandler = (_event, element) => {
  *   return !(element as HTMLButtonElement).disabled;
  * };
  * ```
  */
-export type ModifierHandler = (event: Event, element: HTMLElement) => boolean;
+export type ModifierHandler = (event: Event, element: HTMLElement, action: Action) => boolean;
 
 /**
- * A payload resolver used in `on-action` attribute syntax.
+ * A payload resolver used in `on-<eventType>` attribute syntax.
  *
  * Receives the triggering DOM `event` and the `element` that owns the
- * `on-action` attribute. The return value becomes the `actionPayload` passed
- * to `onAction` subscribers. Use this to compute dynamic payloads from DOM state.
+ * `on-<eventType>` attribute. The return value becomes the `payload` field of
+ * the `Action` object passed to `onAction` subscribers.
  *
  * Using explicit parameters instead of `this` binding makes resolvers
  * compatible with arrow functions and easier to test in isolation.
  *
- * @example
+ * @example — a resolver that returns the element's dataset id
  * ```ts
- * // A resolver that returns the element's dataset id
  * const dataIdResolver: PayloadResolver = (_event, element) => {
  *   return (element as HTMLElement).dataset.id ?? null;
  * };
@@ -89,7 +102,7 @@ modifierRegistry.set('prevent', (event) => {
  * allowing native constraint-validation UI to surface errors. If no form is
  * found the dispatch is also cancelled.
  *
- * Pair with `.prevent` on `submit` events to avoid page reloads:
+ * Pair with `prevent` on `submit` events to avoid page reloads:
  *
  * @example `<form on-submit="submit_form:$formdata; prevent,validate" novalidate>`
  */
@@ -122,8 +135,8 @@ payloadRegistry.set('$value', (_event, element) => {
  *
  * @example `<form on-submit="submit_form:$formdata; prevent,validate">`
  * ```ts
- * onAction('submit_form', (data) => {
- *   console.log(data); // {username: 'ali', password: '…'}
+ * onAction('submit_form', (action) => {
+ *   console.log(action.payload); // {username: 'ali', password: '…'}
  * });
  * ```
  */
@@ -140,8 +153,9 @@ payloadRegistry.set('$formdata', (_event, element) => {
  *
  * @example `<input type="checkbox" on-change="toggle_feature:$checked" />`
  * ```ts
- * onAction('toggle_feature', (isChecked) => {
- *   featureSignal.set(isChecked as boolean);
+ * onAction('toggle_feature', (action) => {
+ *   console.log(action.payload); // true or false
+ *   featureSignal.set(action.payload);
  * });
  * ```
  */
