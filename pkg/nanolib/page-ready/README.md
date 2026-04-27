@@ -147,6 +147,26 @@ The lookup uses `document.querySelector('[page-id]')`, so the attribute can be p
 
 ---
 
+---
+
+## 🌊 Part of Alwatr Flux
+
+`@alwatr/page-ready` is the **Routing Layer** of the [Alwatr Flux](https://github.com/Alwatr/alwatr/tree/next/pkg/flux) architecture — a complete Unidirectional Data Flow system for building scalable Progressive Web Applications.
+
+In the Flux architecture, `@alwatr/page-ready` handles **page identity** for Multi-Page Applications (MPA). It reads the `page-id` attribute from the HTML and notifies the application which page is currently active — enabling page-specific initialization without a full client-side router.
+
+```typescript
+// Use @alwatr/flux for the complete architecture
+import {onPageReady, subscribePageReady, dispatchPageReady, setupActionDelegation} from '@alwatr/flux';
+
+// Or use @alwatr/page-ready standalone
+import {onPageReady, subscribePageReady, dispatchPageReady} from '@alwatr/page-ready';
+```
+
+→ [View the complete Flux documentation](https://github.com/Alwatr/alwatr/tree/next/pkg/flux)
+
+---
+
 ## Contributing
 
 Contributions are welcome! Please read our [contribution guidelines](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) before submitting a pull request.

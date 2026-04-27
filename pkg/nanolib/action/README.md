@@ -411,6 +411,40 @@ registerModifier('not_disabled', (_event, element) => {
 
 ---
 
+---
+
+## 🌊 Part of Alwatr Flux
+
+`@alwatr/action` is the **Action Layer** of the [Alwatr Flux](https://github.com/Alwatr/alwatr/tree/next/pkg/flux) architecture — a complete Unidirectional Data Flow system for building scalable Progressive Web Applications.
+
+```
+View (HTML on-<event> attributes)
+  ↓
+Action Layer (@alwatr/action) — global delegation, O(1) routing
+  ↓
+Controller (business logic via onAction)
+  ↓
+State Layer (@alwatr/signal) — fine-grained reactivity
+  ↓
+View (re-render only affected nodes)
+```
+
+`@alwatr/action` is the bridge between the **View** and **Controller** layers. It captures user intent from HTML attributes and routes it to the right handler — without any coupling between the UI and business logic.
+
+**The full Flux bundle** (`@alwatr/flux`) includes actions, signals, directives, page-ready, and storage — everything you need to build a complete reactive application from a single import.
+
+```typescript
+// Use @alwatr/flux for the complete architecture
+import {setupActionDelegation, onAction, createStateSignal} from '@alwatr/flux';
+
+// Or use @alwatr/action standalone for just the action bus
+import {setupActionDelegation, onAction, dispatchAction} from '@alwatr/action';
+```
+
+→ [View the complete Flux documentation](https://github.com/Alwatr/alwatr/tree/next/pkg/flux)
+
+---
+
 ## Contributing
 
 Contributions are welcome! Please read our [contribution guidelines](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) before submitting a pull request.

@@ -129,5 +129,22 @@ payloadRegistry.set('$value', (_event, element) => {
  */
 payloadRegistry.set('$formdata', (_event, element) => {
   const form = element instanceof HTMLFormElement ? element : element.closest('form');
-  return form ? Object.fromEntries(new FormData(form).entries()) : null;
+  return form ? Object.fromEntries(new FormData(form)) : null;
+});
+
+/**
+ * `$checked` — resolves to the `.checked` boolean property of a checkbox or radio input.
+ *
+ * Works with `<input type="checkbox">` and `<input type="radio">`.
+ * Returns `null` for elements that do not have a `checked` property.
+ *
+ * @example `<input type="checkbox" on-change="toggle_feature:$checked" />`
+ * ```ts
+ * onAction('toggle_feature', (isChecked) => {
+ *   featureSignal.set(isChecked as boolean);
+ * });
+ * ```
+ */
+payloadRegistry.set('$checked', (_event, element) => {
+  return 'checked' in element ? (element as HTMLInputElement).checked : null;
 });

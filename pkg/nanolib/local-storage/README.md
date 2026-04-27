@@ -122,6 +122,33 @@ userSettingsProvider.remove();
 
 ---
 
+## 🌊 Part of Alwatr Flux
+
+`@alwatr/local-storage` is the **Persistence Layer** of the [Alwatr Flux](https://github.com/Alwatr/alwatr/tree/next/pkg/flux) architecture — a complete Unidirectional Data Flow system for building scalable Progressive Web Applications.
+
+In the Flux architecture, `@alwatr/local-storage` provides the **client-side persistence** foundation. It is used internally by `PersistentStateSignal` from `@alwatr/signal` to automatically sync signal state with `localStorage` — giving you reactive, persistent state with zero extra code.
+
+```typescript
+// Use @alwatr/flux for the complete architecture (includes PersistentStateSignal)
+import {PersistentStateSignal} from '@alwatr/flux';
+
+const userPrefs = new PersistentStateSignal({
+  name: 'user-prefs',
+  schemaVersion: 1,
+  initialValue: {theme: 'light'},
+});
+
+// Automatically persisted to localStorage on every set()
+userPrefs.set({theme: 'dark'});
+
+// Or use @alwatr/local-storage standalone for direct storage access
+import {createLocalStorageProvider} from '@alwatr/local-storage';
+```
+
+→ [View the complete Flux documentation](https://github.com/Alwatr/alwatr/tree/next/pkg/flux)
+
+---
+
 ## Sponsors
 
 The following companies, organizations, and individuals support flux ongoing maintenance and development. Become a Sponsor to get your logo on our README and website.

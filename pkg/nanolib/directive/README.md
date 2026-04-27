@@ -603,6 +603,40 @@ Directives use TC39 Stage 3 decorators. Make sure your `tsconfig.json` does **no
 
 ---
 
+---
+
+## 🌊 Part of Alwatr Flux
+
+`@alwatr/directive` is the **View Layer** of the [Alwatr Flux](https://github.com/Alwatr/alwatr/tree/next/pkg/flux) architecture — a complete Unidirectional Data Flow system for building scalable Progressive Web Applications.
+
+```
+View (@alwatr/directive — declarative DOM behaviors)
+  ↓
+Action Layer (@alwatr/action — global event delegation)
+  ↓
+Controller (business logic)
+  ↓
+State Layer (@alwatr/signal — fine-grained reactivity)
+  ↓
+View (re-render via signal subscriptions)
+```
+
+Directives are the **presentation layer** of the Flux architecture. They attach rich behaviors to DOM elements declaratively, subscribe to signals for reactive updates, and dispatch actions upward through the action bus — never touching state directly.
+
+**The full Flux bundle** (`@alwatr/flux`) includes directives, signals, actions, page-ready, and storage — everything you need to build a complete reactive application from a single import.
+
+```typescript
+// Use @alwatr/flux for the complete architecture
+import {Directive, directive, bootstrapDirectives, createStateSignal, onAction} from '@alwatr/flux';
+
+// Or use @alwatr/directive standalone for just the directive system
+import {Directive, directive, bootstrapDirectives} from '@alwatr/directive';
+```
+
+→ [View the complete Flux documentation](https://github.com/Alwatr/alwatr/tree/next/pkg/flux)
+
+---
+
 ## Contributing
 
 Contributions are welcome! Please read our [contribution guidelines](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) before submitting a pull request.
