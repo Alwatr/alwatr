@@ -160,24 +160,44 @@ protected override init_(): void {
 
 ## Action Patterns (`@alwatr/action`)
 
-`@alwatr/action` is the **Action layer** in Unidirectional Data Flow. DOM events flow upward as named actions; business logic subscribes and updates state via signals.
+`@alwatr/action` is the **Action layer** in Unidirectional Data Flow. DOM events flow upward as typed **Action objects** (AFSA — Alwatr Flux Standard Action); business logic subscribes and updates state via signals.
 
-Uses **global event delegation**: one capture-phase listener on `document.body` per event type handles every `on-action` element — O(1) boot time, zero per-element overhead, automatic support for dynamic content.
+Uses **global event delegation**: one capture-phase listener on `document.body` per event type handles every `on-<eventType>` element — O(1) boot time, zero per-element overhead, automatic support for dynamic content.
+
+### The AFSA Object
+
+Every action is a single unified object — not a loose `(id, payload)` pair:
+
+```ts
+interface Action<K extends keyof ActionRecord> {
+  type: K; // action identifier
+  context?: string; // from nearest [action-context] ancestor
+  payload: ActionRecord[K]; // typed business data
+  meta?: Record<string, unknown>; // cross-cutting data (trace IDs, timestamps…)
+}
+```
 
 ### Unidirectional Data Flow
 
 ```
-UI (HTML attributes)
-  │  on-action="click->add_to_cart:42"
+UI (HTML attributes + [action-context] scoping)
+  │  <section action-context="product-list">
+  │    <button on-click="add_to_cart:42">Add</button>
+  │  </section>
   ▼
 Action Layer (@alwatr/action)
-  │  document.body capture listener → closest('[on-action]') → dispatchAction
+  │  body capture listener → parse → resolve context → build Action object
+  │  → run modifiers (may enrich action.meta) → resolve payload
+  │  → internalChannel_.dispatch('add_to_cart', action)
   ▼
 Business Logic
-  │  onAction('add_to_cart', id => cartService.add(id))
+  │  onAction('add_to_cart', (action) => {
+  │    cartService.add(action.payload);
+  │    console.log(action.context); // 'product-list'
+  │  })
   ▼
 State Layer (@alwatr/signal)
-  │  cartSignal.dispatch(newState)
+  │  cartSignal.set(newState)
   ▼
 UI (re-render)
 ```
@@ -220,17 +240,18 @@ Passing an undeclared action name to `onAction` or `dispatchAction` is a **compi
 
 ### Subscribing to actions
 
+The handler receives the full `Action<K>` object — `payload`, `context`, and `meta` in one place:
+
 ```ts
 import {onAction} from '@alwatr/action';
 
-// String payload (default)
-onAction('open_drawer', (panel) => {
-  drawerSignal.dispatch({open: true, panel});
+onAction('open_drawer', (action) => {
+  drawerSignal.set({open: true, panel: action.payload});
 });
 
-// Typed payload
-onAction('add_to_cart', (item) => {
-  cartService.add(item.productId, item.qty);
+onAction('add_to_cart', (action) => {
+  cartService.add(action.payload.productId, action.payload.qty);
+  console.log('from context:', action.context); // e.g. 'product-list'
 });
 
 // Cleanup when component is destroyed
@@ -245,41 +266,54 @@ import {dispatchAction} from '@alwatr/action';
 
 // After an async operation completes
 await uploadFile(file);
-dispatchAction('upload_complete', fileId);
+dispatchAction({type: 'upload_complete', payload: fileId});
 
-// From a service layer
-dispatchAction('navigate', '/dashboard');
+// With context and meta
+dispatchAction({
+  type: 'navigate',
+  payload: '/dashboard',
+  context: 'sidebar',
+  meta: {source: 'keyboard-shortcut'},
+});
+
+// Void payload
+dispatchAction({type: 'logout', payload: undefined});
 ```
 
 ### HTML attribute syntax
 
 ```
-on-action="eventType[.modifier…]->actionId[:payload]"
+on-<eventType>="actionId[:payload][; modifier1,modifier2,…]"
 ```
 
 ```html
 <!-- Literal payload -->
-<button on-action="click->open_drawer:settings">Settings</button>
+<button on-click="open_drawer:settings">Settings</button>
 
 <!-- Dynamic payload from input value -->
-<input on-action="input->search_query:$value" />
+<input on-input="search_query:$value" />
 
 <!-- Form data payload with validation -->
 <form
-  on-action="submit.prevent.validate->submit_form:$formdata"
+  on-submit="submit_form:$formdata; prevent,validate"
   novalidate
 >
   …
 </form>
+
+<!-- Context scoping — all actions inside carry context='product-list' -->
+<section action-context="product-list">
+  <button on-click="add_to_cart:42">Add to Cart</button>
+</section>
 ```
 
 ### Built-in modifiers
 
-| Modifier    | Effect                                                                            |
-| ----------- | --------------------------------------------------------------------------------- |
-| `.prevent`  | `event.preventDefault()`                                                          |
-| `.once`     | Removes `on-action` attribute after first fire — dispatches only once per element |
-| `.validate` | Cancels dispatch if nearest `<form>` fails `checkValidity()`                      |
+| Modifier   | Effect                                                                     |
+| ---------- | -------------------------------------------------------------------------- |
+| `prevent`  | `event.preventDefault()`                                                   |
+| `once`     | Removes `on-<eventType>` attribute after first fire — dispatches only once |
+| `validate` | Cancels dispatch if nearest `<form>` fails `checkValidity()`               |
 
 ### Built-in payload resolvers
 
@@ -287,17 +321,25 @@ on-action="eventType[.modifier…]->actionId[:payload]"
 | ------------ | -------------------------------------------------------------- |
 | `:$value`    | `element.value` (for `<input>`, `<select>`, `<textarea>`)      |
 | `:$formdata` | `Object.fromEntries(new FormData(form))` from nearest `<form>` |
+| `:$checked`  | `element.checked` (for `<input type="checkbox/radio">`)        |
 
 ### Extending with custom modifiers and resolvers
 
-Handler signature uses explicit parameters — no `this` binding:
+Modifier handlers receive `(event, element, action)` — the third argument is the mutable `Action` object. Modifiers may write to `action.meta` to enrich the action before it reaches subscribers:
 
 ```ts
 import {registerModifier, registerPayloadResolver} from '@alwatr/action';
 
-// Custom modifier — cancel dispatch if element is disabled
+// Guard modifier — cancel dispatch if element is disabled
 registerModifier('not-disabled', (_event, element) => {
   return !(element as HTMLButtonElement).disabled;
+});
+
+// Enrichment modifier — stamp a trace ID into meta
+registerModifier('trace', (_event, _element, action) => {
+  action.meta ??= {};
+  action.meta['traceId'] = crypto.randomUUID();
+  return true;
 });
 
 // Custom payload resolver — read a data attribute
@@ -308,7 +350,7 @@ registerPayloadResolver('$data-id', (_event, element) => {
 
 ```html
 <button
-  on-action="click.not-disabled->select_item:$data-id"
+  on-click="select_item:$data-id; not-disabled,trace"
   data-id="42"
 >
   Select
