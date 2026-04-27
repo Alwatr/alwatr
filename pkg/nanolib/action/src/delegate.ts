@@ -16,8 +16,12 @@
  * - When an event fires, the handler walks up the DOM from `event.target`
  *   using `closest()` to find the nearest element with an `on-<eventType>`
  *   attribute (e.g. `on-click`, `on-submit`).
- * - Modifiers and payload resolvers run in the same pipeline as before.
- * - `dispatchAction` is called with the resolved payload.
+ * - The nearest `[action-context]` ancestor is also resolved and attached to
+ *   the `Action` object as `context` — enabling the same action type to be
+ *   scoped to different UI regions.
+ * - Modifiers run with access to the mutable `Action` object so they can
+ *   enrich `meta` before the action reaches subscribers.
+ * - `dispatchAction` is called with the fully assembled `Action` object.
  *
  * ## Complexity
  *
@@ -40,6 +44,8 @@
 
 import {internalChannel_, logger_} from './lib.js';
 import {modifierRegistry, payloadRegistry} from './registry.js';
+import type {Action} from './action.js';
+import type {ActionRecord} from './action-record.js';
 
 // ─── Syntax Parser ────────────────────────────────────────────────────────────
 
@@ -70,7 +76,7 @@ import {modifierRegistry, payloadRegistry} from './registry.js';
  *   → actionId='my_submit_handler', payload='$formdata', modifiers={'prevent','validate'}
  * ```
  */
-const syntaxRegex = /^([a-z0-9_-]+)(?::([^;]+))?(?:;\s*([a-z0-9_,-]+))?$/;
+const syntaxRegex = /^([a-z0-9_:-]+)(?::([^;]+))?(?:;\s*([a-z0-9_,-]+))?$/;
 
 // ─── Parsed Action Descriptor ─────────────────────────────────────────────────
 
@@ -150,9 +156,12 @@ function parseDescriptor__(attributeValue: string): ActionDescriptor | null {
  * 1. Walk up from `event.target` to find the nearest element with an
  *    `on-<eventType>` attribute (e.g. `on-click`, `on-submit`).
  * 2. Parse (or retrieve from cache) the `ActionDescriptor` for that attribute.
- * 3. Run each modifier in order; if any returns `false`, abort.
- * 4. Resolve the payload token (literal or $-resolver).
- * 5. Call `dispatchAction(actionId, payload)`.
+ * 3. Resolve `context` from the nearest `[action-context]` ancestor.
+ * 4. Build a mutable `Action` object with `type`, `payload` (raw), and `context`.
+ * 5. Run each modifier in order with access to the mutable `Action`; if any
+ *    returns `false`, abort.
+ * 6. Resolve the payload token (literal or $-resolver) and assign to `action.payload`.
+ * 7. Call `dispatchAction(action)` with the fully assembled object.
  *
  * @internal
  */
@@ -186,13 +195,28 @@ function handleDelegatedEvent__(event: Event): void {
 
   logger_.logMethodArgs?.('handleDelegatedEvent__.action', {eventType, descriptor});
 
-  // Step 1: handle once modifier — remove attribute before running other modifiers
+  // Step 1: handle `once` modifier — remove attribute before running other modifiers
   // so that even if a modifier aborts, the element will not fire again.
   if (descriptor.modifiers.has('once')) {
     actionElement.removeAttribute(actionAttrib);
   }
 
-  // Step 2: run modifiers
+  // Step 2: resolve `context` from the nearest [action-context] ancestor.
+  // Walk up from the action element itself (inclusive) to find the context scope.
+  // This allows the action element itself to carry action-context if needed.
+  const actionContext = actionElement.closest('[action-context]')?.getAttribute('action-context') ?? undefined;
+
+  // Step 3: build the mutable Action object.
+  // `payload` starts as the raw token string; it will be resolved in step 5.
+  // Modifiers in step 4 may mutate `meta` to attach cross-cutting data.
+  const action: Action = {
+    type: descriptor.actionId as keyof ActionRecord,
+    context: actionContext,
+    // Payload is temporarily set to the raw token; resolved below after modifiers run.
+    payload: descriptor.payload as ActionRecord[keyof ActionRecord],
+  };
+
+  // Step 4: run modifiers — each receives the mutable action so it can enrich meta.
   for (const modifier of descriptor.modifiers) {
     if (modifier === 'once') continue; // handled above
     const handler = modifierRegistry.get(modifier);
@@ -200,18 +224,26 @@ function handleDelegatedEvent__(event: Event): void {
       logger_.accident('handleDelegatedEvent__', 'unknown_modifier', {eventType, modifier, attributeValue, descriptor});
       return; // unknown modifier — abort to avoid silent misbehavior
     }
-    if (handler(event, actionElement) === false) return;
+    if (handler(event, actionElement, action) === false) return;
   }
 
-  // Step 3: resolve payload
-  let payload: unknown = descriptor.payload;
-  if (payload) {
-    const resolver = payloadRegistry.get(payload as string);
-    if (resolver) payload = resolver(event, actionElement);
+  // Step 5: resolve payload — replace raw token with the actual value.
+  // If the raw token starts with '$', look it up in the payload resolver registry.
+  // Otherwise treat it as a literal string payload.
+  if (descriptor.payload) {
+    const resolver = payloadRegistry.get(descriptor.payload);
+    if (resolver) {
+      // Cast needed: payload is typed as ActionRecord[K] but we're building generically.
+      (action as {payload: unknown}).payload = resolver(event, actionElement);
+    }
+    // else: keep the literal string already set on action.payload
+  } else {
+    // No payload token in the attribute — set to undefined.
+    (action as {payload: unknown}).payload = undefined;
   }
 
-  // Step 4: dispatch
-  internalChannel_.dispatch(descriptor.actionId, payload);
+  // Step 6: dispatch the fully assembled Action object.
+  internalChannel_.dispatch(action.type, action);
 }
 
 // ─── Setup ────────────────────────────────────────────────────────────────────
@@ -243,8 +275,9 @@ export const DEFAULT_DELEGATED_EVENTS: readonly string[] = ['click', 'submit', '
  * Registers global event delegation for `on-<eventType>` attributes.
  *
  * Attaches a single `capture`-phase listener on `document.body` for each
- * event type in `eventTypes`. All processing — modifier execution, payload
- * resolution, and `dispatchAction` — happens inside that one handler.
+ * event type in `eventTypes`. All processing — context resolution, modifier
+ * execution, payload resolution, and `dispatchAction` — happens inside that
+ * one handler.
  *
  * **Call this once at application bootstrap**, before any user interaction.
  * Subsequent calls with the same event types are no-ops (idempotent).
@@ -261,6 +294,24 @@ export const DEFAULT_DELEGATED_EVENTS: readonly string[] = ['click', 'submit', '
  * after this call — via `innerHTML`, `lit-html`, a framework renderer, or
  * server-sent HTML — is automatically covered. No re-bootstrap is needed.
  *
+ * ### Context scoping
+ *
+ * Wrap a group of elements in a `[action-context]` container to scope their
+ * actions. The delegation handler automatically resolves the nearest ancestor
+ * and attaches its value to `action.context`:
+ *
+ * ```html
+ * <section action-context="product-list">
+ *   <button on-click="add_to_cart:42">Add</button>
+ * </section>
+ * ```
+ *
+ * ```ts
+ * onAction('add_to_cart', (action) => {
+ *   console.log(action.context); // 'product-list'
+ * });
+ * ```
+ *
  * @param eventTypes - Event types to delegate. Defaults to `DEFAULT_DELEGATED_EVENTS`.
  *
  * @example — minimal bootstrap
@@ -270,7 +321,7 @@ export const DEFAULT_DELEGATED_EVENTS: readonly string[] = ['click', 'submit', '
  * // One call activates the entire page.
  * setupActionDelegation();
  *
- * onAction('open_drawer', (panel) => openDrawer(panel));
+ * onAction('open_drawer', (action) => openDrawer(action.payload));
  * ```
  *
  * @example — with extra event types

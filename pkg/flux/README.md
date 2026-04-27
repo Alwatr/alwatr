@@ -52,7 +52,7 @@ No magic. No hidden re-renders. No performance cliffs.
 
 ### 3. **Absolute Type Safety**
 
-Through TypeScript's **Declaration Merging**, the entire action bus is fully typed:
+Through TypeScript's **Declaration Merging**, the entire action bus is fully typed. Every action is a single **`Action<K>`** object (Alwatr Flux Standard Action — AFSA) carrying `type`, `payload`, `context`, and `meta`:
 
 ```typescript
 // Define your actions once
@@ -64,14 +64,16 @@ declare module '@alwatr/flux' {
   }
 }
 
-// Get compile-time safety everywhere
-onAction('add_to_cart', (item) => {
-  // item is typed as {productId: number; qty: number}
-  cartService.add(item.productId, item.qty);
+// Get compile-time safety everywhere — handler receives the full Action object
+onAction('add_to_cart', (action) => {
+  // action.payload is typed as {productId: number; qty: number}
+  cartService.add(action.payload.productId, action.payload.qty);
+  // action.context is the nearest [action-context] ancestor value (or undefined)
+  console.log(action.context); // e.g. 'product-list'
 });
 
-dispatchAction('add_to_cart', {productId: 42, qty: 1}); // ✅
-dispatchAction('add_to_cart', 'wrong'); // ❌ Compile error
+dispatchAction({type: 'add_to_cart', payload: {productId: 42, qty: 1}}); // ✅
+dispatchAction({type: 'add_to_cart', payload: 'wrong'}); // ❌ Compile error
 ```
 
 ---
@@ -120,7 +122,7 @@ lastName.set('Smith'); // Only fullName and the effect re-run — nothing else
 
 ### 🧩 **Declarative HTML Syntax**
 
-Connect DOM events to typed actions without writing JavaScript:
+Connect DOM events to typed actions without writing JavaScript. Wrap elements in `[action-context]` to scope the same action type to different UI regions:
 
 ```html
 <!-- Simple action -->
@@ -153,6 +155,28 @@ Connect DOM events to typed actions without writing JavaScript:
 
 <!-- Fire once and remove -->
 <button on-click="track_impression:hero_banner; once">Learn More</button>
+
+<!-- Context scoping — same action type, different regions -->
+<section action-context="volume">
+  <input
+    type="range"
+    on-input="slider:change:$value"
+  />
+</section>
+<section action-context="brightness">
+  <input
+    type="range"
+    on-input="slider:change:$value"
+  />
+</section>
+```
+
+```typescript
+// Handler receives the full Action object — payload, context, and meta together
+onAction('slider:change', (action) => {
+  if (action.context === 'volume') audioService.setVolume(Number(action.payload));
+  if (action.context === 'brightness') displayService.setBrightness(Number(action.payload));
+});
 ```
 
 **Built-in modifiers:**
@@ -308,55 +332,59 @@ createEffect({
 Flux implements a **strict layered architecture** where each layer has a single responsibility:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                         VIEW LAYER                          │
-│  (HTML templates, Directives, lit-html rendering)           │
-│                                                              │
-│  • Reads state from Signals                                 │
-│  • Dispatches Actions via on-<event> attributes            │
-│  • Never manipulates state directly                         │
-└──────────────────┬──────────────────────────────────────────┘
+┌───────────────────────────────────────────────────────────┐
+│                         VIEW LAYER                        │
+│  (HTML templates, Directives, lit-html rendering)         │
+│                                                           │
+│  • Reads state from Signals                               │
+│  • Dispatches Actions via on-<event> attributes           │
+│  • Never manipulates state directly                       │
+└──────────────────┬────────────────────────────────────────┘
                    │ on-click="add_to_cart:42"
                    ▼
-┌─────────────────────────────────────────────────────────────┐
-│                       ACTION LAYER                          │
-│  (@alwatr/action — Global Event Delegation)                 │
-│                                                              │
-│  • Captures DOM events via document.body listener           │
-│  • Parses on-<event> attributes                            │
-│  • Runs modifiers (prevent, validate, once)                 │
-│  • Resolves payload ($value, $formdata)                     │
-│  • Dispatches typed action to ChannelSignal                 │
-└──────────────────┬──────────────────────────────────────────┘
-                   │ dispatchAction('add_to_cart', 42)
+┌───────────────────────────────────────────────────────────┐
+│                       ACTION LAYER                        │
+│  (@alwatr/action — Global Event Delegation + AFSA)        │
+│                                                           │
+│  • Captures DOM events via document.body listener         │
+│  • Resolves [action-context] ancestor → action.context    │
+│  • Parses on-<event> attributes                           │
+│  • Runs modifiers (prevent, validate, once)               │
+│  • Modifiers may enrich action.meta                       │
+│  • Resolves payload ($value, $formdata)                   │
+│  • Dispatches full Action {type, payload, context, meta}  │
+└──────────────────┬────────────────────────────────────────┘
+                   │ dispatchAction({type: 'add_to_cart', payload: 42, context: 'cart'})
                    ▼
-┌─────────────────────────────────────────────────────────────┐
-│                     CONTROLLER LAYER                        │
-│  (Business Logic, Services, Use Cases)                      │
-│                                                              │
-│  • Subscribes to Actions via onAction()                     │
-│  • Executes business logic                                  │
-│  • Updates State via Signal.set()                           │
-│  • Never touches DOM directly                               │
-└──────────────────┬──────────────────────────────────────────┘
+┌───────────────────────────────────────────────────────────┐
+│                     CONTROLLER LAYER                      │
+│  (Business Logic, Services, Use Cases)                    │
+│                                                           │
+│  • Subscribes to Actions via onAction()                   │
+│  • Receives full Action object (type, payload, context,   │
+│    meta) — no need to pass context separately             │
+│  • Executes business logic                                │
+│  • Updates State via Signal.set()                         │
+│  • Never touches DOM directly                             │
+└──────────────────┬────────────────────────────────────────┘
                    │ cartSignal.set(newCart)
                    ▼
-┌─────────────────────────────────────────────────────────────┐
-│                        STATE LAYER                          │
-│  (@alwatr/signal — Reactive State Management)               │
-│                                                              │
-│  • StateSignal — mutable state                              │
-│  • ComputedSignal — derived state (memoized)                │
-│  • EffectSignal — side effects                              │
-│  • PersistentStateSignal — localStorage sync                │
-│  • SessionStateSignal — sessionStorage sync                 │
-└──────────────────┬──────────────────────────────────────────┘
+┌───────────────────────────────────────────────────────────┐
+│                        STATE LAYER                        │
+│  (@alwatr/signal — Reactive State Management)             │
+│                                                           │
+│  • StateSignal — mutable state                            │
+│  • ComputedSignal — derived state (memoized)              │
+│  • EffectSignal — side effects                            │
+│  • PersistentStateSignal — localStorage sync              │
+│  • SessionStateSignal — sessionStorage sync               │
+└──────────────────┬────────────────────────────────────────┘
                    │ signal.subscribe(render)
                    ▼
-┌─────────────────────────────────────────────────────────────┐
-│                         VIEW LAYER                          │
-│  (Re-render only affected DOM nodes)                        │
-└─────────────────────────────────────────────────────────────┘
+┌───────────────────────────────────────────────────────────┐
+│                         VIEW LAYER                        │
+│  (Re-render only affected DOM nodes)                      │
+└───────────────────────────────────────────────────────────┘
 ```
 
 **Key architectural benefits:**
@@ -366,6 +394,63 @@ Flux implements a **strict layered architecture** where each layer has a single 
 - **Scalability** — add features without touching existing code
 - **Predictability** — data flows in one direction only
 - **Performance** — fine-grained updates, no full-tree reconciliation
+
+---
+
+## 🎯 The Action Object (AFSA)
+
+Every action flowing through the bus — whether triggered from HTML attributes or dispatched programmatically — is a single **`Action<K>`** object (Alwatr Flux Standard Action):
+
+```typescript
+interface Action<K extends keyof ActionRecord> {
+  /** Action identifier — must be a key of ActionRecord. */
+  type: K;
+
+  /**
+   * DOM context from the nearest [action-context] ancestor.
+   * undefined for programmatic dispatches or when no ancestor exists.
+   * Example: 'product-list', 'checkout-form', 'volume-slider'
+   */
+  context?: string;
+
+  /** Business payload — type is inferred from ActionRecord[K]. */
+  payload: ActionRecord[K];
+
+  /**
+   * Open-ended metadata bag for cross-cutting concerns.
+   * Modifiers in the delegation pipeline may write to this before
+   * the action reaches subscribers.
+   */
+  meta?: Record<string, unknown>;
+}
+```
+
+This unified structure replaces the previous two-argument `(id, payload)` API. Every handler now receives the full picture:
+
+```typescript
+onAction('add_to_cart', (action) => {
+  console.log(action.type); // 'add_to_cart'
+  console.log(action.payload); // {productId: 42, qty: 1} — fully typed
+  console.log(action.context); // 'product-list' — from [action-context] ancestor
+  console.log(action.meta); // {traceId: '…'} — set by modifiers, or undefined
+});
+```
+
+Modifiers can enrich `meta` before the action reaches subscribers:
+
+```typescript
+import {registerModifier} from '@alwatr/flux';
+
+registerModifier('trace', (_event, _element, action) => {
+  action.meta ??= {};
+  action.meta['traceId'] = crypto.randomUUID();
+  return true;
+});
+```
+
+```html
+<button on-click="submit_order:42; trace">Place Order</button>
+```
 
 ---
 
@@ -443,8 +528,9 @@ onAction('decrement', () => {
   counterSignal.update((count) => count - 1);
 });
 
-onAction('set_count', (value) => {
-  counterSignal.set(value);
+// Handler receives the full Action object — payload is typed from ActionRecord
+onAction('set_count', (action) => {
+  counterSignal.set(action.payload); // action.payload: number
 });
 ```
 
@@ -612,39 +698,56 @@ setupActionDelegation();
 setupActionDelegation([...DEFAULT_DELEGATED_EVENTS, 'keydown', 'focus']);
 ```
 
-#### `onAction<K>(actionId, handler)`
+#### `onAction<K>(type, handler)`
 
-Subscribes to a typed action.
+Subscribes to a typed action. The handler receives the full `Action<K>` object.
 
 ```typescript
-const sub = onAction('add_to_cart', (item) => {
-  cartService.add(item.productId, item.qty);
+const sub = onAction('add_to_cart', (action) => {
+  cartService.add(action.payload.productId, action.payload.qty);
+  console.log(action.context); // e.g. 'product-list' or undefined
+  console.log(action.meta); // any metadata set by modifiers
 });
 
 sub.unsubscribe(); // Clean up when done
 ```
 
-#### `dispatchAction<K>(actionId, payload?)`
+#### `dispatchAction<K>(action)`
 
-Dispatches a typed action programmatically.
+Dispatches a typed action programmatically. Takes a full `Action<K>` object.
 
 ```typescript
-dispatchAction('navigate', '/home');
-dispatchAction('logout'); // void payload
+dispatchAction({type: 'navigate', payload: '/home'});
+dispatchAction({type: 'logout', payload: undefined}); // void payload
+
+// With context and meta
+dispatchAction({
+  type: 'add_to_cart',
+  payload: {productId: 42, qty: 1},
+  context: 'product-list',
+  meta: {source: 'recommendation'},
+});
 ```
 
 #### `registerModifier(name, handler)`
 
-Adds a custom modifier for `on-<event>` attributes.
+Adds a custom modifier for `on-<event>` attributes. The handler receives the mutable `action` object and may write to `action.meta`.
 
 ```typescript
 registerModifier('confirm', () => {
   return window.confirm('Are you sure?');
 });
+
+// A modifier that stamps a trace ID into meta
+registerModifier('trace', (_event, _element, action) => {
+  action.meta ??= {};
+  action.meta['traceId'] = crypto.randomUUID();
+  return true;
+});
 ```
 
 ```html
-<button on-click="delete_item:42; confirm">Delete</button>
+<button on-click="delete_item:42; confirm,trace">Delete</button>
 ```
 
 #### `registerPayloadResolver(name, resolver)`
@@ -889,23 +992,23 @@ import {todosSignal} from './state.js';
 
 let nextId = 1;
 
-onAction('add_todo', (text) => {
+onAction('add_todo', (action) => {
   todosSignal.update((todos) => [
     ...todos,
-    {id: nextId++, text, done: false},
+    {id: nextId++, text: action.payload, done: false},
   ]);
 });
 
-onAction('toggle_todo', (id) => {
+onAction('toggle_todo', (action) => {
   todosSignal.update((todos) =>
     todos.map((todo) =>
-      todo.id === id ? {...todo, done: !todo.done} : todo
+      todo.id === action.payload ? {...todo, done: !todo.done} : todo
     )
   );
 });
 
-onAction('remove_todo', (id) => {
-  todosSignal.update((todos) => todos.filter((t) => t.id !== id));
+onAction('remove_todo', (action) => {
+  todosSignal.update((todos) => todos.filter((t) => t.id !== action.payload));
 });
 
 // view.html
