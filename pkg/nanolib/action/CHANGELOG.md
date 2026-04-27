@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.16.0](https://github.com/Alwatr/alwatr/compare/v9.15.0...v9.16.0) (2026-04-27)
+
+### ✨ Features
+
+* **action:** add $checked payload ([84ea649](https://github.com/Alwatr/alwatr/commit/84ea6494659bd84044d46360f1d1f3e5442697f1))
+
+### 🔨 Code Refactoring
+
+* **action:** Apply suggestions from code review ([18a962f](https://github.com/Alwatr/alwatr/commit/18a962f52ae37d3dfbe3eea9e312a496f85b8075))
+* **action:** update delegation pattern to encode event type in attribute name ([2a3ef67](https://github.com/Alwatr/alwatr/commit/2a3ef670f6c0cfa13d58f8a1a3132988bc7039a7))
+
 ## [9.14.0](https://github.com/Alwatr/alwatr/compare/v9.13.0...v9.14.0) (2026-04-25)
 
 ### 🐛 Bug Fixes

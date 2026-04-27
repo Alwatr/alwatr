@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.16.0](https://github.com/Alwatr/alwatr/compare/v9.15.0...v9.16.0) (2026-04-27)
+
+### ✨ Features
+
+* **page-ready:** add subscribePageReady function for global page-ready events ([6f0e723](https://github.com/Alwatr/alwatr/commit/6f0e723f945a9bfc6ae6f968486a9c456ba95f01))
+
 ## [9.14.0](https://github.com/Alwatr/alwatr/compare/v9.13.0...v9.14.0) (2026-04-25)
 
 ### ✨ Features

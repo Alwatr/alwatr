@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.16.0](https://github.com/Alwatr/alwatr/compare/v9.15.0...v9.16.0) (2026-04-27)
+
+### 🧹 Miscellaneous Chores
+
+* remove old flux package README ([4cb0d8e](https://github.com/Alwatr/alwatr/commit/4cb0d8e0527bf6bed50ab4a977f5f60a759bb6c4))
+
 ## [9.15.0](https://github.com/Alwatr/alwatr/compare/v9.14.0...v9.15.0) (2026-04-25)
 
 ### ✨ Features
