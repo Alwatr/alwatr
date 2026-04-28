@@ -76,6 +76,8 @@ export abstract class Directive {
    */
   public readonly index: number;
 
+  protected intersectionOptions_?: IntersectionObserverInit;
+
   constructor(element: HTMLElement, attributeName: string) {
     this.index = generateIndexForDirective(attributeName);
 
@@ -146,7 +148,7 @@ export abstract class Directive {
    * Uses IntersectionObserver when available, falls back to requestIdleCallback or setTimeout(100ms).
    */
   private triggerLazyInit_(): void {
-    const execute = async () => {
+    const executeLazyInit_ = async () => {
       try {
         if (this.isDestroyed()) return;
         await this.lazyInit_!();
@@ -159,15 +161,15 @@ export abstract class Directive {
       const observer = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
           observer.disconnect();
-          void execute();
+          void executeLazyInit_();
         }
-      });
+      }, this.intersectionOptions_);
       observer.observe(this.element_);
       this.addDestroyHook(() => observer.disconnect());
     } else if (typeof requestIdleCallback !== 'undefined') {
-      requestIdleCallback(() => void execute());
+      requestIdleCallback(() => void executeLazyInit_());
     } else {
-      setTimeout(() => void execute(), 100);
+      setTimeout(() => void executeLazyInit_(), 100);
     }
   }
 
@@ -208,7 +210,7 @@ export abstract class Directive {
             this.logger_.error('triggerVisibilityObserver_', 'error_in_on_hidden', err);
           }
         }
-      });
+      }, this.intersectionOptions_);
       observer.observe(this.element_);
       this.addDestroyHook(() => observer.disconnect());
     } else if (this.onVisible_) {
