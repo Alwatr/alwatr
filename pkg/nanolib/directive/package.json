@@ -22,7 +22,8 @@
   "sideEffects": false,
   "dependencies": {
     "@alwatr/delay": "workspace:*",
-    "@alwatr/logger": "workspace:*"
+    "@alwatr/logger": "workspace:*",
+    "lit-html": "^3.3.2"
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
