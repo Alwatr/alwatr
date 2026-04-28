@@ -199,7 +199,7 @@ export function attribute<D extends Directive = Directive>(name: string, cache =
  * }
  * ```
  */
-export function state<D extends Directive = Directive>(_name?: string, _cache = true, _root?: Element) {
+export function state<D extends Directive = Directive>() {
   return function (
     target: ClassAccessorDecoratorTarget<D, string | null>,
     context: ClassAccessorDecoratorContext<D, string | null>,
