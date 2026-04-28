@@ -76,6 +76,69 @@ export abstract class Directive {
    */
   public readonly index: number;
 
+  /**
+   * Optional configuration passed directly to every `IntersectionObserver` created by this directive.
+   *
+   * Set this in your subclass constructor (or as a class field) **before** `init_()` runs to customise
+   * how the browser determines visibility for `lazyInit_()`, `onVisible_()`, and `onHidden_()`.
+   *
+   * All three visibility hooks share the same options object — you cannot configure them independently.
+   * If left `undefined`, the browser's default `IntersectionObserver` options are used:
+   * `root: null` (viewport), `rootMargin: '0px'`, `threshold: 0`.
+   *
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver MDN — IntersectionObserver constructor}
+   *
+   * @example — Trigger 200 px before the element enters the viewport (eager pre-load)
+   * ```ts
+   * @directive('lazy-image')
+   * class LazyImageDirective extends Directive {
+   *   // Pre-load images 200 px before they scroll into view
+   *   protected override intersectionOptions_: IntersectionObserverInit = {
+   *     rootMargin: '200px 0px',
+   *   };
+   *
+   *   protected override async lazyInit_(): Promise<void> {
+   *     const img = this.element_.querySelector('img')!;
+   *     img.src = img.dataset['src']!;
+   *     await img.decode();
+   *   }
+   * }
+   * ```
+   *
+   * @example — Fire `onVisible_` only when at least 50 % of the element is visible
+   * ```ts
+   * @directive('track-impression')
+   * class ImpressionTrackerDirective extends Directive {
+   *   protected override intersectionOptions_: IntersectionObserverInit = {
+   *     threshold: 0.5,
+   *   };
+   *
+   *   protected override onVisible_(): void {
+   *     analytics.trackImpression(this.attributeValue);
+   *   }
+   * }
+   * ```
+   *
+   * @example — Observe within a scrollable container instead of the viewport
+   * ```ts
+   * @directive('sticky-header')
+   * class StickyHeaderDirective extends Directive {
+   *   protected override intersectionOptions_: IntersectionObserverInit = {
+   *     root: document.querySelector('#scroll-container'),
+   *     rootMargin: '-64px 0px 0px 0px', // account for a 64 px top bar
+   *     threshold: 0,
+   *   };
+   *
+   *   protected override onHidden_(): void {
+   *     this.element_.classList.add('is-sticky');
+   *   }
+   *
+   *   protected override onVisible_(): void {
+   *     this.element_.classList.remove('is-sticky');
+   *   }
+   * }
+   * ```
+   */
   protected intersectionOptions_?: IntersectionObserverInit;
 
   constructor(element: HTMLElement, attributeName: string) {
