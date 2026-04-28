@@ -1,16 +1,16 @@
 {
-  "name": "@alwatr/flux",
-  "version": "9.18.1",
-  "description": "UI and reactive library bundle for ECMAScript (JavaScript/TypeScript) projects — signals, actions, directives, and storage.",
+  "name": "@alwatr/embedded-data",
+  "version": "9.16.0",
+  "description": "Framework-agnostic utility to safely extract, parse, and validate embedded JSON data from <script type=\"application/json\"> DOM nodes. Designed for SSR-friendly state hydration in SPAs and MPAs.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alwatr/alwatr",
-    "directory": "pkg/flux"
+    "directory": "pkg/nanolib/embedded-data"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/flux#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/embedded-data#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
@@ -21,20 +21,13 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@alwatr/action": "workspace:*",
-    "@alwatr/directive": "workspace:*",
-    "@alwatr/embedded-data": "workspace:*",
-    "@alwatr/local-storage": "workspace:*",
-    "@alwatr/page-ready": "workspace:*",
-    "@alwatr/render-state": "workspace:*",
-    "@alwatr/session-storage": "workspace:*",
-    "@alwatr/signal": "workspace:*",
-    "@alwatr/type-helper": "workspace:*",
-    "lit-html": "^3.3.2"
+    "@alwatr/logger": "workspace:*"
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
     "@alwatr/standard": "workspace:*",
+    "@alwatr/type-helper": "workspace:*",
+    "@happy-dom/global-registrator": "^20.9.0",
     "typescript": "^6.0.3"
   },
   "scripts": {
@@ -65,22 +58,26 @@
   },
   "keywords": [
     "alwatr",
-    "action",
-    "directive",
+    "browser",
+    "cross-platform",
     "dom",
     "ECMAScript",
+    "embedded-data",
     "esm",
-    "flux",
+    "framework-agnostic",
+    "hydration",
     "javascript",
-    "local-storage",
+    "json",
     "module",
+    "mpa",
     "nanolib",
-    "reactive",
-    "render-state",
-    "session-storage",
-    "signal",
+    "script-tag",
+    "spa",
+    "ssr",
+    "state",
     "typescript",
-    "ui",
-    "unidirectional-data-flow"
+    "util",
+    "utility",
+    "validation"
   ]
 }

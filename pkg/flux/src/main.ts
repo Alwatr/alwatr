@@ -4,6 +4,7 @@
 export * from '@alwatr/signal';
 export * from '@alwatr/action';
 export * from '@alwatr/directive';
+export * from '@alwatr/embedded-data';
 export * from '@alwatr/render-state';
 export * from '@alwatr/local-storage';
 export * from '@alwatr/session-storage';

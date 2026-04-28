@@ -65,6 +65,7 @@
       "dependencies": {
         "@alwatr/action": "workspace:*",
         "@alwatr/directive": "workspace:*",
+        "@alwatr/embedded-data": "workspace:*",
         "@alwatr/local-storage": "workspace:*",
         "@alwatr/page-ready": "workspace:*",
         "@alwatr/render-state": "workspace:*",
@@ -218,6 +219,20 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
+        "typescript": "^6.0.3",
+      },
+    },
+    "pkg/nanolib/embedded-data": {
+      "name": "@alwatr/embedded-data",
+      "version": "9.16.0",
+      "dependencies": {
+        "@alwatr/logger": "workspace:*",
+      },
+      "devDependencies": {
+        "@alwatr/nano-build": "workspace:*",
+        "@alwatr/standard": "workspace:*",
+        "@alwatr/type-helper": "workspace:*",
+        "@happy-dom/global-registrator": "^20.9.0",
         "typescript": "^6.0.3",
       },
     },
@@ -752,6 +767,8 @@
     "@alwatr/directive": ["@alwatr/directive@workspace:pkg/nanolib/directive"],
 
     "@alwatr/djb2-hash": ["@alwatr/djb2-hash@workspace:pkg/nanolib/djb2-hash"],
+
+    "@alwatr/embedded-data": ["@alwatr/embedded-data@workspace:pkg/nanolib/embedded-data"],
 
     "@alwatr/env": ["@alwatr/env@workspace:pkg/nanolib/env"],
 
