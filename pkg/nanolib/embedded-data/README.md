@@ -243,7 +243,7 @@ if (shops) {
 Creates a new collector instance.
 
 - **`attributeName`**: The HTML attribute used to query the script tag (e.g., `'data-config'`).
-- **`validator`** (optional): A type-guard function or validation function (e.g., Zod schema parser) to ensure runtime type safety. Can be synchronous or asynchronous.
+- **validator** (optional): A type-guard function or validation function (e.g., Zod schema parser) to ensure runtime type safety. Must be synchronous.
 
 #### `collect(): T | null`
 
