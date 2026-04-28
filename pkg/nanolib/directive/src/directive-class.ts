@@ -162,12 +162,16 @@ export abstract class Directive {
     delay.nextMacrotask().then(() => this.initializeLifecycle_());
   }
 
+  /**
+   * Initializes the directive's lifecycle by calling the `init_` method and setting up any necessary observers for lazy initialization and visibility tracking. This method is called after the directive instance is created and the initial attribute value is parsed.
+   */
   private async initializeLifecycle_(): Promise<void> {
     try {
       await this.init_?.();
     } catch (err) {
       this.logger_.error('init_', 'error_in_init', err);
     }
+
     if (this.lazyInit_) {
       this.triggerLazyInit_();
     }
@@ -408,4 +412,92 @@ export abstract class Directive {
     element.addEventListener(eventType, boundListener as EventListener, options);
     this.addDestroyHook(() => element.removeEventListener(eventType, boundListener as EventListener, options));
   }
+
+  private isUpdatePending_ = false;
+
+  /**
+   * Schedules a batched re-render for the next macrotask.
+   *
+   * Calling this method multiple times within the same macrotask cycle is safe — only one
+   * `update_()` + `updated_()` pair will be executed. Subsequent calls while an update is
+   * already pending are silently ignored.
+   *
+   * **You rarely need to call this directly.** The two idiomatic triggers are:
+   * - A `@state`-decorated accessor — calls `requestUpdate_()` automatically on every `set`.
+   * - A `StateSignal` subscription — call `requestUpdate_()` inside the callback.
+   *
+   * @example — Triggered automatically by `@state` (most common)
+   * ```ts
+   * // Setting a @state accessor schedules the update — no manual call needed.
+   * this.count_ = newValue;
+   * ```
+   *
+   * @example — Triggered manually from a `StateSignal` subscription
+   * ```ts
+   * protected override init_(): void {
+   *   const sub = cartSignal.subscribe(() => this.requestUpdate_());
+   *   this.addDestroyHook(() => sub.unsubscribe());
+   * }
+   * ```
+   *
+   * @example — Triggered manually after mutating non-`@state` internal state
+   * ```ts
+   * protected override init_(): void {
+   *   this.on_('click', () => {
+   *     this.count_++;
+   *     this.requestUpdate_();
+   *   });
+   * }
+   * ```
+   */
+  public requestUpdate_(): void {
+    this.logger_.logMethod?.('requestUpdate_');
+    if (this.isUpdatePending_) return;
+    this.isUpdatePending_ = true;
+    delay.nextMacrotask().then(() => {
+      try {
+        this.update_();
+      } finally {
+        this.isUpdatePending_ = false;
+      }
+      this.updated_();
+    });
+  }
+
+  /**
+   * Called during each scheduled update cycle, immediately before `updated_()`.
+   *
+   * Override this method to perform DOM mutations or re-renders in response to state changes.
+   * The base implementation is a no-op — subclasses such as `LitDirective` override it to call
+   * `lit-html`'s `render()`.
+   *
+   * This method is always called synchronously within the macrotask scheduled by `requestUpdate_()`.
+   * Do **not** call `requestUpdate_()` from inside `update_()` — it will be ignored because the
+   * pending flag is still set at that point.
+   */
+  protected update_(): void {
+    this.logger_.logMethod?.('update_');
+  }
+
+  /**
+   * Called immediately after `update_()` completes in each update cycle.
+   *
+   * Override this method to run post-render logic — e.g. measuring DOM dimensions, focusing an
+   * element, or dispatching a `CustomEvent` to notify the outside world that the view has changed.
+   *
+   * The base implementation is a no-op.
+   *
+   * @example
+   * ```ts
+   * protected override updated_(): void {
+   *   // Scroll the newly rendered content into view after each update
+   *   this.element_.querySelector('.active-item')?.scrollIntoView({behavior: 'smooth'});
+   * }
+   * ```
+   */
+  protected updated_(): void {
+    this.logger_.logMethod?.('updated_');
+  }
+
+  protected subscribe_(tar);
 }
