@@ -54,16 +54,16 @@ But extracting this data safely requires:
 [HTML with <script data-foo>]
 │
 ▼
-getElement*() ──→ querySelector('[data-foo]')
+getElement_() ──→ querySelector('[data-foo]')
 │
 ▼
-extractRawData*() ──→ element.textContent.trim()
+extractRawData_() ──→ element.textContent.trim()
 │ element.textContent = '' ← GC hint
 ▼
 JSON.parse()
 │
 ▼
-validator\_?.(data) ──→ optional type-guard / Zod schema
+validator_?.(data) ──→ optional type-guard / Zod schema
 │
 ▼
 return T | null
