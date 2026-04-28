@@ -44,22 +44,26 @@ export class Lazy<T> {
    * Returns the lazily-initialized value.
    *
    * On the **first** access:
-   * 1. Calls the initializer.
-   * 2. Caches the result in `value__`.
-   * 3. Deletes `initializer__` so the closure can be GC'd.
+   * 1. Captures the initializer reference.
+   * 2. Deletes `initializer__` **before** calling it (prevents re-entry).
+   * 3. Calls the initializer and caches the result.
    *
    * On **subsequent** accesses the cached value is returned directly — O(1),
    * no function call overhead.
    */
   get value(): T {
     if (this.initializer__ !== undefined) {
-      // First access: run the initializer, cache the result, free the closure.
-      this.value__ = this.initializer__();
+      // Capture the initializer and immediately delete the reference.
+      // This prevents infinite recursion if the initializer itself accesses `.value`.
+      const init = this.initializer__;
       // Explicitly delete (not just assign undefined) so the property is removed
       // from the object shape, giving V8 a stronger GC hint.
       delete this.initializer__;
+      // Now call the initializer — if it re-enters `.value`, it will see
+      // initializer__ === undefined and return the (still-undefined) value__.
+      this.value__ = init();
     }
-    // value__ is guaranteed to be set at this point.
+    // value__ is guaranteed to be set at this point (unless initializer re-entered).
     return this.value__ as T;
   }
 

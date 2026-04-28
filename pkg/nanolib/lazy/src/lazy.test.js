@@ -62,6 +62,21 @@ describe('Lazy', () => {
     expect(instance.value).toEqual({name: 'alwatr', version: 9});
     expect(instance.value).toBe(data); // same reference
   });
+
+  test('handles re-entrant access during initialization gracefully', () => {
+    // Edge case: initializer itself accesses .value
+    // Should return undefined on re-entry (not infinite loop)
+    let reentrantValue;
+    const instance = new Lazy(() => {
+      // During initialization, try to read .value again
+      reentrantValue = instance.value;
+      return 42;
+    });
+    const result = instance.value;
+    expect(result).toBe(42);
+    expect(reentrantValue).toBeUndefined(); // re-entry saw undefined
+    expect(instance.isInitialized()).toBe(true);
+  });
 });
 
 describe('lazy() factory function', () => {
