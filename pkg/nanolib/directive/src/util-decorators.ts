@@ -199,11 +199,11 @@ export function attribute<D extends Directive = Directive>(name: string, cache =
  * }
  * ```
  */
-export function state<D extends Directive = Directive>() {
+export function state<T, D extends Directive = Directive>() {
   return function (
-    target: ClassAccessorDecoratorTarget<D, string | null>,
-    context: ClassAccessorDecoratorContext<D, string | null>,
-  ): ClassAccessorDecoratorResult<D, string | null> {
+    target: ClassAccessorDecoratorTarget<D, T>,
+    context: ClassAccessorDecoratorContext<D, T>,
+  ): ClassAccessorDecoratorResult<D, T> {
     if (context.kind !== 'accessor') {
       throw new Error('@state can only be used with the "accessor" keyword');
     }

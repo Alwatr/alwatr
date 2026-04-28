@@ -8,4 +8,5 @@ export * from '@alwatr/render-state';
 export * from '@alwatr/local-storage';
 export * from '@alwatr/session-storage';
 export * from '@alwatr/page-ready';
+export * from './lit-html.js';
 export type * from '@alwatr/type-helper';

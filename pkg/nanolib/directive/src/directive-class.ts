@@ -9,6 +9,7 @@ import type {Awaitable} from '@alwatr/type-helper';
 import {delay} from '@alwatr/delay';
 import {createLogger} from '@alwatr/logger';
 import {finalizationRegistry} from './lib.js';
+import type {IReadonlySignal, ListenerCallback, SubscribeOptions} from '@alwatr/signal';
 
 /**
  * A map to keep track of the number of instances for each directive name. This helps in generating unique indices for directives when multiple instances are present on the same page.
@@ -499,5 +500,30 @@ export abstract class Directive {
     this.logger_.logMethod?.('updated_');
   }
 
-  protected subscribe_(tar);
+  /**
+   * Subscribes to a signal and automatically unsubscribes when the directive is destroyed.
+   *
+   * This is the idiomatic way to react to shared application state inside a directive. It eliminates
+   * the boilerplate of manually calling `addDestroyHook(() => sub.unsubscribe())` after every
+   * `signal.subscribe(...)` call.
+   *
+   * @param signal - The read-only signal to subscribe to.
+   * @param callback - The listener invoked on every signal emission.
+   * @param options - Optional subscription options forwarded to `signal.subscribe()`.
+   *
+   * @example
+   * ```ts
+   * @state()
+   * private count_ = 0;
+   *
+   * protected override init_(): void {
+   *   this.subscribe_(cartSignal, (cart) => {
+   *     this.count_ = cart.items.length;
+   *   });
+   * }
+   * ```
+   */
+  protected subscribe_<T>(signal: IReadonlySignal<T>, callback: ListenerCallback<T>, options?: SubscribeOptions): void {
+    this.addDestroyHook(signal.subscribe(callback, options).unsubscribe);
+  }
 }

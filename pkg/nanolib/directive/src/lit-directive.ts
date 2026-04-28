@@ -103,7 +103,7 @@ export abstract class LitDirective extends Directive {
    * ```ts
    * @directive('shadow-card')
    * class ShadowCardDirective extends LitDirective {
-   *   protected override rootElement_ = this.element_.attachShadow({mode: 'open'}) as unknown as HTMLElement;
+   *   protected override rootElement_ = this.element_.attachShadow({mode: 'open'});
    *
    *   protected override render_() {
    *     return html`<slot></slot>`;
@@ -111,7 +111,7 @@ export abstract class LitDirective extends Directive {
    * }
    * ```
    */
-  protected rootElement_?: HTMLElement;
+  protected rootElement_?: HTMLElement | ShadowRoot | DocumentFragment;
 
   /**
    * Renders the `lit-html` template returned by `render_()` into `rootElement_` (or `element_`).

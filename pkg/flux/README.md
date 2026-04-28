@@ -945,6 +945,123 @@ renderState(currentState, {
 
 ---
 
+### Template (lit-html)
+
+`@alwatr/flux` re-exports a curated subset of [`lit-html`](https://lit.dev/docs/libraries/standalone-templates/) so you can render efficient DOM templates without adding a separate dependency.
+
+#### `html`
+
+Tagged template literal that produces a `TemplateResult`. lit-html parses the template once and only updates the dynamic parts on subsequent renders.
+
+```typescript
+import {html} from '@alwatr/flux';
+
+const greeting = (name: string) => html`
+  <p>Hello, ${name}!</p>
+`;
+```
+
+#### `render(value, container)`
+
+Renders a `TemplateResult` (or any renderable value) into a DOM container. Subsequent calls efficiently patch only the changed parts.
+
+```typescript
+import {html, render} from '@alwatr/flux';
+
+render(
+  html`
+    <h1>Hello World</h1>
+  `,
+  document.getElementById('app')!,
+);
+```
+
+#### `noChange` / `nothing`
+
+Sentinels for fine-grained control over part updates:
+
+- **`noChange`** — leaves the current DOM value untouched (skips the update entirely)
+- **`nothing`** — removes the node or attribute from the DOM
+
+```typescript
+import {html, noChange, nothing} from '@alwatr/flux';
+
+const badge = (count: number | undefined) => html`
+  <span class="badge">
+    ${count === undefined ? nothing
+    : count === 0 ? noChange
+    : count}
+  </span>
+`;
+```
+
+#### `ifDefined(value)`
+
+Renders the attribute only when `value` is not `undefined`; removes the attribute otherwise.
+
+```typescript
+import {html, ifDefined} from '@alwatr/flux';
+
+const link = (href?: string) => html`
+  <a href=${ifDefined(href)}>Click</a>
+`;
+```
+
+#### `cache(value)`
+
+Caches rendered templates keyed by their `TemplateResult` identity. Avoids re-parsing the template string when switching between a fixed set of templates (e.g. tab panels).
+
+```typescript
+import {html, cache} from '@alwatr/flux';
+
+const panel = (tab: 'home' | 'settings') =>
+  cache(
+    tab === 'home' ?
+      html`
+        <home-panel></home-panel>
+      `
+    : html`
+        <settings-panel></settings-panel>
+      `,
+  );
+```
+
+#### `classMap(classInfo)`
+
+Efficiently toggles CSS classes from a `{[className]: boolean}` object. Only the classes present in the map are touched; others are left unchanged.
+
+```typescript
+import {html, classMap} from '@alwatr/flux';
+
+const button = (isActive: boolean, isDisabled: boolean) => html`
+  <button class=${classMap({active: isActive, disabled: isDisabled})}>Click</button>
+`;
+```
+
+#### `when(condition, trueCase, falseCase?)`
+
+Conditional rendering helper. Cleaner than ternary expressions for template branches.
+
+```typescript
+import {html, when} from '@alwatr/flux';
+
+const status = (isLoading: boolean) => html`
+  <div>
+    ${when(
+      isLoading,
+      () => html`
+        <spinner-element></spinner-element>
+      `,
+      () => html`
+        <content-element></content-element>
+      `,
+    )}
+  </div>
+`;
+```
+
+---
+
 ## 🆚 Why Choose Alwatr Flux?
 
 | Feature                | React + Redux            | Solid.js        | Svelte                   | **Alwatr Flux** 🌊                 |
