@@ -35,6 +35,7 @@
         "@alwatr/iranian-national-code-validator": "workspace:*",
         "@alwatr/is-number": "workspace:*",
         "@alwatr/json2csv": "workspace:*",
+        "@alwatr/lazy": "workspace:*",
         "@alwatr/logger": "workspace:*",
         "@alwatr/parse-duration": "workspace:*",
         "@alwatr/platform-info": "workspace:*",
@@ -354,6 +355,15 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
+        "typescript": "^6.0.3",
+      },
+    },
+    "pkg/nanolib/lazy": {
+      "name": "@alwatr/lazy",
+      "version": "9.16.0",
+      "devDependencies": {
+        "@alwatr/nano-build": "workspace:*",
+        "@alwatr/standard": "workspace:*",
         "typescript": "^6.0.3",
       },
     },
@@ -770,6 +780,8 @@
     "@alwatr/is-number": ["@alwatr/is-number@workspace:pkg/nanolib/is-number"],
 
     "@alwatr/json2csv": ["@alwatr/json2csv@workspace:pkg/nanolib/json2csv"],
+
+    "@alwatr/lazy": ["@alwatr/lazy@workspace:pkg/nanolib/lazy"],
 
     "@alwatr/local-storage": ["@alwatr/local-storage@workspace:pkg/nanolib/local-storage"],
 

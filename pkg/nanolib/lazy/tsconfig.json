@@ -1,0 +1,9 @@
+{
+  "extends": "@alwatr/standard/tsconfig",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "composite": true
+  },
+  "include": ["src/**/*.ts"]
+}

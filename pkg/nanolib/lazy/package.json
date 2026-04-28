@@ -1,55 +1,25 @@
 {
-  "name": "@alwatr/core",
-  "version": "9.18.0",
-  "description": "Necessary library for all ECMAScript (JavaScript/TypeScript) projects.",
+  "name": "@alwatr/lazy",
+  "version": "9.16.0",
+  "description": "A generic, memory-efficient lazy evaluation wrapper. Defers execution of expensive initializers until the value is first accessed, then caches the result and frees the closure reference for GC.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alwatr/alwatr",
-    "directory": "pkg/core"
+    "directory": "pkg/nanolib/lazy"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/core#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/lazy#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
       "import": "./dist/main.js",
       "default": "./dist/main.js"
-    },
-    "./node": {
-      "types": "./dist/node.d.ts",
-      "default": "./dist/node.js"
     }
   },
   "sideEffects": false,
-  "dependencies": {
-    "@alwatr/async-queue": "workspace:*",
-    "@alwatr/cyrb53": "workspace:*",
-    "@alwatr/debounce": "workspace:*",
-    "@alwatr/deep-clone": "workspace:*",
-    "@alwatr/delay": "workspace:*",
-    "@alwatr/djb2-hash": "workspace:*",
-    "@alwatr/fetch": "workspace:*",
-    "@alwatr/flat-string": "workspace:*",
-    "@alwatr/flatomise": "workspace:*",
-    "@alwatr/global-this": "workspace:*",
-    "@alwatr/has-own": "workspace:*",
-    "@alwatr/hash-string": "workspace:*",
-    "@alwatr/http-primer": "workspace:*",
-    "@alwatr/iranian-national-code-validator": "workspace:*",
-    "@alwatr/is-number": "workspace:*",
-    "@alwatr/lazy": "workspace:*",
-    "@alwatr/json2csv": "workspace:*",
-    "@alwatr/logger": "workspace:*",
-    "@alwatr/parse-duration": "workspace:*",
-    "@alwatr/platform-info": "workspace:*",
-    "@alwatr/random": "workspace:*",
-    "@alwatr/resolve-url": "workspace:*",
-    "@alwatr/type-helper": "workspace:*",
-    "@alwatr/unicode-digits": "workspace:*"
-  },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
     "@alwatr/standard": "workspace:*",
@@ -83,27 +53,28 @@
   },
   "keywords": [
     "alwatr",
-    "async",
+    "browser",
+    "cache",
     "cross-platform",
+    "deferred",
     "ECMAScript",
     "esm",
-    "file",
-    "filesystem",
-    "fs",
+    "gc",
     "javascript",
-    "JSON",
+    "lazy",
+    "lazy-evaluation",
+    "lazy-initialization",
+    "lazy-loading",
+    "memoize",
+    "memoization",
     "module",
     "nanolib",
     "node",
     "nodejs",
-    "queue",
-    "readFile",
-    "readJson",
+    "performance",
     "typescript",
     "util",
     "utility",
-    "utils",
-    "writeFile",
-    "writeJson"
+    "utils"
   ]
 }

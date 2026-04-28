@@ -16,6 +16,7 @@ export * from '@alwatr/hash-string';
 export * from '@alwatr/http-primer';
 export * from '@alwatr/iranian-national-code-validator';
 export * from '@alwatr/is-number';
+export * from '@alwatr/lazy';
 export * from '@alwatr/json2csv';
 export * from '@alwatr/logger';
 export * from '@alwatr/parse-duration';
