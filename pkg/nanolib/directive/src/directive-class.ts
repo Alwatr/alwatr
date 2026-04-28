@@ -455,8 +455,11 @@ export abstract class Directive {
     if (this.isUpdatePending_) return;
     this.isUpdatePending_ = true;
     delay.nextMacrotask().then(() => {
-      this.update_();
-      this.isUpdatePending_ = false;
+      try {
+        this.update_();
+      } finally {
+        this.isUpdatePending_ = false;
+      }
       this.updated_();
     });
   }
@@ -495,4 +498,6 @@ export abstract class Directive {
   protected updated_(): void {
     this.logger_.logMethod?.('updated_');
   }
+
+  protected subscribe_(tar);
 }
