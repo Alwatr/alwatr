@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.18.0](https://github.com/Alwatr/alwatr/compare/v9.17.0...v9.18.0) (2026-04-28)
+
+### 🐛 Bug Fixes
+
+* **build:** update build script to target main.ts instead of all TypeScript files ([17877b1](https://github.com/Alwatr/alwatr/commit/17877b1c3306ab63a3ee0b2886cad3dea1447cba))
+
 ## [9.16.0](https://github.com/Alwatr/alwatr/compare/v9.15.0...v9.16.0) (2026-04-27)
 
 **Note:** Version bump only for package @alwatr/core

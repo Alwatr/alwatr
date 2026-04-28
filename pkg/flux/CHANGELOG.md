@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.18.0](https://github.com/Alwatr/alwatr/compare/v9.17.0...v9.18.0) (2026-04-28)
+
+### ✨ Features
+
+* **flux:** add curated lit-html re-exports module ([2e3b99d](https://github.com/Alwatr/alwatr/commit/2e3b99dccce74ff56ec4c643ccfd0b5f3f9a17bc))
+
+### 🐛 Bug Fixes
+
+* **build:** update build script to target main.ts instead of all TypeScript files ([17877b1](https://github.com/Alwatr/alwatr/commit/17877b1c3306ab63a3ee0b2886cad3dea1447cba))
+* **main:** update lit-html import to include file extension ([cdeedc2](https://github.com/Alwatr/alwatr/commit/cdeedc28b4968001627d2c4f4a9e0241b1966ebb))
+
 ## [9.17.0](https://github.com/Alwatr/alwatr/compare/v9.16.0...v9.17.0) (2026-04-27)
 
 **Note:** Version bump only for package @alwatr/flux

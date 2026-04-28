@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.18.0](https://github.com/Alwatr/alwatr/compare/v9.17.0...v9.18.0) (2026-04-28)
+
+### ✨ Features
+
+* **directive:** add [@state](https://github.com/state) decorator for reactive local state management ([c64c6fe](https://github.com/Alwatr/alwatr/commit/c64c6fee0183b05ee4f647979685a2160b9b7297))
+* **directive:** add batched update lifecycle with requestUpdate_, update_, and updated_ ([2f8dcf4](https://github.com/Alwatr/alwatr/commit/2f8dcf4d59c76fdcf78b66ada438c6932cabc46f))
+* **directive:** add configurable IntersectionObserver options and improve lazy init naming ([2546a7b](https://github.com/Alwatr/alwatr/commit/2546a7b1e9cbb0b5d50d7604ccd9ec5182d5b9fb))
+* **directive:** add generic type parameter to state decorator ([e74acfd](https://github.com/Alwatr/alwatr/commit/e74acfd5dd8d5d5587d967087c6a1f55263938d8))
+* **directive:** add LitDirective class for lit-html template rendering ([28f17b8](https://github.com/Alwatr/alwatr/commit/28f17b869a19885b2287f52358e241fe1445531c))
+* **directive:** add optional IntersectionObserver configuration for visibility hooks ([154ae4d](https://github.com/Alwatr/alwatr/commit/154ae4d2d02b1f139e7a349ca0aaa472d1bcbda7))
+* **directive:** implement subscribe_ method for signal subscription management ([9df7628](https://github.com/Alwatr/alwatr/commit/9df7628f9b4312de3a63430ed9f85561472cf64f))
+* **flux:** add curated lit-html re-exports module ([2e3b99d](https://github.com/Alwatr/alwatr/commit/2e3b99dccce74ff56ec4c643ccfd0b5f3f9a17bc))
+
+### 🐛 Bug Fixes
+
+* **build:** update build script to target main.ts instead of all TypeScript files ([17877b1](https://github.com/Alwatr/alwatr/commit/17877b1c3306ab63a3ee0b2886cad3dea1447cba))
+* **directive:** ensure update_ is called safely in the update lifecycle ([1758c23](https://github.com/Alwatr/alwatr/commit/1758c2352b37f590919b93630fbf751dd565f9c3))
+* **directive:** expand rootElement_ type to support ShadowRoot and DocumentFragment ([2e1a630](https://github.com/Alwatr/alwatr/commit/2e1a63036dc01b025bec5965b559e3bfe6a61f0d))
+* **directive:** remove unnecessary type assertion in rootElement_ example ([c6d336f](https://github.com/Alwatr/alwatr/commit/c6d336fa8ad60ee0e03032eee1fc775a9862efc2))
+* **directive:** simplify state decorator parameters by removing unused arguments ([5674362](https://github.com/Alwatr/alwatr/commit/5674362d4376eff36fa912ded8cf9a897e08343b))
+* **main:** update lit-html import to include file extension ([cdeedc2](https://github.com/Alwatr/alwatr/commit/cdeedc28b4968001627d2c4f4a9e0241b1966ebb))
+
+### 🧹 Miscellaneous Chores
+
+* **hooks:** add Kiro hook for syncing docs on source changes ([7d1e3d8](https://github.com/Alwatr/alwatr/commit/7d1e3d8a415b2f72a95d3ebed8202e710b9f3e33))
+* **hooks:** improve sync-docs hook prompt clarity and formatting ([dd03a25](https://github.com/Alwatr/alwatr/commit/dd03a2535c7bf21a38620286b740c28bb37debb1))
+
+### 🔗 Dependencies update
+
+* add @alwatr/signal dependency version 9.16.0 ([f1e66e6](https://github.com/Alwatr/alwatr/commit/f1e66e63cc9399758ef3c3315677d1188be3b101))
+* **directive:** add lit-html dependency for template rendering support ([d2b61a8](https://github.com/Alwatr/alwatr/commit/d2b61a82e95549018d19399ebc72065157dcffcc))
+
 ## [9.17.0](https://github.com/Alwatr/alwatr/compare/v9.16.0...v9.17.0) (2026-04-27)
 
 ### ✨ Features
