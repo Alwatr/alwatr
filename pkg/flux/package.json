@@ -28,7 +28,8 @@
     "@alwatr/render-state": "workspace:*",
     "@alwatr/session-storage": "workspace:*",
     "@alwatr/signal": "workspace:*",
-    "@alwatr/type-helper": "workspace:*"
+    "@alwatr/type-helper": "workspace:*",
+    "lit-html": "^3.3.2"
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",

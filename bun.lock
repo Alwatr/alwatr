@@ -70,6 +70,7 @@
         "@alwatr/session-storage": "workspace:*",
         "@alwatr/signal": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
+        "lit-html": "^3.3.2",
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
@@ -1325,8 +1326,6 @@
     "yocto-queue": ["yocto-queue@1.2.2", "", {}, "sha512-4LCcse/U2MHZ63HAJVE+v71o7yOdIe4cZ70Wpf8D/IyjDKYQLV5GD46B+hSTjJsvV5PztjvHoU580EftxjDZFQ=="],
 
     "zeptomatch": ["zeptomatch@2.1.0", "", { "dependencies": { "grammex": "^3.1.11", "graphmatch": "^1.1.0" } }, "sha512-KiGErG2J0G82LSpniV0CtIzjlJ10E04j02VOudJsPyPwNZgGnRKQy7I1R7GMyg/QswnE4l7ohSGrQbQbjXPPDA=="],
-
-    "@alwatr/directive/@alwatr/signal": ["@alwatr/signal@9.16.0", "", { "dependencies": { "@alwatr/debounce": "9.16.0", "@alwatr/delay": "9.16.0", "@alwatr/local-storage": "9.16.0", "@alwatr/logger": "9.16.0", "@alwatr/session-storage": "9.16.0" } }, "sha512-7WI0q4I75o/fruCptG+KZf8DR+pleFmHOprFGju3R2fMri6m+7D1Vr7/6nvRtxNRR14DOfconKoSG8Q5keFN2g=="],
 
     "cliui/strip-ansi": ["strip-ansi@7.2.0", "", { "dependencies": { "ansi-regex": "^6.2.2" } }, "sha512-yDPMNjp4WyfYBkHnjIRLfca1i6KMyGCtsVgoKe/z1+6vukgaENdgGBZt+ZmKPc4gavvEZ5OgHfHdrazhgNyG7w=="],
 
