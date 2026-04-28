@@ -42,10 +42,9 @@
  * - `once` is emulated by removing the attribute after first fire.
  */
 
-import {internalChannel_, logger_} from './lib.js';
-import {modifierRegistry, payloadRegistry} from './registry.js';
-import type {Action} from './action.js';
-import type {ActionRecord} from './action-record.js';
+import {internalChannel_, logger_} from './lib_.js';
+import {modifierRegistry, payloadRegistry} from './registry_.js';
+import type {Action, ActionRecord} from './type.js';
 
 // ─── Syntax Parser ────────────────────────────────────────────────────────────
 

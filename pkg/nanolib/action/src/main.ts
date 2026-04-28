@@ -87,7 +87,6 @@
  *
  * For page-ready signals in SSG/SSR apps, use `@alwatr/page-ready` instead.
  */
-export type {ActionRecord} from './action-record.js';
-export type {Action} from './action.js';
-export * from './method.js';
 export * from './delegate.js';
+export * from './method.js';
+export type * from './type.js';
