@@ -111,7 +111,7 @@ export abstract class LitDirective extends Directive {
    * }
    * ```
    */
-  protected rootElement_?: HTMLElement;
+  protected rootElement_?: HTMLElement | ShadowRoot | DocumentFragment;
 
   /**
    * Renders the `lit-html` template returned by `render_()` into `rootElement_` (or `element_`).
