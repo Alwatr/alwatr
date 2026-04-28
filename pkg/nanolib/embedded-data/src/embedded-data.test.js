@@ -1,5 +1,10 @@
 import {describe, expect, test, beforeEach, afterEach} from 'bun:test';
 import {EmbeddedDataCollector} from '@alwatr/embedded-data';
+import {GlobalRegistrator} from '@happy-dom/global-registrator';
+
+if (typeof document === 'undefined') {
+  GlobalRegistrator.register();
+}
 
 describe('EmbeddedDataCollector', () => {
   beforeEach(() => {
