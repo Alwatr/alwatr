@@ -171,10 +171,16 @@ new Directive(element, attributeName)
   │    sets: attributeName, attributeValue, element_, logger_, index
   │
   └─ after one macrotask (delay.nextMacrotask)
-       ├─ init_()?       ← optional — runs once (setup, event listeners)
+       ├─ init_()?       ← optional — runs once (setup, event listeners, signal subscriptions)
        ├─ lazyInit_()?   ← optional — runs once, when element first enters viewport
        ├─ onVisible_()?  ← optional — runs every time element enters viewport
        └─ onHidden_()?   ← optional — runs every time element leaves viewport
+
+state change (via @state accessor or StateSignal subscription)
+  │
+  └─ requestUpdate_()   ← batched, collapses multiple calls into one macrotask
+       ├─ update_()     ← DOM mutations / lit-html render() [LitDirective]
+       └─ updated_()    ← post-render hook
 ```
 
 The macrotask delay ensures the full DOM subtree is painted and settled before your directive runs — no race conditions with sibling elements or CSS.
@@ -456,7 +462,205 @@ document.addEventListener('form-submitted', (e: CustomEvent) => {
 
 ---
 
-## Utility Decorators
+## Reactive Rendering — `requestUpdate_()`, `update_()`, `updated_()`
+
+`Directive` includes a lightweight batched update cycle for directives that need to re-render their DOM in response to state changes.
+
+### The update cycle
+
+```
+state change
+  │
+  └─ requestUpdate_()     ← schedules one macrotask (multiple calls collapse into one)
+       │
+       ├─ update_()       ← perform DOM mutations / call lit-html render()
+       └─ updated_()      ← post-render hook (focus, measure, dispatch events)
+```
+
+### Triggering an update
+
+There are three idiomatic ways to start the cycle:
+
+**1. `@state` accessor (most common — local state)**
+
+Setting a `@state`-decorated accessor automatically calls `requestUpdate_()`:
+
+```ts
+@directive('like-button')
+class LikeButtonDirective extends Directive {
+  @state()
+  accessor liked_: string | null = null;
+
+  protected override init_(): void {
+    this.liked_ = 'false'; // triggers first update
+    this.on_('click', () => {
+      this.liked_ = this.liked_ === 'true' ? 'false' : 'true'; // triggers re-render
+    });
+  }
+
+  protected override update_(): void {
+    this.element_.classList.toggle('liked', this.liked_ === 'true');
+  }
+}
+```
+
+**2. `StateSignal` subscription (shared application state)**
+
+Subscribe to a signal in `init_()` and call `requestUpdate_()` from the callback:
+
+```ts
+@directive('cart-badge')
+class CartBadgeDirective extends Directive {
+  private count_ = 0;
+
+  protected override init_(): void {
+    const sub = cartSignal.subscribe((cart) => {
+      this.count_ = cart.items.length;
+      this.requestUpdate_();
+    });
+    this.addDestroyHook(() => sub.unsubscribe());
+  }
+
+  protected override update_(): void {
+    this.element_.textContent = String(this.count_);
+  }
+}
+```
+
+**3. Manual call (imperative mutations)**
+
+Call `requestUpdate_()` directly after mutating non-`@state` internal state:
+
+```ts
+protected override init_(): void {
+  this.on_('click', () => {
+    this.count_++;
+    this.requestUpdate_();
+  });
+}
+```
+
+### `update_()`
+
+Override to perform DOM mutations. Called once per scheduled cycle, synchronously inside the macrotask. `LitDirective` overrides this to call `lit-html`'s `render()`.
+
+### `updated_()`
+
+Override to run post-render logic — measuring layout, focusing an element, or dispatching a `CustomEvent`:
+
+```ts
+protected override updated_(): void {
+  this.element_.querySelector<HTMLElement>('.active-item')?.focus();
+}
+```
+
+---
+
+## `LitDirective` — Declarative Templates with `lit-html`
+
+`LitDirective` extends `Directive` and adds a `render_()` hook that integrates `lit-html`. Use it when you want to describe a directive's DOM output as a declarative template instead of imperative DOM mutations.
+
+```ts
+import {directive, LitDirective, state} from '@alwatr/directive';
+import {html} from 'lit-html';
+
+@directive('cart-badge')
+export class CartBadgeDirective extends LitDirective {
+  @state()
+  accessor count_: string | null = null;
+
+  protected override init_(): void {
+    // StateSignal.subscribe() calls the callback immediately with the current value,
+    // so the first render happens right after init_() without any extra trigger.
+    const sub = cartSignal.subscribe((cart) => {
+      this.count_ = String(cart.items.length); // @state setter calls requestUpdate_()
+    });
+    this.addDestroyHook(() => sub.unsubscribe());
+  }
+
+  protected override render_() {
+    return html`
+      <span class="badge">${this.count_ ?? '0'}</span>
+    `;
+  }
+}
+```
+
+```html
+<div cart-badge></div>
+```
+
+### `render_()`
+
+The only method you must implement. Return any value accepted by `lit-html`'s `render()` — typically an `html` tagged template literal. Keep it pure and side-effect-free; all side effects belong in `update_()` or `updated_()`.
+
+### `rootElement_`
+
+By default `lit-html` renders into `this.element_`. Override `rootElement_` to redirect rendering into a different container:
+
+```ts
+@directive('shadow-card')
+class ShadowCardDirective extends LitDirective {
+  protected override rootElement_ = this.element_.attachShadow({mode: 'open'}) as unknown as HTMLElement;
+
+  protected override render_() {
+    return html`
+      <slot></slot>
+    `;
+  }
+}
+```
+
+### When to use `LitDirective` vs `Directive`
+
+| Scenario                                             | Use            |
+| ---------------------------------------------------- | -------------- |
+| Simple DOM mutations, event listeners, class toggles | `Directive`    |
+| Complex, data-driven templates that change shape     | `LitDirective` |
+| Subscribing to signals and re-rendering a template   | `LitDirective` |
+
+---
+
+## `@state` — Reactive Local State
+
+`@state` marks an `accessor` as reactive. Every time the accessor is set, `requestUpdate_()` is called automatically — no manual trigger needed.
+
+```ts
+@state()
+accessor count_: string | null = null;
+```
+
+**Rules:**
+
+- Requires the `accessor` keyword (TC39 Stage 3 auto-accessor)
+- No deep-equality check — every `set` schedules an update, even with the same value
+- For **shared** state, use a `StateSignal` subscription instead (see above)
+
+**Combining `@state` with `StateSignal`** is the standard pattern for reactive directives:
+
+```ts
+@directive('user-avatar')
+class UserAvatarDirective extends LitDirective {
+  @state()
+  accessor avatarUrl_: string | null = null;
+
+  protected override init_(): void {
+    const sub = userSignal.subscribe((user) => {
+      this.avatarUrl_ = user.avatarUrl; // @state triggers re-render on each emission
+    });
+    this.addDestroyHook(() => sub.unsubscribe());
+  }
+
+  protected override render_() {
+    return html`
+      <img
+        src=${this.avatarUrl_ ?? '/default-avatar.png'}
+        alt="avatar"
+      />
+    `;
+  }
+}
+```
 
 These TC39 Stage 3 accessor decorators reduce boilerplate for common patterns inside directives. They require the `accessor` keyword.
 
@@ -595,10 +799,23 @@ Class decorator. Registers the decorated class in the global directive registry.
 | `lazyInit_()?`             | `protected`                                       | Optional — runs once when element first enters the viewport                                                                                                             |
 | `onVisible_()?`            | `protected`                                       | Optional — runs every time element enters the viewport                                                                                                                  |
 | `onHidden_()?`             | `protected`                                       | Optional — runs every time element leaves the viewport                                                                                                                  |
+| `requestUpdate_()`         | `public`                                          | Schedules a batched `update_()` + `updated_()` call for the next macrotask. Multiple calls within the same cycle collapse into one.                                     |
+| `update_()`                | `protected`                                       | Called once per update cycle — override to perform DOM mutations. `LitDirective` overrides this to call `lit-html`'s `render()`.                                        |
+| `updated_()`               | `protected`                                       | Called immediately after `update_()` — override for post-render logic (focus, measure, dispatch events).                                                                |
 | `dispatch(event, detail?)` | `public`                                          | Fires a bubbling `CustomEvent` from `element_`                                                                                                                          |
 | `addDestroyHook(task)`     | `public`                                          | Registers an async cleanup callback                                                                                                                                     |
 | `destroy()`                | `public async`                                    | Runs all destroy hooks, then nullifies `element_`                                                                                                                       |
 | `autoDestroy()`            | `public`                                          | Destroys if element is disconnected; returns `true` if destroyed                                                                                                        |
+
+---
+
+### `LitDirective` (abstract class, extends `Directive`)
+
+| Member         | Type                                 | Description                                                                                                           |
+| -------------- | ------------------------------------ | --------------------------------------------------------------------------------------------------------------------- |
+| `rootElement_` | `protected HTMLElement \| undefined` | The container `lit-html` renders into. Defaults to `element_`. Override to redirect rendering (e.g. Shadow DOM root). |
+| `render_()`    | `protected abstract`                 | **Must implement.** Returns the `lit-html` template for each update cycle. Keep it pure — no side effects.            |
+| `update_()`    | `protected override`                 | Calls `render_()` and passes the result to `lit-html`'s `render()`. Do not call directly — use `requestUpdate_()`.    |
 
 ---
 
@@ -615,6 +832,16 @@ Scans `root` (default: `document.body`) for elements matching registered attribu
 ### `autoDestructDirectives()`
 
 Iterates all live directive instances and calls `autoDestroy()` on each. Removes destroyed instances from the internal registry.
+
+---
+
+### `state()`
+
+Accessor decorator. Marks the accessor as reactive local state — every `set` call automatically schedules a re-render via `requestUpdate_()`.
+
+- No deep-equality check — every assignment schedules an update
+- **Requires `accessor` keyword**
+- For shared application state, use a `StateSignal` subscription instead
 
 ---
 
