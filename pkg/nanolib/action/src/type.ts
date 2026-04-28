@@ -158,7 +158,7 @@ export type ModifierHandler = (event: Event, element: HTMLElement, action: Actio
  * @example — a resolver that returns the element's dataset id
  * ```ts
  * const dataIdResolver: PayloadResolver = (_event, element) => {
- *   return (element as HTMLElement).dataset.id ?? null;
+ *   return element.dataset.id ?? null;
  * };
  * ```
  */
