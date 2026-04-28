@@ -1,0 +1,82 @@
+{
+  "name": "@alwatr/embedded-data",
+  "version": "9.16.0",
+  "description": "Framework-agnostic utility to safely extract, parse, and validate embedded JSON data from <script type=\"application/json\"> DOM nodes. Designed for SSR-friendly state hydration in SPAs and MPAs.",
+  "license": "MPL-2.0",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alwatr/alwatr",
+    "directory": "pkg/nanolib/embedded-data"
+  },
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/embedded-data#readme",
+  "bugs": "https://github.com/Alwatr/alwatr/issues",
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.js",
+      "default": "./dist/main.js"
+    }
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "@alwatr/logger": "workspace:*"
+  },
+  "devDependencies": {
+    "@alwatr/nano-build": "workspace:*",
+    "@alwatr/standard": "workspace:*",
+    "@alwatr/type-helper": "workspace:*",
+    "typescript": "^6.0.3"
+  },
+  "scripts": {
+    "b": "bun run build",
+    "build": "bun run build:ts && bun run build:es",
+    "build:es": "nano-build --preset=module src/main.ts",
+    "build:ts": "tsc --build",
+    "cl": "bun run clean",
+    "clean": "rm -rfv dist *.tsbuildinfo",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint src/ --ext .ts",
+    "t": "bun run test",
+    "test": "ALWATR_DEBUG=0 bun test",
+    "w": "bun run watch",
+    "watch": "bun run watch:ts & bun run watch:es",
+    "watch:es": "bun run build:es --watch",
+    "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
+  },
+  "files": [
+    "dist",
+    "src/**/*.ts",
+    "!src/**/*.test.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "alwatr",
+    "browser",
+    "cross-platform",
+    "dom",
+    "ECMAScript",
+    "embedded-data",
+    "esm",
+    "framework-agnostic",
+    "hydration",
+    "javascript",
+    "json",
+    "module",
+    "mpa",
+    "nanolib",
+    "script-tag",
+    "spa",
+    "ssr",
+    "state",
+    "typescript",
+    "util",
+    "utility",
+    "validation"
+  ]
+}
