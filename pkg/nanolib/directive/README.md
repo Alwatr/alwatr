@@ -273,6 +273,76 @@ class AutoPauseVideoDirective extends Directive {
 
 > **Note:** `onVisible_` and `onHidden_` share a single `IntersectionObserver` instance — no duplicate observers are created when both are defined.
 
+### Customizing the `IntersectionObserver` — `intersectionOptions_`
+
+By default, all three visibility hooks (`lazyInit_`, `onVisible_`, `onHidden_`) use the browser's default `IntersectionObserver` settings: the **viewport** as the root, **no margin**, and a **0 threshold** (fires as soon as a single pixel is visible).
+
+Override `intersectionOptions_` in your subclass to change this behaviour. The same options object is shared by every observer created for that directive instance.
+
+```typescript
+protected override intersectionOptions_: IntersectionObserverInit = {
+  rootMargin: '200px 0px', // pre-load 200 px before the element enters the viewport
+  threshold: 0,
+};
+```
+
+#### Common recipes
+
+**Pre-load before the element is visible** — useful for images and heavy components:
+
+```typescript
+@directive('lazy-image')
+class LazyImageDirective extends Directive {
+  protected override intersectionOptions_: IntersectionObserverInit = {
+    rootMargin: '200px 0px', // start loading 200 px early
+  };
+
+  protected override async lazyInit_(): Promise<void> {
+    const img = this.element_.querySelector('img')!;
+    img.src = img.dataset['src']!;
+    await img.decode();
+  }
+}
+```
+
+**Fire only when the element is at least 50 % visible** — useful for impression tracking:
+
+```typescript
+@directive('track-impression')
+class ImpressionTrackerDirective extends Directive {
+  protected override intersectionOptions_: IntersectionObserverInit = {
+    threshold: 0.5, // at least half the element must be visible
+  };
+
+  protected override onVisible_(): void {
+    analytics.trackImpression(this.attributeValue);
+  }
+}
+```
+
+**Observe within a scrollable container** — useful for sticky headers or virtualised lists:
+
+```typescript
+@directive('sticky-header')
+class StickyHeaderDirective extends Directive {
+  protected override intersectionOptions_: IntersectionObserverInit = {
+    root: document.querySelector('#scroll-container'),
+    rootMargin: '-64px 0px 0px 0px', // account for a 64 px top bar
+    threshold: 0,
+  };
+
+  protected override onHidden_(): void {
+    this.element_.classList.add('is-sticky');
+  }
+
+  protected override onVisible_(): void {
+    this.element_.classList.remove('is-sticky');
+  }
+}
+```
+
+> **Tip:** `intersectionOptions_` must be set **before** `init_()` completes, because the observers are created during `initializeLifecycle_()` which runs right after `init_()`. The safest place is a class field initializer or the constructor.
+
 ### Using both hooks together
 
 ```typescript
@@ -319,6 +389,7 @@ No manual cleanup is needed. No memory leaks.
 | **Auto cleanup**   | —                      | ✅ observer disconnected on destroy  | ✅ shared observer, disconnected       | ✅ shared observer, disconnected  |
 | **Error handling** | —                      | ✅ logged, never re-thrown           | ✅ logged, never re-thrown             | ✅ logged, never re-thrown        |
 | **Fallback**       | —                      | `requestIdleCallback` → `setTimeout` | Called once via `setTimeout(100ms)`    | None — silently skipped           |
+| **Custom options** | —                      | ✅ via `intersectionOptions_`        | ✅ via `intersectionOptions_`          | ✅ via `intersectionOptions_`     |
 
 ---
 
@@ -512,21 +583,22 @@ Class decorator. Registers the decorated class in the global directive registry.
 
 ### `Directive` (abstract class)
 
-| Member                     | Type                             | Description                                                        |
-| -------------------------- | -------------------------------- | ------------------------------------------------------------------ |
-| `attributeName`            | `readonly string`                | The attribute name this directive is bound to                      |
-| `attributeValue`           | `readonly string`                | The value of the attribute at construction time                    |
-| `index`                    | `readonly number`                | Per-attribute instance counter (0, 1, 2, …)                        |
-| `element_`                 | `protected readonly HTMLElement` | The bound DOM element                                              |
-| `logger_`                  | `protected readonly`             | Scoped logger: `directive:{attributeName}/{index}`                 |
-| `init_()?`                 | `protected`                      | Optional — runs once after next macrotask (setup, event listeners) |
-| `lazyInit_()?`             | `protected`                      | Optional — runs once when element first enters the viewport        |
-| `onVisible_()?`            | `protected`                      | Optional — runs every time element enters the viewport             |
-| `onHidden_()?`             | `protected`                      | Optional — runs every time element leaves the viewport             |
-| `dispatch(event, detail?)` | `public`                         | Fires a bubbling `CustomEvent` from `element_`                     |
-| `addDestroyHook(task)`     | `public`                         | Registers an async cleanup callback                                |
-| `destroy()`                | `public async`                   | Runs all destroy hooks, then nullifies `element_`                  |
-| `autoDestroy()`            | `public`                         | Destroys if element is disconnected; returns `true` if destroyed   |
+| Member                     | Type                                              | Description                                                                                                                                                             |
+| -------------------------- | ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `attributeName`            | `readonly string`                                 | The attribute name this directive is bound to                                                                                                                           |
+| `attributeValue`           | `readonly string`                                 | The value of the attribute at construction time                                                                                                                         |
+| `index`                    | `readonly number`                                 | Per-attribute instance counter (0, 1, 2, …)                                                                                                                             |
+| `element_`                 | `protected readonly HTMLElement`                  | The bound DOM element                                                                                                                                                   |
+| `logger_`                  | `protected readonly`                              | Scoped logger: `directive:{attributeName}/{index}`                                                                                                                      |
+| `intersectionOptions_`     | `protected IntersectionObserverInit \| undefined` | Optional options forwarded to every `IntersectionObserver` created for this directive (`lazyInit_`, `onVisible_`, `onHidden_`). Must be set before `init_()` completes. |
+| `init_()?`                 | `protected`                                       | Optional — runs once after next macrotask (setup, event listeners)                                                                                                      |
+| `lazyInit_()?`             | `protected`                                       | Optional — runs once when element first enters the viewport                                                                                                             |
+| `onVisible_()?`            | `protected`                                       | Optional — runs every time element enters the viewport                                                                                                                  |
+| `onHidden_()?`             | `protected`                                       | Optional — runs every time element leaves the viewport                                                                                                                  |
+| `dispatch(event, detail?)` | `public`                                          | Fires a bubbling `CustomEvent` from `element_`                                                                                                                          |
+| `addDestroyHook(task)`     | `public`                                          | Registers an async cleanup callback                                                                                                                                     |
+| `destroy()`                | `public async`                                    | Runs all destroy hooks, then nullifies `element_`                                                                                                                       |
+| `autoDestroy()`            | `public`                                          | Destroys if element is disconnected; returns `true` if destroyed                                                                                                        |
 
 ---
 
