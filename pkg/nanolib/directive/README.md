@@ -632,7 +632,7 @@ accessor count_: string | null = null;
 
 **Rules:**
 
-- Requires the `accessor` keyword (TC39 Stage 3 auto-accessor)
+- Requires the `accessor` keyword (ES2024 auto-accessor feature)
 - No deep-equality check — every `set` schedules an update, even with the same value
 - For **shared** state, use a `StateSignal` subscription instead (see above)
 
