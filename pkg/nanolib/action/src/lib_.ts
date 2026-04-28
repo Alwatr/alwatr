@@ -1,7 +1,6 @@
 import {createLogger} from '@alwatr/logger';
 import {createChannelSignal} from '@alwatr/signal';
-
-import type {Action} from './action.js';
+import type {Action} from './type.js';
 
 /**
  * Module-scoped logger for `@alwatr/action`.

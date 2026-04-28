@@ -1,14 +1,9 @@
 import type {Awaitable} from '@alwatr/type-helper';
 import type {SubscribeResult} from '@alwatr/signal';
 
-import {internalChannel_, logger_} from './lib.js';
-import {modifierRegistry, payloadRegistry, type ModifierHandler, type PayloadResolver} from './registry.js';
-import type {ActionRecord} from './action-record.js';
-import type {Action} from './action.js';
-
-// Re-export extension types so consumers can import them from the package root.
-export type {ModifierHandler, PayloadResolver};
-export type {Action};
+import {internalChannel_, logger_} from './lib_.js';
+import {modifierRegistry, payloadRegistry} from './registry_.js';
+import type {Action, ActionRecord, DispatchParam, ModifierHandler, PayloadResolver} from './type.js';
 
 // ─── Core Action API ──────────────────────────────────────────────────────────
 
@@ -100,8 +95,10 @@ export function onAction<K extends keyof ActionRecord>(
  * dispatchAction({type: 'add_to_cart', payload: {productId: 42, qty: 1}});
  * ```
  *
- * @example — void payload
+ * @example — void payload (payload field is optional and can be omitted entirely)
  * ```ts
+ * dispatchAction({type: 'logout'});
+ * // or explicitly:
  * dispatchAction({type: 'logout', payload: undefined});
  * ```
  *
@@ -115,9 +112,9 @@ export function onAction<K extends keyof ActionRecord>(
  * });
  * ```
  */
-export function dispatchAction<K extends keyof ActionRecord>(action: Action<K>): void {
+export function dispatchAction<K extends keyof ActionRecord>(action: DispatchParam<K>): void {
   logger_.logMethodArgs?.('dispatchAction', action);
-  internalChannel_.dispatch(action.type, action);
+  internalChannel_.dispatch(action.type, action as Action<K>);
 }
 
 // ─── Extension API ────────────────────────────────────────────────────────────
