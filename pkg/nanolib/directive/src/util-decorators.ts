@@ -133,6 +133,94 @@ export function attribute<D extends Directive = Directive>(name: string, cache =
 }
 
 /**
+ * A property decorator that marks an accessor as reactive local state.
+ *
+ * When the accessor's value is set, `requestUpdate_()` is called automatically on the directive
+ * instance, scheduling a batched re-render for the next macrotask.
+ *
+ * This is the primary way to drive `LitDirective` re-renders from **local** state changes
+ * (values owned by the directive itself). For **shared** application state, subscribe to a
+ * `StateSignal` inside `init_()` and call `requestUpdate_()` from the subscription callback —
+ * see the signal example below.
+ *
+ * The decorator is a thin wrapper around the native accessor — it does **not** perform any
+ * deep-equality check. Every `set` call (even with the same value) will schedule an update.
+ *
+ * @remarks
+ * The `name`, `cache`, and `root` parameters are accepted for API symmetry with `@attribute`
+ * but are currently unused. They are reserved for future use (e.g. persisting state to an
+ * attribute or reading the initial value from the DOM).
+ *
+ * @example — Local state (owned by the directive)
+ * ```ts
+ * import {directive, LitDirective, state} from '@alwatr/directive';
+ * import {html} from 'lit-html';
+ *
+ * @directive('like-button')
+ * class LikeButtonDirective extends LitDirective {
+ *   \@state()
+ *   accessor liked_: string | null = null;
+ *
+ *   protected override init_(): void {
+ *     this.liked_ = 'false'; // triggers first render
+ *     this.on_('click', () => {
+ *       this.liked_ = this.liked_ === 'true' ? 'false' : 'true'; // triggers re-render
+ *     });
+ *   }
+ *
+ *   protected override render_() {
+ *     return html`<button class=${this.liked_ === 'true' ? 'liked' : ''}>♥</button>`;
+ *   }
+ * }
+ * ```
+ *
+ * @example — Shared state via `StateSignal` subscription
+ * ```ts
+ * import {directive, LitDirective, state} from '@alwatr/directive';
+ * import {html} from 'lit-html';
+ * import {cartSignal} from '../signals/cart.js';
+ *
+ * @directive('cart-badge')
+ * class CartBadgeDirective extends LitDirective {
+ *   \@state()
+ *   accessor count_: string | null = null;
+ *
+ *   protected override init_(): void {
+ *     // Subscribe to the shared signal; each emission sets count_ and triggers a re-render.
+ *     const sub = cartSignal.subscribe((cart) => {
+ *       this.count_ = String(cart.items.length);
+ *     });
+ *     this.addDestroyHook(() => sub.unsubscribe());
+ *   }
+ *
+ *   protected override render_() {
+ *     return html`<span class="badge">${this.count_ ?? '0'}</span>`;
+ *   }
+ * }
+ * ```
+ */
+export function state<D extends Directive = Directive>(_name?: string, _cache = true, _root?: Element) {
+  return function (
+    target: ClassAccessorDecoratorTarget<D, string | null>,
+    context: ClassAccessorDecoratorContext<D, string | null>,
+  ): ClassAccessorDecoratorResult<D, string | null> {
+    if (context.kind !== 'accessor') {
+      throw new Error('@state can only be used with the "accessor" keyword');
+    }
+
+    return {
+      get(this: D) {
+        return target.get.call(this);
+      },
+      set(this: D, value) {
+        target.set.call(this, value);
+        this.requestUpdate_();
+      },
+    };
+  };
+}
+
+/**
  * A method decorator that registers a DOM event listener on the directive's element (or a matching
  * child element when a CSS selector is provided). The listener is automatically removed when the
  * directive is destroyed, preventing memory leaks.
