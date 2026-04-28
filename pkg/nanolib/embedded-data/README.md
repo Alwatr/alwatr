@@ -39,37 +39,34 @@ But extracting this data safely requires:
 │  constructor(attributeName, validator?)                   │
 │    └─ stores attributeName_ and optional validator_       │
 │                                                           │
-│  fetch(): T | null                                        │
+│  collect(): T | null                                      │
 │    ├─ getElement_() → querySelector script tag            │
 │    ├─ extractRawData_() → read textContent, clear DOM     │
 │    ├─ JSON.parse(rawData)                                 │
 │    ├─ validator_?.(parsedData) → optional type-guard      │
 │    └─ return validated data or null                       │
-│                                                           │
-│  (): Promise<T | null>                                    │
-│    └─ same as fetch() but awaits async validators         │
 └───────────────────────────────────────────────────────────┘
 ```
 
 **Flow:**
 
 ```
-  [HTML with <script data-foo>]
-         │
-         ▼
-  getElement_()  ──→  querySelector('[data-foo]')
-         │
-         ▼
-  extractRawData_()  ──→  element.textContent.trim()
-         │                element.textContent = ''  ← GC hint
-         ▼
-  JSON.parse()
-         │
-         ▼
-  validator_?.(data)  ──→  optional type-guard / Zod schema
-         │
-         ▼
-  return T | null
+[HTML with <script data-foo>]
+│
+▼
+getElement*() ──→ querySelector('[data-foo]')
+│
+▼
+extractRawData*() ──→ element.textContent.trim()
+│ element.textContent = '' ← GC hint
+▼
+JSON.parse()
+│
+▼
+validator\_?.(data) ──→ optional type-guard / Zod schema
+│
+▼
+return T | null
 ```
 
 ---
@@ -243,12 +240,12 @@ if (shops) {
 
 #### `constructor(attributeName: string, validator?: (data: unknown) => data is T)`
 
-Creates a new fetcher instance.
+Creates a new collector instance.
 
 - **`attributeName`**: The HTML attribute used to query the script tag (e.g., `'data-config'`).
 - **`validator`** (optional): A type-guard function or validation function (e.g., Zod schema parser) to ensure runtime type safety. Can be synchronous or asynchronous.
 
-#### `fetch(): T | null`
+#### `collect(): T | null`
 
 Synchronously extracts, parses, and validates the embedded JSON payload.
 
@@ -327,11 +324,11 @@ On the client side, use `EmbeddedDataCollector` to extract and validate the data
 ```ts
 import {EmbeddedDataCollector} from '@alwatr/embedded-data';
 
-const configFetcher = new EmbeddedDataCollector('data-app-config');
-const config = configFetcher.collect();
+const configCollector = new EmbeddedDataCollector('data-app-config');
+const config = configCollector.collect();
 
-const userFetcher = new EmbeddedDataCollector('data-user-profile');
-const user = userFetcher.collect();
+const userCollector = new EmbeddedDataCollector('data-user-profile');
+const user = userCollector.collect();
 ```
 
 ---
