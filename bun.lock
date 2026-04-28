@@ -60,7 +60,7 @@
     },
     "pkg/flux": {
       "name": "@alwatr/flux",
-      "version": "9.18.0",
+      "version": "9.18.1",
       "dependencies": {
         "@alwatr/action": "workspace:*",
         "@alwatr/directive": "workspace:*",
@@ -94,7 +94,7 @@
     },
     "pkg/nanolib/action": {
       "name": "@alwatr/action",
-      "version": "9.17.0",
+      "version": "9.18.1",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
         "@alwatr/signal": "workspace:*",

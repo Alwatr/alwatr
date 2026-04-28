@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.18.1](https://github.com/Alwatr/alwatr/compare/v9.18.0...v9.18.1) (2026-04-28)
+
+### 🔨 Code Refactoring
+
+* **action:** consolidate type definitions into single module ([955863d](https://github.com/Alwatr/alwatr/commit/955863d0a462b95193bb15a0dd6eb31c3514379c))
+
 ## [9.17.0](https://github.com/Alwatr/alwatr/compare/v9.16.0...v9.17.0) (2026-04-27)
 
 ### ✨ Features
