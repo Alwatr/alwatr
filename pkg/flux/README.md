@@ -268,6 +268,58 @@ console.log(userPrefs.get()); // {theme: 'dark', lang: 'fa'}
 - **Type-safe** — full TypeScript support
 - **Migration-friendly** — bump `schemaVersion` to reset storage
 
+### 🌐 **SSR State Hydration**
+
+`@alwatr/embedded-data` bridges the gap between server-rendered HTML and client-side reactive state. The server embeds initial data as JSON inside `<script type="application/json">` tags; the client extracts, validates, and feeds it into signals — **zero extra HTTP round-trips, zero flash of empty content**.
+
+```html
+<!-- Server renders this into the HTML -->
+<script
+  type="application/json"
+  data-user-profile
+>
+  {"userId": 42, "name": "Ali", "role": "admin"}
+</script>
+```
+
+```typescript
+import {EmbeddedDataCollector} from '@alwatr/flux';
+import {lazy} from '@alwatr/lazy';
+
+interface UserProfile {
+  userId: number;
+  name: string;
+  role: 'admin' | 'user';
+}
+
+function isUserProfile(data: unknown): data is UserProfile {
+  return typeof data === 'object' && data !== null && 'userId' in data;
+}
+
+// Lazy: extraction runs only when .value is first accessed — not at module load.
+export const userProfile = lazy(() =>
+  new EmbeddedDataCollector<UserProfile>('data-user-profile', isUserProfile).collect(),
+);
+```
+
+```typescript
+// Feed into a signal — the rest of the app reacts normally
+import {createStateSignal} from '@alwatr/flux';
+
+const userSignal = createStateSignal<UserProfile | null>({
+  name: 'user',
+  initialValue: userProfile.value, // hydrated from DOM, no API call needed
+});
+```
+
+**Why this matters:**
+
+- **No flash of empty content** — state is available synchronously on first render
+- **No extra API call** — server already sent the data in the HTML payload
+- **SSR-safe** — `EmbeddedDataCollector` guards against missing `document` in Node.js/Bun
+- **Memory-efficient** — script tag content is cleared after extraction (GC hint)
+- **Type-safe** — optional type-guard validator ensures runtime safety
+
 ### 📄 **Page-Ready Signal for MPA**
 
 Lightweight page identity system for Multi-Page Applications:
@@ -915,6 +967,81 @@ Same as `createLocalStorageProvider` but uses `sessionStorage`.
 
 ---
 
+### Embedded Data
+
+#### `EmbeddedDataCollector<T>`
+
+Extracts, parses, and validates JSON embedded in `<script type="application/json">` DOM nodes. Designed for SSR state hydration — the server renders initial state into the HTML, the client reads it on boot without an extra HTTP round-trip.
+
+```typescript
+import {EmbeddedDataCollector} from '@alwatr/flux';
+
+// HTML: <script type="application/json" data-config>{"apiUrl":"https://api.example.com"}</script>
+
+const collector = new EmbeddedDataCollector<AppConfig>('data-config');
+const config = collector.collect(); // AppConfig | null
+```
+
+**Constructor:**
+
+```typescript
+new EmbeddedDataCollector<T>(
+  attributeName: string,           // HTML attribute to query (e.g. 'data-config')
+  validator?: (data: unknown) => data is T  // optional type-guard
+)
+```
+
+**`collect(): T | null`**
+
+Runs the full extraction pipeline:
+
+1. `querySelector('script[attributeName]')` — SSR-safe, returns `null` if `document` is undefined
+2. Read `textContent`, then set it to `''` (GC hint)
+3. `JSON.parse()`
+4. Run `validator` if provided
+5. Return typed data or `null` on any failure
+
+**With type-guard validation:**
+
+```typescript
+import {EmbeddedDataCollector} from '@alwatr/flux';
+import {createStateSignal} from '@alwatr/flux';
+
+interface CartState {
+  items: {id: number; qty: number}[];
+  total: number;
+}
+
+function isCartState(data: unknown): data is CartState {
+  return typeof data === 'object' && data !== null && Array.isArray((data as CartState).items);
+}
+
+// Extract once at boot, feed into signal
+const collector = new EmbeddedDataCollector<CartState>('data-cart', isCartState);
+
+const cartSignal = createStateSignal<CartState>({
+  name: 'cart',
+  initialValue: collector.collect() ?? {items: [], total: 0},
+});
+```
+
+**Combine with `@alwatr/lazy` for deferred extraction:**
+
+```typescript
+import {lazy} from '@alwatr/lazy';
+import {EmbeddedDataCollector} from '@alwatr/flux';
+
+// Extraction is deferred until .value is first accessed
+export const serverConfig = lazy(() =>
+  new EmbeddedDataCollector<ServerConfig>('data-server-config', isServerConfig).collect(),
+);
+
+// Somewhere in your bootstrap code:
+const config = serverConfig.value; // extracted here, cached forever
+```
+
+---
+
 ### Render State
 
 #### `renderState<R, T>(state, renderRecord, thisArg?)`
@@ -1172,6 +1299,7 @@ todosSignal.subscribe((todos) => {
 - **[@alwatr/signal](https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/signal)** — Fine-grained reactive signals (part of Flux)
 - **[@alwatr/action](https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/action)** — Global event delegation action bus (part of Flux)
 - **[@alwatr/directive](https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/directive)** — Attribute-based DOM directives (part of Flux)
+- **[@alwatr/embedded-data](https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/embedded-data)** — Extract and validate embedded JSON from DOM script tags for SSR hydration (part of Flux)
 - **[@alwatr/fsm](https://github.com/Alwatr/alwatr/tree/next/pkg/fsm)** — Type-safe Finite State Machine
 - **[@alwatr/nanotron](https://github.com/Alwatr/alwatr/tree/next/pkg/nanotron)** — Lightweight API server framework
 - **[@alwatr/nitrobase](https://github.com/Alwatr/alwatr/tree/next/pkg/nitrobase)** — In-memory JSON database

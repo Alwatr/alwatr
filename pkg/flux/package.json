@@ -23,6 +23,7 @@
   "dependencies": {
     "@alwatr/action": "workspace:*",
     "@alwatr/directive": "workspace:*",
+    "@alwatr/embedded-data": "workspace:*",
     "@alwatr/local-storage": "workspace:*",
     "@alwatr/page-ready": "workspace:*",
     "@alwatr/render-state": "workspace:*",
