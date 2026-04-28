@@ -1,0 +1,11 @@
+# Change Log
+
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [9.19.0](https://github.com/Alwatr/alwatr/compare/v9.18.1...v9.19.0) (2026-04-28)
+
+### ✨ Features
+
+* **lazy:** add lazy evaluation utility package to nanolib ([9e6378f](https://github.com/Alwatr/alwatr/commit/9e6378fca3238446d17e3a6c64be0ebf0ee56bbe))
+* **lazy:** handle re-entrant access during initialization ([79c4d28](https://github.com/Alwatr/alwatr/commit/79c4d28ca615018462d89f2a0856491572570550))

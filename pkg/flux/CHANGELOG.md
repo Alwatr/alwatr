@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.19.0](https://github.com/Alwatr/alwatr/compare/v9.18.1...v9.19.0) (2026-04-28)
+
+### ✨ Features
+
+* **flux:** add embedded-data re-exports and SSR hydration documentation ([9117567](https://github.com/Alwatr/alwatr/commit/9117567722d23106ef7ad29b200e87131cb438e8))
+
 ## [9.18.1](https://github.com/Alwatr/alwatr/compare/v9.18.0...v9.18.1) (2026-04-28)
 
 **Note:** Version bump only for package @alwatr/flux

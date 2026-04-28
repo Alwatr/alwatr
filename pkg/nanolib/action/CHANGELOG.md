@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.19.0](https://github.com/Alwatr/alwatr/compare/v9.18.1...v9.19.0) (2026-04-28)
+
+### 🐛 Bug Fixes
+
+* **action:** remove unnecessary type assertion in PayloadResolver example ([c845819](https://github.com/Alwatr/alwatr/commit/c84581964c65837220e4476456eb208d9abc0110))
+
 ## [9.18.1](https://github.com/Alwatr/alwatr/compare/v9.18.0...v9.18.1) (2026-04-28)
 
 ### 🔨 Code Refactoring

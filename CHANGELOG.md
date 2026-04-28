@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.19.0](https://github.com/Alwatr/alwatr/compare/v9.18.1...v9.19.0) (2026-04-28)
+
+### ✨ Features
+
+* **embedded-data:** add embedded data utility package to nanolib ([42c600f](https://github.com/Alwatr/alwatr/commit/42c600fcb77b1a5ae31f599e449f23a8ef04e88e))
+* **flux:** add embedded-data re-exports and SSR hydration documentation ([9117567](https://github.com/Alwatr/alwatr/commit/9117567722d23106ef7ad29b200e87131cb438e8))
+* **lazy:** add lazy evaluation utility package to nanolib ([9e6378f](https://github.com/Alwatr/alwatr/commit/9e6378fca3238446d17e3a6c64be0ebf0ee56bbe))
+* **lazy:** handle re-entrant access during initialization ([79c4d28](https://github.com/Alwatr/alwatr/commit/79c4d28ca615018462d89f2a0856491572570550))
+
+### 🐛 Bug Fixes
+
+* **action:** remove unnecessary type assertion in PayloadResolver example ([c845819](https://github.com/Alwatr/alwatr/commit/c84581964c65837220e4476456eb208d9abc0110))
+* **docs:** correct method names in README for clarity ([67e53db](https://github.com/Alwatr/alwatr/commit/67e53dba7bc42c0392d6efabbd27c77162b85030))
+
+### 🔨 Code Refactoring
+
+* **embedded-data:** rename fetch() to collect() for clarity and consistency ([26003aa](https://github.com/Alwatr/alwatr/commit/26003aa3ae48eab54df82cae05486c70bd6efb8f))
+
+### 🔗 Dependencies update
+
+* update ([df6e9a7](https://github.com/Alwatr/alwatr/commit/df6e9a742effc7ac19a7a69d3c2325cd7ea95fa0))
+
 ## [9.18.1](https://github.com/Alwatr/alwatr/compare/v9.18.0...v9.18.1) (2026-04-28)
 
 ### 🔨 Code Refactoring
