@@ -50,10 +50,9 @@ export class EmbeddedDataCollector<T> {
    * or if no matching element is found.
    */
   protected getElement_(): HTMLScriptElement | null {
-    // SSR check: globalThis.document might be undefined in Node.js/Bun server.
-    if (typeof globalThis.document === 'undefined') return null;
-
-    return globalThis.document.querySelector<HTMLScriptElement>(`script[${this.attributeName_}]`);
+    // SSR check: document might be undefined in Node.js/Bun server.
+    if (typeof document === 'undefined') return null;
+    return document.querySelector<HTMLScriptElement>(`script[${this.attributeName_}]`);
   }
 
   /**
@@ -119,7 +118,7 @@ export class EmbeddedDataCollector<T> {
       return null;
     }
 
-    // Open/Closed Principle: Validation logic is injected rather than hardcoded.
+    // Open/Closed Principle
     if (this.validator_ && !this.validator_(parsedData)) {
       this.logger_.accident('collect', 'data_validation_failed', {
         attributeName: this.attributeName_,
