@@ -424,8 +424,8 @@ export abstract class Directive {
    * already pending are silently ignored.
    *
    * **You rarely need to call this directly.** The two idiomatic triggers are:
-   * - A `@state`-decorated accessor — calls `requestUpdate_()` automatically on every `set`.
-   * - A `StateSignal` subscription — call `requestUpdate_()` inside the callback.
+   * - A `@state`-decorated accessor — calls `requestUpdate()` automatically on every `set`.
+   * - A `StateSignal` subscription — call `requestUpdate()` inside the callback.
    *
    * @example — Triggered automatically by `@state` (most common)
    * ```ts
@@ -436,7 +436,7 @@ export abstract class Directive {
    * @example — Triggered manually from a `StateSignal` subscription
    * ```ts
    * protected override init_(): void {
-   *   const sub = cartSignal.subscribe(() => this.requestUpdate_());
+   *   const sub = cartSignal.subscribe(() => this.requestUpdate());
    *   this.addDestroyHook(() => sub.unsubscribe());
    * }
    * ```
@@ -446,13 +446,13 @@ export abstract class Directive {
    * protected override init_(): void {
    *   this.on_('click', () => {
    *     this.count_++;
-   *     this.requestUpdate_();
+   *     this.requestUpdate();
    *   });
    * }
    * ```
    */
-  public requestUpdate_(): void {
-    this.logger_.logMethod?.('requestUpdate_');
+  public requestUpdate(): void {
+    this.logger_.logMethod?.('requestUpdate');
     if (this.isUpdatePending_) return;
     this.isUpdatePending_ = true;
     delay.nextMacrotask().then(() => {
@@ -472,8 +472,8 @@ export abstract class Directive {
    * The base implementation is a no-op — subclasses such as `LitDirective` override it to call
    * `lit-html`'s `render()`.
    *
-   * This method is always called synchronously within the macrotask scheduled by `requestUpdate_()`.
-   * Do **not** call `requestUpdate_()` from inside `update_()` — it will be ignored because the
+   * This method is always called synchronously within the macrotask scheduled by `requestUpdate()`.
+   * Do **not** call `requestUpdate()` from inside `update_()` — it will be ignored because the
    * pending flag is still set at that point.
    */
   protected update_(): void {

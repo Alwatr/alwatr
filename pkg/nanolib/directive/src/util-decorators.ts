@@ -135,12 +135,12 @@ export function attribute<D extends Directive = Directive>(name: string, cache =
 /**
  * A property decorator that marks an accessor as reactive local state.
  *
- * When the accessor's value is set, `requestUpdate_()` is called automatically on the directive
+ * When the accessor's value is set, `requestUpdate()` is called automatically on the directive
  * instance, scheduling a batched re-render for the next macrotask.
  *
  * This is the primary way to drive `LitDirective` re-renders from **local** state changes
  * (values owned by the directive itself). For **shared** application state, subscribe to a
- * `StateSignal` inside `init_()` and call `requestUpdate_()` from the subscription callback —
+ * `StateSignal` inside `init_()` and call `requestUpdate()` from the subscription callback —
  * see the signal example below.
  *
  * The decorator is a thin wrapper around the native accessor — it does **not** perform any
@@ -214,7 +214,7 @@ export function state<T, D extends Directive = Directive>() {
       },
       set(this: D, value) {
         target.set.call(this, value);
-        this.requestUpdate_();
+        this.requestUpdate();
       },
     };
   };

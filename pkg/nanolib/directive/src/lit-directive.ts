@@ -13,11 +13,11 @@ import {Directive} from './directive-class.js';
  * A `Directive` subclass that renders its DOM output using `lit-html`.
  *
  * Extend `LitDirective` instead of `Directive` when you want to describe the directive's view
- * as a declarative `lit-html` template. Every time `requestUpdate_()` is called — either
+ * as a declarative `lit-html` template. Every time `requestUpdate()` is called — either
  * manually or automatically by a `@state`-decorated accessor — `update_()` runs, which calls
  * `render_()` and passes the result to `lit-html`'s `render()`.
  *
- * The update cycle is always **batched**: multiple `requestUpdate_()` calls within the same
+ * The update cycle is always **batched**: multiple `requestUpdate()` calls within the same
  * macrotask collapse into a single `render_()` invocation.
  *
  * By default the template is rendered into `this.element_`. Override `rootElement_` to redirect
@@ -30,7 +30,7 @@ import {Directive} from './directive-class.js';
  * ```
  * state change (set @state accessor  OR  signal subscription callback)
  *   │
- *   └─ requestUpdate_()          ← schedules one macrotask (batched)
+ *   └─ requestUpdate()          ← schedules one macrotask (batched)
  *        │
  *        ├─ update_()            ← calls render_() via lit-html render()
  *        └─ updated_()           ← post-render hook (focus, measure, etc.)
@@ -76,7 +76,7 @@ import {Directive} from './directive-class.js';
  *     // cartSignal.subscribe() calls the callback immediately with the current value,
  *     // so the first render happens right after init_() without any extra trigger.
  *     const sub = cartSignal.subscribe((cart) => {
- *       this.count_ = String(cart.items.length); // @state setter calls requestUpdate_()
+ *       this.count_ = String(cart.items.length); // @state setter calls requestUpdate()
  *     });
  *     this.addDestroyHook(() => sub.unsubscribe());
  *   }
@@ -116,8 +116,8 @@ export abstract class LitDirective extends Directive {
   /**
    * Renders the `lit-html` template returned by `render_()` into `rootElement_` (or `element_`).
    *
-   * This method is called automatically by `requestUpdate_()` during each scheduled update cycle.
-   * Do not call it directly — use `requestUpdate_()` instead to ensure batching.
+   * This method is called automatically by `requestUpdate()` during each scheduled update cycle.
+   * Do not call it directly — use `requestUpdate()` instead to ensure batching.
    */
   protected override update_(): void {
     super.update_();
