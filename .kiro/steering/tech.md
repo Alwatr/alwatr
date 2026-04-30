@@ -15,10 +15,15 @@ inclusion: always
 
 - **Lerna Lite** — monorepo task orchestration (`lerna run build`)
 - **`@alwatr/nano-build`** — thin wrapper around `bun build` (esbuild) with presets:
-  - `--preset=module` — ESM library, external packages, linked sourcemaps
-  - `--preset=web` — browser bundle
+  - `--preset=module` — ESM library, `--target=node`, external packages, linked sourcemaps
+  - `--preset=module-web` — ESM library, `--target=browser`, external packages, linked sourcemaps
+  - `--preset=web` — browser bundle, packages bundled in
   - `--preset=node-service` — bundled Node.js service
   - `--preset=bun-service` — bundled Bun service
+- **Build-time constants** injected by nano-build (not runtime globals):
+  - `__dev_mode__` — `boolean`, `true` unless `NODE_ENV=production`
+  - `__package_name__` — `string`, from `package.json` `name` field
+  - `__package_version__` — `string`, from `package.json` `version` field
 - **`tsc --build`** — type checking and `.d.ts` generation only (`emitDeclarationOnly: true`)
 - Each package runs `build:ts` (type check) then `build:es` (bundle) as its build step
 
@@ -26,11 +31,14 @@ inclusion: always
 
 - **Prettier** — config in `pkg/standard/prettier.config.js`
   - single quotes, 2-space indent, 120 print width, trailing commas, LF line endings
+  - `experimentalTernaries: true`, `singleAttributePerLine: true`
 - **EditorConfig** — 2-space indent, LF, UTF-8, 140 max line length
+- **syncpack** — enforces consistent `package.json` field ordering across all packages
 
 ## Testing
 
 - **Bun test** — built-in test runner using `bun:test` (Jest-compatible API)
+- **`@happy-dom/global-registrator`** — DOM simulation for browser-dependent tests
 - Test files: `*.test.js` co-located with source in `src/`
 - Run with `ALWATR_DEBUG=0` to suppress debug logs
 - Tests are excluded from published package files
@@ -38,8 +46,16 @@ inclusion: always
 ## Key Libraries (internal)
 
 - `@alwatr/logger` — `createLogger(domain)` returns scoped logger; debug methods are `undefined` when debug mode is off (use optional chaining: `logger.logMethod?.()`)
-- `@alwatr/signal` — reactive primitives: `StateSignal`, `EventSignal`, `ComputedSignal`, `EffectSignal`
+- `@alwatr/signal` — reactive primitives: `StateSignal`, `EventSignal`, `ComputedSignal`, `EffectSignal`, `PersistentStateSignal`, `SessionStateSignal`, `ChannelSignal`
 - `@alwatr/type-helper` — global type augmentations (`JsonObject`, `SingleOrArray`, etc.) via ambient `types` in tsconfig
+- `@alwatr/lazy` — `Lazy<T>` class + `lazy()` factory for deferred evaluation with GC-friendly closure cleanup
+- `@alwatr/directive` — attribute-based DOM directives with `Directive` base class and `LitDirective` for lit-html rendering
+
+## External Dependencies
+
+- **lit-html** `^3.3.2` — used by `@alwatr/directive` for declarative template rendering
+- **@types/node** `^24.12.2` — Node.js type definitions for server-side packages
+- **bun-types** `^1.3.13` — Bun runtime type definitions (root devDependency)
 
 ## Common Commands
 

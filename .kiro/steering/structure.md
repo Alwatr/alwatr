@@ -9,25 +9,54 @@ inclusion: always
 ```
 alwatr-devkit/
 ├── pkg/                        # All active packages
-│   ├── core/                   # @alwatr/core — aggregates all nanolib exports
+│   ├── core/                   # @alwatr/core — aggregates all cross-platform nanolib exports
 │   ├── devtools/               # @alwatr/devtools — internal dev tools (private)
+│   ├── flux/                   # @alwatr/flux — UI and reactive bundle (signals, actions, directives, storage)
 │   ├── fsm/                    # @alwatr/fsm — finite state machine
 │   ├── nanotron/               # @alwatr/nanotron — API server framework
 │   ├── nitrobase/              # @alwatr/nitrobase — in-memory JSON database
 │   ├── node/                   # @alwatr/node — Node.js utilities bundle
 │   ├── playground/             # local experimentation, not published
 │   ├── standard/               # @alwatr/standard — shared tsconfig + prettier config
-│   ├── nanolib/                # Individual nano-packages (@alwatr/<name>), ~30+ packages
+│   ├── nanolib/                # Individual nano-packages (@alwatr/<name>), ~38 packages
 │   │   ├── action/             # @alwatr/action — Action layer for Unidirectional Data Flow
 │   │   ├── async-queue/
+│   │   ├── crypto/
+│   │   ├── cyrb53/
 │   │   ├── debounce/
+│   │   ├── dedupe/
+│   │   ├── deep-clone/
 │   │   ├── delay/
-│   │   ├── directive/          # @alwatr/directive — attribute-based DOM directives
+│   │   ├── directive/          # @alwatr/directive — attribute-based DOM directives + lit-html rendering
+│   │   ├── djb2-hash/
+│   │   ├── embedded-data/      # @alwatr/embedded-data — SSR-friendly JSON hydration from script tags
+│   │   ├── env/
+│   │   ├── exit-hook/
+│   │   ├── fetch/
+│   │   ├── flat-string/
+│   │   ├── flatomise/
+│   │   ├── global-this/
+│   │   ├── has-own/
+│   │   ├── hash-string/
+│   │   ├── http-primer/
+│   │   ├── iranian-national-code-validator/
+│   │   ├── is-number/
+│   │   ├── json2csv/
+│   │   ├── lazy/               # @alwatr/lazy — memory-efficient lazy evaluation wrapper
+│   │   ├── local-storage/
 │   │   ├── logger/
 │   │   ├── nano-build/         # @alwatr/nano-build — build CLI tool
-│   │   ├── signal/             # @alwatr/signal — reactive signals
+│   │   ├── node-fs/
+│   │   ├── page-ready/
+│   │   ├── parse-duration/
+│   │   ├── platform-info/
+│   │   ├── random/
+│   │   ├── render-state/
+│   │   ├── resolve-url/
+│   │   ├── session-storage/
+│   │   ├── signal/             # @alwatr/signal — reactive signals (State, Event, Computed, Effect, Channel)
 │   │   ├── type-helper/        # @alwatr/type-helper — global ambient types
-│   │   └── ...
+│   │   └── unicode-digits/
 │   ├── nanotron-old/           # legacy nanotron sub-packages (do not modify)
 │   └── nitrobase-old/          # legacy nitrobase sub-packages (do not modify)
 ├── deprecated/                 # Archived packages — do not modify
@@ -35,6 +64,15 @@ alwatr-devkit/
 ├── package.json                # Root workspace — scripts, devDependencies
 └── bun.lock                    # Lockfile
 ```
+
+## Bundle Packages
+
+The monorepo provides two convenience bundles that re-export groups of nanolibs:
+
+- **`@alwatr/core`** — cross-platform utilities (async-queue, debounce, delay, fetch, hash, random, lazy, logger, etc.). Entry points: `.` (browser+node), `./node` (Node.js only).
+- **`@alwatr/flux`** — UI and reactive layer (signal, action, directive, embedded-data, render-state, local-storage, session-storage, page-ready, lit-html re-exports). Single entry point `.`.
+
+Use the bundle for convenience or import individual nanolibs for minimal bundle size.
 
 ## Package Anatomy
 
@@ -98,6 +136,7 @@ pkg/<name>/
 
 - Test files are `.test.js` (not `.test.ts`), co-located in `src/`.
 - Use `bun:test` (Jest-compatible API).
+- DOM-dependent tests use `@happy-dom/global-registrator` for DOM simulation.
 - Import from the package name, not relative paths:
   ```js
   import {StateSignal} from '@alwatr/signal'; // correct
@@ -115,3 +154,14 @@ pkg/<name>/
 
 - Follow Conventional Commits: `feat:`, `fix:`, `perf:`, `refactor:`, `chore:`, `deps:`.
 - Releases are cut from the `next` branch via `lerna version`.
+
+### package.json Field Order
+
+Enforced by syncpack (`.syncpackrc`):
+
+```
+name → version → description → private → license → author → type → workspaces →
+repository → homepage → bugs → engines → bin → exports → sideEffects →
+dependencies → peerDependencies → devDependencies → resolutions → scripts →
+files → publishConfig → keywords
+```
