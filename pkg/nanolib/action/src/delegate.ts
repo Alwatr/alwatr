@@ -75,7 +75,7 @@ import type {Action, ActionRecord} from './type.js';
  *   → actionId='my_submit_handler', payload='$formdata', modifiers={'prevent','validate'}
  * ```
  */
-const syntaxRegex = /^([a-z0-9_-]+)(?::([^;]+))?(?:;\s*([a-z0-9_,-]+))?$/;
+const syntaxRegex = /^(ui:[a-z0-9_-]+)(?::([^;]+))?(?:;\s*([a-z0-9_,-]+))?$/;
 
 // ─── Parsed Action Descriptor ─────────────────────────────────────────────────
 
