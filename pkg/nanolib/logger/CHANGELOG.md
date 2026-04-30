@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.20.1](https://github.com/Alwatr/alwatr/compare/v9.20.0...v9.20.1) (2026-04-30)
+
+### 🔨 Code Refactoring
+
+* **action:** migrate action naming from colon to underscore separator ([a6e99a7](https://github.com/Alwatr/alwatr/commit/a6e99a75988a9d506a87ec79efe13f44bf3073f0))
+* **docs:** update comments to use underscore separator for consistency ([ea37792](https://github.com/Alwatr/alwatr/commit/ea37792e4501e0f4fcd80f8a580640f8725879ad))
+
 ## [9.16.0](https://github.com/Alwatr/alwatr/compare/v9.15.0...v9.16.0) (2026-04-27)
 
 **Note:** Version bump only for package @alwatr/logger
