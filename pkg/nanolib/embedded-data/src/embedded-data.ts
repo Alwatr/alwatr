@@ -30,6 +30,30 @@ import {createLogger} from '@alwatr/logger';
  * ```
  */
 export class EmbeddedDataCollector<T> {
+  /**
+   * Checks whether a `<script type="application/json">` tag with the given attribute
+   * exists in the DOM — without logging any errors or warnings.
+   *
+   * Useful for conditional hydration: check if embedded data is available before
+   * creating a collector instance, avoiding unnecessary error logs when the script
+   * tag is intentionally absent.
+   *
+   * @param attributeName The HTML attribute used to query the script tag (e.g., 'data-config').
+   * @returns `true` if a matching script element exists, `false` otherwise (including SSR contexts).
+   *
+   * @example
+   * ```typescript
+   * if (EmbeddedDataCollector.exists('data-config')) {
+   *   const collector = new EmbeddedDataCollector<AppConfig>('data-config');
+   *   const config = collector.collect();
+   * }
+   * ```
+   */
+  static exists(attributeName: string): boolean {
+    if (typeof document === 'undefined') return false;
+    return document.querySelector(`script[${attributeName}]`) !== null;
+  }
+
   protected readonly logger_ = createLogger('embedded-data-collector');
 
   /**

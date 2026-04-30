@@ -143,3 +143,45 @@ describe('EmbeddedDataCollector', () => {
     expect(data).toEqual([1, 2, 3]);
   });
 });
+
+describe('EmbeddedDataCollector.exists', () => {
+  afterEach(() => {
+    document.querySelectorAll('script[data-test]').forEach((el) => el.remove());
+  });
+
+  test('returns true when script tag exists', () => {
+    const script = document.createElement('script');
+    script.type = 'application/json';
+    script.setAttribute('data-test', '');
+    script.textContent = '{"key": "value"}';
+    document.body.appendChild(script);
+
+    expect(EmbeddedDataCollector.exists('data-test')).toBe(true);
+  });
+
+  test('returns false when script tag does not exist', () => {
+    expect(EmbeddedDataCollector.exists('data-nonexistent')).toBe(false);
+  });
+
+  test('returns true even when script tag is empty', () => {
+    const script = document.createElement('script');
+    script.type = 'application/json';
+    script.setAttribute('data-test', '');
+    script.textContent = '';
+    document.body.appendChild(script);
+
+    expect(EmbeddedDataCollector.exists('data-test')).toBe(true);
+  });
+
+  test('does not modify the script tag content', () => {
+    const script = document.createElement('script');
+    script.type = 'application/json';
+    script.setAttribute('data-test', '');
+    script.textContent = '{"preserved": true}';
+    document.body.appendChild(script);
+
+    EmbeddedDataCollector.exists('data-test');
+
+    expect(script.textContent).toBe('{"preserved": true}');
+  });
+});

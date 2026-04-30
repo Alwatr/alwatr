@@ -101,6 +101,80 @@ this.logger_.error('methodName', 'json_parse_failed', {error});
 
 ---
 
+## Lazy Evaluation Pattern (`@alwatr/lazy`)
+
+Use `Lazy<T>` to defer expensive initialization until first access. The closure is released after evaluation for GC:
+
+```ts
+import {lazy} from '@alwatr/lazy';
+
+// Factory function (preferred — better type inference)
+const config = lazy(() => loadExpensiveConfig());
+console.log(config.value); // initialized on first access
+console.log(config.isInitialized()); // true
+
+// Class API
+const db = new Lazy(() => new DatabaseConnection(connectionString));
+if (!db.isInitialized()) {
+  console.log('DB not yet connected — skipping teardown.');
+}
+```
+
+---
+
+## Signal Patterns (`@alwatr/signal`)
+
+### Signal Types
+
+| Signal                  | Purpose                                                                       |
+| ----------------------- | ----------------------------------------------------------------------------- |
+| `StateSignal<T>`        | Holds a value, notifies on change. Subscribers get current value immediately. |
+| `EventSignal<T>`        | Stateless event dispatch. Subscribers only get future emissions.              |
+| `ComputedSignal<T>`     | Derived from other signals, auto-updates when dependencies change.            |
+| `EffectSignal`          | Side-effect runner triggered by signal changes.                               |
+| `PersistentStateSignal` | `StateSignal` backed by `localStorage`.                                       |
+| `SessionStateSignal`    | `StateSignal` backed by `sessionStorage`.                                     |
+| `ChannelSignal<TMap>`   | Typed multi-message bus with O(1) per-name routing.                           |
+
+### ChannelSignal Usage
+
+`ChannelSignal` is ideal when a single signal carries multiple distinct message types:
+
+```ts
+interface AppMessages {
+  'open-drawer': {panel: string};
+  'close-drawer': void;
+  'show-toast': {message: string; type: 'info' | 'error'};
+}
+
+const appChannel = new ChannelSignal<AppMessages>({name: 'app-channel'});
+
+// Subscribe to a specific message — handler receives payload directly
+appChannel.on('open-drawer', (payload) => {
+  openDrawer(payload.panel);
+});
+
+// Dispatch a typed message
+appChannel.dispatch('open-drawer', {panel: 'settings'});
+appChannel.dispatch('close-drawer'); // no payload needed for void types
+
+// Raw stream subscription (for logging/middleware)
+appChannel.subscribe((msg) => console.log('[channel]', msg.name, msg.payload));
+```
+
+### Factory Functions
+
+Prefer factory functions over `new` for simpler signal creation:
+
+```ts
+import {createState, createEvent, createComputed, createEffect} from '@alwatr/signal';
+
+const count = createState({name: 'count', initialValue: 0});
+const doubled = createComputed({name: 'doubled', source: count, compute: (v) => v * 2});
+```
+
+---
+
 ## Directive Patterns (`@alwatr/directive`)
 
 ### Creating a directive
@@ -154,6 +228,162 @@ protected override init_(): void {
   const sub = signal.subscribe(this.onSignal_.bind(this));
   this.addDestroyHook(() => sub.unsubscribe());
 }
+```
+
+### Signal Subscriptions in Directives
+
+Use the built-in `subscribe_()` helper for auto-cleanup signal subscriptions:
+
+```ts
+protected override init_(): void {
+  // Automatically unsubscribes when directive is destroyed — no manual addDestroyHook needed
+  this.subscribe_(cartSignal, (cart) => {
+    this.count_ = cart.items.length;
+  });
+}
+```
+
+### LitDirective — Reactive Rendering with lit-html
+
+Extend `LitDirective` instead of `Directive` when you need declarative template rendering:
+
+```ts
+import {directive, LitDirective, state} from '@alwatr/directive';
+import {html} from 'lit-html';
+
+@directive('like-button')
+export class LikeButtonDirective extends LitDirective {
+  @state()
+  accessor liked_: string | null = null;
+
+  protected override init_(): void {
+    this.liked_ = 'false'; // first assignment triggers initial render
+    this.on_('click', () => {
+      this.liked_ = this.liked_ === 'true' ? 'false' : 'true';
+    });
+  }
+
+  protected override render_() {
+    return html`
+      <button class=${this.liked_ === 'true' ? 'liked' : ''}>♥</button>
+    `;
+  }
+}
+```
+
+### Update Cycle
+
+```
+state change (set @state accessor  OR  signal subscription callback)
+  │
+  └─ requestUpdate()          ← schedules one macrotask (batched)
+       │
+       ├─ update_()            ← calls render_() via lit-html render()
+       └─ updated_()           ← post-render hook (focus, measure, etc.)
+```
+
+Multiple `requestUpdate()` calls within the same macrotask collapse into a single render.
+
+### Utility Decorators
+
+| Decorator    | Target     | Purpose                                                             |
+| ------------ | ---------- | ------------------------------------------------------------------- |
+| `@query`     | `accessor` | Cached `querySelector` on `this.element_`                           |
+| `@queryAll`  | `accessor` | Cached `querySelectorAll` on `this.element_`                        |
+| `@attribute` | `accessor` | Cached `getAttribute` on `this.element_`                            |
+| `@state`     | `accessor` | Marks accessor as reactive — calls `requestUpdate()` on every `set` |
+
+```ts
+@directive('product-card')
+class ProductCardDirective extends LitDirective {
+  @query('.price')
+  accessor priceEl!: HTMLElement | null;
+
+  @attribute('product-id')
+  accessor productId!: string | null;
+
+  @state()
+  accessor count_: number = 0;
+}
+```
+
+### Event Listeners in Directives
+
+Use `on_()` for auto-cleanup event listeners:
+
+```ts
+protected override init_(): void {
+  // Listener on the directive's element (default)
+  this.on_('click', (event) => {
+    this.logger_.logMethodArgs?.('onClick', {target: event.target});
+  });
+
+  // Listener on a child element via CSS selector
+  this.on_('input', (event) => {
+    const value = (event.target as HTMLInputElement).value;
+  }, '.search-input');
+}
+```
+
+### IntersectionObserver Configuration
+
+Override `intersectionOptions_` to customize viewport detection for `lazyInit_()`, `onVisible_()`, and `onHidden_()`:
+
+```ts
+@directive('lazy-image')
+class LazyImageDirective extends Directive {
+  protected override intersectionOptions_: IntersectionObserverInit = {
+    rootMargin: '200px 0px', // pre-load 200px before viewport
+  };
+
+  protected override async lazyInit_(): Promise<void> {
+    const img = this.element_.querySelector('img')!;
+    img.src = img.dataset['src']!;
+  }
+}
+```
+
+### Bootstrapping Directives
+
+```ts
+import {bootstrapDirectives} from '@alwatr/directive';
+
+// Initialize all registered directives on the page
+document.addEventListener('DOMContentLoaded', () => bootstrapDirectives());
+
+// Or initialize on a dynamically added subtree
+bootstrapDirectives(newContentElement);
+```
+
+---
+
+## Embedded Data Pattern (`@alwatr/embedded-data`)
+
+For SSR-friendly state hydration from `<script type="application/json">` tags:
+
+```html
+<!-- Server renders initial state into a script tag -->
+<script
+  type="application/json"
+  app-config
+>
+  {"theme": "dark", "locale": "fa"}
+</script>
+```
+
+```ts
+import {EmbeddedDataCollector} from '@alwatr/embedded-data';
+
+// Simple usage
+const collector = new EmbeddedDataCollector<{theme: string; locale: string}>('app-config');
+const config = collector.collect(); // parsed JSON or null
+
+// With type-guard validation
+function isAppConfig(data: unknown): data is AppConfig {
+  return typeof data === 'object' && data !== null && 'theme' in data;
+}
+const safeCollector = new EmbeddedDataCollector('app-config', isAppConfig);
+const safeConfig = safeCollector.collect(); // guaranteed type or null
 ```
 
 ---
