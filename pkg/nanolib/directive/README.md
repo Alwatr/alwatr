@@ -454,7 +454,7 @@ class SubmitFormDirective extends Directive {
   }
 }
 
-// Anywhere in the app:
+// Anywhere in the app_
 document.addEventListener('form-submitted', (e: CustomEvent) => {
   console.log('Form submitted:', e.detail.formId);
 });

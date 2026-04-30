@@ -46,7 +46,7 @@ First, create a logger instance with a unique scope. This scope will prefix all 
 import {createLogger} from '@alwatr/logger';
 
 // Create a logger with a specific scope
-const logger = createLogger('my-app:main');
+const logger = createLogger('my-app_main');
 
 function greet(name: string) {
   // Log the method call with its arguments
@@ -153,7 +153,7 @@ The `createLogger` function returns a logger instance with the following methods
 ## Best Practices
 
 1. **Use Meaningful Scopes:**
-   Choose descriptive scopes to easily identify the source of logs. A good practice is to use the module or component path, e.g., `app:http-client`, `ui_user-form`.
+   Choose descriptive scopes to easily identify the source of logs. A good practice is to use the module or component path, e.g., `app_http-client`, `ui:user-form`.
 
 2. **Log Arguments and Results in Development:**
    Use `logMethodArgs` and `logMethodFull` generously during development. Since they are stripped in production builds, they won't impact performance.
@@ -259,7 +259,7 @@ yarn add @alwatr/logger
 import {createLogger} from '@alwatr/logger';
 
 // ساخت یک لاگر با یک حوزه مشخص
-const logger = createLogger('my-app:main');
+const logger = createLogger('my-app_main');
 
 function greet(name: string) {
   // لاگ کردن فراخوانی متد به همراه آرگومان‌های آن
@@ -366,7 +366,7 @@ fetchData('/api/data', {retries: 1});
 ## بهترین شیوه‌ها (Best Practices)
 
 ۱. **از حوزه‌های (Scopes) معنادار استفاده کنید:**
-حوزه‌های توصیفی انتخاب کنید تا منبع لاگ‌ها به راحتی قابل شناسایی باشد. یک روش خوب، استفاده از مسیر ماژول یا کامپوننت است، مانند: `app:http-client` یا `ui_user-form`.
+حوزه‌های توصیفی انتخاب کنید تا منبع لاگ‌ها به راحتی قابل شناسایی باشد. یک روش خوب، استفاده از مسیر ماژول یا کامپوننت است، مانند: `app_http-client` یا `ui_user-form`.
 
 ۲. **در محیط توسعه، آرگومان‌ها و نتایج را لاگ کنید:**
 در طول توسعه، به طور گسترده از `logMethodArgs` و `logMethodFull` استفاده کنید. از آنجایی که این لاگ‌ها در بیلد پروداکشن حذف می‌شوند، تأثیری بر عملکرد نخواهند داشت.

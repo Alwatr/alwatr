@@ -129,7 +129,11 @@ import type {StateMachineConfig} from '@alwatr/fsm';
 type User = {id: string; name: string};
 type FetchContext = {user: User | null; error: Error | null; retries: number};
 type FetchState = 'idle' | 'pending' | 'success' | 'error';
-type FetchEvent = {type: 'FETCH'; id: string} | {type: 'RESOLVE'; user: User} | {type: 'REJECT'; error: Error} | {type: 'RETRY'};
+type FetchEvent =
+  | {type: 'FETCH'; id: string}
+  | {type: 'RESOLVE'; user: User}
+  | {type: 'REJECT'; error: Error}
+  | {type: 'RETRY'};
 
 // The entire logic is declared in this single configuration object.
 // تمام منطق در این آبجکت پیکربندی واحد تعریف می‌شود.
@@ -202,7 +206,7 @@ const fetchService = createFsmService(fetchMachineConfig);
 // Subscribe to state changes to update the UI.
 fetchService.stateSignal.subscribe((state) => {
   console.log(`Current State: ${state.name}`, state.context);
-  // In a real app:
+  // In a real app_
   // if (state.name === 'pending') showSpinner();
   // if (state.name === 'success') showUserData(state.context.user);
   // if (state.name === 'error') showError(state.context.error);
