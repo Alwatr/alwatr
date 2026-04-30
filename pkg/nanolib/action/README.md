@@ -37,16 +37,16 @@ document.body capture listener  (1 listener per event type)
         │
         └─ closest('[on-click]') → finds element
            closest('[action-context]') → resolves context (e.g. 'product-list')
-           parse attribute → 'add_to_cart:42'
+           parse attribute → 'ui:add_to_cart:42'
            run modifiers   → none
            resolve payload → '42'
-           internalChannel_.dispatch('add_to_cart', {
-             type: 'add_to_cart',
+           internalChannel_.dispatch('ui:add_to_cart', {
+             type: 'ui:add_to_cart',
              payload: '42',
              context: 'product-list',
            })
                 │
-                └─ Map.get('add_to_cart') → O(1) → invoke only matching handlers
+                └─ Map.get('ui:add_to_cart') → O(1) → invoke only matching handlers
 ```
 
 ### Complexity
@@ -84,10 +84,15 @@ Extend `ActionRecord` via declaration merging. This gives you full type safety a
 // src/action-record.ts
 declare module '@alwatr/action' {
   interface ActionRecord {
-    open_drawer: string;
-    search_query: string;
-    add_to_cart: {productId: number; qty: number};
-    logout: void;
+    // UI-originated actions (dispatched from HTML on-<event> attributes) — must start with 'ui:'
+    'ui:open_drawer': string;
+    'ui:search_query': string;
+    'ui:add_to_cart': {productId: number; qty: number};
+    'ui:logout': void;
+
+    // Code-originated actions (dispatched programmatically from services/controllers)
+    'upload_complete': string;
+    'auth_expired': void;
   }
 }
 ```
@@ -101,8 +106,8 @@ import './action-record.js'; // ensure the declaration is loaded
 setupActionDelegation();
 
 // The handler receives the full Action<K> object — payload, context, and meta in one place.
-onAction('open_drawer', (action) => openDrawer(action.payload)); // action.payload: string
-onAction('add_to_cart', (action) => {
+onAction('ui:open_drawer', (action) => openDrawer(action.payload)); // action.payload: string
+onAction('ui:add_to_cart', (action) => {
   cartService.add(action.payload.productId, action.payload.qty); // fully typed
   console.log(action.context); // e.g. 'product-list' — from nearest [action-context] ancestor
 });
@@ -111,22 +116,22 @@ onAction('add_to_cart', (action) => {
 ### 3. Add attributes to HTML
 
 ```html
-<!-- Dispatches 'close_drawer' on click — no payload -->
-<button on-click="close_drawer">Close</button>
+<!-- Dispatches 'ui:close_drawer' on click — no payload -->
+<button on-click="ui:close_drawer">Close</button>
 
-<!-- Dispatches 'open_drawer' with payload 'main' on click -->
-<button on-click="open_drawer:main">Open Drawer</button>
+<!-- Dispatches 'ui:open_drawer' with payload 'main' on click -->
+<button on-click="ui:open_drawer:main">Open Drawer</button>
 
-<!-- Dispatches 'search_query' with the input's live value -->
+<!-- Dispatches 'ui:search_query' with the input's live value -->
 <input
   type="search"
-  on-input="search_query:$value"
+  on-input="ui:search_query:$value"
   placeholder="Search…"
 />
 
 <!-- Prevents default, validates, then dispatches all field values -->
 <form
-  on-submit="submit_form:$formdata; prevent,validate"
+  on-submit="ui:submit_form:$formdata; prevent,validate"
   novalidate
 >
   <input
@@ -137,7 +142,7 @@ onAction('add_to_cart', (action) => {
 </form>
 
 <!-- Fires only once — attribute is removed after first click -->
-<button on-click="welcome_dismissed; once">Got it</button>
+<button on-click="ui:welcome_dismissed; once">Got it</button>
 ```
 
 ### 4. Context scoping with `action-context`
@@ -145,24 +150,24 @@ onAction('add_to_cart', (action) => {
 Wrap a group of elements in an `[action-context]` container to scope their actions. The delegation handler automatically resolves the nearest ancestor and attaches its value to `action.context`. This lets the same action type serve multiple independent UI regions without creating separate action names.
 
 ```html
-<!-- Two sliders on the same page, both dispatching 'slider:change' -->
+<!-- Two sliders on the same page, both dispatching 'ui:slider_change' -->
 <section action-context="volume">
   <input
     type="range"
-    on-input="slider:change:$value"
+    on-input="ui:slider_change:$value"
   />
 </section>
 
 <section action-context="brightness">
   <input
     type="range"
-    on-input="slider:change:$value"
+    on-input="ui:slider_change:$value"
   />
 </section>
 ```
 
 ```ts
-onAction('slider:change', (action) => {
+onAction('ui:slider_change', (action) => {
   if (action.context === 'volume') audioService.setVolume(Number(action.payload));
   if (action.context === 'brightness') displayService.setBrightness(Number(action.payload));
 });
@@ -172,10 +177,13 @@ Context is `undefined` when no `[action-context]` ancestor exists — programmat
 
 ### 5. Programmatic dispatch
 
+Use `dispatchAction` for code-originated actions (after async operations, from services, etc.).
+These actions should **not** use the `ui:` prefix — that prefix is reserved for DOM-originated actions.
+
 ```ts
 import {dispatchAction} from '@alwatr/action';
 
-// dispatchAction takes a full Action object
+// Code-originated actions — no 'ui:' prefix
 await uploadFile(file);
 dispatchAction({type: 'upload_complete', payload: fileId});
 
@@ -183,7 +191,7 @@ dispatchAction({type: 'navigate', payload: '/dashboard'});
 
 // With explicit context and meta
 dispatchAction({
-  type: 'slider:change',
+  type: 'slider_change',
   payload: 75,
   context: 'volume',
   meta: {source: 'keyboard'},
@@ -198,12 +206,12 @@ dispatchAction({
 on-<eventType>="actionId[:payload][; modifier1,modifier2,…]"
 ```
 
-| Segment       | Description                                                 | Example                       |
-| ------------- | ----------------------------------------------------------- | ----------------------------- |
-| `eventType`   | Any standard DOM event name — encoded in the attribute name | `on-click`, `on-submit`       |
-| `actionId`    | Identifier your handler subscribes to                       | `open_drawer`, `search_query` |
-| `:payload`    | Optional literal string, or a `$`-prefixed resolver token   | `:main`, `:$value`            |
-| `; modifiers` | Optional comma-separated modifier list after a semicolon    | `; prevent,validate`          |
+| Segment       | Description                                                 | Example                             |
+| ------------- | ----------------------------------------------------------- | ----------------------------------- |
+| `eventType`   | Any standard DOM event name — encoded in the attribute name | `on-click`, `on-submit`             |
+| `actionId`    | Identifier your handler subscribes to                       | `ui:open_drawer`, `ui:search_query` |
+| `:payload`    | Optional literal string, or a `$`-prefixed resolver token   | `:main`, `:$value`                  |
+| `; modifiers` | Optional comma-separated modifier list after a semicolon    | `; prevent,validate`                |
 
 ### Built-in modifiers
 
@@ -263,11 +271,11 @@ registerModifier('trace', (_event, _element, action) => {
 ```
 
 ```html
-<button on-click="submit_order:42; trace">Place Order</button>
+<button on-click="ui:submit_order:42; trace">Place Order</button>
 ```
 
 ```ts
-onAction('submit_order', (action) => {
+onAction('ui:submit_order', (action) => {
   console.log(action.meta?.['traceId']); // e.g. 'a1b2-c3d4-…'
 });
 ```
@@ -284,8 +292,8 @@ The Alwatr Flux Standard Action object. Every dispatch and every handler callbac
 import type {Action} from '@alwatr/action';
 
 // Reading fields in a handler
-onAction('add_to_cart', (action: Action<'add_to_cart'>) => {
-  console.log(action.type); // 'add_to_cart'
+onAction('ui:add_to_cart', (action: Action<'ui:add_to_cart'>) => {
+  console.log(action.type); // 'ui:add_to_cart'
   console.log(action.payload); // {productId: number; qty: number}
   console.log(action.context); // string | undefined
   console.log(action.meta); // Record<string, unknown> | undefined
@@ -301,8 +309,8 @@ The global action type registry. Extend via declaration merging to register type
 ```ts
 declare module '@alwatr/action' {
   interface ActionRecord {
-    open_drawer: string;
-    logout: void;
+    'ui:open_drawer': string;
+    'ui:logout': void;
   }
 }
 ```
@@ -346,7 +354,7 @@ function onAction<K extends keyof ActionRecord>(type: K, handler: (action: Actio
 ```
 
 ```ts
-const sub = onAction('open_drawer', (action) => {
+const sub = onAction('ui:open_drawer', (action) => {
   openDrawer(action.payload); // payload: string
   console.log(action.context); // e.g. 'sidebar' or undefined
 });
@@ -364,15 +372,15 @@ function dispatchAction<K extends keyof ActionRecord>(action: Action<K>): void;
 ```
 
 ```ts
-// With payload
-dispatchAction({type: 'open_drawer', payload: 'settings'});
+// With payload (code-originated — no 'ui:' prefix)
+dispatchAction({type: 'navigate', payload: 'settings'});
 
 // Void payload
-dispatchAction({type: 'logout', payload: undefined});
+dispatchAction({type: 'auth_expired', payload: undefined});
 
 // With context and meta
 dispatchAction({
-  type: 'open_drawer',
+  type: 'navigate',
   payload: 'settings',
   context: 'header',
   meta: {triggeredBy: 'keyboard'},
@@ -406,7 +414,7 @@ registerModifier('timestamp', (_event, _element, action) => {
 
 ```html
 <button
-  on-click="select_item:$data_id; not_disabled,timestamp"
+  on-click="ui:select_item:$data_id; not_disabled,timestamp"
   data-id="42"
 >
   Select
@@ -432,10 +440,10 @@ registerPayloadResolver('$data_id', (_event, element) => {
 ```html
 <input
   type="checkbox"
-  on-change="toggle_feature:$checked"
+  on-change="ui:toggle_feature:$checked"
 />
 <li
-  on-click="select_item:$data_id"
+  on-click="ui:select_item:$data_id"
   data-id="42"
 >
   Item
@@ -450,7 +458,7 @@ registerPayloadResolver('$data_id', (_event, element) => {
 ┌────────────────────────────────────────────────────────────┐
 │                           UI Layer                         │
 │  <section action-context="cart">                           │
-│    <button on-click="add_to_cart:42">Add</button>          │
+│    <button on-click="ui:add_to_cart:42">Add</button>       │
 │  </section>                                                │
 └─────────────────────────┬──────────────────────────────────┘
                           │ DOM event bubbles to body
@@ -468,7 +476,7 @@ registerPayloadResolver('$data_id', (_event, element) => {
                           ▼
 ┌────────────────────────────────────────────────────────────┐
 │                     Business Logic Layer                   │
-│  onAction('add_to_cart', (action) => {                     │
+│  onAction('ui:add_to_cart', (action) => {                  │
 │    cartService.add(action.payload);                        │
 │    // action.context === 'cart'                            │
 │  })                                                        │
@@ -504,15 +512,15 @@ concern, not a user-interaction action.
 **Before:**
 
 ```ts
-dispatchAction('open_drawer', 'settings');
-dispatchAction('logout');
+dispatchAction('ui:open_drawer', 'settings');
+dispatchAction('auth_expired');
 ```
 
 **After:**
 
 ```ts
-dispatchAction({type: 'open_drawer', payload: 'settings'});
-dispatchAction({type: 'logout', payload: undefined});
+dispatchAction({type: 'ui:open_drawer', payload: 'settings'});
+dispatchAction({type: 'auth_expired', payload: undefined});
 ```
 
 ### `onAction` handler signature changed
@@ -522,7 +530,7 @@ Handlers now receive the full `Action<K>` object instead of just the payload.
 **Before:**
 
 ```ts
-onAction('add_to_cart', (item) => {
+onAction('ui:add_to_cart', (item) => {
   cartService.add(item.productId, item.qty);
 });
 ```
@@ -530,7 +538,7 @@ onAction('add_to_cart', (item) => {
 **After:**
 
 ```ts
-onAction('add_to_cart', (action) => {
+onAction('ui:add_to_cart', (action) => {
   cartService.add(action.payload.productId, action.payload.qty);
   // action.context is now also available
 });
@@ -563,27 +571,27 @@ The event type is now encoded in the **attribute name** instead of the value, an
 **Before:**
 
 ```html
-<button on-action="click->open_drawer:main">Open</button>
+<button on-action="click->ui:open_drawer:main">Open</button>
 <form
-  on-action="submit.prevent.validate->submit_form:$formdata"
+  on-action="submit.prevent.validate->ui:submit_form:$formdata"
   novalidate
 >
   …
 </form>
-<button on-action="click.once->welcome_dismissed">Got it</button>
+<button on-action="click.once->ui:welcome_dismissed">Got it</button>
 ```
 
 **After:**
 
 ```html
-<button on-click="open_drawer:main">Open</button>
+<button on-click="ui:open_drawer:main">Open</button>
 <form
-  on-submit="submit_form:$formdata; prevent,validate"
+  on-submit="ui:submit_form:$formdata; prevent,validate"
   novalidate
 >
   …
 </form>
-<button on-click="welcome_dismissed; once">Got it</button>
+<button on-click="ui:welcome_dismissed; once">Got it</button>
 ```
 
 ### `page-ready` moved to `@alwatr/page-ready`

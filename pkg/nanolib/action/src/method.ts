@@ -16,8 +16,8 @@ import type {Action, ActionRecord, DispatchParam, ModifierHandler, PayloadResolv
  * the correct `payload` type from `ActionRecord`:
  *
  * ```ts
- * // ActionRecord declares: 'add_to_cart': {productId: number; qty: number}
- * onAction('add_to_cart', (action) => {
+ * // ActionRecord declares: 'ui:add_to_cart': {productId: number; qty: number}
+ * onAction('ui:add_to_cart', (action) => {
  *   cartService.add(action.payload.productId, action.payload.qty); // fully typed
  *   console.log(action.context); // e.g. 'product-list' (from DOM) or undefined
  * });
@@ -30,7 +30,7 @@ import type {Action, ActionRecord, DispatchParam, ModifierHandler, PayloadResolv
  * // src/action-record.ts
  * declare module '@alwatr/action' {
  *   interface ActionRecord {
- *     'open_drawer': string;
+ *     'ui:open_drawer': string;
  *   }
  * }
  * ```
@@ -46,7 +46,7 @@ import type {Action, ActionRecord, DispatchParam, ModifierHandler, PayloadResolv
  * ```ts
  * import {onAction} from '@alwatr/action';
  *
- * const sub = onAction('page_ready', (action) => {
+ * const sub = onAction('ui:page_ready', (action) => {
  *   router.setPage(action.payload); // payload: string — inferred from ActionRecord
  * });
  *
@@ -71,9 +71,9 @@ export function onAction<K extends keyof ActionRecord>(
  * typed from `ActionRecord[K]` — passing the wrong shape is a **compile error**:
  *
  * ```ts
- * // ActionRecord declares: 'add_to_cart': {productId: number; qty: number}
- * dispatchAction({type: 'add_to_cart', payload: {productId: 42, qty: 1}}); // ✅
- * dispatchAction({type: 'add_to_cart', payload: 'wrong'});                  // ❌ compile error
+ * // ActionRecord declares: 'ui:add_to_cart': {productId: number; qty: number}
+ * dispatchAction({type: 'ui:add_to_cart', payload: {productId: 42, qty: 1}}); // ✅
+ * dispatchAction({type: 'ui:add_to_cart', payload: 'wrong'});                  // ❌ compile error
  * dispatchAction({type: 'unknown_action', payload: 'x'});                   // ❌ compile error
  * ```
  *
@@ -87,19 +87,19 @@ export function onAction<K extends keyof ActionRecord>(
  *
  * @param action - A full `Action<K>` object with at minimum `type` and `payload`.
  *
- * @example — with payload
+ * @example — with payload (code-originated action — no 'ui:' prefix)
  * ```ts
  * import {dispatchAction} from '@alwatr/action';
  *
  * dispatchAction({type: 'navigate', payload: '/dashboard'});
- * dispatchAction({type: 'add_to_cart', payload: {productId: 42, qty: 1}});
+ * dispatchAction({type: 'upload_complete', payload: fileId});
  * ```
  *
  * @example — void payload (payload field is optional and can be omitted entirely)
  * ```ts
- * dispatchAction({type: 'logout'});
+ * dispatchAction({type: 'auth_expired'});
  * // or explicitly:
- * dispatchAction({type: 'logout', payload: undefined});
+ * dispatchAction({type: 'auth_expired', payload: undefined});
  * ```
  *
  * @example — with context and meta
@@ -145,7 +145,7 @@ export function dispatchAction<K extends keyof ActionRecord>(action: DispatchPar
  * registerModifier('confirm', () => window.confirm('Are you sure?'));
  * ```
  * ```html
- * <button on-click="delete_item:42; confirm">Delete</button>
+ * <button on-click="ui:delete_item:42; confirm">Delete</button>
  * ```
  *
  * @example — a `trace` modifier that stamps a trace ID into meta
@@ -191,7 +191,7 @@ export function registerModifier(name: string, handler: ModifierHandler): void {
  * });
  * ```
  * ```html
- * <button on-click="select_item:$data-id" data-id="42">Select</button>
+ * <button on-click="ui:select_item:$data-id" data-id="42">Select</button>
  * ```
  */
 export function registerPayloadResolver(name: string, resolver: PayloadResolver): void {

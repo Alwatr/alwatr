@@ -58,22 +58,22 @@ Through TypeScript's **Declaration Merging**, the entire action bus is fully typ
 // Define your actions once
 declare module '@alwatr/flux' {
   interface ActionRecord {
-    add_to_cart: {productId: number; qty: number};
-    open_drawer: 'menu' | 'settings';
-    logout: void;
+    'ui:add_to_cart': {productId: number; qty: number};
+    'ui:open_drawer': 'menu' | 'settings';
+    'ui:logout': void;
   }
 }
 
 // Get compile-time safety everywhere — handler receives the full Action object
-onAction('add_to_cart', (action) => {
+onAction('ui:add_to_cart', (action) => {
   // action.payload is typed as {productId: number; qty: number}
   cartService.add(action.payload.productId, action.payload.qty);
   // action.context is the nearest [action-context] ancestor value (or undefined)
   console.log(action.context); // e.g. 'product-list'
 });
 
-dispatchAction({type: 'add_to_cart', payload: {productId: 42, qty: 1}}); // ✅
-dispatchAction({type: 'add_to_cart', payload: 'wrong'}); // ❌ Compile error
+dispatchAction({type: 'ui:add_to_cart', payload: {productId: 42, qty: 1}}); // ✅
+dispatchAction({type: 'ui:add_to_cart', payload: 'wrong'}); // ❌ Compile error
 ```
 
 ---
@@ -126,17 +126,17 @@ Connect DOM events to typed actions without writing JavaScript. Wrap elements in
 
 ```html
 <!-- Simple action -->
-<button on-click="open_drawer:menu">Menu</button>
+<button on-click="ui:open_drawer:menu">Menu</button>
 
 <!-- Dynamic payload from input value -->
 <input
-  on-input="search_query:$value"
+  on-input="ui:search_query:$value"
   placeholder="Search..."
 />
 
 <!-- Form submission with validation -->
 <form
-  on-submit="submit_form:$formdata; prevent,validate"
+  on-submit="ui:submit_form:$formdata; prevent,validate"
   novalidate
 >
   <input
@@ -150,30 +150,30 @@ Connect DOM events to typed actions without writing JavaScript. Wrap elements in
 <!-- Checkbox state -->
 <input
   type="checkbox"
-  on-change="toggle_feature:$checked"
+  on-change="ui:toggle_feature:$checked"
 />
 
 <!-- Fire once and remove -->
-<button on-click="track_impression:hero_banner; once">Learn More</button>
+<button on-click="ui:track_impression:hero_banner; once">Learn More</button>
 
 <!-- Context scoping — same action type, different regions -->
 <section action-context="volume">
   <input
     type="range"
-    on-input="slider:change:$value"
+    on-input="ui:slider_change:$value"
   />
 </section>
 <section action-context="brightness">
   <input
     type="range"
-    on-input="slider:change:$value"
+    on-input="ui:slider_change:$value"
   />
 </section>
 ```
 
 ```typescript
 // Handler receives the full Action object — payload, context, and meta together
-onAction('slider:change', (action) => {
+onAction('ui:slider_change', (action) => {
   if (action.context === 'volume') audioService.setVolume(Number(action.payload));
   if (action.context === 'brightness') displayService.setBrightness(Number(action.payload));
 });
@@ -392,7 +392,7 @@ Flux implements a **strict layered architecture** where each layer has a single 
 │  • Dispatches Actions via on-<event> attributes           │
 │  • Never manipulates state directly                       │
 └──────────────────┬────────────────────────────────────────┘
-                   │ on-click="add_to_cart:42"
+                   │ on-click="ui:add_to_cart:42"
                    ▼
 ┌───────────────────────────────────────────────────────────┐
 │                       ACTION LAYER                        │
@@ -406,7 +406,7 @@ Flux implements a **strict layered architecture** where each layer has a single 
 │  • Resolves payload ($value, $formdata)                   │
 │  • Dispatches full Action {type, payload, context, meta}  │
 └──────────────────┬────────────────────────────────────────┘
-                   │ dispatchAction({type: 'add_to_cart', payload: 42, context: 'cart'})
+                   │ dispatchAction({type: 'ui:add_to_cart', payload: 42, context: 'cart'})
                    ▼
 ┌───────────────────────────────────────────────────────────┐
 │                     CONTROLLER LAYER                      │
@@ -480,8 +480,8 @@ interface Action<K extends keyof ActionRecord> {
 This unified structure replaces the previous two-argument `(id, payload)` API. Every handler now receives the full picture:
 
 ```typescript
-onAction('add_to_cart', (action) => {
-  console.log(action.type); // 'add_to_cart'
+onAction('ui:add_to_cart', (action) => {
+  console.log(action.type); // 'ui:add_to_cart'
   console.log(action.payload); // {productId: 42, qty: 1} — fully typed
   console.log(action.context); // 'product-list' — from [action-context] ancestor
   console.log(action.meta); // {traceId: '…'} — set by modifiers, or undefined
@@ -501,7 +501,7 @@ registerModifier('trace', (_event, _element, action) => {
 ```
 
 ```html
-<button on-click="submit_order:42; trace">Place Order</button>
+<button on-click="ui:submit_order:42; trace">Place Order</button>
 ```
 
 ---
@@ -546,9 +546,9 @@ dispatchPageReady();
 // src/actions.ts
 declare module '@alwatr/flux' {
   interface ActionRecord {
-    increment: void;
-    decrement: void;
-    set_count: number;
+    'ui:increment': void;
+    'ui:decrement': void;
+    'ui:set_count': number;
   }
 }
 ```
@@ -572,16 +572,16 @@ export const counterSignal = createStateSignal({
 import {onAction} from '@alwatr/flux';
 import {counterSignal} from './state.js';
 
-onAction('increment', () => {
+onAction('ui:increment', () => {
   counterSignal.update((count) => count + 1);
 });
 
-onAction('decrement', () => {
+onAction('ui:decrement', () => {
   counterSignal.update((count) => count - 1);
 });
 
 // Handler receives the full Action object — payload is typed from ActionRecord
-onAction('set_count', (action) => {
+onAction('ui:set_count', (action) => {
   counterSignal.set(action.payload); // action.payload: number
 });
 ```
@@ -597,11 +597,11 @@ onAction('set_count', (action) => {
         Counter:
         <span id="count">0</span>
       </h1>
-      <button on-click="decrement">-</button>
-      <button on-click="increment">+</button>
+      <button on-click="ui:decrement">-</button>
+      <button on-click="ui:increment">+</button>
       <input
         type="number"
-        on-input="set_count:$value"
+        on-input="ui:set_count:$value"
         value="0"
       />
     </div>
@@ -755,7 +755,7 @@ setupActionDelegation([...DEFAULT_DELEGATED_EVENTS, 'keydown', 'focus']);
 Subscribes to a typed action. The handler receives the full `Action<K>` object.
 
 ```typescript
-const sub = onAction('add_to_cart', (action) => {
+const sub = onAction('ui:add_to_cart', (action) => {
   cartService.add(action.payload.productId, action.payload.qty);
   console.log(action.context); // e.g. 'product-list' or undefined
   console.log(action.meta); // any metadata set by modifiers
@@ -770,12 +770,12 @@ Dispatches a typed action programmatically. Takes a full `Action<K>` object.
 
 ```typescript
 dispatchAction({type: 'navigate', payload: '/home'});
-dispatchAction({type: 'logout', payload: undefined}); // void payload
+dispatchAction({type: 'auth_expired', payload: undefined}); // void payload
 
 // With context and meta
 dispatchAction({
-  type: 'add_to_cart',
-  payload: {productId: 42, qty: 1},
+  type: 'upload_complete',
+  payload: fileId,
   context: 'product-list',
   meta: {source: 'recommendation'},
 });
@@ -799,7 +799,7 @@ registerModifier('trace', (_event, _element, action) => {
 ```
 
 ```html
-<button on-click="delete_item:42; confirm,trace">Delete</button>
+<button on-click="ui:delete_item:42; confirm,trace">Delete</button>
 ```
 
 #### `registerPayloadResolver(name, resolver)`
@@ -814,7 +814,7 @@ registerPayloadResolver('$data-id', (_event, element) => {
 
 ```html
 <button
-  on-click="select:$data-id"
+  on-click="ui:select:$data-id"
   data-id="42"
 >
   Select
@@ -1210,9 +1210,9 @@ const status = (isLoading: boolean) => html`
 // actions.ts
 declare module '@alwatr/flux' {
   interface ActionRecord {
-    'add_todo': string;
-    'toggle_todo': number;
-    'remove_todo': number;
+    'ui:add_todo': string;
+    'ui:toggle_todo': number;
+    'ui:remove_todo': number;
   }
 }
 
@@ -1236,14 +1236,14 @@ import {todosSignal} from './state.js';
 
 let nextId = 1;
 
-onAction('add_todo', (action) => {
+onAction('ui:add_todo', (action) => {
   todosSignal.update((todos) => [
     ...todos,
     {id: nextId++, text: action.payload, done: false},
   ]);
 });
 
-onAction('toggle_todo', (action) => {
+onAction('ui:toggle_todo', (action) => {
   todosSignal.update((todos) =>
     todos.map((todo) =>
       todo.id === action.payload ? {...todo, done: !todo.done} : todo
@@ -1251,13 +1251,13 @@ onAction('toggle_todo', (action) => {
   );
 });
 
-onAction('remove_todo', (action) => {
+onAction('ui:remove_todo', (action) => {
   todosSignal.update((todos) => todos.filter((t) => t.id !== action.payload));
 });
 
 // view.html
 <div id="app">
-<input id="new-todo" on-change="add_todo:$value" placeholder="What needs to be done?" />
+<input id="new-todo" on-change="ui:add_todo:$value" placeholder="What needs to be done?" />
   <ul id="todo-list"></ul>
 </div>
 
@@ -1276,10 +1276,10 @@ todosSignal.subscribe((todos) => {
           <input
             type="checkbox"
             .checked=${todo.done}
-            on-change="toggle_todo:${todo.id}"
+            on-change="ui:toggle_todo:${todo.id}"
           />
           <span style="${todo.done ? 'text-decoration: line-through' : ''}">${todo.text}</span>
-          <button on-click="remove_todo:${todo.id}">×</button>
+          <button on-click="ui:remove_todo:${todo.id}">×</button>
         </li>
       `)}
     `,

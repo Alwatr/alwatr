@@ -15,9 +15,14 @@ import type {DictionaryOpt} from '@alwatr/type-helper';
  * // pkg/my-feature/src/action-record.ts
  * declare module '@alwatr/action' {
  *   interface ActionRecord {
- *     'open_drawer': string;
- *     'add_to_cart': {productId: number; qty: number};
- *     'logout': void;
+ *     // UI-originated actions (dispatched from HTML on-<event> attributes) — must start with 'ui:'
+ *     'ui:open_drawer': string;
+ *     'ui:add_to_cart': {productId: number; qty: number};
+ *     'ui:logout': void;
+ *
+ *     // Code-originated actions (dispatched programmatically from services/controllers)
+ *     'upload_complete': string;
+ *     'auth_expired': void;
  *   }
  * }
  * ```
@@ -33,12 +38,12 @@ export interface ActionRecord {}
  *
  * @example — void action (payload omitted)
  * ```ts
- * dispatchAction({type: 'logout'});
+ * dispatchAction({type: 'auth_expired'});
  * ```
  *
  * @example — typed action (payload required)
  * ```ts
- * dispatchAction({type: 'add_to_cart', payload: {productId: 42, qty: 1}});
+ * dispatchAction({type: 'upload_complete', payload: fileId});
  * ```
  */
 export type DispatchParam<K extends keyof ActionRecord> =
@@ -53,15 +58,15 @@ export type DispatchParam<K extends keyof ActionRecord> =
  *
  * @template K - A key of `ActionRecord`; constrains `type` and `payload` together.
  *
- * @example — dispatching
+ * @example — dispatching (code-originated action — no 'ui:' prefix)
  * ```ts
- * dispatchAction({type: 'add_to_cart', payload: {productId: 42, qty: 1}});
+ * dispatchAction({type: 'upload_complete', payload: fileId});
  * ```
  *
- * @example — subscribing
+ * @example — subscribing to a UI-originated action
  * ```ts
- * onAction('add_to_cart', (action) => {
- *   console.log(action.type);    // 'add_to_cart'
+ * onAction('ui:add_to_cart', (action) => {
+ *   console.log(action.type);    // 'ui:add_to_cart'
  *   console.log(action.payload); // {productId: 42, qty: 1}
  *   console.log(action.context); // e.g. 'product-list' (from DOM) or undefined
  * });
@@ -71,7 +76,7 @@ export interface Action<K extends keyof ActionRecord = keyof ActionRecord> {
   /**
    * Unique action identifier — must be a key of `ActionRecord`.
    *
-   * @example 'cart:add-item', 'open_drawer', 'logout'
+   * @example 'ui:add_to_cart', 'ui:open_drawer', 'upload_complete'
    */
   readonly type: K;
 
