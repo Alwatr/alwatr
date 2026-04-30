@@ -182,16 +182,16 @@ interface Action<K extends keyof ActionRecord> {
 ```
 UI (HTML attributes + [action-context] scoping)
   │  <section action-context="product-list">
-  │    <button on-click="ui:add_to_cart:42">Add</button>
+  │    <button on-click="ui_add_to_cart:42">Add</button>
   │  </section>
   ▼
 Action Layer (@alwatr/action)
   │  body capture listener → parse → resolve context → build Action object
   │  → run modifiers (may enrich action.meta) → resolve payload
-  │  → internalChannel_.dispatch('ui:add_to_cart', action)
+  │  → internalChannel_.dispatch('ui_add_to_cart', action)
   ▼
 Business Logic
-  │  onAction('ui:add_to_cart', (action) => {
+  │  onAction('ui_add_to_cart', (action) => {
   │    cartService.add(action.payload);
   │    console.log(action.context); // 'product-list'
   │  })
@@ -229,14 +229,14 @@ Extend `ActionRecord` via declaration merging in each feature package:
 // src/action-record.ts
 declare module '@alwatr/action' {
   interface ActionRecord {
-    // UI-originated actions (dispatched from HTML on-<event> attributes) — must start with 'ui:'
-    'ui:open_drawer': string;
-    'ui:add_to_cart': {productId: number; qty: number};
-    'ui:logout': void;
+    // UI-originated actions (dispatched from HTML on-<event> attributes) — must start with 'ui_'
+    ui_open_drawer: string;
+    ui_add_to_cart: {productId: number; qty: number};
+    ui_logout: void;
 
     // Code-originated actions (dispatched programmatically from services/controllers)
-    'upload_complete': string;
-    'auth_expired': void;
+    upload_complete: string;
+    auth_expired: void;
   }
 }
 ```
@@ -250,28 +250,28 @@ The handler receives the full `Action<K>` object — `payload`, `context`, and `
 ```ts
 import {onAction} from '@alwatr/action';
 
-onAction('ui:open_drawer', (action) => {
+onAction('ui_open_drawer', (action) => {
   drawerSignal.set({open: true, panel: action.payload});
 });
 
-onAction('ui:add_to_cart', (action) => {
+onAction('ui_add_to_cart', (action) => {
   cartService.add(action.payload.productId, action.payload.qty);
   console.log('from context:', action.context); // e.g. 'product-list'
 });
 
 // Cleanup when component is destroyed
-const sub = onAction('ui:logout', () => authService.logout());
+const sub = onAction('ui_logout', () => authService.logout());
 sub.unsubscribe(); // call when no longer needed
 ```
 
 ### Dispatching actions from code
 
-Code-originated actions should **not** use the `ui:` prefix — that prefix is reserved for DOM-originated actions.
+Code-originated actions should **not** use the `ui_` prefix — that prefix is reserved for DOM-originated actions.
 
 ```ts
 import {dispatchAction} from '@alwatr/action';
 
-// After an async operation completes (code-originated — no 'ui:' prefix)
+// After an async operation completes (code-originated — no 'ui_' prefix)
 await uploadFile(file);
 dispatchAction({type: 'upload_complete', payload: fileId});
 
@@ -295,14 +295,14 @@ on-<eventType>="actionId[:payload][; modifier1,modifier2,…]"
 
 ```html
 <!-- Literal payload -->
-<button on-click="ui:open_drawer:settings">Settings</button>
+<button on-click="ui_open_drawer:settings">Settings</button>
 
 <!-- Dynamic payload from input value -->
-<input on-input="ui:search_query:$value" />
+<input on-input="ui_search_query:$value" />
 
 <!-- Form data payload with validation -->
 <form
-  on-submit="ui:submit_form:$formdata; prevent,validate"
+  on-submit="ui_submit_form:$formdata; prevent,validate"
   novalidate
 >
   …
@@ -310,7 +310,7 @@ on-<eventType>="actionId[:payload][; modifier1,modifier2,…]"
 
 <!-- Context scoping — all actions inside carry context='product-list' -->
 <section action-context="product-list">
-  <button on-click="ui:add_to_cart:42">Add to Cart</button>
+  <button on-click="ui_add_to_cart:42">Add to Cart</button>
 </section>
 ```
 
@@ -357,7 +357,7 @@ registerPayloadResolver('$data-id', (_event, element) => {
 
 ```html
 <button
-  on-click="ui:select_item:$data-id; not-disabled,trace"
+  on-click="ui_select_item:$data-id; not-disabled,trace"
   data-id="42"
 >
   Select

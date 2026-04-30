@@ -15,10 +15,10 @@ import type {DictionaryOpt} from '@alwatr/type-helper';
  * // pkg/my-feature/src/action-record.ts
  * declare module '@alwatr/action' {
  *   interface ActionRecord {
- *     // UI-originated actions (dispatched from HTML on-<event> attributes) — must start with 'ui:'
- *     'ui:open_drawer': string;
- *     'ui:add_to_cart': {productId: number; qty: number};
- *     'ui:logout': void;
+ *     // UI-originated actions (dispatched from HTML on-<event> attributes) — must start with 'ui_'
+ *     'ui_open_drawer': string;
+ *     'ui_add_to_cart': {productId: number; qty: number};
+ *     'ui_logout': void;
  *
  *     // Code-originated actions (dispatched programmatically from services/controllers)
  *     'upload_complete': string;
@@ -58,15 +58,15 @@ export type DispatchParam<K extends keyof ActionRecord> =
  *
  * @template K - A key of `ActionRecord`; constrains `type` and `payload` together.
  *
- * @example — dispatching (code-originated action — no 'ui:' prefix)
+ * @example — dispatching (code-originated action — no 'ui_' prefix)
  * ```ts
  * dispatchAction({type: 'upload_complete', payload: fileId});
  * ```
  *
  * @example — subscribing to a UI-originated action
  * ```ts
- * onAction('ui:add_to_cart', (action) => {
- *   console.log(action.type);    // 'ui:add_to_cart'
+ * onAction('ui_add_to_cart', (action) => {
+ *   console.log(action.type);    // 'ui_add_to_cart'
  *   console.log(action.payload); // {productId: 42, qty: 1}
  *   console.log(action.context); // e.g. 'product-list' (from DOM) or undefined
  * });
@@ -76,7 +76,7 @@ export interface Action<K extends keyof ActionRecord = keyof ActionRecord> {
   /**
    * Unique action identifier — must be a key of `ActionRecord`.
    *
-   * @example 'ui:add_to_cart', 'ui:open_drawer', 'upload_complete'
+   * @example 'ui_add_to_cart', 'ui_open_drawer', 'upload_complete'
    */
   readonly type: K;
 

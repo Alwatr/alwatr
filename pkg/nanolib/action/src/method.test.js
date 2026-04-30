@@ -194,9 +194,9 @@ describe('Action — DOM Delegation', () => {
     it('should be idempotent — calling setupActionDelegation twice does not duplicate listeners', async () => {
       setupActionDelegation(); // second call
       const callback = jest.fn();
-      const sub = onAction('ui:idempotent_test', callback);
+      const sub = onAction('ui_idempotent_test', callback);
       const btn = document.createElement('button');
-      btn.setAttribute('on-click', 'ui:idempotent_test:payload');
+      btn.setAttribute('on-click', 'ui_idempotent_test:payload');
       document.body.appendChild(btn);
       btn.click();
       await nextMacrotask();
@@ -208,9 +208,9 @@ describe('Action — DOM Delegation', () => {
     it('should stop dispatching after teardownActionDelegation', async () => {
       teardownActionDelegation();
       const callback = jest.fn();
-      const sub = onAction('ui:teardown_test', callback);
+      const sub = onAction('ui_teardown_test', callback);
       const btn = document.createElement('button');
-      btn.setAttribute('on-click', 'ui:teardown_test:payload');
+      btn.setAttribute('on-click', 'ui_teardown_test:payload');
       document.body.appendChild(btn);
       btn.click();
       await nextMacrotask();
@@ -222,39 +222,39 @@ describe('Action — DOM Delegation', () => {
   describe('click delegation with on-click attribute', () => {
     it('should dispatch action when element with on-click is clicked', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:btn_click', callback);
+      const sub = onAction('ui_btn_click', callback);
       const btn = document.createElement('button');
-      btn.setAttribute('on-click', 'ui:btn_click');
+      btn.setAttribute('on-click', 'ui_btn_click');
       document.body.appendChild(btn);
       btn.click();
       await nextMacrotask();
       expect(callback).toHaveBeenCalledTimes(1);
       const action = callback.mock.calls[0][0];
-      expect(action.type).toBe('ui:btn_click');
+      expect(action.type).toBe('ui_btn_click');
       expect(action.payload).toBeUndefined();
       sub.unsubscribe();
     });
 
     it('should dispatch action with literal payload', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:open_drawer', callback);
+      const sub = onAction('ui_open_drawer', callback);
       const btn = document.createElement('button');
-      btn.setAttribute('on-click', 'ui:open_drawer:settings');
+      btn.setAttribute('on-click', 'ui_open_drawer:settings');
       document.body.appendChild(btn);
       btn.click();
       await nextMacrotask();
       expect(callback).toHaveBeenCalledTimes(1);
       const action = callback.mock.calls[0][0];
-      expect(action.type).toBe('ui:open_drawer');
+      expect(action.type).toBe('ui_open_drawer');
       expect(action.payload).toBe('settings');
       sub.unsubscribe();
     });
 
     it('should dispatch action from child element (event bubbles up)', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:parent_action', callback);
+      const sub = onAction('ui_parent_action', callback);
       const div = document.createElement('div');
-      div.setAttribute('on-click', 'ui:parent_action:from-child');
+      div.setAttribute('on-click', 'ui_parent_action:from-child');
       const span = document.createElement('span');
       span.textContent = 'Click me';
       div.appendChild(span);
@@ -268,7 +268,7 @@ describe('Action — DOM Delegation', () => {
 
     it('should not dispatch when element without on-click is clicked', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:no_attr', callback);
+      const sub = onAction('ui_no_attr', callback);
       const btn = document.createElement('button');
       document.body.appendChild(btn);
       btn.click();
@@ -281,11 +281,11 @@ describe('Action — DOM Delegation', () => {
   describe('context resolution via [action-context]', () => {
     it('should resolve context from nearest [action-context] ancestor', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:ctx_action', callback);
+      const sub = onAction('ui_ctx_action', callback);
       const section = document.createElement('section');
       section.setAttribute('action-context', 'product-list');
       const btn = document.createElement('button');
-      btn.setAttribute('on-click', 'ui:ctx_action:42');
+      btn.setAttribute('on-click', 'ui_ctx_action:42');
       section.appendChild(btn);
       document.body.appendChild(section);
       btn.click();
@@ -299,9 +299,9 @@ describe('Action — DOM Delegation', () => {
 
     it('should have undefined context when no [action-context] ancestor exists', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:no_ctx', callback);
+      const sub = onAction('ui_no_ctx', callback);
       const btn = document.createElement('button');
-      btn.setAttribute('on-click', 'ui:no_ctx:data');
+      btn.setAttribute('on-click', 'ui_no_ctx:data');
       document.body.appendChild(btn);
       btn.click();
       await nextMacrotask();
@@ -312,9 +312,9 @@ describe('Action — DOM Delegation', () => {
 
     it('should resolve context from the element itself if it has [action-context]', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:self_ctx', callback);
+      const sub = onAction('ui_self_ctx', callback);
       const btn = document.createElement('button');
-      btn.setAttribute('on-click', 'ui:self_ctx:data');
+      btn.setAttribute('on-click', 'ui_self_ctx:data');
       btn.setAttribute('action-context', 'self-scope');
       document.body.appendChild(btn);
       btn.click();
@@ -327,9 +327,9 @@ describe('Action — DOM Delegation', () => {
   describe('built-in modifiers', () => {
     it('once modifier should remove attribute after first fire', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:once_action', callback);
+      const sub = onAction('ui_once_action', callback);
       const btn = document.createElement('button');
-      btn.setAttribute('on-click', 'ui:once_action:data; once');
+      btn.setAttribute('on-click', 'ui_once_action:data; once');
       document.body.appendChild(btn);
       btn.click();
       await nextMacrotask();
@@ -345,9 +345,9 @@ describe('Action — DOM Delegation', () => {
 
     it('prevent modifier should call event.preventDefault()', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:prevent_action', callback);
+      const sub = onAction('ui_prevent_action', callback);
       const form = document.createElement('form');
-      form.setAttribute('on-submit', 'ui:prevent_action; prevent');
+      form.setAttribute('on-submit', 'ui_prevent_action; prevent');
       document.body.appendChild(form);
       const preventDefaultSpy = jest.fn();
       const submitEvent = new Event('submit', {bubbles: true, cancelable: true});
@@ -363,9 +363,9 @@ describe('Action — DOM Delegation', () => {
   describe('built-in payload resolvers', () => {
     it('$value resolver should read element.value', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:input_action', callback);
+      const sub = onAction('ui_input_action', callback);
       const input = document.createElement('input');
-      input.setAttribute('on-input', 'ui:input_action:$value');
+      input.setAttribute('on-input', 'ui_input_action:$value');
       input.value = 'hello world';
       document.body.appendChild(input);
       input.dispatchEvent(new Event('input', {bubbles: true}));
@@ -377,11 +377,11 @@ describe('Action — DOM Delegation', () => {
 
     it('$checked resolver should read element.checked', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:check_action', callback);
+      const sub = onAction('ui_check_action', callback);
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
       checkbox.checked = true;
-      checkbox.setAttribute('on-change', 'ui:check_action:$checked');
+      checkbox.setAttribute('on-change', 'ui_check_action:$checked');
       document.body.appendChild(checkbox);
       checkbox.dispatchEvent(new Event('change', {bubbles: true}));
       await nextMacrotask();
@@ -395,9 +395,9 @@ describe('Action — DOM Delegation', () => {
     it('custom modifier should run and can cancel dispatch by returning false', async () => {
       registerModifier('block-all', () => false);
       const callback = jest.fn();
-      const sub = onAction('ui:blocked_action', callback);
+      const sub = onAction('ui_blocked_action', callback);
       const btn = document.createElement('button');
-      btn.setAttribute('on-click', 'ui:blocked_action:data; block-all');
+      btn.setAttribute('on-click', 'ui_blocked_action:data; block-all');
       document.body.appendChild(btn);
       btn.click();
       await nextMacrotask();
@@ -412,9 +412,9 @@ describe('Action — DOM Delegation', () => {
         return true;
       });
       const callback = jest.fn();
-      const sub = onAction('ui:traced_action', callback);
+      const sub = onAction('ui_traced_action', callback);
       const btn = document.createElement('button');
-      btn.setAttribute('on-click', 'ui:traced_action:data; add-trace');
+      btn.setAttribute('on-click', 'ui_traced_action:data; add-trace');
       document.body.appendChild(btn);
       btn.click();
       await nextMacrotask();
@@ -428,9 +428,9 @@ describe('Action — DOM Delegation', () => {
         return element.dataset.id ?? null;
       });
       const callback = jest.fn();
-      const sub = onAction('ui:custom_resolve', callback);
+      const sub = onAction('ui_custom_resolve', callback);
       const btn = document.createElement('button');
-      btn.setAttribute('on-click', 'ui:custom_resolve:$data-id');
+      btn.setAttribute('on-click', 'ui_custom_resolve:$data-id');
       btn.dataset.id = '99';
       document.body.appendChild(btn);
       btn.click();
@@ -444,10 +444,10 @@ describe('Action — DOM Delegation', () => {
   describe('dynamic content support', () => {
     it('should handle elements added after setupActionDelegation', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:dynamic_action', callback);
+      const sub = onAction('ui_dynamic_action', callback);
       // Add element AFTER setup.
       const btn = document.createElement('button');
-      btn.setAttribute('on-click', 'ui:dynamic_action:dynamic');
+      btn.setAttribute('on-click', 'ui_dynamic_action:dynamic');
       document.body.appendChild(btn);
       btn.click();
       await nextMacrotask();
@@ -460,7 +460,7 @@ describe('Action — DOM Delegation', () => {
   describe('invalid syntax handling', () => {
     it('should not dispatch for invalid attribute syntax', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:invalid', callback);
+      const sub = onAction('ui_invalid', callback);
       const btn = document.createElement('button');
       btn.setAttribute('on-click', '!!!invalid syntax!!!');
       document.body.appendChild(btn);
@@ -472,7 +472,7 @@ describe('Action — DOM Delegation', () => {
 
     it('should not dispatch for empty attribute value', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:empty', callback);
+      const sub = onAction('ui_empty', callback);
       const btn = document.createElement('button');
       btn.setAttribute('on-click', '');
       document.body.appendChild(btn);
@@ -499,10 +499,10 @@ describe('Action — DOM Delegation (extra)', () => {
   describe('$formdata resolver', () => {
     it('should resolve $formdata from nearest form', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:submit_form', callback);
+      const sub = onAction('ui_submit_form', callback);
 
       const form = document.createElement('form');
-      form.setAttribute('on-submit', 'ui:submit_form:$formdata; prevent');
+      form.setAttribute('on-submit', 'ui_submit_form:$formdata; prevent');
 
       const nameInput = document.createElement('input');
       nameInput.name = 'username';
@@ -530,10 +530,10 @@ describe('Action — DOM Delegation (extra)', () => {
 
     it('should return null when $formdata has no form ancestor', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:no_form', callback);
+      const sub = onAction('ui_no_form', callback);
 
       const btn = document.createElement('button');
-      btn.setAttribute('on-click', 'ui:no_form:$formdata');
+      btn.setAttribute('on-click', 'ui_no_form:$formdata');
       document.body.appendChild(btn);
       btn.click();
       await nextMacrotask();
@@ -548,10 +548,10 @@ describe('Action — DOM Delegation (extra)', () => {
   describe('validate modifier', () => {
     it('should cancel dispatch when form is invalid', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:validate_fail', callback);
+      const sub = onAction('ui_validate_fail', callback);
 
       const form = document.createElement('form');
-      form.setAttribute('on-submit', 'ui:validate_fail; prevent,validate');
+      form.setAttribute('on-submit', 'ui_validate_fail; prevent,validate');
       form.setAttribute('novalidate', '');
 
       const input = document.createElement('input');
@@ -571,10 +571,10 @@ describe('Action — DOM Delegation (extra)', () => {
 
     it('should allow dispatch when form is valid', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:validate_pass', callback);
+      const sub = onAction('ui_validate_pass', callback);
 
       const form = document.createElement('form');
-      form.setAttribute('on-submit', 'ui:validate_pass; prevent,validate');
+      form.setAttribute('on-submit', 'ui_validate_pass; prevent,validate');
 
       const input = document.createElement('input');
       input.required = true;
@@ -593,10 +593,10 @@ describe('Action — DOM Delegation (extra)', () => {
 
     it('should cancel dispatch when no form ancestor exists', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:validate_no_form', callback);
+      const sub = onAction('ui_validate_no_form', callback);
 
       const btn = document.createElement('button');
-      btn.setAttribute('on-click', 'ui:validate_no_form; validate');
+      btn.setAttribute('on-click', 'ui_validate_no_form; validate');
       document.body.appendChild(btn);
       btn.click();
       await nextMacrotask();
@@ -611,12 +611,12 @@ describe('Action — DOM Delegation (extra)', () => {
   describe('$checked resolver with false', () => {
     it('should resolve $checked as false for unchecked checkbox', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:uncheck_action', callback);
+      const sub = onAction('ui_uncheck_action', callback);
 
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
       checkbox.checked = false;
-      checkbox.setAttribute('on-change', 'ui:uncheck_action:$checked');
+      checkbox.setAttribute('on-change', 'ui_uncheck_action:$checked');
       document.body.appendChild(checkbox);
 
       checkbox.dispatchEvent(new Event('change', {bubbles: true}));
@@ -632,10 +632,10 @@ describe('Action — DOM Delegation (extra)', () => {
   describe('$value resolver with different input types', () => {
     it('should resolve $value from textarea', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:textarea_action', callback);
+      const sub = onAction('ui_textarea_action', callback);
 
       const textarea = document.createElement('textarea');
-      textarea.setAttribute('on-input', 'ui:textarea_action:$value');
+      textarea.setAttribute('on-input', 'ui_textarea_action:$value');
       textarea.value = 'multi\nline\ntext';
       document.body.appendChild(textarea);
 
@@ -650,10 +650,10 @@ describe('Action — DOM Delegation (extra)', () => {
 
     it('should resolve $value from select element', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:select_action', callback);
+      const sub = onAction('ui_select_action', callback);
 
       const select = document.createElement('select');
-      select.setAttribute('on-change', 'ui:select_action:$value');
+      select.setAttribute('on-change', 'ui_select_action:$value');
       const opt1 = document.createElement('option');
       opt1.value = 'a';
       opt1.textContent = 'Option A';
@@ -678,14 +678,14 @@ describe('Action — DOM Delegation (extra)', () => {
   describe('nested context resolution', () => {
     it('should resolve nearest context when contexts are nested', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:nested_ctx', callback);
+      const sub = onAction('ui_nested_ctx', callback);
 
       const outer = document.createElement('div');
       outer.setAttribute('action-context', 'outer');
       const inner = document.createElement('div');
       inner.setAttribute('action-context', 'inner');
       const btn = document.createElement('button');
-      btn.setAttribute('on-click', 'ui:nested_ctx:data');
+      btn.setAttribute('on-click', 'ui_nested_ctx:data');
 
       inner.appendChild(btn);
       outer.appendChild(inner);
@@ -705,10 +705,10 @@ describe('Action — DOM Delegation (extra)', () => {
   describe('multiple event types', () => {
     it('should handle input event delegation', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:input_evt', callback);
+      const sub = onAction('ui_input_evt', callback);
 
       const input = document.createElement('input');
-      input.setAttribute('on-input', 'ui:input_evt:$value');
+      input.setAttribute('on-input', 'ui_input_evt:$value');
       input.value = 'typed';
       document.body.appendChild(input);
 
@@ -721,10 +721,10 @@ describe('Action — DOM Delegation (extra)', () => {
 
     it('should handle change event delegation', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:change_evt', callback);
+      const sub = onAction('ui_change_evt', callback);
 
       const select = document.createElement('select');
-      select.setAttribute('on-change', 'ui:change_evt:$value');
+      select.setAttribute('on-change', 'ui_change_evt:$value');
       const opt = document.createElement('option');
       opt.value = 'selected';
       opt.selected = true;
@@ -742,10 +742,10 @@ describe('Action — DOM Delegation (extra)', () => {
   describe('unknown modifier handling', () => {
     it('should abort dispatch when an unknown modifier is encountered', async () => {
       const callback = jest.fn();
-      const sub = onAction('ui:unknown_mod', callback);
+      const sub = onAction('ui_unknown_mod', callback);
 
       const btn = document.createElement('button');
-      btn.setAttribute('on-click', 'ui:unknown_mod:data; nonexistent-modifier');
+      btn.setAttribute('on-click', 'ui_unknown_mod:data; nonexistent-modifier');
       document.body.appendChild(btn);
       btn.click();
       await nextMacrotask();
@@ -761,10 +761,10 @@ describe('Action — DOM Delegation (extra)', () => {
       setupActionDelegation();
 
       const callback = jest.fn();
-      const sub = onAction('ui:re_setup', callback);
+      const sub = onAction('ui_re_setup', callback);
 
       const btn = document.createElement('button');
-      btn.setAttribute('on-click', 'ui:re_setup:data');
+      btn.setAttribute('on-click', 'ui_re_setup:data');
       document.body.appendChild(btn);
       btn.click();
       await nextMacrotask();
@@ -780,10 +780,10 @@ describe('Action — DOM Delegation (extra)', () => {
       setupActionDelegation(['click', 'keydown']);
 
       const callback = jest.fn();
-      const sub = onAction('ui:key_action', callback);
+      const sub = onAction('ui_key_action', callback);
 
       const input = document.createElement('input');
-      input.setAttribute('on-keydown', 'ui:key_action:enter');
+      input.setAttribute('on-keydown', 'ui_key_action:enter');
       document.body.appendChild(input);
 
       input.dispatchEvent(new Event('keydown', {bubbles: true}));

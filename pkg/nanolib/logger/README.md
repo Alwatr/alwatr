@@ -153,18 +153,18 @@ The `createLogger` function returns a logger instance with the following methods
 ## Best Practices
 
 1. **Use Meaningful Scopes:**
-    Choose descriptive scopes to easily identify the source of logs. A good practice is to use the module or component path, e.g., `app:http-client`, `ui:user-form`.
+   Choose descriptive scopes to easily identify the source of logs. A good practice is to use the module or component path, e.g., `app:http-client`, `ui_user-form`.
 
 2. **Log Arguments and Results in Development:**
-    Use `logMethodArgs` and `logMethodFull` generously during development. Since they are stripped in production builds, they won't impact performance.
+   Use `logMethodArgs` and `logMethodFull` generously during development. Since they are stripped in production builds, they won't impact performance.
 
 3. **Distinguish Between `incident`, `accident`, and `error`:**
-    - **`incident`**: For events that are part of the normal application flow but are worth noting (e.g., cache miss, user abort).
-    - **`accident`**: For handled errors or unexpected situations where the app can recover (e.g., failed API call with a retry mechanism).
-    - **`error`**: For critical failures that disrupt functionality and require immediate attention.
+   - **`incident`**: For events that are part of the normal application flow but are worth noting (e.g., cache miss, user abort).
+   - **`accident`**: For handled errors or unexpected situations where the app can recover (e.g., failed API call with a retry mechanism).
+   - **`error`**: For critical failures that disrupt functionality and require immediate attention.
 
 4. **Keep Production Logs Clean:**
-    Rely on `accident` and `error` for production logs. These are always active and highlight important issues without the noise of debug messages.
+   Rely on `accident` and `error` for production logs. These are always active and highlight important issues without the noise of debug messages.
 
 ---
 
@@ -366,7 +366,7 @@ fetchData('/api/data', {retries: 1});
 ## بهترین شیوه‌ها (Best Practices)
 
 ۱. **از حوزه‌های (Scopes) معنادار استفاده کنید:**
-حوزه‌های توصیفی انتخاب کنید تا منبع لاگ‌ها به راحتی قابل شناسایی باشد. یک روش خوب، استفاده از مسیر ماژول یا کامپوننت است، مانند: `app:http-client` یا `ui:user-form`.
+حوزه‌های توصیفی انتخاب کنید تا منبع لاگ‌ها به راحتی قابل شناسایی باشد. یک روش خوب، استفاده از مسیر ماژول یا کامپوننت است، مانند: `app:http-client` یا `ui_user-form`.
 
 ۲. **در محیط توسعه، آرگومان‌ها و نتایج را لاگ کنید:**
 در طول توسعه، به طور گسترده از `logMethodArgs` و `logMethodFull` استفاده کنید. از آنجایی که این لاگ‌ها در بیلد پروداکشن حذف می‌شوند، تأثیری بر عملکرد نخواهند داشت.

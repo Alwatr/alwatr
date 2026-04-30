@@ -59,23 +59,23 @@ import type {Action, ActionRecord} from './type.js';
  *
  * | Capture group | Matches                                | Example                    |
  * | ------------- | -------------------------------------- | -------------------------- |
- * | 1             | Action identifier                      | `ui:open_drawer`           |
+ * | 1             | Action identifier                      | `ui_open_drawer`           |
  * | 2             | Optional payload token or literal      | `main_menu` / `$value`     |
  * | 3             | Optional comma-separated modifier list | `prevent,validate`         |
  *
  * @example
  * ```
- * 'ui:close_drawer'
- *   → actionId='ui:close_drawer', payload=undefined, modifiers={}
+ * 'ui_close_drawer'
+ *   → actionId='ui_close_drawer', payload=undefined, modifiers={}
  *
- * 'ui:open_drawer:main_menu'
- *   → actionId='ui:open_drawer', payload='main_menu', modifiers={}
+ * 'ui_open_drawer:main_menu'
+ *   → actionId='ui_open_drawer', payload='main_menu', modifiers={}
  *
- * 'ui:submit_form:$formdata; prevent,validate'
- *   → actionId='ui:submit_form', payload='$formdata', modifiers={'prevent','validate'}
+ * 'ui_submit_form:$formdata; prevent,validate'
+ *   → actionId='ui_submit_form', payload='$formdata', modifiers={'prevent','validate'}
  * ```
  */
-const syntaxRegex = /^(ui:[a-z0-9_-]+)(?::([^;]+))?(?:;\s*([a-z0-9_,-]+))?$/;
+const syntaxRegex = /^(ui_[a-z0-9_-]+)(?::([^;]+))?(?:;\s*([a-z0-9_,-]+))?$/;
 
 // ─── Parsed Action Descriptor ─────────────────────────────────────────────────
 
@@ -105,7 +105,7 @@ interface ActionDescriptor {
  *
  * The cache key is the raw attribute value string. No composite key with
  * event type is needed because the attribute name already encodes the event
- * type — `on-click="ui:open_drawer"` and `on-submit="ui:open_drawer"` are two
+ * type — `on-click="ui_open_drawer"` and `on-submit="ui_open_drawer"` are two
  * separate attributes with the same value string, but they are read from
  * different attribute names and never collide in this cache.
  *
@@ -301,12 +301,12 @@ export const DEFAULT_DELEGATED_EVENTS: readonly string[] = ['click', 'submit', '
  *
  * ```html
  * <section action-context="product-list">
- *   <button on-click="ui:add_to_cart:42">Add</button>
+ *   <button on-click="ui_add_to_cart:42">Add</button>
  * </section>
  * ```
  *
  * ```ts
- * onAction('ui:add_to_cart', (action) => {
+ * onAction('ui_add_to_cart', (action) => {
  *   console.log(action.context); // 'product-list'
  * });
  * ```
@@ -320,7 +320,7 @@ export const DEFAULT_DELEGATED_EVENTS: readonly string[] = ['click', 'submit', '
  * // One call activates the entire page.
  * setupActionDelegation();
  *
- * onAction('ui:open_drawer', (action) => openDrawer(action.payload));
+ * onAction('ui_open_drawer', (action) => openDrawer(action.payload));
  * ```
  *
  * @example — with extra event types
