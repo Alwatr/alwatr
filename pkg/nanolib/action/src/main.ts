@@ -17,7 +17,7 @@
  * import {setupActionDelegation, onAction} from '@alwatr/action';
  *
  * setupActionDelegation();
- * onAction('ui:open_drawer', (action) => openDrawer(action.payload));
+ * onAction('ui_open_drawer', (action) => openDrawer(action.payload));
  * ```
  *
  * ## Attribute syntax
@@ -27,9 +27,9 @@
  * ```
  *
  * ```html
- * <button on-click="ui:open_drawer:main">Open</button>
- * <input on-input="ui:search_query:$value" />
- * <form on-submit="ui:submit_form:$formdata; prevent,validate" novalidate>…</form>
+ * <button on-click="ui_open_drawer:main">Open</button>
+ * <input on-input="ui_search_query:$value" />
+ * <form on-submit="ui_submit_form:$formdata; prevent,validate" novalidate>…</form>
  * ```
  *
  * ## Context scoping
@@ -40,12 +40,12 @@
  *
  * ```html
  * <section action-context="product-list">
- *   <button on-click="ui:add_to_cart:42">Add</button>
+ *   <button on-click="ui_add_to_cart:42">Add</button>
  * </section>
  * ```
  *
  * ```ts
- * onAction('ui:add_to_cart', (action) => {
+ * onAction('ui_add_to_cart', (action) => {
  *   console.log(action.context); // 'product-list'
  *   console.log(action.payload); // '42'
  * });
@@ -53,7 +53,7 @@
  *
  * ## Programmatic dispatch
  *
- * Code-originated actions should not use the `ui:` prefix — that prefix is
+ * Code-originated actions should not use the `ui_` prefix — that prefix is
  * reserved for DOM-originated actions dispatched via HTML attributes.
  *
  * ```ts
@@ -70,12 +70,12 @@
  * // src/action-record.ts
  * declare module '@alwatr/action' {
  *   interface ActionRecord {
- *     // UI-originated actions — must start with 'ui:'
- *     'ui:open_drawer': string;
- *     'ui:add_to_cart': {productId: number; qty: number};
- *     'ui:logout': void;
+ *     // UI-originated actions — must start with 'ui_'
+ *     'ui_open_drawer': string;
+ *     'ui_add_to_cart': {productId: number; qty: number};
+ *     'ui_logout': void;
  *
- *     // Code-originated actions — no 'ui:' prefix
+ *     // Code-originated actions — no 'ui_' prefix
  *     'upload_complete': string;
  *     'auth_expired': void;
  *   }

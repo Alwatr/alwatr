@@ -38,9 +38,9 @@ describe('Delegate — Attribute Syntax Parsing', () => {
 
   it('should parse action with hyphenated action id', async () => {
     const callback = jest.fn();
-    const sub = onAction('ui:open-drawer', callback);
+    const sub = onAction('ui_open-drawer', callback);
     const btn = document.createElement('button');
-    btn.setAttribute('on-click', 'ui:open-drawer:main');
+    btn.setAttribute('on-click', 'ui_open-drawer:main');
     document.body.appendChild(btn);
     btn.click();
     await nextMacrotask();
@@ -51,9 +51,9 @@ describe('Delegate — Attribute Syntax Parsing', () => {
 
   it('should parse action with numeric payload', async () => {
     const callback = jest.fn();
-    const sub = onAction('ui:select-item', callback);
+    const sub = onAction('ui_select-item', callback);
     const btn = document.createElement('button');
-    btn.setAttribute('on-click', 'ui:select-item:42');
+    btn.setAttribute('on-click', 'ui_select-item:42');
     document.body.appendChild(btn);
     btn.click();
     await nextMacrotask();
@@ -67,9 +67,9 @@ describe('Delegate — Attribute Syntax Parsing', () => {
     registerModifier('mod-a', () => true);
     registerModifier('mod-b', () => true);
     const callback = jest.fn();
-    const sub = onAction('ui:multi-mod', callback);
+    const sub = onAction('ui_multi-mod', callback);
     const btn = document.createElement('button');
-    btn.setAttribute('on-click', 'ui:multi-mod:data; mod-a,mod-b');
+    btn.setAttribute('on-click', 'ui_multi-mod:data; mod-a,mod-b');
     document.body.appendChild(btn);
     btn.click();
     await nextMacrotask();
@@ -77,7 +77,7 @@ describe('Delegate — Attribute Syntax Parsing', () => {
     sub.unsubscribe();
   });
 
-  it('should not parse action without ui: prefix', async () => {
+  it('should not parse action without ui_ prefix', async () => {
     const callback = jest.fn();
     const sub = onAction('no_prefix', callback);
     const btn = document.createElement('button');
@@ -85,16 +85,16 @@ describe('Delegate — Attribute Syntax Parsing', () => {
     document.body.appendChild(btn);
     btn.click();
     await nextMacrotask();
-    // Regex requires ui: prefix — should not match.
+    // Regex requires ui_ prefix — should not match.
     expect(callback).not.toHaveBeenCalled();
     sub.unsubscribe();
   });
 
   it('should handle whitespace around semicolon in modifiers', async () => {
     const callback = jest.fn();
-    const sub = onAction('ui:ws-test', callback);
+    const sub = onAction('ui_ws-test', callback);
     const btn = document.createElement('button');
-    btn.setAttribute('on-click', 'ui:ws-test:data; prevent');
+    btn.setAttribute('on-click', 'ui_ws-test:data; prevent');
     document.body.appendChild(btn);
     const preventDefaultSpy = jest.fn();
     const clickEvent = new Event('click', {bubbles: true, cancelable: true});
@@ -108,9 +108,9 @@ describe('Delegate — Attribute Syntax Parsing', () => {
 
   it('should handle action id with only lowercase and underscores', async () => {
     const callback = jest.fn();
-    const sub = onAction('ui:my_action_name', callback);
+    const sub = onAction('ui_my_action_name', callback);
     const btn = document.createElement('button');
-    btn.setAttribute('on-click', 'ui:my_action_name');
+    btn.setAttribute('on-click', 'ui_my_action_name');
     document.body.appendChild(btn);
     btn.click();
     await nextMacrotask();
@@ -133,13 +133,13 @@ describe('Delegate — Descriptor Caching', () => {
 
   it('should cache parsed descriptors — same attribute value dispatches correctly on repeated clicks', async () => {
     const callback = jest.fn();
-    const sub = onAction('ui:cached-action', callback);
+    const sub = onAction('ui_cached-action', callback);
 
     // Create two buttons with the same attribute value to exercise the cache.
     const btn1 = document.createElement('button');
-    btn1.setAttribute('on-click', 'ui:cached-action:shared');
+    btn1.setAttribute('on-click', 'ui_cached-action:shared');
     const btn2 = document.createElement('button');
-    btn2.setAttribute('on-click', 'ui:cached-action:shared');
+    btn2.setAttribute('on-click', 'ui_cached-action:shared');
     document.body.appendChild(btn1);
     document.body.appendChild(btn2);
 
@@ -156,7 +156,7 @@ describe('Delegate — Descriptor Caching', () => {
 
   it('should cache invalid syntax as null — repeated clicks on invalid attribute do not dispatch', async () => {
     const callback = jest.fn();
-    const sub = onAction('ui:invalid-cache', callback);
+    const sub = onAction('ui_invalid-cache', callback);
 
     const btn = document.createElement('button');
     btn.setAttribute('on-click', '!!!invalid!!!');
@@ -200,9 +200,9 @@ describe('Delegate — Modifier Execution Order', () => {
     });
 
     const callback = jest.fn();
-    const sub = onAction('ui:order-test', callback);
+    const sub = onAction('ui_order-test', callback);
     const btn = document.createElement('button');
-    btn.setAttribute('on-click', 'ui:order-test:data; order-a,order-b,order-c');
+    btn.setAttribute('on-click', 'ui_order-test:data; order-a,order-b,order-c');
     document.body.appendChild(btn);
     btn.click();
     await nextMacrotask();
@@ -225,9 +225,9 @@ describe('Delegate — Modifier Execution Order', () => {
     });
 
     const callback = jest.fn();
-    const sub = onAction('ui:all-pass', callback);
+    const sub = onAction('ui_all-pass', callback);
     const btn = document.createElement('button');
-    btn.setAttribute('on-click', 'ui:all-pass:data; pass-a,pass-b');
+    btn.setAttribute('on-click', 'ui_all-pass:data; pass-a,pass-b');
     document.body.appendChild(btn);
     btn.click();
     await nextMacrotask();
@@ -253,9 +253,9 @@ describe('Delegate — Once Modifier Edge Cases', () => {
   it('once modifier should remove attribute even when another modifier cancels dispatch', async () => {
     registerModifier('always-cancel', () => false);
     const callback = jest.fn();
-    const sub = onAction('ui:once-cancel', callback);
+    const sub = onAction('ui_once-cancel', callback);
     const btn = document.createElement('button');
-    btn.setAttribute('on-click', 'ui:once-cancel:data; once,always-cancel');
+    btn.setAttribute('on-click', 'ui_once-cancel:data; once,always-cancel');
     document.body.appendChild(btn);
     btn.click();
     await nextMacrotask();
@@ -268,9 +268,9 @@ describe('Delegate — Once Modifier Edge Cases', () => {
 
   it('once modifier combined with prevent should work correctly', async () => {
     const callback = jest.fn();
-    const sub = onAction('ui:once-prevent', callback);
+    const sub = onAction('ui_once-prevent', callback);
     const form = document.createElement('form');
-    form.setAttribute('on-submit', 'ui:once-prevent; once,prevent');
+    form.setAttribute('on-submit', 'ui_once-prevent; once,prevent');
     document.body.appendChild(form);
 
     const preventDefaultSpy = jest.fn();
@@ -305,9 +305,9 @@ describe('Delegate — Payload Resolution Edge Cases', () => {
 
   it('should use literal payload when no resolver matches the token', async () => {
     const callback = jest.fn();
-    const sub = onAction('ui:literal-payload', callback);
+    const sub = onAction('ui_literal-payload', callback);
     const btn = document.createElement('button');
-    btn.setAttribute('on-click', 'ui:literal-payload:my-literal-value');
+    btn.setAttribute('on-click', 'ui_literal-payload:my-literal-value');
     document.body.appendChild(btn);
     btn.click();
     await nextMacrotask();
@@ -319,9 +319,9 @@ describe('Delegate — Payload Resolution Edge Cases', () => {
 
   it('should set payload to undefined when no payload token is present', async () => {
     const callback = jest.fn();
-    const sub = onAction('ui:no-payload', callback);
+    const sub = onAction('ui_no-payload', callback);
     const btn = document.createElement('button');
-    btn.setAttribute('on-click', 'ui:no-payload');
+    btn.setAttribute('on-click', 'ui_no-payload');
     document.body.appendChild(btn);
     btn.click();
     await nextMacrotask();
@@ -336,10 +336,10 @@ describe('Delegate — Payload Resolution Edge Cases', () => {
       return `resolved-${element.id}`;
     });
     const callback = jest.fn();
-    const sub = onAction('ui:custom-resolve-test', callback);
+    const sub = onAction('ui_custom-resolve-test', callback);
     const btn = document.createElement('button');
     btn.id = 'btn-42';
-    btn.setAttribute('on-click', 'ui:custom-resolve-test:$custom-test');
+    btn.setAttribute('on-click', 'ui_custom-resolve-test:$custom-test');
     document.body.appendChild(btn);
     btn.click();
     await nextMacrotask();
@@ -364,11 +364,11 @@ describe('Delegate — Context Resolution Edge Cases', () => {
 
   it('should resolve empty string context when action-context attribute is empty', async () => {
     const callback = jest.fn();
-    const sub = onAction('ui:empty-ctx', callback);
+    const sub = onAction('ui_empty-ctx', callback);
     const section = document.createElement('section');
     section.setAttribute('action-context', '');
     const btn = document.createElement('button');
-    btn.setAttribute('on-click', 'ui:empty-ctx:data');
+    btn.setAttribute('on-click', 'ui_empty-ctx:data');
     section.appendChild(btn);
     document.body.appendChild(section);
     btn.click();
@@ -385,7 +385,7 @@ describe('Delegate — Context Resolution Edge Cases', () => {
 
   it('should resolve context from deeply nested ancestor', async () => {
     const callback = jest.fn();
-    const sub = onAction('ui:deep-ctx', callback);
+    const sub = onAction('ui_deep-ctx', callback);
 
     const root = document.createElement('div');
     root.setAttribute('action-context', 'deep-root');
@@ -393,7 +393,7 @@ describe('Delegate — Context Resolution Edge Cases', () => {
     const level2 = document.createElement('div');
     const level3 = document.createElement('div');
     const btn = document.createElement('button');
-    btn.setAttribute('on-click', 'ui:deep-ctx:data');
+    btn.setAttribute('on-click', 'ui_deep-ctx:data');
 
     level3.appendChild(btn);
     level2.appendChild(level3);
@@ -411,7 +411,7 @@ describe('Delegate — Context Resolution Edge Cases', () => {
 
   it('should resolve nearest context when multiple ancestors have action-context', async () => {
     const callback = jest.fn();
-    const sub = onAction('ui:multi-ctx', callback);
+    const sub = onAction('ui_multi-ctx', callback);
 
     const outer = document.createElement('div');
     outer.setAttribute('action-context', 'outer-ctx');
@@ -420,7 +420,7 @@ describe('Delegate — Context Resolution Edge Cases', () => {
     const inner = document.createElement('div');
     inner.setAttribute('action-context', 'inner-ctx');
     const btn = document.createElement('button');
-    btn.setAttribute('on-click', 'ui:multi-ctx:data');
+    btn.setAttribute('on-click', 'ui_multi-ctx:data');
 
     inner.appendChild(btn);
     middle.appendChild(inner);
@@ -452,14 +452,14 @@ describe('Delegate — Dynamic Content', () => {
 
   it('should handle elements added dynamically after initial setup', async () => {
     const callback = jest.fn();
-    const sub = onAction('ui:dynamic-add', callback);
+    const sub = onAction('ui_dynamic-add', callback);
 
     const container = document.createElement('div');
     document.body.appendChild(container);
 
     // Simulate dynamic content by creating and appending elements after setup.
     const btn = document.createElement('button');
-    btn.setAttribute('on-click', 'ui:dynamic-add:injected');
+    btn.setAttribute('on-click', 'ui_dynamic-add:injected');
     container.appendChild(btn);
 
     btn.click();
@@ -472,14 +472,14 @@ describe('Delegate — Dynamic Content', () => {
 
   it('should handle elements moved between containers', async () => {
     const callback = jest.fn();
-    const sub = onAction('ui:moved-action', callback);
+    const sub = onAction('ui_moved-action', callback);
 
     const container1 = document.createElement('div');
     container1.setAttribute('action-context', 'container-1');
     const container2 = document.createElement('div');
     container2.setAttribute('action-context', 'container-2');
     const btn = document.createElement('button');
-    btn.setAttribute('on-click', 'ui:moved-action:data');
+    btn.setAttribute('on-click', 'ui_moved-action:data');
 
     container1.appendChild(btn);
     document.body.appendChild(container1);
@@ -514,10 +514,10 @@ describe('Delegate — Multiple Event Types', () => {
     setupActionDelegation([...DEFAULT_DELEGATED_EVENTS, 'focus']);
 
     const callback = jest.fn();
-    const sub = onAction('ui:focus-action', callback);
+    const sub = onAction('ui_focus-action', callback);
 
     const input = document.createElement('input');
-    input.setAttribute('on-focus', 'ui:focus-action:focused');
+    input.setAttribute('on-focus', 'ui_focus-action:focused');
     document.body.appendChild(input);
 
     input.dispatchEvent(new Event('focus', {bubbles: true}));
@@ -532,10 +532,10 @@ describe('Delegate — Multiple Event Types', () => {
     setupActionDelegation(['click']); // only click
 
     const callback = jest.fn();
-    const sub = onAction('ui:unregistered-evt', callback);
+    const sub = onAction('ui_unregistered-evt', callback);
 
     const input = document.createElement('input');
-    input.setAttribute('on-input', 'ui:unregistered-evt:data');
+    input.setAttribute('on-input', 'ui_unregistered-evt:data');
     document.body.appendChild(input);
 
     input.dispatchEvent(new Event('input', {bubbles: true}));
@@ -553,9 +553,9 @@ describe('Delegate — Teardown Cleanup', () => {
     setupActionDelegation();
 
     const callback = jest.fn();
-    const sub = onAction('ui:cache-clear', callback);
+    const sub = onAction('ui_cache-clear', callback);
     const btn = document.createElement('button');
-    btn.setAttribute('on-click', 'ui:cache-clear:first');
+    btn.setAttribute('on-click', 'ui_cache-clear:first');
     document.body.appendChild(btn);
     btn.click();
     await nextMacrotask();
@@ -567,7 +567,7 @@ describe('Delegate — Teardown Cleanup', () => {
     // Re-setup — cache should be cleared.
     setupActionDelegation();
     const btn2 = document.createElement('button');
-    btn2.setAttribute('on-click', 'ui:cache-clear:second');
+    btn2.setAttribute('on-click', 'ui_cache-clear:second');
     document.body.appendChild(btn2);
     btn2.click();
     await nextMacrotask();

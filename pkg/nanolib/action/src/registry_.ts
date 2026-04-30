@@ -16,7 +16,7 @@ export const modifierRegistry = new Map<string, ModifierHandler>();
  * Registry of all named payload resolvers.
  *
  * Keys are resolver tokens used in the `on-<eventType>` attribute syntax
- * (e.g. `on-input="ui:search_query:$value"`). Values are `PayloadResolver` functions.
+ * (e.g. `on-input="ui_search_query:$value"`). Values are `PayloadResolver` functions.
  * Populated at module load with built-in resolvers; extended at runtime via
  * `registerPayloadResolver`.
  *
@@ -32,7 +32,7 @@ export const payloadRegistry = new Map<string, PayloadResolver>();
  * Use it to suppress the browser's default behaviour (e.g. form submission,
  * link navigation, context menu).
  *
- * @example `<form on-submit="ui:submit-form; prevent">`
+ * @example `<form on-submit="ui_submit-form; prevent">`
  */
 modifierRegistry.set('prevent', (event) => {
   event.preventDefault();
@@ -49,7 +49,7 @@ modifierRegistry.set('prevent', (event) => {
  *
  * Pair with `prevent` on `submit` events to avoid page reloads:
  *
- * @example `<form on-submit="ui:submit_form:$formdata; prevent,validate" novalidate>`
+ * @example `<form on-submit="ui_submit_form:$formdata; prevent,validate" novalidate>`
  */
 modifierRegistry.set('validate', (_event, element) => {
   const form = element instanceof HTMLFormElement ? element : element.closest('form');
@@ -65,7 +65,7 @@ modifierRegistry.set('validate', (_event, element) => {
  * Works with any element that exposes a `value` property: `<input>`,
  * `<textarea>`, `<select>`. Returns `null` for elements without `.value`.
  *
- * @example `<input on-input="ui:search_query:$value" />`
+ * @example `<input on-input="ui_search_query:$value" />`
  */
 payloadRegistry.set('$value', (_event, element) => {
   return 'value' in element ? (element as {value: unknown}).value : null;
@@ -78,9 +78,9 @@ payloadRegistry.set('$value', (_event, element) => {
  * Looks for a `<form>` ancestor (or the element itself). Returns `null` when no
  * form is found.
  *
- * @example `<form on-submit="ui:submit_form:$formdata; prevent,validate">`
+ * @example `<form on-submit="ui_submit_form:$formdata; prevent,validate">`
  * ```ts
- * onAction('ui:submit_form', (action) => {
+ * onAction('ui_submit_form', (action) => {
  *   console.log(action.payload); // {username: 'ali', password: '…'}
  * });
  * ```
@@ -96,9 +96,9 @@ payloadRegistry.set('$formdata', (_event, element) => {
  * Works with `<input type="checkbox">` and `<input type="radio">`.
  * Returns `null` for elements that do not have a `checked` property.
  *
- * @example `<input type="checkbox" on-change="ui:toggle_feature:$checked" />`
+ * @example `<input type="checkbox" on-change="ui_toggle_feature:$checked" />`
  * ```ts
- * onAction('ui:toggle_feature', (action) => {
+ * onAction('ui_toggle_feature', (action) => {
  *   console.log(action.payload); // true or false
  *   featureSignal.set(action.payload);
  * });
