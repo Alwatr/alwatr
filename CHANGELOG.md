@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.20.0](https://github.com/Alwatr/alwatr/compare/v9.19.1...v9.20.0) (2026-04-30)
+
+### ✨ Features
+
+* **action-syntax:** require ui: namespace prefix for UI actions ([4b9ef67](https://github.com/Alwatr/alwatr/commit/4b9ef672928a728ef1a541eed53b9512ddefc700))
+
+### 🐛 Bug Fixes
+
+* **action-syntax:** require ui: namespace prefix in action names ([adc861b](https://github.com/Alwatr/alwatr/commit/adc861b460d885361ba18896b82b6a07d04d4e62))
+
+### 🔨 Code Refactoring
+
+* **directive:** defer update execution until lifecycle initialization ([f7dd588](https://github.com/Alwatr/alwatr/commit/f7dd588817428d1dcb6c3844476dead016cf4cc1))
+* **directive:** rename initialized_ to initialized__ for clarity and consistency ([e1191e8](https://github.com/Alwatr/alwatr/commit/e1191e89530cf0a3801e8dacb698fbc409d93c2c))
+
+### 🔗 Dependencies update
+
+* add @happy-dom/global-registrator dependency ([e893c6b](https://github.com/Alwatr/alwatr/commit/e893c6b4573b91e70af5d3e515754b5ba90820f4))
+
 ## [9.19.1](https://github.com/Alwatr/alwatr/compare/v9.19.0...v9.19.1) (2026-04-30)
 
 ### 🐛 Bug Fixes

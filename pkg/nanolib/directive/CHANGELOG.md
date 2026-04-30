@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.20.0](https://github.com/Alwatr/alwatr/compare/v9.19.1...v9.20.0) (2026-04-30)
+
+### 🔨 Code Refactoring
+
+* **directive:** defer update execution until lifecycle initialization ([f7dd588](https://github.com/Alwatr/alwatr/commit/f7dd588817428d1dcb6c3844476dead016cf4cc1))
+* **directive:** rename initialized_ to initialized__ for clarity and consistency ([e1191e8](https://github.com/Alwatr/alwatr/commit/e1191e89530cf0a3801e8dacb698fbc409d93c2c))
+
 ## [9.18.0](https://github.com/Alwatr/alwatr/compare/v9.17.0...v9.18.0) (2026-04-28)
 
 ### ✨ Features
