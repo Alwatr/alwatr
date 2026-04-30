@@ -188,3 +188,101 @@ describe('ChannelSignal', () => {
     });
   });
 });
+
+describe('ChannelSignal — extra coverage', () => {
+  it('should support priority option on subscribe (raw stream)', async () => {
+    const channel = new ChannelSignal({name: 'priority-test'});
+    /** @type {string[]} */
+    const order = [];
+    const normalCb = jest.fn(() => order.push('normal'));
+    const priorityCb = jest.fn(() => order.push('priority'));
+
+    channel.subscribe(normalCb);
+    channel.subscribe(priorityCb, {priority: true});
+
+    channel.dispatch('open-drawer', {panel: 'test'});
+    await delay.nextMacrotask();
+
+    expect(order).toEqual(['priority', 'normal']);
+    channel.destroy();
+  });
+
+  it('should support once option on subscribe (raw stream)', async () => {
+    const channel = new ChannelSignal({name: 'once-raw-test'});
+    const callback = jest.fn();
+
+    channel.subscribe(callback, {once: true});
+
+    channel.dispatch('open-drawer', {panel: 'first'});
+    await delay.nextMacrotask();
+    expect(callback).toHaveBeenCalledTimes(1);
+
+    channel.dispatch('open-drawer', {panel: 'second'});
+    await delay.nextMacrotask();
+    expect(callback).toHaveBeenCalledTimes(1); // Not called again.
+
+    channel.destroy();
+  });
+
+  it('should have isDestroyed = false initially', () => {
+    const channel = new ChannelSignal({name: 'is-destroyed-ch'});
+    expect(channel.isDestroyed).toBe(false);
+    channel.destroy();
+  });
+
+  it('should have isDestroyed = true after destroy', () => {
+    const channel = new ChannelSignal({name: 'is-destroyed-ch-2'});
+    channel.destroy();
+    expect(channel.isDestroyed).toBe(true);
+  });
+
+  it('should clean up named handlers on destroy', async () => {
+    const channel = new ChannelSignal({name: 'cleanup-ch'});
+    const callback = jest.fn();
+    channel.on('open-drawer', callback);
+    channel.destroy();
+
+    // After destroy, dispatch should throw.
+    expect(() => channel.dispatch('open-drawer', {panel: 'x'})).toThrow();
+  });
+
+  it('should handle multiple different message names', async () => {
+    const channel = new ChannelSignal({name: 'multi-name'});
+    const openCb = jest.fn();
+    const closeCb = jest.fn();
+    const toastCb = jest.fn();
+
+    channel.on('open-drawer', openCb);
+    channel.on('close-drawer', closeCb);
+    channel.on('show-toast', toastCb);
+
+    channel.dispatch('open-drawer', {panel: 'settings'});
+    channel.dispatch('show-toast', {message: 'hello'});
+    await delay.nextMacrotask();
+
+    expect(openCb).toHaveBeenCalledTimes(1);
+    expect(openCb).toHaveBeenCalledWith({panel: 'settings'});
+    expect(closeCb).not.toHaveBeenCalled();
+    expect(toastCb).toHaveBeenCalledTimes(1);
+    expect(toastCb).toHaveBeenCalledWith({message: 'hello'});
+
+    channel.destroy();
+  });
+
+  it('should handle rapid dispatches of the same name', async () => {
+    const channel = new ChannelSignal({name: 'rapid-ch'});
+    const callback = jest.fn();
+    channel.on('open-drawer', callback);
+
+    for (let i = 0; i < 5; i++) {
+      channel.dispatch('open-drawer', {panel: `p${i}`});
+    }
+    await delay.nextMacrotask();
+
+    expect(callback).toHaveBeenCalledTimes(5);
+    expect(callback).toHaveBeenNthCalledWith(1, {panel: 'p0'});
+    expect(callback).toHaveBeenNthCalledWith(5, {panel: 'p4'});
+
+    channel.destroy();
+  });
+});

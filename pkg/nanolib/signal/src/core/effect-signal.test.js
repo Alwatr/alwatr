@@ -16,7 +16,7 @@ describe('EffectSignal', () => {
     if (effectSignal && !effectSignal.isDestroyed) {
       effectSignal.destroy();
     }
-    depSignal.destroy();
+    if (!depSignal.isDestroyed) depSignal.destroy();
   });
 
   it('should be defined', () => {
@@ -131,6 +131,119 @@ describe('EffectSignal', () => {
     await delay.by(5);
 
     expect(runFn).not.toHaveBeenCalled();
+  });
+
+  // ── Extra coverage ──────────────────────────────────────────────────────
+
+  describe('isDestroyed', () => {
+    it('should be false initially', () => {
+      effectSignal = new EffectSignal({deps: [depSignal], run: () => {}});
+      expect(effectSignal.isDestroyed).toBe(false);
+    });
+
+    it('should be true after destroy', () => {
+      effectSignal = new EffectSignal({deps: [depSignal], run: () => {}});
+      effectSignal.destroy();
+      expect(effectSignal.isDestroyed).toBe(true);
+    });
+  });
+
+  describe('name', () => {
+    it('should use provided name', () => {
+      effectSignal = new EffectSignal({name: 'my-effect', deps: [depSignal], run: () => {}});
+      expect(effectSignal.name).toBe('my-effect');
+    });
+
+    it('should auto-generate name from dependencies when not provided', () => {
+      effectSignal = new EffectSignal({deps: [depSignal], run: () => {}});
+      expect(effectSignal.name).toBe('[dep]');
+    });
+
+    it('should auto-generate name from multiple dependencies', () => {
+      const dep2 = new StateSignal({name: 'dep2', initialValue: 'x'});
+      effectSignal = new EffectSignal({deps: [depSignal, dep2], run: () => {}});
+      expect(effectSignal.name).toBe('[dep, dep2]');
+      dep2.destroy();
+    });
+  });
+
+  describe('onDestroy callback', () => {
+    it('should call onDestroy callback when destroyed', () => {
+      const onDestroy = jest.fn();
+      effectSignal = new EffectSignal({deps: [depSignal], run: () => {}, onDestroy});
+      effectSignal.destroy();
+      expect(onDestroy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should not call onDestroy if not provided', () => {
+      effectSignal = new EffectSignal({deps: [depSignal], run: () => {}});
+      expect(() => effectSignal.destroy()).not.toThrow();
+    });
+  });
+
+  describe('error handling in run function', () => {
+    it('should not crash when run function throws', async () => {
+      effectSignal = new EffectSignal({
+        deps: [depSignal],
+        run: () => {
+          throw new Error('effect error');
+        },
+      });
+      depSignal.set(1);
+      await delay.by(5);
+
+      // Effect should have been called but error caught internally.
+      // Signal should still be functional.
+      expect(effectSignal.isDestroyed).toBe(false);
+    });
+
+    it('should continue running on subsequent changes after an error', async () => {
+      let callCount = 0;
+      effectSignal = new EffectSignal({
+        deps: [depSignal],
+        run: () => {
+          callCount++;
+          if (callCount === 1) throw new Error('first call error');
+        },
+      });
+
+      depSignal.set(1);
+      await delay.by(5);
+      expect(callCount).toBe(1);
+
+      depSignal.set(2);
+      await delay.by(5);
+      expect(callCount).toBe(2);
+    });
+  });
+
+  describe('batching', () => {
+    it('should batch rapid dependency changes into a single execution', async () => {
+      const runFn = jest.fn();
+      effectSignal = new EffectSignal({
+        deps: [depSignal],
+        run: runFn,
+      });
+
+      // Rapid changes within the same microtask.
+      depSignal.set(1);
+      depSignal.set(2);
+      depSignal.set(3);
+
+      await delay.by(10);
+
+      // Due to batching (isRunning__ flag), should run once or twice, not three times.
+      expect(runFn.mock.calls.length).toBeLessThanOrEqual(2);
+      expect(runFn.mock.calls.length).toBeGreaterThanOrEqual(1);
+    });
+  });
+
+  describe('double destroy', () => {
+    it('should handle double destroy gracefully', () => {
+      effectSignal = new EffectSignal({deps: [depSignal], run: () => {}});
+      effectSignal.destroy();
+      expect(() => effectSignal.destroy()).not.toThrow();
+    });
   });
 
   describe('destroyed signal', () => {

@@ -164,3 +164,85 @@ describe('ComputedSignal', () => {
     });
   });
 });
+
+describe('ComputedSignal — extra coverage', () => {
+  it('should have isDestroyed = false initially', () => {
+    const dep = new StateSignal({name: 'dep-extra', initialValue: 1});
+    const computed = new ComputedSignal({name: 'extra-computed', deps: [dep], get: () => dep.get()});
+    expect(computed.isDestroyed).toBe(false);
+    computed.destroy();
+    dep.destroy();
+  });
+
+  it('should have isDestroyed = true after destroy', () => {
+    const dep = new StateSignal({name: 'dep-extra-2', initialValue: 1});
+    const computed = new ComputedSignal({name: 'extra-computed-2', deps: [dep], get: () => dep.get()});
+    computed.destroy();
+    expect(computed.isDestroyed).toBe(true);
+    dep.destroy();
+  });
+
+  it('should clean up dependency subscriptions on destroy', async () => {
+    const dep = new StateSignal({name: 'dep-cleanup', initialValue: 0});
+    const getFn = jest.fn(() => dep.get());
+    const computed = new ComputedSignal({name: 'cleanup-computed', deps: [dep], get: getFn});
+
+    // Initial computation.
+    expect(getFn).toHaveBeenCalledTimes(1);
+
+    computed.destroy();
+
+    // After destroy, changing the dependency should NOT trigger recomputation.
+    const callCountBefore = getFn.mock.calls.length;
+    dep.set(10);
+    await delay.by(10);
+    expect(getFn.mock.calls.length).toBe(callCountBefore);
+
+    dep.destroy();
+  });
+
+  it('should call onDestroy callback when destroyed', () => {
+    const dep = new StateSignal({name: 'dep-ondestroy', initialValue: 0});
+    const onDestroy = jest.fn();
+    const computed = new ComputedSignal({name: 'ondestroy-computed', deps: [dep], get: () => dep.get(), onDestroy});
+    computed.destroy();
+    expect(onDestroy).toHaveBeenCalledTimes(1);
+    dep.destroy();
+  });
+
+  it('should handle complex computed values (objects)', async () => {
+    const firstName = new StateSignal({name: 'first', initialValue: 'John'});
+    const lastName = new StateSignal({name: 'last', initialValue: 'Doe'});
+    const fullName = new ComputedSignal({
+      name: 'full-name',
+      deps: [firstName, lastName],
+      get: () => ({first: firstName.get(), last: lastName.get()}),
+    });
+
+    expect(fullName.get()).toEqual({first: 'John', last: 'Doe'});
+
+    firstName.set('Jane');
+    await fullName.untilNext();
+    expect(fullName.get()).toEqual({first: 'Jane', last: 'Doe'});
+
+    fullName.destroy();
+    firstName.destroy();
+    lastName.destroy();
+  });
+
+  it('should support chained computed signals', async () => {
+    const base = new StateSignal({name: 'base', initialValue: 2});
+    const doubled = new ComputedSignal({name: 'doubled', deps: [base], get: () => base.get() * 2});
+    const quadrupled = new ComputedSignal({name: 'quadrupled', deps: [doubled], get: () => doubled.get() * 2});
+
+    expect(quadrupled.get()).toBe(8);
+
+    base.set(5);
+    await quadrupled.untilNext();
+    expect(quadrupled.get()).toBe(20);
+
+    quadrupled.destroy();
+    doubled.destroy();
+    base.destroy();
+  });
+});
