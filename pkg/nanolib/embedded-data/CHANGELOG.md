@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.19.1](https://github.com/Alwatr/alwatr/compare/v9.19.0...v9.19.1) (2026-04-30)
+
+### 🐛 Bug Fixes
+
+* **embedded-data:** remove unnecessary trim() call on textContent for improve performance ([52f08b9](https://github.com/Alwatr/alwatr/commit/52f08b9d5f9f48e5ecbe19d62b4bf6ee58ee79e5))
+
+### 🔨 Code Refactoring
+
+* **embedded-data:** simplify global document references and clarify comments ([455a2f3](https://github.com/Alwatr/alwatr/commit/455a2f3964ffcfb07cede306d325767d9a725c4a))
+
 ## [9.19.0](https://github.com/Alwatr/alwatr/compare/v9.18.1...v9.19.0) (2026-04-28)
 
 ### ✨ Features

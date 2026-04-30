@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.19.1](https://github.com/Alwatr/alwatr/compare/v9.19.0...v9.19.1) (2026-04-30)
+
+**Note:** Version bump only for package @alwatr/flux
+
 ## [9.19.0](https://github.com/Alwatr/alwatr/compare/v9.18.1...v9.19.0) (2026-04-28)
 
 ### ✨ Features

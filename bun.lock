@@ -61,7 +61,7 @@
     },
     "pkg/flux": {
       "name": "@alwatr/flux",
-      "version": "9.19.0",
+      "version": "9.19.1",
       "dependencies": {
         "@alwatr/action": "workspace:*",
         "@alwatr/directive": "workspace:*",
@@ -96,7 +96,7 @@
     },
     "pkg/nanolib/action": {
       "name": "@alwatr/action",
-      "version": "9.19.0",
+      "version": "9.19.1",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
         "@alwatr/signal": "workspace:*",
@@ -224,7 +224,7 @@
     },
     "pkg/nanolib/embedded-data": {
       "name": "@alwatr/embedded-data",
-      "version": "9.19.0",
+      "version": "9.19.1",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
       },

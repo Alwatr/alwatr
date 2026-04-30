@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.19.1](https://github.com/Alwatr/alwatr/compare/v9.19.0...v9.19.1) (2026-04-30)
+
+### 🐛 Bug Fixes
+
+* **action-syntax:** update regex to allow hyphens in action names ([1ad001d](https://github.com/Alwatr/alwatr/commit/1ad001d70108547ef836a3ddff663ba832380c07))
+
 ## [9.19.0](https://github.com/Alwatr/alwatr/compare/v9.18.1...v9.19.0) (2026-04-28)
 
 ### 🐛 Bug Fixes
