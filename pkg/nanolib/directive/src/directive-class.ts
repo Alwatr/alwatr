@@ -163,7 +163,7 @@ export abstract class Directive {
     delay.nextMacrotask().then(() => this.initializeLifecycle_());
   }
 
-  protected initialized_ = false;
+  private initialized__ = false;
 
   /**
    * Initializes the directive's lifecycle by calling the `init_` method and setting up any necessary observers for lazy initialization and visibility tracking. This method is called after the directive instance is created and the initial attribute value is parsed.
@@ -182,7 +182,7 @@ export abstract class Directive {
       this.triggerVisibilityObserver_();
     }
 
-    this.initialized_ = true;
+    this.initialized__ = true;
     if (this.isUpdatePending_) {
       void this.performUpdate__();
     }
@@ -461,13 +461,13 @@ export abstract class Directive {
   public requestUpdate(): void {
     this.logger_.logMethod?.('requestUpdate');
     if (this.isUpdatePending_) return;
-    this.isUpdatePending_ = true;
     void this.performUpdate__();
   }
 
   private async performUpdate__(): Promise<void> {
+    this.isUpdatePending_ = true;
     await delay.nextMacrotask();
-    if (!this.initialized_) return;
+    if (this.initialized__ === false || this.isDestroyed()) return;
     try {
       this.update_();
     } finally {
