@@ -211,3 +211,81 @@ describe('EventSignal', () => {
     });
   });
 });
+
+describe('EventSignal — extra coverage', () => {
+  it('should have isDestroyed = false initially', () => {
+    const s = new EventSignal({name: 'is-destroyed-test'});
+    expect(s.isDestroyed).toBe(false);
+    s.destroy();
+  });
+
+  it('should have isDestroyed = true after destroy', () => {
+    const s = new EventSignal({name: 'is-destroyed-test-2'});
+    s.destroy();
+    expect(s.isDestroyed).toBe(true);
+  });
+
+  it('should call onDestroy callback when destroyed', () => {
+    const onDestroy = jest.fn();
+    const s = new EventSignal({name: 'on-destroy-test', onDestroy});
+    s.destroy();
+    expect(onDestroy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should ignore receivePrevious option (EventSignal has no state)', async () => {
+    const s = new EventSignal({name: 'no-receive-prev'});
+    const callback = jest.fn();
+    // Even with receivePrevious: true, EventSignal should NOT call the callback immediately.
+    s.subscribe(callback, {receivePrevious: true});
+    await delay.nextMacrotask();
+    expect(callback).not.toHaveBeenCalled();
+
+    // Only dispatched events should trigger the callback.
+    s.dispatch('data');
+    await delay.nextMacrotask();
+    expect(callback).toHaveBeenCalledTimes(1);
+    s.destroy();
+  });
+
+  it('should handle rapid dispatches correctly', async () => {
+    const s = new EventSignal({name: 'rapid-dispatch'});
+    const callback = jest.fn();
+    s.subscribe(callback);
+
+    for (let i = 0; i < 10; i++) {
+      s.dispatch(i);
+    }
+
+    await delay.nextMacrotask();
+    expect(callback).toHaveBeenCalledTimes(10);
+    for (let i = 0; i < 10; i++) {
+      expect(callback).toHaveBeenNthCalledWith(i + 1, i);
+    }
+    s.destroy();
+  });
+
+  it('should support subscribing with once + priority together', async () => {
+    const s = new EventSignal({name: 'once-priority'});
+    /** @type {string[]} */
+    const order = [];
+    const normalCb = jest.fn(() => order.push('normal'));
+    const priorityOnceCb = jest.fn(() => order.push('priority-once'));
+
+    s.subscribe(normalCb);
+    s.subscribe(priorityOnceCb, {once: true, priority: true});
+
+    s.dispatch('test');
+    await delay.nextMacrotask();
+
+    expect(order).toEqual(['priority-once', 'normal']);
+    expect(priorityOnceCb).toHaveBeenCalledTimes(1);
+
+    // Second dispatch — priority-once should not fire again.
+    s.dispatch('test2');
+    await delay.nextMacrotask();
+    expect(priorityOnceCb).toHaveBeenCalledTimes(1);
+    expect(normalCb).toHaveBeenCalledTimes(2);
+
+    s.destroy();
+  });
+});
