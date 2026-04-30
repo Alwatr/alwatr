@@ -72,7 +72,7 @@ export class EmbeddedDataCollector<T> {
       return null;
     }
 
-    const rawData = element.textContent?.trim();
+    const rawData = element.textContent;
     if (!rawData) {
       this.logger_.accident('extractRawData_', 'element_empty', {attributeName: this.attributeName_});
       return null;
