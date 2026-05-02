@@ -32,9 +32,14 @@ import {Directive} from './directive-class.js';
  *   │
  *   └─ requestUpdate()          ← schedules one macrotask (batched)
  *        │
- *        ├─ update_()            ← calls render_() via lit-html render()
- *        └─ updated_()           ← post-render hook (focus, measure, etc.)
+ *        ├─ shouldUpdate_()?    ← return false to abort (skip render entirely)
+ *        ├─ update_()           ← calls render_() via lit-html render()
+ *        └─ updated_()          ← post-render hook (focus, measure, etc.)
  * ```
+ *
+ * Override `shouldUpdate_()` to conditionally skip a render — for example, while data is still
+ * loading or while the element is inside a hidden panel. Return `false` to abort; return `true`
+ * or `void` to proceed normally.
  *
  * ---
  *
@@ -141,4 +146,52 @@ export abstract class LitDirective extends Directive {
    * ```
    */
   protected abstract render_(): unknown;
+
+  /**
+   * Guards the render cycle for `LitDirective`.
+   *
+   * Inherited from `Directive`. Override to skip a `render_()` call when the current state does
+   * not warrant a DOM update — for example, while data is still loading or while the element is
+   * inside a hidden panel.
+   *
+   * Return `false` to abort the cycle (`render_()`, `update_()`, and `updated_()` are **not**
+   * called). Return `true` or `void` to proceed normally.
+   *
+   * **Placement in the update cycle:**
+   * ```
+   * requestUpdate()
+   *   └─ (next macrotask)
+   *        ├─ shouldUpdate_()   ← return false to skip render_() entirely
+   *        ├─ update_()         ← calls render_() via lit-html render()
+   *        └─ updated_()        ← post-render hook
+   * ```
+   *
+   * @returns `false` to abort the render cycle, or `true` / `void` to allow it.
+   *
+   * @example — Suppress renders while data is loading
+   * ```ts
+   * @directive('product-list')
+   * class ProductListDirective extends LitDirective {
+   *   private products_: Product[] = [];
+   *   private loading_ = true;
+   *
+   *   protected override shouldUpdate_(): boolean | void {
+   *     if (this.loading_) return false; // render_() will not be called
+   *   }
+   *
+   *   protected override async lazyInit_(): Promise<void> {
+   *     this.products_ = await fetchProducts();
+   *     this.loading_ = false;
+   *     this.requestUpdate(); // now shouldUpdate_() returns void → render proceeds
+   *   }
+   *
+   *   protected override render_() {
+   *     return html`${this.products_.map((p) => html`<li>${p.name}</li>`)}`;
+   *   }
+   * }
+   * ```
+   */
+  protected override shouldUpdate_(): boolean | void {
+    return super.shouldUpdate_();
+  }
 }
