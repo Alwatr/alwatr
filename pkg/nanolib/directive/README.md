@@ -178,7 +178,7 @@ new Directive(element, attributeName)
 
 state change (via @state accessor or StateSignal subscription)
   │
-  └─ requestUpdate()   ← batched, collapses multiple calls into one macrotask
+  └─ requestUpdate()   ← ignored if disableUpdate_ is true; batched otherwise
        ├─ shouldUpdate_()?  ← return false to abort (skip update_/updated_ entirely)
        ├─ update_()     ← DOM mutations / lit-html render() [LitDirective]
        └─ updated_()    ← post-render hook
@@ -472,7 +472,7 @@ document.addEventListener('form-submitted', (e: CustomEvent) => {
 ```
 state change
   │
-  └─ requestUpdate()     ← schedules one macrotask (multiple calls collapse into one)
+  └─ requestUpdate()     ← ignored if disableUpdate_ is true; batched otherwise
        │
        ├─ shouldUpdate_()?  ← return false to abort (update_/updated_ are skipped)
        ├─ update_()         ← perform DOM mutations / call lit-html render()
@@ -546,7 +546,7 @@ protected override init_(): void {
 
 Override to conditionally abort an update cycle before `update_()` runs. Return `false` (strict boolean) to skip the render entirely; return `true` or `void` to proceed normally.
 
-The `isUpdatePending_` flag is cleared even when `shouldUpdate_()` returns `false`, so a future `requestUpdate()` will schedule a new cycle normally.
+The `disableUpdate_` flag is cleared even when `shouldUpdate_()` returns `false`, so a future `requestUpdate()` will schedule a new cycle normally.
 
 ```ts
 @directive('data-table')
@@ -581,6 +581,71 @@ Another common pattern — skip renders while the element is inside a hidden pan
 ```ts
 protected override shouldUpdate_(): boolean | void {
   if (this.element_.closest('[hidden]')) return false;
+}
+```
+
+### `disableUpdate_`
+
+A `protected` boolean flag that controls whether `requestUpdate()` is allowed to schedule a new render cycle. It serves two roles:
+
+**1. Pending-update guard (automatic)**
+Set to `true` by `requestUpdate()` and cleared back to `false` by `performUpdate__()` once the cycle finishes (or is aborted by `shouldUpdate_()`). This collapses multiple `requestUpdate()` calls within the same macrotask into a single render.
+
+**2. Manual render suppression (opt-in)**
+Subclasses can set `disableUpdate_ = true` at any time to pause rendering indefinitely — for example, while performing a multi-step async setup or while the element is off-screen. Set it back to `false` and call `requestUpdate()` to resume.
+
+**`disableUpdate_` vs `shouldUpdate_()`**
+
+|                      | `disableUpdate_ = true`                    | `shouldUpdate_()` returning `false`         |
+| -------------------- | ------------------------------------------ | ------------------------------------------- |
+| Scope                | Prevents **all future** cycles until reset | Aborts only the **current** in-flight cycle |
+| Resets automatically | No — you must reset it manually            | Yes — cleared after each aborted cycle      |
+| Use when             | Sustained pause (loading, off-screen)      | Per-cycle condition (data not ready yet)    |
+
+```ts
+@directive('live-feed')
+class LiveFeedDirective extends LitDirective {
+  // Pause all renders while the element is scrolled out of view
+  protected override onHidden_(): void {
+    this.disableUpdate_ = true;
+  }
+
+  protected override onVisible_(): void {
+    this.disableUpdate_ = false;
+    this.requestUpdate(); // catch up with any missed state changes
+  }
+
+  protected override render_() {
+    return html`
+      <ul>
+        ${this.items_.map(
+          (i) => html`
+            <li>${i}</li>
+          `,
+        )}
+      </ul>
+    `;
+  }
+}
+```
+
+```ts
+@directive('async-card')
+class AsyncCardDirective extends LitDirective {
+  protected override async init_(): Promise<void> {
+    // Block signal-triggered renders until initial data is ready
+    this.disableUpdate_ = true;
+
+    this.subscribe_(dataSignal, (data) => {
+      this.data_ = data;
+      this.requestUpdate(); // silently ignored while disableUpdate_ is true
+    });
+
+    await this.loadInitialData_();
+
+    this.disableUpdate_ = false; // re-enable
+    this.requestUpdate(); // first render with fully loaded state
+  }
 }
 ```
 
@@ -833,27 +898,28 @@ Class decorator. Registers the decorated class in the global directive registry.
 
 ### `Directive` (abstract class)
 
-| Member                                   | Type                                              | Description                                                                                                                                                               |
-| ---------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `attributeName`                          | `readonly string`                                 | The attribute name this directive is bound to                                                                                                                             |
-| `attributeValue`                         | `readonly string`                                 | The value of the attribute at construction time                                                                                                                           |
-| `index`                                  | `readonly number`                                 | Per-attribute instance counter (0, 1, 2, …)                                                                                                                               |
-| `element_`                               | `protected readonly HTMLElement`                  | The bound DOM element                                                                                                                                                     |
-| `logger_`                                | `protected readonly`                              | Scoped logger: `directive:{attributeName}/{index}`                                                                                                                        |
-| `intersectionOptions_`                   | `protected IntersectionObserverInit \| undefined` | Optional options forwarded to every `IntersectionObserver` created for this directive (`lazyInit_`, `onVisible_`, `onHidden_`). Must be set before `init_()` completes.   |
-| `init_()?`                               | `protected`                                       | Optional — runs once after next macrotask (setup, event listeners)                                                                                                        |
-| `lazyInit_()?`                           | `protected`                                       | Optional — runs once when element first enters the viewport                                                                                                               |
-| `onVisible_()?`                          | `protected`                                       | Optional — runs every time element enters the viewport                                                                                                                    |
-| `onHidden_()?`                           | `protected`                                       | Optional — runs every time element leaves the viewport                                                                                                                    |
-| `requestUpdate()`                        | `public`                                          | Schedules a batched `update_()` + `updated_()` call for the next macrotask. Multiple calls within the same cycle collapse into one.                                       |
-| `shouldUpdate_()`                        | `protected`                                       | Called before `update_()` in each cycle. Return `false` to abort the cycle (skips `update_()` and `updated_()`). Return `true` or `void` to proceed. Base returns `void`. |
-| `update_()`                              | `protected`                                       | Called once per update cycle — override to perform DOM mutations. `LitDirective` overrides this to call `lit-html`'s `render()`.                                          |
-| `updated_()`                             | `protected`                                       | Called immediately after `update_()` — override for post-render logic (focus, measure, dispatch events).                                                                  |
-| `dispatch(event, detail?)`               | `public`                                          | Fires a bubbling `CustomEvent` from `element_`                                                                                                                            |
-| `addDestroyHook(task)`                   | `public`                                          | Registers an async cleanup callback                                                                                                                                       |
-| `subscribe_(signal, callback, options?)` | `protected`                                       | Subscribes to a read-only signal and automatically unsubscribes on `destroy()`. Idiomatic replacement for `signal.subscribe()` + `addDestroyHook()`.                      |
-| `destroy()`                              | `public async`                                    | Runs all destroy hooks, then nullifies `element_`                                                                                                                         |
-| `autoDestroy()`                          | `public`                                          | Destroys if element is disconnected; returns `true` if destroyed                                                                                                          |
+| Member                                   | Type                                              | Description                                                                                                                                                                          |
+| ---------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `attributeName`                          | `readonly string`                                 | The attribute name this directive is bound to                                                                                                                                        |
+| `attributeValue`                         | `readonly string`                                 | The value of the attribute at construction time                                                                                                                                      |
+| `index`                                  | `readonly number`                                 | Per-attribute instance counter (0, 1, 2, …)                                                                                                                                          |
+| `element_`                               | `protected readonly HTMLElement`                  | The bound DOM element                                                                                                                                                                |
+| `logger_`                                | `protected readonly`                              | Scoped logger: `directive:{attributeName}/{index}`                                                                                                                                   |
+| `intersectionOptions_`                   | `protected IntersectionObserverInit \| undefined` | Optional options forwarded to every `IntersectionObserver` created for this directive (`lazyInit_`, `onVisible_`, `onHidden_`). Must be set before `init_()` completes.              |
+| `init_()?`                               | `protected`                                       | Optional — runs once after next macrotask (setup, event listeners)                                                                                                                   |
+| `lazyInit_()?`                           | `protected`                                       | Optional — runs once when element first enters the viewport                                                                                                                          |
+| `onVisible_()?`                          | `protected`                                       | Optional — runs every time element enters the viewport                                                                                                                               |
+| `onHidden_()?`                           | `protected`                                       | Optional — runs every time element leaves the viewport                                                                                                                               |
+| `requestUpdate()`                        | `public`                                          | Schedules a batched `update_()` + `updated_()` call for the next macrotask. Ignored if `disableUpdate_` is `true`. Multiple calls within the same cycle collapse into one.           |
+| `disableUpdate_`                         | `protected boolean`                               | When `true`, `requestUpdate()` is a no-op. Set manually to pause rendering; reset to `false` and call `requestUpdate()` to resume. Also used internally as the pending-update guard. |
+| `shouldUpdate_()`                        | `protected`                                       | Called before `update_()` in each cycle. Return `false` to abort the cycle (skips `update_()` and `updated_()`). Return `true` or `void` to proceed. Base returns `void`.            |
+| `update_()`                              | `protected`                                       | Called once per update cycle — override to perform DOM mutations. `LitDirective` overrides this to call `lit-html`'s `render()`.                                                     |
+| `updated_()`                             | `protected`                                       | Called immediately after `update_()` — override for post-render logic (focus, measure, dispatch events).                                                                             |
+| `dispatch(event, detail?)`               | `public`                                          | Fires a bubbling `CustomEvent` from `element_`                                                                                                                                       |
+| `addDestroyHook(task)`                   | `public`                                          | Registers an async cleanup callback                                                                                                                                                  |
+| `subscribe_(signal, callback, options?)` | `protected`                                       | Subscribes to a read-only signal and automatically unsubscribes on `destroy()`. Idiomatic replacement for `signal.subscribe()` + `addDestroyHook()`.                                 |
+| `destroy()`                              | `public async`                                    | Runs all destroy hooks, then nullifies `element_`                                                                                                                                    |
+| `autoDestroy()`                          | `public`                                          | Destroys if element is disconnected; returns `true` if destroyed                                                                                                                     |
 
 ---
 
