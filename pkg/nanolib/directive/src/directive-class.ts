@@ -522,6 +522,7 @@ export abstract class Directive {
     await delay.nextMacrotask();
     this.logger_.logMethod?.('performUpdate__');
     if (this.shouldUpdate_() === false) {
+      this.logger_.logOther?.('update_aborted_by_should_update');
       this.disableUpdate_ = false;
       return;
     }
