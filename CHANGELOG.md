@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.21.0](https://github.com/Alwatr/alwatr/compare/v9.20.1...v9.21.0) (2026-05-02)
+
+### ✨ Features
+
+* **embedded-data:** add static exists method for conditional hydration ([b363c05](https://github.com/Alwatr/alwatr/commit/b363c05eb39de5c5a316c6a00990e08ddf88ade1))
+
 ## [9.20.1](https://github.com/Alwatr/alwatr/compare/v9.20.0...v9.20.1) (2026-04-30)
 
 ### 🔨 Code Refactoring
