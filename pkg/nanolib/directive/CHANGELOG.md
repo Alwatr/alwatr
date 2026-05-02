@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.22.0](https://github.com/Alwatr/alwatr/compare/v9.21.0...v9.22.0) (2026-05-02)
+
+### ✨ Features
+
+* **directive:** add shallow equality check to state decorator ([f3cd07a](https://github.com/Alwatr/alwatr/commit/f3cd07a724f697ad44b67f8365cb4f7bc8592bac))
+* **directive:** add shouldUpdate_ guard method for conditional rendering ([8cf3dc7](https://github.com/Alwatr/alwatr/commit/8cf3dc75b3a07145a6b8a17a8290f50e19d0485a))
+* **directive:** add shouldUpdate_ guard method for conditional rendering ([e1a624d](https://github.com/Alwatr/alwatr/commit/e1a624d1590ae719ac4073e79ba45324240aeff0))
+
+### 🐛 Bug Fixes
+
+* **directive:** reset isUpdatePending_ flag when shouldUpdate_ guard prevents update ([7e27f6f](https://github.com/Alwatr/alwatr/commit/7e27f6f4126fc3217c90a7a30742d3e104ff6639))
+
+### 🔨 Code Refactoring
+
+* **directive:** rename isUpdatePending_ to disableUpdate_ with dual-purpose semantics ([2fe4a06](https://github.com/Alwatr/alwatr/commit/2fe4a0650dd541c580c4ff2ed1477b1296dde64f))
+
 ## [9.20.1](https://github.com/Alwatr/alwatr/compare/v9.20.0...v9.20.1) (2026-04-30)
 
 ### 🔨 Code Refactoring
