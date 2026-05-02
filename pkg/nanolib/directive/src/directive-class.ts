@@ -464,9 +464,15 @@ export abstract class Directive {
     void this.performUpdate__();
   }
 
+  /**
+   * Performs the update cycle by calling `update_()` and then `updated_()`.
+   * This method is responsible for executing the update logic in a batched manner, ensuring that multiple calls to `requestUpdate()` within the same macrotask result in only one execution of `update_()` and `updated_()`.
+   */
   private async performUpdate__(): Promise<void> {
     this.isUpdatePending_ = true;
     await delay.nextMacrotask();
+    this.logger_.logMethod?.('performUpdate__');
+    if (this.shouldUpdate_() === false) return;
     if (this.initialized__ === false || this.isDestroyed()) return;
     try {
       this.update_();
@@ -475,6 +481,62 @@ export abstract class Directive {
     }
     this.updated_();
   }
+
+  /**
+   * Guards the update cycle — called by `performUpdate__()` just before `update_()` runs.
+   *
+   * Override this method to implement conditional rendering logic. The return value controls
+   * whether the current update cycle proceeds:
+   *
+   * - Return `false` (strict boolean) → cycle is **aborted**: `update_()` and `updated_()` are
+   *   **not** called. The `isUpdatePending_` flag is also cleared, so a future `requestUpdate()`
+   *   will schedule a new cycle normally.
+   * - Return `true`, `undefined`, or `void` → cycle **proceeds** as normal.
+   *
+   * The base implementation returns `void` (i.e., always proceeds).
+   *
+   * **Placement in the update cycle:**
+   * ```
+   * requestUpdate()
+   *   └─ (next macrotask)
+   *        ├─ shouldUpdate_()   ← return false to abort here
+   *        ├─ update_()         ← DOM mutations / lit-html render()
+   *        └─ updated_()        ← post-render hook
+   * ```
+   *
+   * @returns `false` to abort the cycle, or `true` / `void` to allow it.
+   *
+   * @example — Skip render while a loading flag is set
+   * ```ts
+   * @directive('data-table')
+   * class DataTableDirective extends LitDirective {
+   *   private loading_ = true;
+   *
+   *   protected override shouldUpdate_(): boolean | void {
+   *     // Do not render until data has been fetched
+   *     if (this.loading_) return false;
+   *   }
+   *
+   *   protected override async lazyInit_(): Promise<void> {
+   *     this.rows_ = await fetchRows();
+   *     this.loading_ = false;
+   *     this.requestUpdate();
+   *   }
+   *
+   *   protected override render_() {
+   *     return html`${this.rows_.map((r) => html`<tr><td>${r.name}</td></tr>`)}`;
+   *   }
+   * }
+   * ```
+   *
+   * @example — Abort update when the element is hidden (e.g. inside an inactive tab)
+   * ```ts
+   * protected override shouldUpdate_(): boolean | void {
+   *   if (this.element_.closest('[hidden]')) return false;
+   * }
+   * ```
+   */
+  protected shouldUpdate_(): boolean | void {}
 
   /**
    * Called during each scheduled update cycle, immediately before `updated_()`.
