@@ -472,7 +472,10 @@ export abstract class Directive {
     this.isUpdatePending_ = true;
     await delay.nextMacrotask();
     this.logger_.logMethod?.('performUpdate__');
-    if (this.shouldUpdate_() === false) return;
+    if (this.shouldUpdate_() === false) {
+      this.isUpdatePending_ = true;
+      return;
+    }
     if (this.initialized__ === false || this.isDestroyed()) return;
     try {
       this.update_();
