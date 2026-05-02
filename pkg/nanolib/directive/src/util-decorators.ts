@@ -143,8 +143,10 @@ export function attribute<D extends Directive = Directive>(name: string, cache =
  * `StateSignal` inside `init_()` and call `requestUpdate()` from the subscription callback —
  * see the signal example below.
  *
- * The decorator is a thin wrapper around the native accessor — it does **not** perform any
- * deep-equality check. Every `set` call (even with the same value) will schedule an update.
+ * The decorator performs a **shallow equality check for primitives**: if the new value is
+ * identical to the current value (via `Object.is`) and is a primitive (or `null`), the update
+ * is skipped. For object and array values no equality check is performed — every `set` call
+ * schedules an update regardless of whether the reference changed.
  *
  * @remarks
  * The `name`, `cache`, and `root` parameters are accepted for API symmetry with `@attribute`
@@ -212,8 +214,13 @@ export function state<T, D extends Directive = Directive>() {
       get(this: D) {
         return target.get.call(this);
       },
-      set(this: D, value) {
-        target.set.call(this, value);
+      set(this: D, newValue) {
+        const oldValue = target.get.call(this);
+        // For primitives (including null), do not notify if the value is the same.
+        if (Object.is(oldValue, newValue) && (typeof newValue !== 'object' || newValue === null)) {
+          return;
+        }
+        target.set.call(this, newValue);
         this.requestUpdate();
       },
     };
