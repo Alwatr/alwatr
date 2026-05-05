@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.23.0](https://github.com/Alwatr/alwatr/compare/v9.22.0...v9.23.0) (2026-05-05)
+
+### ✨ Features
+
+* **flux:** expand lit-html exports to include additional types and APIs ([0f7c2ef](https://github.com/Alwatr/alwatr/commit/0f7c2efb11da416ac79f7b0d32c41dbc5c6e1533))
+
+### 🐛 Bug Fixes
+
+* **directive:** log when update is aborted by shouldUpdate_ guard ([d85b50b](https://github.com/Alwatr/alwatr/commit/d85b50b3326e8eace045d531ba6a3fbaba9e9ae1))
+
+### 🧹 Miscellaneous Chores
+
+* update root scripts ([9318386](https://github.com/Alwatr/alwatr/commit/9318386ed6cbc33dd887638e38135a8426879d6a))
+
 ## [9.22.0](https://github.com/Alwatr/alwatr/compare/v9.21.0...v9.22.0) (2026-05-02)
 
 ### ✨ Features

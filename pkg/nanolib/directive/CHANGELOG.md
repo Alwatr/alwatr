@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.23.0](https://github.com/Alwatr/alwatr/compare/v9.22.0...v9.23.0) (2026-05-05)
+
+### 🐛 Bug Fixes
+
+* **directive:** log when update is aborted by shouldUpdate_ guard ([d85b50b](https://github.com/Alwatr/alwatr/commit/d85b50b3326e8eace045d531ba6a3fbaba9e9ae1))
+
 ## [9.22.0](https://github.com/Alwatr/alwatr/compare/v9.21.0...v9.22.0) (2026-05-02)
 
 ### ✨ Features
