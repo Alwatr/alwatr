@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.23.1](https://github.com/Alwatr/alwatr/compare/v9.23.0...v9.23.1) (2026-05-06)
+
+### 🐛 Bug Fixes
+
+* **signal:** notification handling and subscription behavior in StateSignal ([5025ef8](https://github.com/Alwatr/alwatr/commit/5025ef813a1dbd9eda2ef732a9423f28b2fc54cf))
+
 ## [9.23.0](https://github.com/Alwatr/alwatr/compare/v9.22.0...v9.23.0) (2026-05-05)
 
 ### ✨ Features
