@@ -103,6 +103,12 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
   }
 
   /**
+   * Indicates if a notification is already scheduled.
+   * @private
+   */
+  private notifyPending__ = false;
+
+  /**
    * Notifies all listeners about the current value, even if it hasn't changed.
    *
    * This method is useful when you change the value instance directly (e.g., mutating an object) and want to inform listeners about the change.
@@ -110,8 +116,15 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
   public notifyChange(): void {
     this.logger_.logMethod?.('notifyChange');
     this.checkDestroyed_();
+
+    if (this.notifyPending__) return;
+    this.notifyPending__ = true;
+
     // Dispatch as a microtask to ensure consistent, non-blocking behavior.
-    delay.nextMicrotask().then(() => this.notify_(this.value__));
+    delay.nextMicrotask().then(() => {
+      this.notifyPending__ = false;
+      this.notify_(this.value__);
+    });
   }
 
   /**
@@ -150,6 +163,8 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
     this.logger_.logMethodArgs?.('subscribe', options);
     this.checkDestroyed_();
 
+    const result = super.subscribe(callback, options);
+
     // By default, new subscribers to a StateSignal should receive the current value.
     if (options.receivePrevious !== false) {
       // Immediately (but asynchronously) call the listener with the current value.
@@ -158,19 +173,17 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
         .nextMicrotask()
         .then(() => {
           this.logger_.logStep?.('subscribe', 'immediate_callback');
-          callback(this.value__);
+          if (!this.notifyPending__) {
+            callback(this.value__);
+            if (options.once) {
+              result.unsubscribe();
+            }
+          }
         })
         .catch((err) => this.logger_.error('subscribe', 'immediate_callback_failed', err));
-
-      // If it's a 'once' subscription that receives the previous value, it's now fulfilled.
-      // We don't need to add it to the observers list for future updates.
-      if (options.once) {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        return {unsubscribe: () => {}};
-      }
     }
 
-    return super.subscribe(callback, options);
+    return result;
   }
 
   /**
