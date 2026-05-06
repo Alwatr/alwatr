@@ -47,7 +47,7 @@ describe('StateSignal', () => {
     expect(callback).toHaveBeenCalledTimes(1);
   });
 
-  it('should notify not multiple notify', async () => {
+  it('should not notify multiple times', async () => {
     const callback = jest.fn();
 
     signal.subscribe(callback);
@@ -60,7 +60,7 @@ describe('StateSignal', () => {
     expect(callback).toHaveBeenCalledTimes(1);
   });
 
-  it('should should handle once with receivePrevious', async () => {
+  it('should handle once with receivePrevious', async () => {
     const callback = jest.fn();
 
     signal.subscribe(callback, {
