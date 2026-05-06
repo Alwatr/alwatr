@@ -36,6 +36,48 @@ describe('StateSignal', () => {
     expect(callback).toHaveBeenCalledWith(newValue);
   });
 
+  it('should notify once with initial value', async () => {
+    const callback = jest.fn();
+    const newValue = 42;
+
+    signal.subscribe(callback);
+    signal.set(newValue);
+    await delay.nextMacrotask();
+    expect(callback).toHaveBeenCalledWith(newValue);
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
+
+  it('should notify not multiple notify', async () => {
+    const callback = jest.fn();
+
+    signal.subscribe(callback);
+    signal.set(1);
+    signal.set(2);
+    signal.set(3);
+    signal.set(4);
+    await delay.nextMacrotask();
+    expect(callback).toHaveBeenCalledWith(4);
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
+
+  it('should should handle once with receivePrevious', async () => {
+    const callback = jest.fn();
+
+    signal.subscribe(callback, {
+      once: true,
+      receivePrevious: true,
+    });
+    await delay.nextMacrotask();
+    signal.set(1);
+    await delay.nextMacrotask();
+    signal.set(2);
+    await delay.nextMacrotask();
+    signal.set(3);
+    await delay.nextMacrotask();
+    expect(callback).toHaveBeenCalledWith(0);
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
+
   it('should notify subscribers when value changes', async () => {
     const callback = jest.fn();
     const newValue = 42;
@@ -155,7 +197,7 @@ describe('StateSignal', () => {
     const callback = jest.fn();
     const value = {a: 1};
     const signal = new StateSignal({name: 'object-signal', initialValue: value});
-    
+
     signal.subscribe(callback, {receivePrevious: false});
 
     value.a++;
@@ -196,7 +238,7 @@ describe('StateSignal', () => {
 
     // Set should not be awaited, but we need to wait for the microtask queue to be processed.
     await delay.nextMacrotask();
-    expect(callback).toHaveBeenCalledTimes(2);
+    expect(callback).toHaveBeenCalledTimes(1);
   });
 
   it('should continue notifying other subscribers if one callback throws an error', async () => {
@@ -210,9 +252,9 @@ describe('StateSignal', () => {
     signal.set(5);
     signal.set(10);
     await delay.nextMacrotask();
-    expect(errorCallback).toHaveBeenCalledTimes(2);
-    expect(normalCallback).toHaveBeenCalledTimes(2);
-    expect(normalCallback).toHaveBeenCalledWith(10)
+    expect(errorCallback).toHaveBeenCalledTimes(1);
+    expect(normalCallback).toHaveBeenCalledTimes(1);
+    expect(normalCallback).toHaveBeenCalledWith(10);
   });
 
   describe('destroyed signal', () => {
