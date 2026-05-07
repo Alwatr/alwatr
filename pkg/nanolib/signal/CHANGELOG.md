@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.23.2](https://github.com/Alwatr/alwatr/compare/v9.23.1...v9.23.2) (2026-05-07)
+
+### 🐛 Bug Fixes
+
+* Denoising StateSignal subscription with version tracking to prevent stale immediate callbacks ([2d3145c](https://github.com/Alwatr/alwatr/commit/2d3145c72e83936fe942fb406ce4ba5eb5cec86f))
+* remove redundant check for pending notifications in StateSignal subscription ([3af24d1](https://github.com/Alwatr/alwatr/commit/3af24d1e93b789975c72112fba7d343e37d35f3c))
+
 ## [9.23.1](https://github.com/Alwatr/alwatr/compare/v9.23.0...v9.23.1) (2026-05-06)
 
 ### 🐛 Bug Fixes

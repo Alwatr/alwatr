@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/directive",
-  "version": "9.23.1",
+  "version": "9.23.2",
   "description": "Connect your TypeScript classes to the DOM, declaratively.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
@@ -23,7 +23,7 @@
   "dependencies": {
     "@alwatr/delay": "workspace:*",
     "@alwatr/logger": "workspace:*",
-    "@alwatr/signal": "9.23.1",
+    "@alwatr/signal": "9.23.2",
     "lit-html": "^3.3.2"
   },
   "devDependencies": {
