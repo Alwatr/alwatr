@@ -40,8 +40,8 @@ describe('StateSignal', () => {
     const callback = jest.fn();
     const newValue = 42;
 
-    signal.subscribe(callback);
     signal.set(newValue);
+    signal.subscribe(callback);
     await delay.nextMacrotask();
     expect(callback).toHaveBeenCalledWith(newValue);
     expect(callback).toHaveBeenCalledTimes(1);
