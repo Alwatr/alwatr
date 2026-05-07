@@ -51,6 +51,18 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    */
   protected logger_: AlwatrLogger;
 
+  /**
+   * Indicates if a notification is already scheduled.
+   * @private
+   */
+  private notifyPending__ = false;
+
+  /**
+   * The version of the last notification.
+   * @private
+   */
+  private notifyVersion__ = 0;
+
   constructor(config: StateSignalConfig<T>) {
     super({
       name: config.name,
@@ -103,12 +115,6 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
   }
 
   /**
-   * Indicates if a notification is already scheduled.
-   * @private
-   */
-  private notifyPending__ = false;
-
-  /**
    * Notifies all listeners about the current value, even if it hasn't changed.
    *
    * This method is useful when you change the value instance directly (e.g., mutating an object) and want to inform listeners about the change.
@@ -117,6 +123,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
     this.logger_.logMethod?.('notifyChange');
     this.checkDestroyed_();
 
+    this.notifyVersion__++;
     if (this.notifyPending__) return;
     this.notifyPending__ = true;
 
@@ -165,23 +172,21 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
 
     const result = super.subscribe(callback, options);
 
-    // By default, new subscribers to a StateSignal should receive the current value.
-    if (options.receivePrevious !== false) {
-      // Immediately (but asynchronously) call the listener with the current value.
-      // This is done in a microtask to ensure it happens after the subscription is fully registered.
-      delay
-        .nextMicrotask()
-        .then(() => {
-          this.logger_.logStep?.('subscribe', 'immediate_callback');
-          if (!this.notifyPending__) {
-            callback(this.value__);
-            if (options.once) {
-              result.unsubscribe();
-            }
-          }
-        })
-        .catch((err) => this.logger_.error('subscribe', 'immediate_callback_failed', err));
-    }
+    if (options.receivePrevious === false) return result; // If the subscriber opts out of receiving the current value, skip the immediate callback.
+    if (this.notifyPending__) return result; // If a notification is already pending, the callback will be called with the latest value when the notification is processed.
+
+    const subscribeVersion = this.notifyVersion__;
+    delay
+      .nextMicrotask()
+      .then((): void => {
+        this.logger_.logStep?.('subscribe', 'immediate_callback');
+        if (this.notifyVersion__ !== subscribeVersion) return; // A notification occurred after subscribing, so skip the immediate callback.
+        if (options.once) {
+          result.unsubscribe();
+        }
+        callback(this.value__);
+      })
+      .catch((err) => this.logger_.error('subscribe', 'immediate_callback_failed', err));
 
     return result;
   }

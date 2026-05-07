@@ -40,8 +40,8 @@ describe('StateSignal', () => {
     const callback = jest.fn();
     const newValue = 42;
 
-    signal.subscribe(callback);
     signal.set(newValue);
+    signal.subscribe(callback);
     await delay.nextMacrotask();
     expect(callback).toHaveBeenCalledWith(newValue);
     expect(callback).toHaveBeenCalledTimes(1);
@@ -50,8 +50,8 @@ describe('StateSignal', () => {
   it('should not notify multiple times', async () => {
     const callback = jest.fn();
 
-    signal.subscribe(callback);
     signal.set(1);
+    signal.subscribe(callback);
     signal.set(2);
     signal.set(3);
     signal.set(4);
