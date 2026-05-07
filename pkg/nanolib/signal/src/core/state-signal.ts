@@ -181,7 +181,6 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
       .then((): void => {
         this.logger_.logStep?.('subscribe', 'immediate_callback');
         if (this.notifyVersion__ !== subscribeVersion) return; // A notification occurred after subscribing, so skip the immediate callback.
-        if (this.notifyPending__) return; // A notification is already pending, so the callback will be called with the latest value when the notification is processed.
         if (options.once) {
           result.unsubscribe();
         }
