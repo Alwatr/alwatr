@@ -125,22 +125,16 @@ export interface StateSignalConfig<T> extends SignalConfig {
 }
 
 /**
- * Represents a signal that can be read from but not written to.
- * Both `StateSignal` and `ComputedSignal` implement this interface, allowing them to be used
- * as dependencies in other signals without exposing their `set` or `dispatch` methods.
+ * Represents a signal that can be subscribed to for changes, but does not allow direct modification of its value.
+ * This is the base interface for both `StateSignal` and `ComputedSignal`, allowing them to be used as dependencies
  *
  * @template T The type of the signal's value.
  */
-export interface IReadonlySignal<T> {
+export interface IBaseSignal<T> {
   /**
    * The unique identifier for this signal instance. Useful for debugging.
    */
   readonly name: string;
-
-  /**
-   * The current value of the signal.
-   */
-  get: () => T;
 
   /**
    * Indicates whether the signal has been destroyed.
@@ -181,6 +175,20 @@ export interface IReadonlySignal<T> {
    * garbage collection of the signal and its observers.
    */
   destroy(): void;
+}
+
+/**
+ * Represents a signal that can be read from but not written to.
+ * Both `StateSignal` and `ComputedSignal` implement this interface, allowing them to be used
+ * as dependencies in other signals without exposing their `set` or `dispatch` methods.
+ *
+ * @template T The type of the signal's value.
+ */
+export interface IReadonlySignal<T> extends IBaseSignal<T> {
+  /**
+   * The current value of the signal.
+   */
+  get: () => T;
 }
 
 /**
