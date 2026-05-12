@@ -3,7 +3,7 @@ import {createLogger, type AlwatrLogger} from '@alwatr/logger';
 
 import {SignalBase} from './signal-base.js';
 
-import type {ISignal, SignalConfig} from '../type.js';
+import type {IBaseSignal, SignalConfig} from '../type.js';
 
 /**
  * A stateless signal for dispatching transient events.
@@ -32,7 +32,7 @@ import type {ISignal, SignalConfig} from '../type.js';
  * onAppReady.subscribe(() => console.log('Application is ready!'));
  * onAppReady.dispatch(); // Notifies the listener.
  */
-export class EventSignal<T = void> extends SignalBase<T> implements ISignal<T> {
+export class EventSignal<T = void> extends SignalBase<T> implements IBaseSignal<T> {
   /**
    * The logger instance for this signal.
    * @protected

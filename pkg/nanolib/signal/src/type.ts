@@ -126,12 +126,11 @@ export interface StateSignalConfig<T> extends SignalConfig {
 
 /**
  * Represents a signal that can be subscribed to for changes, but does not allow direct modification of its value.
- * Both `StateSignal` and `EventSignal` implement this interface, allowing them to be used as dependencies in other signals
- * without exposing their `set` or `dispatch` methods.
+ * This is the base interface for both `StateSignal` and `ComputedSignal`, allowing them to be used as dependencies
  *
  * @template T The type of the signal's value.
  */
-export interface ISignal<T> {
+export interface IBaseSignal<T> {
   /**
    * The unique identifier for this signal instance. Useful for debugging.
    */
@@ -185,7 +184,7 @@ export interface ISignal<T> {
  *
  * @template T The type of the signal's value.
  */
-export interface IReadonlySignal<T> extends ISignal<T> {
+export interface IReadonlySignal<T> extends IBaseSignal<T> {
   /**
    * The current value of the signal.
    */
