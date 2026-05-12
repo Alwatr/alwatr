@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.23.3](https://github.com/Alwatr/alwatr/compare/v9.23.2...v9.23.3) (2026-05-12)
+
+### 🐛 Bug Fixes
+
+* update IReadonlySignal to ISignal in subscribe_ method for improved type safety ([40fdf51](https://github.com/Alwatr/alwatr/commit/40fdf517155349c413ed38441906b6cca56e3c40))
+
+### 🔨 Code Refactoring
+
+* replace ISignal with IBaseSignal in subscribe_ method for consistency ([0c248f2](https://github.com/Alwatr/alwatr/commit/0c248f250d916a95cd11e460de7c359a0d7060c1))
+
 ## [9.23.2](https://github.com/Alwatr/alwatr/compare/v9.23.1...v9.23.2) (2026-05-07)
 
 **Note:** Version bump only for package @alwatr/directive

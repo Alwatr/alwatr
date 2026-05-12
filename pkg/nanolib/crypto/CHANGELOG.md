@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.23.3](https://github.com/Alwatr/alwatr/compare/v9.23.2...v9.23.3) (2026-05-12)
+
+### 🔗 Dependencies update
+
+* update @types/node version to ^24.12.3 across multiple packages ([c73c199](https://github.com/Alwatr/alwatr/commit/c73c199617e2e22fb54655e78c0d07683759e35d))
+
 ## [9.16.0](https://github.com/Alwatr/alwatr/compare/v9.15.0...v9.16.0) (2026-04-27)
 
 **Note:** Version bump only for package @alwatr/crypto

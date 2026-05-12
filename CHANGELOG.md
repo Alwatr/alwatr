@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.23.3](https://github.com/Alwatr/alwatr/compare/v9.23.2...v9.23.3) (2026-05-12)
+
+### 🐛 Bug Fixes
+
+* update IReadonlySignal to ISignal in subscribe_ method for improved type safety ([40fdf51](https://github.com/Alwatr/alwatr/commit/40fdf517155349c413ed38441906b6cca56e3c40))
+
+### 🔨 Code Refactoring
+
+* improve type definitions for EventSignal and IReadonlySignal interfaces ([7b83abc](https://github.com/Alwatr/alwatr/commit/7b83abc2a0d91c457d4ed0efc87eb0cb007be386))
+* replace ISignal with IBaseSignal in EventSignal and IReadonlySignal for consistency ([2425fce](https://github.com/Alwatr/alwatr/commit/2425fce32965349daa947c2ea0c694f2f1332b78))
+* replace ISignal with IBaseSignal in subscribe_ method for consistency ([0c248f2](https://github.com/Alwatr/alwatr/commit/0c248f250d916a95cd11e460de7c359a0d7060c1))
+
+### 🔗 Dependencies update
+
+* update [@lerna-lite](https://github.com/lerna-lite) packages to version ^5.2.1 ([102f41f](https://github.com/Alwatr/alwatr/commit/102f41f5ea55219f6c9d281c338ba61e41cb8b58))
+* update @types/node version to ^24.12.3 across multiple packages ([c73c199](https://github.com/Alwatr/alwatr/commit/c73c199617e2e22fb54655e78c0d07683759e35d))
+* upgrade all packages ([6f8f038](https://github.com/Alwatr/alwatr/commit/6f8f0389b0d5a2b8f660daa5abddcff7e08535db))
+
 ## [9.23.2](https://github.com/Alwatr/alwatr/compare/v9.23.1...v9.23.2) (2026-05-07)
 
 ### 🐛 Bug Fixes

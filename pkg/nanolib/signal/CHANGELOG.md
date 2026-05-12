@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.23.3](https://github.com/Alwatr/alwatr/compare/v9.23.2...v9.23.3) (2026-05-12)
+
+### 🔨 Code Refactoring
+
+* improve type definitions for EventSignal and IReadonlySignal interfaces ([7b83abc](https://github.com/Alwatr/alwatr/commit/7b83abc2a0d91c457d4ed0efc87eb0cb007be386))
+* replace ISignal with IBaseSignal in EventSignal and IReadonlySignal for consistency ([2425fce](https://github.com/Alwatr/alwatr/commit/2425fce32965349daa947c2ea0c694f2f1332b78))
+
 ## [9.23.2](https://github.com/Alwatr/alwatr/compare/v9.23.1...v9.23.2) (2026-05-07)
 
 ### 🐛 Bug Fixes

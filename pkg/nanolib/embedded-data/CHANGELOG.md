@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.23.3](https://github.com/Alwatr/alwatr/compare/v9.23.2...v9.23.3) (2026-05-12)
+
+**Note:** Version bump only for package @alwatr/embedded-data
+
 ## [9.21.0](https://github.com/Alwatr/alwatr/compare/v9.20.1...v9.21.0) (2026-05-02)
 
 ### ✨ Features
