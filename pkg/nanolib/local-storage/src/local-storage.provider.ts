@@ -10,7 +10,7 @@ import type {LocalStorageProviderConfig} from './type.js';
  * ```typescript
  * const userSettings = new LocalStorageProvider({
  *   name: 'user-settings',
- *   schemaVersion: 1
+ *   version: 1
  * });
  *
  * // Write new settings
