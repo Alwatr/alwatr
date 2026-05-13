@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.23.4](https://github.com/Alwatr/alwatr/compare/v9.23.3...v9.23.4) (2026-05-13)
+
+### 🔨 Code Refactoring
+
+* enhance state decorator to use private key for state management ([2675b63](https://github.com/Alwatr/alwatr/commit/2675b630cb80b80a98a8b30e1dc1a4b1205184a3))
+
 ## [9.23.3](https://github.com/Alwatr/alwatr/compare/v9.23.2...v9.23.3) (2026-05-12)
 
 ### 🐛 Bug Fixes

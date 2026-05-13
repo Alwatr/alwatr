@@ -61,7 +61,7 @@
     },
     "pkg/flux": {
       "name": "@alwatr/flux",
-      "version": "9.23.3",
+      "version": "9.23.4",
       "dependencies": {
         "@alwatr/action": "workspace:*",
         "@alwatr/directive": "workspace:*",
@@ -199,7 +199,7 @@
     },
     "pkg/nanolib/directive": {
       "name": "@alwatr/directive",
-      "version": "9.23.3",
+      "version": "9.23.4",
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/logger": "workspace:*",
