@@ -1,7 +1,7 @@
 import {describe, expect, it} from 'bun:test';
 import {GlobalRegistrator} from '@happy-dom/global-registrator';
 import {Directive} from './directive-class.js';
-import {attribute, on, query, queryAll} from './util-decorators.js';
+import {attribute, on, query, queryAll, state} from './util-decorators.js';
 
 // Guard against double-registration (directive-class.test.ts may have already registered)
 if (typeof document === 'undefined') {
@@ -108,6 +108,75 @@ describe('@attribute', () => {
 
     expect(first).toBe('123');
     expect(second).toBe('123');
+  });
+});
+
+describe('@state', () => {
+  class StateDirective extends Directive {
+    public requestUpdateCount = 0;
+
+    protected init_(): void {}
+
+    @state<string | null>()
+    accessor text: string | null = null;
+
+    @state<{count: number}>()
+    accessor payload: {count: number} = {count: 0};
+
+    public override requestUpdate(): void {
+      this.requestUpdateCount++;
+    }
+  }
+
+  it('initializes and returns the accessor value', () => {
+    const root = document.createElement('div');
+    const directive = new StateDirective(root, 'test');
+
+    expect(directive.text).toBeNull();
+    expect(directive.payload).toEqual({count: 0});
+  });
+
+  it('updates value and requests update when primitive value changes', () => {
+    const root = document.createElement('div');
+    const directive = new StateDirective(root, 'test');
+
+    directive.text = 'hello';
+
+    expect(directive.text).toBe('hello');
+    expect(directive.requestUpdateCount).toBe(1);
+  });
+
+  it('does not request update when primitive value is unchanged', () => {
+    const root = document.createElement('div');
+    const directive = new StateDirective(root, 'test');
+
+    directive.text = 'same';
+    directive.text = 'same';
+
+    expect(directive.requestUpdateCount).toBe(1);
+  });
+
+  it('always requests update for object values even when reference is unchanged', () => {
+    const root = document.createElement('div');
+    const directive = new StateDirective(root, 'test');
+
+    const sameRef = directive.payload;
+    directive.payload = sameRef;
+    directive.payload = sameRef;
+
+    expect(directive.requestUpdateCount).toBe(2);
+  });
+
+  it('throws at decoration time when applied to a non-accessor', () => {
+    expect(() => {
+      const decorator = state();
+      decorator(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        {} as any,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        {kind: 'method', name: 'foo'} as any,
+      );
+    }).toThrow('@state can only be used with the "accessor" keyword');
   });
 });
 

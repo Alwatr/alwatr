@@ -203,24 +203,30 @@ export function attribute<D extends Directive = Directive>(name: string, cache =
  */
 export function state<T, D extends Directive = Directive>() {
   return function (
-    target: ClassAccessorDecoratorTarget<D, T>,
+    _target: ClassAccessorDecoratorTarget<D, T>,
     context: ClassAccessorDecoratorContext<D, T>,
   ): ClassAccessorDecoratorResult<D, T> {
     if (context.kind !== 'accessor') {
       throw new Error('@state can only be used with the "accessor" keyword');
     }
 
+    const privateKey = Symbol(`${String(context.name)}__state`);
+
     return {
+      init(initialValue: T) {
+        (this as any)[privateKey] = initialValue;
+        return initialValue;
+      },
       get(this: D) {
-        return target.get.call(this);
+        return (this as any)[privateKey] as T;
       },
       set(this: D, newValue) {
-        const oldValue = target.get.call(this);
+        const oldValue = (this as any)[privateKey] as T;
         // For primitives (including null), do not notify if the value is the same.
         if (Object.is(oldValue, newValue) && (typeof newValue !== 'object' || newValue === null)) {
           return;
         }
-        target.set.call(this, newValue);
+        (this as any)[privateKey] = newValue;
         this.requestUpdate();
       },
     };
