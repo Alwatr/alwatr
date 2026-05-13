@@ -1,6 +1,7 @@
 import type {Awaitable} from '@alwatr/type-helper';
 import type {DebouncerConfig} from '@alwatr/debounce';
 import type {LocalStorageProviderConfig} from '@alwatr/local-storage';
+import type {SessionStorageProviderConfig} from '@alwatr/session-storage';
 
 /**
  * @package @alwatr/signal
@@ -323,7 +324,7 @@ export interface DebounceSignalConfig extends Omit<DebouncerConfig<never>, 'func
  *
  * @template T The type of the state it holds.
  */
-export interface PersistentStateSignalConfig<T> extends StateSignalConfig<T>, LocalStorageProviderConfig {
+export interface PersistentStateSignalConfig<T> extends StateSignalConfig<T>, LocalStorageProviderConfig<T> {
   /**
    * The key under which to store the signal's state in localStorage.
    * @default `signal-name`
@@ -344,7 +345,7 @@ export interface PersistentStateSignalConfig<T> extends StateSignalConfig<T>, Lo
  *
  * @template T The type of the state it holds.
  */
-export interface SessionStateSignalConfig<T> extends StateSignalConfig<T> {
+export interface SessionStateSignalConfig<T> extends StateSignalConfig<T>, SessionStorageProviderConfig<T> {
   /**
    * The key used to store data in `sessionStorage`.
    * Defaults to the signal's `name` if not provided.

@@ -36,11 +36,22 @@ export class PersistentStateSignal<T> extends StateSignal<T> {
   private readonly storageSyncSubscription__;
 
   constructor(config: PersistentStateSignalConfig<T>) {
-    const {name, storageKey = name, saveDebounceDelay = 500, initialValue, onDestroy, schemaVersion} = config;
+    const {
+      name,
+      storageKey = name,
+      saveDebounceDelay = 500,
+      initialValue,
+      onDestroy,
+      schemaVersion,
+      parse,
+      stringify,
+    } = config;
 
     const storageProvider = createLocalStorageProvider<T>({
       name: storageKey,
       schemaVersion,
+      parse,
+      stringify,
     });
 
     super({

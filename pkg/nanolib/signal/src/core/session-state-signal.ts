@@ -68,9 +68,13 @@ export class SessionStateSignal<T> extends StateSignal<T> {
   private readonly storageSyncSubscription__;
 
   constructor(config: SessionStateSignalConfig<T>) {
-    const {name, storageKey = name, saveDebounceDelay = 500, initialValue, onDestroy} = config;
+    const {name, storageKey = name, saveDebounceDelay = 500, initialValue, onDestroy, parse, stringify} = config;
 
-    const storageProvider = createSessionStorageProvider<T>({name: storageKey});
+    const storageProvider = createSessionStorageProvider<T>({
+      name: storageKey,
+      parse,
+      stringify,
+    });
 
     super({
       name,
