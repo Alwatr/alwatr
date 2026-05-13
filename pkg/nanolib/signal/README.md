@@ -379,6 +379,27 @@ The `subscribe` method accepts an optional second argument to customize its beha
   - `config.name`: `string`
 - **`.dispatch(payload: T)`**: Dispatches an event to all listeners.
 
+### `PersistentStateSignal<T>`
+
+- **`constructor(config)`**: Creates a state signal that persists in `localStorage`.
+  - `config.name`: `string`
+  - `config.initialValue`: `T`
+  - `config.schemaVersion`: `number` (optional)
+  - `config.parse`: `(value: string) => T` (optional)
+  - `config.stringify`: `(value: T) => string` (optional)
+- Has all methods of `StateSignal`.
+- **`.remove()`**: Removes the value from storage without destroying the signal.
+
+### `SessionStateSignal<T>`
+
+- **`constructor(config)`**: Creates a state signal that persists in `sessionStorage` (tab-scoped).
+  - `config.name`: `string`
+  - `config.initialValue`: `T`
+  - `config.parse`: `(value: string) => T` (optional)
+  - `config.stringify`: `(value: T) => string` (optional)
+- Has all methods of `StateSignal`.
+- **`.remove()`**: Removes the value from storage without destroying the signal.
+
 ### `ChannelSignal<TMap>`
 
 - **`constructor(config)`**: Creates a new channel signal.
@@ -813,7 +834,28 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 
 - **`constructor(config)`**: یک سیگنال رویداد جدید ایجاد می‌کند.
   - `config.name`: `string`
-- **`.dispatch(payload: T)`**: یک رویداد را به تمام شنوندگان ارسال می‌کند.
+- **`.dispatch(payload: T)`**: یک رویداد را به همه شنوندگان ارسال می‌کند.
+
+### `PersistentStateSignal<T>`
+
+- **`constructor(config)`**: یک سیگنال وضعیت ایجاد می‌کند که در `localStorage` ماندگار است.
+  - `config.name`: `string`
+  - `config.initialValue`: `T`
+  - `config.schemaVersion`: `number` (اختیاری)
+  - `config.parse`: `(value: string) => T` (اختیاری)
+  - `config.stringify`: `(value: T) => string` (اختیاری)
+- دارای تمامی متدهای `StateSignal` است.
+- **`.remove()`**: مقدار را از حافظه (storage) بدون از بین بردن سیگنال پاک می‌کند.
+
+### `SessionStateSignal<T>`
+
+- **`constructor(config)`**: یک سیگنال وضعیت ایجاد می‌کند که در `sessionStorage` (در سطح tab) ماندگار است.
+  - `config.name`: `string`
+  - `config.initialValue`: `T`
+  - `config.parse`: `(value: string) => T` (اختیاری)
+  - `config.stringify`: `(value: T) => string` (اختیاری)
+- دارای تمامی متدهای `StateSignal` است.
+- **`.remove()`**: مقدار را از حافظه (storage) بدون از بین بردن سیگنال پاک می‌کند.
 
 ### `ChannelSignal<TMap>`
 
