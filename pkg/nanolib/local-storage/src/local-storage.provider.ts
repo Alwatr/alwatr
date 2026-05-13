@@ -26,12 +26,17 @@ export class LocalStorageProvider<T> {
 
   private readonly key__: string;
   protected readonly logger_;
+  protected readonly parse__: (value: string) => T;
+  protected readonly stringify__: (value: T) => string;
 
-  constructor(config: LocalStorageProviderConfig) {
+  constructor(config: LocalStorageProviderConfig<T>) {
     this.logger_ = createLogger(`local-storage-provider: ${config.name}, v: ${config.schemaVersion}`);
     this.logger_.logMethodArgs?.('constructor', {config});
     this.key__ = LocalStorageProvider.getKey(config);
     LocalStorageProvider.clearPreviousStorageVersions(config);
+
+    this.parse__ = config.parse ?? (JSON.parse as (value: string) => T);
+    this.stringify__ = config.stringify ?? JSON.stringify;
   }
 
   /**
@@ -110,7 +115,7 @@ export class LocalStorageProvider<T> {
     }
 
     try {
-      const parsedValue = JSON.parse(value) as T;
+      const parsedValue = this.parse__(value);
       this.logger_.logMethodFull?.('read//value', undefined, {parsedValue});
       return parsedValue;
     } catch (err) {
@@ -126,7 +131,7 @@ export class LocalStorageProvider<T> {
     this.logger_.logMethodArgs?.('write', {value});
     let valueStr: string;
     try {
-      valueStr = JSON.stringify(value);
+      valueStr = this.stringify__(value);
     } catch (err) {
       this.logger_.error('write', 'write_stringify_error', {err});
       throw new Error('write_stringify_error');
