@@ -10,7 +10,7 @@ import type {LocalStorageProviderConfig} from './type.js';
  * ```typescript
  * const userSettings = new LocalStorageProvider({
  *   name: 'user-settings',
- *   version: 1
+ *   schemaVersion: 1
  * });
  *
  * // Write new settings
@@ -44,14 +44,14 @@ export class LocalStorageProvider<T> {
    * @param meta - An object containing the name and schemaVersion.
    * @returns The versioned key string.
    */
-  public static getKey(config: LocalStorageProviderConfig): string {
+  public static getKey(config: {name: string; schemaVersion: number}): string {
     return `${config.name}.v${config.schemaVersion}`;
   }
 
   /**
    * Manages data migration by removing all previous versions of the item.
    */
-  public static clearPreviousStorageVersions(config: LocalStorageProviderConfig): void {
+  public static clearPreviousStorageVersions(config: {name: string; schemaVersion: number}): void {
     if (config.schemaVersion < 1) return;
 
     // Iterate from v1 up to the version just before the current one and remove them.
