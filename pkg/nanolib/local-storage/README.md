@@ -114,6 +114,19 @@ To completely remove the item from `localStorage`, use the `.remove()` method.
 userSettingsProvider.remove();
 ```
 
+### 6\. Storing Complex Types (Maps, Sets, Dates)
+
+By default, the provider uses `JSON.parse` and `JSON.stringify`. If you need to store types that aren't natively supported by JSON (like `Map`, `Set`, or `Date`), you can provide custom `parse` and `stringify` functions in the configuration.
+
+```typescript
+const mapProvider = createLocalStorageProvider<Map<string, number>>({
+  name: 'score-map',
+  schemaVersion: 1,
+  stringify: (map) => JSON.stringify(Array.from(map.entries())),
+  parse: (str) => new Map(JSON.parse(str)),
+});
+```
+
 ## Best Practices
 
 - **Always use the `createLocalStorageProvider` factory function.** It provides a stable API that protects your code from internal library changes.
@@ -276,6 +289,19 @@ if (LocalStorageProvider.has(formMeta)) {
 
 ```typescript
 userSettingsProvider.remove();
+```
+
+### ۶. ذخیره‌سازی انواع داده‌های پیچیده (Map, Set, Date)
+
+به طور پیش‌فرض، Provider از `JSON.parse` و `JSON.stringify` استفاده می‌کند. اگر نیاز به ذخیره نوع‌هایی دارید که به صورت ذاتی توسط JSON پشتیبانی نمی‌شوند (مانند `Map`، `Set` یا `Date`)، می‌توانید توابع سفارشی `parse` و `stringify` را در پیکربندی ارائه دهید.
+
+```typescript
+const mapProvider = createLocalStorageProvider<Map<string, number>>({
+  name: 'score-map',
+  schemaVersion: 1,
+  stringify: (map) => JSON.stringify(Array.from(map.entries())),
+  parse: (str) => new Map(JSON.parse(str)),
+});
 ```
 
 ## بهترین روش‌ها (Best Practices)
