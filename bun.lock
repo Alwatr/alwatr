@@ -9,7 +9,7 @@
         "@lerna-lite/publish": "^5.2.1",
         "@lerna-lite/run": "^5.2.1",
         "@lerna-lite/version": "^5.2.1",
-        "bun-types": "^1.3.13",
+        "bun-types": "^1.3.14",
         "conventional-changelog-conventionalcommits": "^9.3.1",
         "conventional-commits-filter": "^5.0.0",
         "typescript": "^6.0.3",
@@ -72,7 +72,7 @@
         "@alwatr/session-storage": "workspace:*",
         "@alwatr/signal": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "lit-html": "^3.3.2",
+        "lit-html": "^3.3.3",
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
@@ -132,7 +132,7 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "@types/node": "^24.12.3",
+        "@types/node": "^24.12.4",
         "typescript": "^6.0.3",
       },
     },
@@ -153,7 +153,7 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "@types/node": "^24.12.3",
+        "@types/node": "^24.12.4",
         "typescript": "^6.0.3",
       },
     },
@@ -193,7 +193,7 @@
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
         "@happy-dom/global-registrator": "^20.9.0",
-        "@types/node": "^24.12.3",
+        "@types/node": "^24.12.4",
         "typescript": "^6.0.3",
       },
     },
@@ -203,8 +203,8 @@
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/logger": "workspace:*",
-        "@alwatr/signal": "9.23.2",
-        "lit-html": "^3.3.2",
+        "@alwatr/signal": "9.23.3",
+        "lit-html": "^3.3.3",
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
@@ -248,7 +248,7 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "@types/node": "^24.12.3",
+        "@types/node": "^24.12.4",
         "typescript": "^6.0.3",
       },
     },
@@ -259,7 +259,7 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "@types/node": "^24.12.3",
+        "@types/node": "^24.12.4",
         "typescript": "^6.0.3",
       },
     },
@@ -311,7 +311,7 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "@types/node": "^24.12.3",
+        "@types/node": "^24.12.4",
         "typescript": "^6.0.3",
       },
     },
@@ -408,7 +408,7 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "@types/node": "^24.12.3",
+        "@types/node": "^24.12.4",
         "typescript": "^6.0.3",
       },
     },
@@ -429,7 +429,7 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "@types/node": "^24.12.3",
+        "@types/node": "^24.12.4",
         "typescript": "^6.0.3",
       },
     },
@@ -468,7 +468,7 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "@types/node": "^24.12.3",
+        "@types/node": "^24.12.4",
         "typescript": "^6.0.3",
       },
     },
@@ -567,7 +567,7 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "@types/node": "^24.12.3",
+        "@types/node": "^24.12.4",
         "typescript": "^6.0.3",
       },
     },
@@ -581,7 +581,7 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "@types/node": "^24.12.3",
+        "@types/node": "^24.12.4",
         "typescript": "^6.0.3",
       },
     },
@@ -595,7 +595,7 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "@types/node": "^24.12.3",
+        "@types/node": "^24.12.4",
         "typescript": "^6.0.3",
       },
     },
@@ -613,7 +613,7 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "@types/node": "^24.12.3",
+        "@types/node": "^24.12.4",
         "typescript": "^6.0.3",
       },
     },
@@ -634,7 +634,7 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "@types/node": "^24.12.3",
+        "@types/node": "^24.12.4",
         "typescript": "^6.0.3",
       },
     },
@@ -650,7 +650,7 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "@types/node": "^24.12.3",
+        "@types/node": "^24.12.4",
         "typescript": "^6.0.3",
       },
     },
@@ -672,7 +672,7 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "@types/node": "^24.12.3",
+        "@types/node": "^24.12.4",
         "typescript": "^6.0.3",
       },
     },
@@ -686,7 +686,7 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "@types/node": "^24.12.3",
+        "@types/node": "^24.12.4",
         "typescript": "^6.0.3",
       },
     },
@@ -705,7 +705,7 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
-        "@types/node": "^24.12.3",
+        "@types/node": "^24.12.4",
         "typescript": "^6.0.3",
       },
     },
@@ -971,7 +971,7 @@
 
     "@tufjs/models": ["@tufjs/models@4.1.0", "", { "dependencies": { "@tufjs/canonical-json": "2.0.0", "minimatch": "^10.1.1" } }, "sha512-Y8cK9aggNRsqJVaKUlEYs4s7CvQ1b1ta2DVPyAimb0I2qhzjNk+A+mxvll/klL0RlfuIUei8BF7YWiua4kQqww=="],
 
-    "@types/node": ["@types/node@24.12.3", "", { "dependencies": { "undici-types": "~7.16.0" } }, "sha512-8oljBDGun9cIsZRJR6fkihn0TSXJI0UDOOhncYaERq6M0JMDoPLxyscwruJcb4GKS6dvK/d8xebYBg27h/duaQ=="],
+    "@types/node": ["@types/node@24.12.4", "", { "dependencies": { "undici-types": "~7.16.0" } }, "sha512-GUUEShf+PBCGW2KaXwcIt3Yk+e3pkKwWKb9GSyM9WQVE+ep2jzmHdGsHzu4wgcZy5fN9FBdVzjpBQsYlpfpgLA=="],
 
     "@types/normalize-package-data": ["@types/normalize-package-data@2.4.4", "", {}, "sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA=="],
 
@@ -1001,7 +1001,7 @@
 
     "brace-expansion": ["brace-expansion@5.0.6", "", { "dependencies": { "balanced-match": "^4.0.2" } }, "sha512-kLpxurY4Z4r9sgMsyG0Z9uzsBlgiU/EFKhj/h91/8yHu0edo7XuixOIH3VcJ8kkxs6/jPzoI6U9Vj3WqbMQ94g=="],
 
-    "bun-types": ["bun-types@1.3.13", "", { "dependencies": { "@types/node": "*" } }, "sha512-QXKeHLlOLqQX9LgYaHJfzdBaV21T63HhFJnvuRCcjZiaUDpbs5ED1MgxbMra71CsryN/1dAoXuJJJwIv/2drVA=="],
+    "bun-types": ["bun-types@1.3.14", "", { "dependencies": { "@types/node": "*" } }, "sha512-4N0ig0fEomHt5R0KCFWjovxow98rIoRwKolrYdCcknNwMekCXRnWEUvgu5soYV8QXtVsrUD8B95MBOZGPvr6KQ=="],
 
     "cacache": ["cacache@20.0.4", "", { "dependencies": { "@npmcli/fs": "^5.0.0", "fs-minipass": "^3.0.0", "glob": "^13.0.0", "lru-cache": "^11.1.0", "minipass": "^7.0.3", "minipass-collect": "^2.0.1", "minipass-flush": "^1.0.5", "minipass-pipeline": "^1.2.4", "p-map": "^7.0.2", "ssri": "^13.0.0" } }, "sha512-M3Lab8NPYlZU2exsL3bMVvMrMqgwCnMWfdZbK28bn3pK6APT/Te/I8hjRPNu1uwORY9a1eEQoifXbKPQMfMTOA=="],
 
@@ -1149,7 +1149,7 @@
 
     "lilconfig": ["lilconfig@3.1.3", "", {}, "sha512-/vlFKAoH5Cgt3Ie+JLhRbwOsCQePABiU3tJ1egGvyQ+33R/vcwM2Zl2QR/LzjsBeItPt3oSVXapn+m4nQDvpzw=="],
 
-    "lit-html": ["lit-html@3.3.2", "", { "dependencies": { "@types/trusted-types": "^2.0.2" } }, "sha512-Qy9hU88zcmaxBXcc10ZpdK7cOLXvXpRoBxERdtqV9QOrfpMZZ6pSYP91LhpPtap3sFMUiL7Tw2RImbe0Al2/kw=="],
+    "lit-html": ["lit-html@3.3.3", "", { "dependencies": { "@types/trusted-types": "^2.0.2" } }, "sha512-el8M6jK2o3RXBnrSHX3ZKrsN8zEV63pSExTO1wYJz7QndGYZ8353e2a5PPX+qHe2aGayfnchQmkAojaWAREOIA=="],
 
     "load-json-file": ["load-json-file@7.0.1", "", {}, "sha512-Gnxj3ev3mB5TkVBGad0JM6dmLiQL+o0t23JPBZ9sd+yvSLk05mFoqKBw5N8gbbkU4TNXyqCgIrl/VM17OgUIgQ=="],
 
@@ -1351,7 +1351,13 @@
 
     "zeptomatch": ["zeptomatch@2.1.0", "", { "dependencies": { "grammex": "^3.1.11", "graphmatch": "^1.1.0" } }, "sha512-KiGErG2J0G82LSpniV0CtIzjlJ10E04j02VOudJsPyPwNZgGnRKQy7I1R7GMyg/QswnE4l7ohSGrQbQbjXPPDA=="],
 
+    "@happy-dom/global-registrator/@types/node": ["@types/node@24.12.3", "", { "dependencies": { "undici-types": "~7.16.0" } }, "sha512-8oljBDGun9cIsZRJR6fkihn0TSXJI0UDOOhncYaERq6M0JMDoPLxyscwruJcb4GKS6dvK/d8xebYBg27h/duaQ=="],
+
+    "@types/ws/@types/node": ["@types/node@24.12.3", "", { "dependencies": { "undici-types": "~7.16.0" } }, "sha512-8oljBDGun9cIsZRJR6fkihn0TSXJI0UDOOhncYaERq6M0JMDoPLxyscwruJcb4GKS6dvK/d8xebYBg27h/duaQ=="],
+
     "cliui/strip-ansi": ["strip-ansi@7.2.0", "", { "dependencies": { "ansi-regex": "^6.2.2" } }, "sha512-yDPMNjp4WyfYBkHnjIRLfca1i6KMyGCtsVgoKe/z1+6vukgaENdgGBZt+ZmKPc4gavvEZ5OgHfHdrazhgNyG7w=="],
+
+    "happy-dom/@types/node": ["@types/node@24.12.3", "", { "dependencies": { "undici-types": "~7.16.0" } }, "sha512-8oljBDGun9cIsZRJR6fkihn0TSXJI0UDOOhncYaERq6M0JMDoPLxyscwruJcb4GKS6dvK/d8xebYBg27h/duaQ=="],
 
     "minipass-flush/minipass": ["minipass@3.3.6", "", { "dependencies": { "yallist": "^4.0.0" } }, "sha512-DxiNidxSEK+tHG6zOIklvNOwm3hvCrbUrdtzY74U6HKTJxvIDfOUL5W5P2Ghd3DTkhhKPYGqeNUIh5qcM4YBfw=="],
 

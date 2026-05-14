@@ -24,7 +24,7 @@
     "@alwatr/delay": "workspace:*",
     "@alwatr/logger": "workspace:*",
     "@alwatr/signal": "9.23.3",
-    "lit-html": "^3.3.2"
+    "lit-html": "^3.3.3"
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
