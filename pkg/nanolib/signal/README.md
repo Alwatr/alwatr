@@ -388,6 +388,7 @@ The `subscribe` method accepts an optional second argument to customize its beha
   - `config.parse`: `(value: string) => T` (optional)
   - `config.stringify`: `(value: T) => string` (optional)
 - Has all methods of `StateSignal`.
+- **Reliable Save & BFCache Support**: Automatically flushes pending writes on `pagehide` and re-syncs state on `pageshow` when restoring from BFCache.
 - **`.remove()`**: Removes the value from storage without destroying the signal.
 
 ### `SessionStateSignal<T>`
@@ -398,6 +399,7 @@ The `subscribe` method accepts an optional second argument to customize its beha
   - `config.parse`: `(value: string) => T` (optional)
   - `config.stringify`: `(value: T) => string` (optional)
 - Has all methods of `StateSignal`.
+- **Reliable Save & BFCache Support**: Automatically flushes pending writes on `pagehide` and re-syncs state on `pageshow` when restoring from BFCache.
 - **`.remove()`**: Removes the value from storage without destroying the signal.
 
 ### `ChannelSignal<TMap>`
@@ -845,6 +847,7 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
   - `config.parse`: `(value: string) => T` (اختیاری)
   - `config.stringify`: `(value: T) => string` (اختیاری)
 - دارای تمامی متدهای `StateSignal` است.
+- **ذخیره مطمئن و پشتیبانی از BFCache**: به طور خودکار داده‌ها را در رویداد `pagehide` ذخیره می‌کند و در صورت بازگشت از BFCache (رویداد `pageshow`)، سیگنال را دوباره با حافظه همگام‌سازی (Sync) می‌کند.
 - **`.remove()`**: مقدار را از حافظه (storage) بدون از بین بردن سیگنال پاک می‌کند.
 
 ### `SessionStateSignal<T>`
@@ -855,6 +858,7 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
   - `config.parse`: `(value: string) => T` (اختیاری)
   - `config.stringify`: `(value: T) => string` (اختیاری)
 - دارای تمامی متدهای `StateSignal` است.
+- **ذخیره مطمئن و پشتیبانی از BFCache**: به طور خودکار داده‌ها را در رویداد `pagehide` ذخیره می‌کند و در صورت بازگشت از BFCache (رویداد `pageshow`)، سیگنال را دوباره با حافظه همگام‌سازی (Sync) می‌کند.
 - **`.remove()`**: مقدار را از حافظه (storage) بدون از بین بردن سیگنال پاک می‌کند.
 
 ### `ChannelSignal<TMap>`
