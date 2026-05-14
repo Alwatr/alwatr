@@ -28,11 +28,16 @@ export class SessionStorageProvider<T> {
 
   private readonly key__: string;
   protected readonly logger_;
+  protected readonly parse_: (value: string) => T;
+  protected readonly stringify_: (value: T) => string;
 
-  constructor(config: SessionStorageProviderConfig) {
+  constructor(config: SessionStorageProviderConfig<T>) {
     this.key__ = config.name;
     this.logger_ = createLogger(`session-storage-provider: ${this.key__}`);
     this.logger_.logMethodArgs?.('constructor', config);
+
+    this.parse_ = config.parse ?? (JSON.parse as (value: string) => T);
+    this.stringify_ = config.stringify ?? JSON.stringify;
   }
 
   /**
@@ -97,7 +102,7 @@ export class SessionStorageProvider<T> {
     }
 
     try {
-      const parsed = JSON.parse(raw) as T;
+      const parsed = this.parse_(raw);
       this.logger_.logMethodFull?.('read//value', undefined, {parsed});
       return parsed;
     } catch (err) {
@@ -122,7 +127,7 @@ export class SessionStorageProvider<T> {
 
     let valueStr: string;
     try {
-      valueStr = JSON.stringify(value);
+      valueStr = this.stringify_(value);
     } catch (err) {
       this.logger_.error('write', 'write_stringify_error', {err});
       throw new Error('write_stringify_error');

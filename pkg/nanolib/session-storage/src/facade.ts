@@ -20,6 +20,6 @@ import type {SessionStorageProviderConfig} from './type.js';
  * console.log(current); // { step: 2, answers: { q1: 'yes' } }
  * ```
  */
-export function createSessionStorageProvider<T>(config: SessionStorageProviderConfig): SessionStorageProvider<T> {
+export function createSessionStorageProvider<T>(config: SessionStorageProviderConfig<T>): SessionStorageProvider<T> {
   return new SessionStorageProvider<T>(config);
 }

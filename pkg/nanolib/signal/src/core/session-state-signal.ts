@@ -17,12 +17,15 @@ import type {SessionStorageProvider} from '@alwatr/session-storage';
  * This is ideal for transient UI state that should survive soft navigations and refreshes
  * within the same browser tab (e.g., wizard steps, unsaved form drafts, scroll position).
  *
- * @template T The type of the state it holds. Must be JSON-serializable.
+ * @template T The type of the state it holds. If custom `parse` and `stringify` functions are
+ * provided in the config, T can be any type. If they are not provided, T must be JSON-serializable
+ * (using the default `JSON.parse` and `JSON.stringify`).
  *
  * @example
  * ```typescript
  * import {SessionStateSignal} from '@alwatr/signal';
  *
+ * // Example 1: Basic usage with JSON-serializable state (default parse/stringify)
  * interface WizardState {
  *   step: number;
  *   answers: Record<string, string>;
@@ -38,6 +41,14 @@ import type {SessionStorageProvider} from '@alwatr/session-storage';
  *
  * // Update state — written to sessionStorage automatically (debounced).
  * wizardSignal.set({ step: 2, answers: { q1: 'yes' } });
+ *
+ * // Example 2: Custom state type with parse and stringify
+ * const dateSignal = new SessionStateSignal<Date>({
+ *   name: 'last-interaction',
+ *   initialValue: new Date(),
+ *   parse: (str: string) => new Date(str),
+ *   stringify: (date: Date) => date.toISOString(),
+ * });
  *
  * // After a soft page reload, the state is restored from sessionStorage.
  *
@@ -67,10 +78,36 @@ export class SessionStateSignal<T> extends StateSignal<T> {
    */
   private readonly storageSyncSubscription__;
 
-  constructor(config: SessionStateSignalConfig<T>) {
-    const {name, storageKey = name, saveDebounceDelay = 500, initialValue, onDestroy} = config;
+  /**
+   * Listener for the browser's pagehide events to flush pending saves.
+   * @private
+   */
+  private readonly windowPageHideListener_ = (): void => {
+    this.storageDebouncer__.flush();
+  };
 
-    const storageProvider = createSessionStorageProvider<T>({name: storageKey});
+  /**
+   * Listener for the browser's pageshow events to sync from storage when restored from BFCache.
+   * @private
+   */
+  private readonly windowPageShowListener_ = (event: PageTransitionEvent): void => {
+    if (event.persisted) {
+      this.logger_.logMethod?.('windowPageShowListener_//restored_from_bfcache');
+      const value = this.storageProvider__.read();
+      if (value !== null) {
+        this.set(value);
+      }
+    }
+  };
+
+  constructor(config: SessionStateSignalConfig<T>) {
+    const {name, storageKey = name, saveDebounceDelay = 500, initialValue, onDestroy, parse, stringify} = config;
+
+    const storageProvider = createSessionStorageProvider<T>({
+      name: storageKey,
+      parse,
+      stringify,
+    });
 
     super({
       name,
@@ -91,6 +128,11 @@ export class SessionStateSignal<T> extends StateSignal<T> {
     });
 
     this.storageSyncSubscription__ = this.subscribe(this.storageDebouncer__.trigger, {receivePrevious: false});
+
+    if (typeof globalThis.addEventListener === 'function') {
+      globalThis.addEventListener('pagehide', this.windowPageHideListener_, {passive: true});
+      globalThis.addEventListener('pageshow', this.windowPageShowListener_, {passive: true});
+    }
   }
 
   /**
@@ -136,6 +178,10 @@ export class SessionStateSignal<T> extends StateSignal<T> {
    */
   public override destroy(): void {
     this.logger_.logMethod?.('destroy');
+    if (typeof globalThis.removeEventListener === 'function') {
+      globalThis.removeEventListener('pagehide', this.windowPageHideListener_);
+      globalThis.removeEventListener('pageshow', this.windowPageShowListener_);
+    }
     // Flush any pending debounced writes before destroying.
     this.storageDebouncer__.flush();
     // Unsubscribe the storage sync listener to prevent memory leaks.

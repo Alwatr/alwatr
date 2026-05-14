@@ -64,6 +64,18 @@ if (formDraft.has()) {
 formDraft.remove();
 ```
 
+### Storing Complex Types (Maps, Sets, Dates)
+
+You can provide custom `parse` and `stringify` functions in the configuration to store complex types that aren't natively supported by `JSON.stringify`.
+
+```typescript
+const mapProvider = createSessionStorageProvider<Map<string, number>>({
+  name: 'score-map',
+  stringify: (map) => JSON.stringify(Array.from(map.entries())),
+  parse: (str) => new Map(JSON.parse(str)),
+});
+```
+
 ---
 
 ## 🌊 Part of Alwatr Flux

@@ -26,27 +26,32 @@ export class LocalStorageProvider<T> {
 
   private readonly key__: string;
   protected readonly logger_;
+  protected readonly parse_: (value: string) => T;
+  protected readonly stringify_: (value: T) => string;
 
-  constructor(config: LocalStorageProviderConfig) {
+  constructor(config: LocalStorageProviderConfig<T>) {
     this.logger_ = createLogger(`local-storage-provider: ${config.name}, v: ${config.schemaVersion}`);
     this.logger_.logMethodArgs?.('constructor', {config});
     this.key__ = LocalStorageProvider.getKey(config);
     LocalStorageProvider.clearPreviousStorageVersions(config);
+
+    this.parse_ = config.parse ?? (JSON.parse as (value: string) => T);
+    this.stringify_ = config.stringify ?? JSON.stringify;
   }
 
   /**
    * Generates the versioned storage key.
-   * @param meta - An object containing the name and schemaVersion.
+   * @param config - An object containing the name and schemaVersion.
    * @returns The versioned key string.
    */
-  public static getKey(config: LocalStorageProviderConfig): string {
+  public static getKey(config: {name: string; schemaVersion: number}): string {
     return `${config.name}.v${config.schemaVersion}`;
   }
 
   /**
    * Manages data migration by removing all previous versions of the item.
    */
-  public static clearPreviousStorageVersions(config: LocalStorageProviderConfig): void {
+  public static clearPreviousStorageVersions(config: {name: string; schemaVersion: number}): void {
     if (config.schemaVersion < 1) return;
 
     // Iterate from v1 up to the version just before the current one and remove them.
@@ -110,7 +115,7 @@ export class LocalStorageProvider<T> {
     }
 
     try {
-      const parsedValue = JSON.parse(value) as T;
+      const parsedValue = this.parse_(value);
       this.logger_.logMethodFull?.('read//value', undefined, {parsedValue});
       return parsedValue;
     } catch (err) {
@@ -126,7 +131,7 @@ export class LocalStorageProvider<T> {
     this.logger_.logMethodArgs?.('write', {value});
     let valueStr: string;
     try {
-      valueStr = JSON.stringify(value);
+      valueStr = this.stringify_(value);
     } catch (err) {
       this.logger_.error('write', 'write_stringify_error', {err});
       throw new Error('write_stringify_error');

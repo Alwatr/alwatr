@@ -11,8 +11,41 @@ import type {LocalStorageProvider} from '@alwatr/local-storage';
  *
  * It extends the functionality of a standard `StateSignal` by automatically reading
  * its initial value from localStorage and writing back any subsequent changes.
+ * The data persists across browser sessions and full page reloads until explicitly removed.
  *
- * @template T The type of the state it holds.
+ * @template T The type of the state it holds. If custom `parse` and `stringify` functions are
+ * provided in the config, T can be any type. If they are not provided, T must be JSON-serializable
+ * (using the default `JSON.parse` and `JSON.stringify`).
+ *
+ * @example
+ * ```typescript
+ * import {PersistentStateSignal} from '@alwatr/signal';
+ *
+ * // Example 1: Basic usage with JSON-serializable state
+ * interface UserPreferences {
+ *   theme: 'light' | 'dark';
+ *   language: string;
+ * }
+ *
+ * const preferencesSignal = new PersistentStateSignal<UserPreferences>({
+ *   name: 'user-preferences',
+ *   initialValue: { theme: 'light', language: 'en' },
+ * });
+ *
+ * // Example 2: Custom state type with parse and stringify
+ * const lastVisitSignal = new PersistentStateSignal<Date>({
+ *   name: 'last-visit',
+ *   initialValue: new Date(),
+ *   parse: (str: string) => new Date(str),
+ *   stringify: (date: Date) => date.toISOString(),
+ * });
+ *
+ * // The state is restored from localStorage on every page load.
+ * console.log(preferencesSignal.get());
+ *
+ * // Updates are automatically saved to localStorage (debounced).
+ * preferencesSignal.set({ theme: 'dark', language: 'fa' });
+ * ```
  */
 export class PersistentStateSignal<T> extends StateSignal<T> {
   /**
@@ -35,12 +68,45 @@ export class PersistentStateSignal<T> extends StateSignal<T> {
    */
   private readonly storageSyncSubscription__;
 
+  /**
+   * Listener for the browser's pagehide events to flush pending saves.
+   * @private
+   */
+  private readonly windowPageHideListener_ = (): void => {
+    this.storageDebouncer__.flush();
+  };
+
+  /**
+   * Listener for the browser's pageshow events to sync from storage when restored from BFCache.
+   * @private
+   */
+  private readonly windowPageShowListener_ = (event: PageTransitionEvent): void => {
+    if (event.persisted) {
+      this.logger_.logMethod?.('windowPageShowListener_//restored_from_bfcache');
+      const value = this.storageProvider__.read();
+      if (value !== null) {
+        this.set(value);
+      }
+    }
+  };
+
   constructor(config: PersistentStateSignalConfig<T>) {
-    const {name, storageKey = name, saveDebounceDelay = 500, initialValue, onDestroy, schemaVersion} = config;
+    const {
+      name,
+      storageKey = name,
+      saveDebounceDelay = 500,
+      initialValue,
+      onDestroy,
+      schemaVersion,
+      parse,
+      stringify,
+    } = config;
 
     const storageProvider = createLocalStorageProvider<T>({
       name: storageKey,
       schemaVersion,
+      parse,
+      stringify,
     });
 
     super({
@@ -62,6 +128,11 @@ export class PersistentStateSignal<T> extends StateSignal<T> {
     });
 
     this.storageSyncSubscription__ = this.subscribe(this.storageDebouncer__.trigger, {receivePrevious: false});
+
+    if (typeof globalThis.addEventListener === 'function') {
+      globalThis.addEventListener('pagehide', this.windowPageHideListener_, {passive: true});
+      globalThis.addEventListener('pageshow', this.windowPageShowListener_, {passive: true});
+    }
   }
 
   /**
@@ -89,6 +160,10 @@ export class PersistentStateSignal<T> extends StateSignal<T> {
    */
   public override destroy(): void {
     this.logger_.logMethod?.('destroy');
+    if (typeof globalThis.removeEventListener === 'function') {
+      globalThis.removeEventListener('pagehide', this.windowPageHideListener_);
+      globalThis.removeEventListener('pageshow', this.windowPageShowListener_);
+    }
     // Flush any pending storage writes before destroying.
     this.storageDebouncer__.flush();
     // Unsubscribe from the sync listener to prevent memory leaks.
