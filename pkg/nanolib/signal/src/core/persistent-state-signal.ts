@@ -11,8 +11,41 @@ import type {LocalStorageProvider} from '@alwatr/local-storage';
  *
  * It extends the functionality of a standard `StateSignal` by automatically reading
  * its initial value from localStorage and writing back any subsequent changes.
+ * The data persists across browser sessions and full page reloads until explicitly removed.
  *
- * @template T The type of the state it holds.
+ * @template T The type of the state it holds. If custom `parse` and `stringify` functions are
+ * provided in the config, T can be any type. If they are not provided, T must be JSON-serializable
+ * (using the default `JSON.parse` and `JSON.stringify`).
+ *
+ * @example
+ * ```typescript
+ * import {PersistentStateSignal} from '@alwatr/signal';
+ *
+ * // Example 1: Basic usage with JSON-serializable state
+ * interface UserPreferences {
+ *   theme: 'light' | 'dark';
+ *   language: string;
+ * }
+ *
+ * const preferencesSignal = new PersistentStateSignal<UserPreferences>({
+ *   name: 'user-preferences',
+ *   initialValue: { theme: 'light', language: 'en' },
+ * });
+ *
+ * // Example 2: Custom state type with parse and stringify
+ * const lastVisitSignal = new PersistentStateSignal<Date>({
+ *   name: 'last-visit',
+ *   initialValue: new Date(),
+ *   parse: (str: string) => new Date(str),
+ *   stringify: (date: Date) => date.toISOString(),
+ * });
+ *
+ * // The state is restored from localStorage on every page load.
+ * console.log(preferencesSignal.get());
+ *
+ * // Updates are automatically saved to localStorage (debounced).
+ * preferencesSignal.set({ theme: 'dark', language: 'fa' });
+ * ```
  */
 export class PersistentStateSignal<T> extends StateSignal<T> {
   /**

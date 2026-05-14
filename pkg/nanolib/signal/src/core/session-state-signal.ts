@@ -17,12 +17,15 @@ import type {SessionStorageProvider} from '@alwatr/session-storage';
  * This is ideal for transient UI state that should survive soft navigations and refreshes
  * within the same browser tab (e.g., wizard steps, unsaved form drafts, scroll position).
  *
- * @template T The type of the state it holds. Must be JSON-serializable.
+ * @template T The type of the state it holds. If custom `parse` and `stringify` functions are
+ * provided in the config, T can be any type. If they are not provided, T must be JSON-serializable
+ * (using the default `JSON.parse` and `JSON.stringify`).
  *
  * @example
  * ```typescript
  * import {SessionStateSignal} from '@alwatr/signal';
  *
+ * // Example 1: Basic usage with JSON-serializable state (default parse/stringify)
  * interface WizardState {
  *   step: number;
  *   answers: Record<string, string>;
@@ -38,6 +41,14 @@ import type {SessionStorageProvider} from '@alwatr/session-storage';
  *
  * // Update state — written to sessionStorage automatically (debounced).
  * wizardSignal.set({ step: 2, answers: { q1: 'yes' } });
+ *
+ * // Example 2: Custom state type with parse and stringify
+ * const dateSignal = new SessionStateSignal<Date>({
+ *   name: 'last-interaction',
+ *   initialValue: new Date(),
+ *   parse: (str: string) => new Date(str),
+ *   stringify: (date: Date) => date.toISOString(),
+ * });
  *
  * // After a soft page reload, the state is restored from sessionStorage.
  *

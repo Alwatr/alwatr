@@ -322,7 +322,28 @@ export interface DebounceSignalConfig extends Omit<DebouncerConfig<never>, 'func
  * Configuration for a persistent state signal.
  * It combines the core signal configuration with the necessary options for local storage persistence.
  *
- * @template T The type of the state it holds.
+ * This configuration extends both `StateSignalConfig` and `LocalStorageProviderConfig`,
+ * inheriting all storage-related options including `parse` and `stringify` for custom serialization.
+ *
+ * @template T The type of the state it holds. If custom `parse` and `stringify` functions are
+ * provided, T can be any type (e.g., Date, Map, Set). Otherwise, T must be JSON-serializable.
+ *
+ * @example
+ * ```typescript
+ * // Basic configuration with JSON-serializable state
+ * const config = {
+ *   name: 'user-prefs',
+ *   initialValue: { theme: 'dark', lang: 'en' },
+ * };
+ *
+ * // Configuration with custom serialization for Date type
+ * const dateConfig = {
+ *   name: 'last-modified',
+ *   initialValue: new Date(),
+ *   parse: (str: string) => new Date(str),
+ *   stringify: (date: Date) => date.toISOString(),
+ * };
+ * ```
  */
 export interface PersistentStateSignalConfig<T> extends StateSignalConfig<T>, LocalStorageProviderConfig<T> {
   /**
@@ -343,7 +364,28 @@ export interface PersistentStateSignalConfig<T> extends StateSignalConfig<T>, Lo
  * Configuration for a session state signal.
  * The state is persisted in `sessionStorage` and cleared when the tab closes.
  *
- * @template T The type of the state it holds.
+ * This configuration extends both `StateSignalConfig` and `SessionStorageProviderConfig`,
+ * inheriting all storage-related options including `parse` and `stringify` for custom serialization.
+ *
+ * @template T The type of the state it holds. If custom `parse` and `stringify` functions are
+ * provided, T can be any type (e.g., Date, Map, Set). Otherwise, T must be JSON-serializable.
+ *
+ * @example
+ * ```typescript
+ * // Basic configuration with JSON-serializable state
+ * const config = {
+ *   name: 'my-signal',
+ *   initialValue: { count: 0 },
+ * };
+ *
+ * // Configuration with custom serialization for Date type
+ * const dateConfig = {
+ *   name: 'timestamp-signal',
+ *   initialValue: new Date(),
+ *   parse: (str: string) => new Date(str),
+ *   stringify: (date: Date) => date.toISOString(),
+ * };
+ * ```
  */
 export interface SessionStateSignalConfig<T> extends StateSignalConfig<T>, SessionStorageProviderConfig<T> {
   /**
