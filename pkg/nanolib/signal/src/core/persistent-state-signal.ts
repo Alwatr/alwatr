@@ -35,6 +35,28 @@ export class PersistentStateSignal<T> extends StateSignal<T> {
    */
   private readonly storageSyncSubscription__;
 
+  /**
+   * Listener for the browser's pagehide events to flush pending saves.
+   * @private
+   */
+  private readonly windowPageHideListener_ = (): void => {
+    this.storageDebouncer__.flush();
+  };
+
+  /**
+   * Listener for the browser's pageshow events to sync from storage when restored from BFCache.
+   * @private
+   */
+  private readonly windowPageShowListener_ = (event: PageTransitionEvent): void => {
+    if (event.persisted) {
+      this.logger_.logMethod?.('windowPageShowListener_//restored_from_bfcache');
+      const value = this.storageProvider__.read();
+      if (value !== null) {
+        this.set(value);
+      }
+    }
+  };
+
   constructor(config: PersistentStateSignalConfig<T>) {
     const {
       name,
@@ -73,6 +95,11 @@ export class PersistentStateSignal<T> extends StateSignal<T> {
     });
 
     this.storageSyncSubscription__ = this.subscribe(this.storageDebouncer__.trigger, {receivePrevious: false});
+
+    if (typeof globalThis.addEventListener === 'function') {
+      globalThis.addEventListener('pagehide', this.windowPageHideListener_, {passive: true});
+      globalThis.addEventListener('pageshow', this.windowPageShowListener_, {passive: true});
+    }
   }
 
   /**
@@ -100,6 +127,10 @@ export class PersistentStateSignal<T> extends StateSignal<T> {
    */
   public override destroy(): void {
     this.logger_.logMethod?.('destroy');
+    if (typeof globalThis.removeEventListener === 'function') {
+      globalThis.removeEventListener('pagehide', this.windowPageHideListener_);
+      globalThis.removeEventListener('pageshow', this.windowPageShowListener_);
+    }
     // Flush any pending storage writes before destroying.
     this.storageDebouncer__.flush();
     // Unsubscribe from the sync listener to prevent memory leaks.
