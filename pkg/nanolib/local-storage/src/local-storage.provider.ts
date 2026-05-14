@@ -41,7 +41,7 @@ export class LocalStorageProvider<T> {
 
   /**
    * Generates the versioned storage key.
-   * @param meta - An object containing the name and schemaVersion.
+   * @param config - An object containing the name and schemaVersion.
    * @returns The versioned key string.
    */
   public static getKey(config: {name: string; schemaVersion: number}): string {

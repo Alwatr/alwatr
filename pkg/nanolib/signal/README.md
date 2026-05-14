@@ -384,7 +384,7 @@ The `subscribe` method accepts an optional second argument to customize its beha
 - **`constructor(config)`**: Creates a state signal that persists in `localStorage`.
   - `config.name`: `string`
   - `config.initialValue`: `T`
-  - `config.schemaVersion`: `number` (optional)
+  - config.schemaVersion: number
   - `config.parse`: `(value: string) => T` (optional)
   - `config.stringify`: `(value: T) => string` (optional)
 - Has all methods of `StateSignal`.
@@ -843,7 +843,7 @@ Alwatr Signal از یک مدل ناهمزمان قابل پیش‌بینی بر�
 - **`constructor(config)`**: یک سیگنال وضعیت ایجاد می‌کند که در `localStorage` ماندگار است.
   - `config.name`: `string`
   - `config.initialValue`: `T`
-  - `config.schemaVersion`: `number` (اختیاری)
+  - config.schemaVersion: number
   - `config.parse`: `(value: string) => T` (اختیاری)
   - `config.stringify`: `(value: T) => string` (اختیاری)
 - دارای تمامی متدهای `StateSignal` است.
