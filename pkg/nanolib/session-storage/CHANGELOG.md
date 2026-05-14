@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.24.0](https://github.com/Alwatr/alwatr/compare/v9.23.4...v9.24.0) (2026-05-14)
+
+### ✨ Features
+
+* add support for storing complex types with custom parse and stringify functions ([8e56086](https://github.com/Alwatr/alwatr/commit/8e56086ce91e9bc95b6e25b20abb52bd29885d15))
+* enhance SessionStorageProvider to support custom parse and stringify functions ([d8412ed](https://github.com/Alwatr/alwatr/commit/d8412ed6803217d149f8d7f1c6e2902db4e710ff))
+
 ## [9.23.3](https://github.com/Alwatr/alwatr/compare/v9.23.2...v9.23.3) (2026-05-12)
 
 **Note:** Version bump only for package @alwatr/session-storage

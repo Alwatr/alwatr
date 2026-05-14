@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.24.0](https://github.com/Alwatr/alwatr/compare/v9.23.4...v9.24.0) (2026-05-14)
+
+### ✨ Features
+
+* add pagehide and pageshow event listeners to sync storage in PersistentStateSignal and SessionStateSignal ([e847ba8](https://github.com/Alwatr/alwatr/commit/e847ba86b322b851a9c61b3604ab547a183ece1c))
+* add PersistentStateSignal and SessionStateSignal with custom parse and stringify options ([eb5621c](https://github.com/Alwatr/alwatr/commit/eb5621c440d684775392459ea4d699dbce40d00d))
+* extend PersistentStateSignal and SessionStateSignal to support custom parse and stringify functions ([8a18a40](https://github.com/Alwatr/alwatr/commit/8a18a408789b62901fac289dbb34eeedb737e4f6))
+
 ## [9.23.3](https://github.com/Alwatr/alwatr/compare/v9.23.2...v9.23.3) (2026-05-12)
 
 ### 🔨 Code Refactoring

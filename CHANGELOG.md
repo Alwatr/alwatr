@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.24.0](https://github.com/Alwatr/alwatr/compare/v9.23.4...v9.24.0) (2026-05-14)
+
+### ✨ Features
+
+* add pagehide and pageshow event listeners to sync storage in PersistentStateSignal and SessionStateSignal ([e847ba8](https://github.com/Alwatr/alwatr/commit/e847ba86b322b851a9c61b3604ab547a183ece1c))
+* add PersistentStateSignal and SessionStateSignal with custom parse and stringify options ([eb5621c](https://github.com/Alwatr/alwatr/commit/eb5621c440d684775392459ea4d699dbce40d00d))
+* add support for storing complex types with custom parse and stringify functions ([8e56086](https://github.com/Alwatr/alwatr/commit/8e56086ce91e9bc95b6e25b20abb52bd29885d15))
+* add support for storing complex types with custom parse and stringify functions ([433d1b5](https://github.com/Alwatr/alwatr/commit/433d1b5fd79d067b55b30c2c661d6fcdd159243e))
+* enhance LocalStorageProvider to support custom parse and stringify functions ([0fb87d7](https://github.com/Alwatr/alwatr/commit/0fb87d7875d05bfe2870d621df5009eb993f6a6e))
+* enhance SessionStorageProvider to support custom parse and stringify functions ([d8412ed](https://github.com/Alwatr/alwatr/commit/d8412ed6803217d149f8d7f1c6e2902db4e710ff))
+* extend PersistentStateSignal and SessionStateSignal to support custom parse and stringify functions ([8a18a40](https://github.com/Alwatr/alwatr/commit/8a18a408789b62901fac289dbb34eeedb737e4f6))
+
+### 🐛 Bug Fixes
+
+* correct variable names for parse and stringify in LocalStorageProvider ([b3f8ff5](https://github.com/Alwatr/alwatr/commit/b3f8ff57caa6f0a9e946ed043449569bcfa66dd6))
+* update parameter names in LocalStorageProvider for consistency ([4c6d218](https://github.com/Alwatr/alwatr/commit/4c6d21804484cdc2a5c8bd31e96a8053eab55187))
+
+### 🧹 Miscellaneous Chores
+
+* update example to use 'version' instead of 'schemaVersion' in LocalStorageProvider documentation ([1101e9a](https://github.com/Alwatr/alwatr/commit/1101e9ae3560bdb4ea5fcbc9d82cd51956a1e09c))
+
+### 🔗 Dependencies update
+
+* bump actions/dependency-review-action in the github-actions group ([966d82d](https://github.com/Alwatr/alwatr/commit/966d82da6db9b82376b33133a80cf71af8313319))
+* update @types/node and other dependencies to latest versions ([51df398](https://github.com/Alwatr/alwatr/commit/51df398cedf840ab72b3e5bbae9b4e3fafcc6299))
+
 ## [9.23.4](https://github.com/Alwatr/alwatr/compare/v9.23.3...v9.23.4) (2026-05-13)
 
 ### 🔨 Code Refactoring

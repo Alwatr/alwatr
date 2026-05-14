@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.24.0](https://github.com/Alwatr/alwatr/compare/v9.23.4...v9.24.0) (2026-05-14)
+
+### ✨ Features
+
+* add support for storing complex types with custom parse and stringify functions ([433d1b5](https://github.com/Alwatr/alwatr/commit/433d1b5fd79d067b55b30c2c661d6fcdd159243e))
+* enhance LocalStorageProvider to support custom parse and stringify functions ([0fb87d7](https://github.com/Alwatr/alwatr/commit/0fb87d7875d05bfe2870d621df5009eb993f6a6e))
+
+### 🐛 Bug Fixes
+
+* correct variable names for parse and stringify in LocalStorageProvider ([b3f8ff5](https://github.com/Alwatr/alwatr/commit/b3f8ff57caa6f0a9e946ed043449569bcfa66dd6))
+* update parameter names in LocalStorageProvider for consistency ([4c6d218](https://github.com/Alwatr/alwatr/commit/4c6d21804484cdc2a5c8bd31e96a8053eab55187))
+
+### 🧹 Miscellaneous Chores
+
+* update example to use 'version' instead of 'schemaVersion' in LocalStorageProvider documentation ([1101e9a](https://github.com/Alwatr/alwatr/commit/1101e9ae3560bdb4ea5fcbc9d82cd51956a1e09c))
+
 ## [9.23.3](https://github.com/Alwatr/alwatr/compare/v9.23.2...v9.23.3) (2026-05-12)
 
 **Note:** Version bump only for package @alwatr/local-storage

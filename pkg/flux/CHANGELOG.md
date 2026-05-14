@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.24.0](https://github.com/Alwatr/alwatr/compare/v9.23.4...v9.24.0) (2026-05-14)
+
+### 🔗 Dependencies update
+
+* update @types/node and other dependencies to latest versions ([51df398](https://github.com/Alwatr/alwatr/commit/51df398cedf840ab72b3e5bbae9b4e3fafcc6299))
+
 ## [9.23.4](https://github.com/Alwatr/alwatr/compare/v9.23.3...v9.23.4) (2026-05-13)
 
 **Note:** Version bump only for package @alwatr/flux
