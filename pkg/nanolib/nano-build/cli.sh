@@ -94,6 +94,7 @@ done
 case "$preset" in
   module)
     args+=(
+      '--root=src'
       '--target=node'
       '--sourcemap=linked'
       '--format=esm'
@@ -107,6 +108,7 @@ case "$preset" in
 
   module-web)
     args+=(
+      '--root=src'
       '--target=browser'
       '--sourcemap=linked'
       '--format=esm'
