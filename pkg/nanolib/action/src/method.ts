@@ -1,4 +1,4 @@
-import type {Awaitable} from '@alwatr/type-helper';
+import type {Awaitable, SingleOrArray} from '@alwatr/type-helper';
 import type {SubscribeResult} from '@alwatr/signal';
 
 import {internalChannel_, logger_} from './lib_.js';
@@ -54,13 +54,26 @@ import type {Action, ActionRecord, DispatchParam, ModifierHandler, PayloadResolv
  * ```
  */
 export function onAction<K extends keyof ActionRecord>(
-  type: K,
+  type: SingleOrArray<K>,
   handler: (action: Action<K>) => Awaitable<void>,
 ): SubscribeResult {
   logger_.logMethodArgs?.('onAction', {type});
   // The internal channel stores Action<any>; we cast to Action<K> here because
   // the channel key guarantees the type matches — only Action<K> objects are
   // ever dispatched under key K.
+  if (Array.isArray(type)) {
+    const results: SubscribeResult[] = [];
+    for (const t of type) {
+      results.push(internalChannel_.on(t, handler as (action: Action) => Awaitable<void>));
+    }
+    return {
+      unsubscribe: () => {
+        for (const s of results) {
+          s.unsubscribe();
+        }
+      },
+    };
+  }
   return internalChannel_.on(type, handler as (action: Action) => Awaitable<void>);
 }
 
