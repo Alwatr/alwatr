@@ -92,7 +92,7 @@ A TypeScript/ESM monorepo of small, focused libraries for building robust JavaSc
 
 | Package                                   | Key API / Notes                                                                                                                                       |
 | ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@alwatr/lazy`                            | `Lazy<T>` class + `lazy()` factory — deferred evaluation with cached result and closure cleanup for GC. `.value` accessor, `.isInitialized()` check.  |
+| `@alwatr/lazy`                            | `Lazy<T>` class + `lazy()` factory — deferred evaluation with cached result and closure cleanup for GC. `.instance` accessor, `.isInitialized()` check.  |
 | `@alwatr/deep-clone`                      | `deepClone(obj)` — deep clone objects/arrays.                                                                                                         |
 | `@alwatr/flat-string`                     | Flattens concatenated string's internal C structure for V8 performance.                                                                               |
 | `@alwatr/has-own`                         | Side-effect-free `Object.hasOwn` polyfill.                                                                                                            |

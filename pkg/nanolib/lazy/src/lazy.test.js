@@ -4,95 +4,95 @@ import {Lazy, lazy} from '@alwatr/lazy';
 describe('Lazy', () => {
   test('initializer is not called on construction', () => {
     let called = false;
-    const instance = new Lazy(() => {
+    const lazy = new Lazy(() => {
       called = true;
       return 42;
     });
     expect(called).toBe(false);
-    expect(instance.isInitialized()).toBe(false);
+    expect(lazy.isInitialized()).toBe(false);
   });
 
-  test('initializer is called on first .value access', () => {
+  test('initializer is called on first .instance access', () => {
     let callCount = 0;
-    const instance = new Lazy(() => {
+    const lazy = new Lazy(() => {
       callCount++;
       return 'hello';
     });
-    expect(instance.value).toBe('hello');
+    expect(lazy.instance).toBe('hello');
     expect(callCount).toBe(1);
   });
 
-  test('initializer is called only once across multiple .value accesses', () => {
+  test('initializer is called only once across multiple .instance accesses', () => {
     let callCount = 0;
-    const instance = new Lazy(() => {
+    const lazy = new Lazy(() => {
       callCount++;
       return {id: 1};
     });
-    const a = instance.value;
-    const b = instance.value;
-    const c = instance.value;
+    const a = lazy.instance;
+    const b = lazy.instance;
+    const c = lazy.instance;
     expect(callCount).toBe(1);
     // All accesses return the exact same cached reference
     expect(a).toBe(b);
     expect(b).toBe(c);
   });
 
-  test('isInitialized() returns true after first .value access', () => {
-    const instance = new Lazy(() => 99);
-    expect(instance.isInitialized()).toBe(false);
-    void instance.value;
-    expect(instance.isInitialized()).toBe(true);
+  test('isInitialized() returns true after first .instance access', () => {
+    const lazy = new Lazy(() => 99);
+    expect(lazy.isInitialized()).toBe(false);
+    void lazy.instance;
+    expect(lazy.isInitialized()).toBe(true);
   });
 
   test('works with null as a valid value', () => {
-    const instance = new Lazy(() => null);
-    expect(instance.value).toBeNull();
-    expect(instance.isInitialized()).toBe(true);
+    const lazy = new Lazy(() => null);
+    expect(lazy.instance).toBeNull();
+    expect(lazy.isInitialized()).toBe(true);
   });
 
   test('works with undefined as a valid value', () => {
-    const instance = new Lazy(() => undefined);
-    expect(instance.value).toBeUndefined();
-    expect(instance.isInitialized()).toBe(true);
+    const lazy = new Lazy(() => undefined);
+    expect(lazy.instance).toBeUndefined();
+    expect(lazy.isInitialized()).toBe(true);
   });
 
   test('works with complex object values', () => {
     const data = {name: 'alwatr', version: 9};
-    const instance = new Lazy(() => data);
-    expect(instance.value).toEqual({name: 'alwatr', version: 9});
-    expect(instance.value).toBe(data); // same reference
+    const lazy = new Lazy(() => data);
+    expect(lazy.instance).toEqual({name: 'alwatr', version: 9});
+    expect(lazy.instance).toBe(data); // same reference
   });
 
   test('handles re-entrant access during initialization gracefully', () => {
-    // Edge case: initializer itself accesses .value
+    // Edge case: initializer itself accesses .instance
     // Should return undefined on re-entry (not infinite loop)
     let reentrantValue;
-    const instance = new Lazy(() => {
-      // During initialization, try to read .value again
-      reentrantValue = instance.value;
+    const lazy = new Lazy(() => {
+      // During initialization, try to read .instance again
+      reentrantValue = lazy.instance;
       return 42;
     });
-    const result = instance.value;
+    const result = lazy.instance;
     expect(result).toBe(42);
     expect(reentrantValue).toBeUndefined(); // re-entry saw undefined
-    expect(instance.isInitialized()).toBe(true);
+    expect(lazy.isInitialized()).toBe(true);
   });
 });
 
 describe('lazy() factory function', () => {
   test('returns a Lazy instance', () => {
-    const instance = lazy(() => 'test');
-    expect(instance).toBeInstanceOf(Lazy);
+    const lazyVal = lazy(() => 'test');
+    expect(lazyVal).toBeInstanceOf(Lazy);
   });
 
   test('defers execution like the class constructor', () => {
     let called = false;
-    const instance = lazy(() => {
+    const lazyVal = lazy(() => {
       called = true;
       return true;
     });
     expect(called).toBe(false);
-    expect(instance.value).toBe(true);
+    expect(lazyVal.instance).toBe(true);
     expect(called).toBe(true);
   });
 });

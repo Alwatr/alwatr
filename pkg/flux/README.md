@@ -308,7 +308,7 @@ import {createStateSignal} from '@alwatr/flux';
 
 const userSignal = createStateSignal<UserProfile | null>({
   name: 'user',
-  initialValue: userProfile.value, // hydrated from DOM, no API call needed
+  initialValue: userProfile.instance, // hydrated from DOM, no API call needed
 });
 ```
 
@@ -1038,13 +1038,13 @@ const cartSignal = createStateSignal<CartState>({
 import {lazy} from '@alwatr/lazy';
 import {EmbeddedDataCollector} from '@alwatr/flux';
 
-// Extraction is deferred until .value is first accessed
+// Extraction is deferred until .instance is first accessed
 export const serverConfig = lazy(() =>
   new EmbeddedDataCollector<ServerConfig>('data-server-config', isServerConfig).collect(),
 );
 
 // Somewhere in your bootstrap code:
-const config = serverConfig.value; // extracted here, cached forever
+const config = serverConfig.instance; // extracted here, cached forever
 ```
 
 ---

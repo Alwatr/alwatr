@@ -176,7 +176,7 @@ export const appConfig = lazy(() => {
 });
 
 // Later, when config is needed:
-const config = appConfig.value;
+const config = appConfig.instance;
 if (config) {
   console.log('API URL:', config.apiUrl);
 }
@@ -226,7 +226,7 @@ export const embeddedData = {
 // Usage in components
 import {embeddedData} from './data/embedded-data.js';
 
-const shops = embeddedData.shops.value;
+const shops = embeddedData.shops.instance;
 if (shops) {
   console.log('Loaded', shops.items.length, 'shops');
 }

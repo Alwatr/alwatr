@@ -1,7 +1,7 @@
 /**
  * A generic, memory-efficient lazy evaluation wrapper.
  *
- * Defers execution of an expensive initializer until `.value` is first accessed.
+ * Defers execution of an expensive initializer until `.instance` is first accessed.
  * After the first access the result is cached and the initializer reference is
  * dropped, allowing the GC to reclaim any closure memory.
  *
@@ -14,7 +14,7 @@
  * // Class API
  * const heavyService = new Lazy(() => new ExpensiveService());
  * console.log(heavyService.isInitialized()); // false — not yet created
- * console.log(heavyService.value);           // ExpensiveService instance (created now)
+ * console.log(heavyService.instance);        // ExpensiveService instance (created now)
  * console.log(heavyService.isInitialized()); // true
  *
  * // Factory function API (preferred for type inference)
@@ -28,7 +28,7 @@ export class Lazy<T> {
    * Using `undefined` as the sentinel (rather than `null`) so that
    * `T` can itself be `null` without ambiguity.
    */
-  private value__?: T;
+  private instance__?: T;
 
   /**
    * The deferred initializer function.
@@ -51,20 +51,20 @@ export class Lazy<T> {
    * On **subsequent** accesses the cached value is returned directly — O(1),
    * no function call overhead.
    */
-  get value(): T {
+  get instance(): T {
     if (this.initializer__ !== undefined) {
       // Capture the initializer and immediately delete the reference.
-      // This prevents infinite recursion if the initializer itself accesses `.value`.
+      // This prevents infinite recursion if the initializer itself accesses `.instance`.
       const init = this.initializer__;
       // Explicitly delete (not just assign undefined) so the property is removed
       // from the object shape, giving V8 a stronger GC hint.
       delete this.initializer__;
-      // Now call the initializer — if it re-enters `.value`, it will see
-      // initializer__ === undefined and return the (still-undefined) value__.
-      this.value__ = init();
+      // Now call the initializer — if it re-enters `.instance`, it will see
+      // initializer__ === undefined and return the (still-undefined) instance__.
+      this.instance__ = init();
     }
-    // value__ is guaranteed to be set at this point (unless initializer re-entered).
-    return this.value__ as T;
+    // instance__ is guaranteed to be set at this point (unless initializer re-entered).
+    return this.instance__ as T;
   }
 
   /**
@@ -80,7 +80,7 @@ export class Lazy<T> {
    *   console.log('Service not yet started — skipping teardown.');
    *   return;
    * }
-   * service.value.shutdown();
+   * service.instance.shutdown();
    * ```
    */
   isInitialized(): boolean {
@@ -102,7 +102,7 @@ export class Lazy<T> {
  * @example
  * ```typescript
  * const db = lazy(() => new DatabaseConnection(config));
- * // db.value is only created when first accessed
+ * // db.instance is only created when first accessed
  * ```
  */
 export function lazy<T>(initializer: () => T): Lazy<T> {
