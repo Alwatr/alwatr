@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.25.0](https://github.com/Alwatr/alwatr/compare/v9.24.0...v9.25.0) (2026-05-21)
+
+### ✨ Features
+
+* **on-action-array:** support handling multiple action types in onAction function ([fcc35aa](https://github.com/Alwatr/alwatr/commit/fcc35aac42c25bf1a10e8cd6ca11eed84b576a1a))
+* **on-action:** refactor onAction to support multiple action types with improved unsubscribe handling ([d79285e](https://github.com/Alwatr/alwatr/commit/d79285e5a19c27196501a5e8c84d877cb9c321a5))
+
 ## [9.24.0](https://github.com/Alwatr/alwatr/compare/v9.23.4...v9.24.0) (2026-05-14)
 
 **Note:** Version bump only for package @alwatr/action

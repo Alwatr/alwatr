@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.25.0](https://github.com/Alwatr/alwatr/compare/v9.24.0...v9.25.0) (2026-05-21)
+
+### ✨ Features
+
+* add '--root=src' argument for module and module-web presets ([b5fa461](https://github.com/Alwatr/alwatr/commit/b5fa461d733aabb1176a2e307704ed164e60a824))
+
 ## [9.14.0](https://github.com/Alwatr/alwatr/compare/v9.13.0...v9.14.0) (2026-04-25)
 
 ### 🔨 Code Refactoring

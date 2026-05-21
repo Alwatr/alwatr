@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.25.0](https://github.com/Alwatr/alwatr/compare/v9.24.0...v9.25.0) (2026-05-21)
+
+### 🔨 Code Refactoring
+
+* **lazy:** change property names from `.value` to `.instance` ([1bfca09](https://github.com/Alwatr/alwatr/commit/1bfca09360e8957f7095970b7b289b11563cc1ad))
+
 ## [9.19.0](https://github.com/Alwatr/alwatr/compare/v9.18.1...v9.19.0) (2026-04-28)
 
 ### ✨ Features

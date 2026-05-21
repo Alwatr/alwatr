@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.25.0](https://github.com/Alwatr/alwatr/compare/v9.24.0...v9.25.0) (2026-05-21)
+
+### ✨ Features
+
+* add '--root=src' argument for module and module-web presets ([b5fa461](https://github.com/Alwatr/alwatr/commit/b5fa461d733aabb1176a2e307704ed164e60a824))
+* **on-action-array:** support handling multiple action types in onAction function ([fcc35aa](https://github.com/Alwatr/alwatr/commit/fcc35aac42c25bf1a10e8cd6ca11eed84b576a1a))
+* **on-action:** refactor onAction to support multiple action types with improved unsubscribe handling ([d79285e](https://github.com/Alwatr/alwatr/commit/d79285e5a19c27196501a5e8c84d877cb9c321a5))
+
+### 🔨 Code Refactoring
+
+* **lazy:** change property names from `.value` to `.instance` ([1bfca09](https://github.com/Alwatr/alwatr/commit/1bfca09360e8957f7095970b7b289b11563cc1ad))
+
 ## [9.24.0](https://github.com/Alwatr/alwatr/compare/v9.23.4...v9.24.0) (2026-05-14)
 
 ### ✨ Features
