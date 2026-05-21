@@ -347,18 +347,29 @@ function teardownActionDelegation(): void;
 
 ### `onAction(type, handler)`
 
-Subscribes to a named action. O(1) routing via `ChannelSignal`. The handler receives the full `Action<K>` object.
+Subscribes to a single named action or an array of actions. O(1) routing via `ChannelSignal`. The handler receives the full `Action<K>` object.
 
 ```ts
-function onAction<K extends keyof ActionRecord>(type: K, handler: (action: Action<K>) => void): SubscribeResult;
+function onAction<K extends keyof ActionRecord>(
+  type: K | K[],
+  handler: (action: Action<K>) => Awaitable<void>,
+): SubscribeResult;
 ```
 
 ```ts
+// Subscribe to a single action
 const sub = onAction('ui_open_drawer', (action) => {
   openDrawer(action.payload); // payload: string
   console.log(action.context); // e.g. 'sidebar' or undefined
 });
+
+// Subscribe to multiple actions with a single handler
+const multiSub = onAction(['ui_increment', 'ui_decrement'], (action) => {
+  console.log('Action triggered:', action.type);
+});
+
 sub.unsubscribe(); // prevent memory leaks
+multiSub.unsubscribe();
 ```
 
 ---

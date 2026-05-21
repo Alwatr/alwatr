@@ -752,16 +752,23 @@ setupActionDelegation([...DEFAULT_DELEGATED_EVENTS, 'keydown', 'focus']);
 
 #### `onAction<K>(type, handler)`
 
-Subscribes to a typed action. The handler receives the full `Action<K>` object.
+Subscribes to a single typed action or an array of actions. The handler receives the full `Action<K>` object.
 
 ```typescript
+// Subscribe to a single action
 const sub = onAction('ui_add_to_cart', (action) => {
   cartService.add(action.payload.productId, action.payload.qty);
   console.log(action.context); // e.g. 'product-list' or undefined
   console.log(action.meta); // any metadata set by modifiers
 });
 
+// Subscribe to multiple actions with a single handler
+const multiSub = onAction(['ui_increment', 'ui_decrement'], (action) => {
+  console.log('Action triggered:', action.type);
+});
+
 sub.unsubscribe(); // Clean up when done
+multiSub.unsubscribe();
 ```
 
 #### `dispatchAction<K>(action)`
