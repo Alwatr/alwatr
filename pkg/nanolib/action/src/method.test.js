@@ -96,6 +96,26 @@ describe('Action — Programmatic API', () => {
       subB.unsubscribe();
     });
 
+    it('should subscribe to multiple action types when given an array of types', async () => {
+      const callback = jest.fn();
+      const sub = onAction(['action_x', 'action_y'], callback);
+
+      dispatchAction({type: 'action_x', payload: 'data_x'});
+      await nextMacrotask();
+      expect(callback).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledWith({type: 'action_x', payload: 'data_x'});
+
+      dispatchAction({type: 'action_y', payload: 'data_y'});
+      await nextMacrotask();
+      expect(callback).toHaveBeenCalledTimes(2);
+      expect(callback).toHaveBeenLastCalledWith({type: 'action_y', payload: 'data_y'});
+
+      sub.unsubscribe();
+      dispatchAction({type: 'action_x', payload: 'more_data'});
+      await nextMacrotask();
+      expect(callback).toHaveBeenCalledTimes(2); // no more calls
+    });
+
     it('should handle multiple dispatches in sequence', async () => {
       const callback = jest.fn();
       const sub = onAction('multi_dispatch', callback);
