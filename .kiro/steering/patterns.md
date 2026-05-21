@@ -110,7 +110,7 @@ import {lazy} from '@alwatr/lazy';
 
 // Factory function (preferred — better type inference)
 const config = lazy(() => loadExpensiveConfig());
-console.log(config.value); // initialized on first access
+console.log(config.instance); // initialized on first access
 console.log(config.isInitialized()); // true
 
 // Class API

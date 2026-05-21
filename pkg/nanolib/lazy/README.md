@@ -40,14 +40,14 @@ When you write `new Lazy(() => new ExpensiveService(config))`, the arrow functio
 │  constructor(initializer: () => T)                  │
 │    └─ stores initializer__ reference                │
 │                                                     │
-│  get value(): T                                     │
+│  get instance(): T                                  │
 │    ├─ [first access]                                │
 │    │    1. call initializer__()                     │
-│    │    2. cache result in value__                  │
+│    │    2. cache result in instance__               │
 │    │    3. delete initializer__  ← GC hint          │
-│    │    4. return value__                           │
+│    │    4. return instance__                        │
 │    └─ [subsequent accesses]                         │
-│         return value__  (O(1), no function call)    │
+│         return instance__  (O(1), no function call) │
 │                                                     │
 │  isInitialized(): boolean                           │
 │    └─ initializer__ === undefined                   │
@@ -59,13 +59,13 @@ When you write `new Lazy(() => new ExpensiveService(config))`, the arrow functio
 ```
   [constructed]
        │
-       │  first .value access
+       │  first .instance access
        ▼
   [initializing]  ──→  initializer__() runs
        │
        │  result cached, initializer__ deleted
        ▼
-  [initialized]   ──→  all subsequent .value reads return cache
+  [initialized]   ──→  all subsequent .instance reads return cache
 ```
 
 ---
@@ -93,9 +93,9 @@ const db = new Lazy(() => new DatabaseConnection(config));
 console.log(db.isInitialized()); // false
 
 // Created on first access, cached for all future accesses.
-const connection = db.value; // DatabaseConnection instantiated here
+const connection = db.instance; // DatabaseConnection instantiated here
 console.log(db.isInitialized()); // true
-console.log(db.value === connection); // true — same reference
+console.log(db.instance === connection); // true — same reference
 ```
 
 ### Factory Function (preferred)
@@ -122,7 +122,7 @@ function trackEvent(name: string) {
     // Analytics not yet started — skip silently during boot
     return;
   }
-  analyticsClient.value.track(name);
+  analyticsClient.instance.track(name);
 }
 ```
 
@@ -144,7 +144,7 @@ export const database = lazy(() => new DatabaseConnection(process.env.DB_URL!));
 import {database} from '../services/database.js';
 
 export async function getUsers() {
-  return database.value.query('SELECT * FROM users');
+  return database.instance.query('SELECT * FROM users');
 }
 ```
 
@@ -162,7 +162,7 @@ const cartSignal = new StateSignal<CartState>('cart', {items: []});
 
 cartSignal.subscribe((state) => {
   // cartService is initialized on the first subscription, not at module load.
-  cartService.value.syncToStorage(state);
+  cartService.instance.syncToStorage(state);
 });
 ```
 
@@ -176,7 +176,7 @@ cartSignal.subscribe((state) => {
 
 Creates a new `Lazy` wrapper. The `initializer` is **not** called at this point.
 
-#### `get value(): T`
+#### `get instance(): T`
 
 Returns the lazily-initialized value. Calls `initializer` on the first access,
 caches the result, and deletes the initializer reference. All subsequent accesses
@@ -184,7 +184,7 @@ return the cached value in O(1) with no function call overhead.
 
 #### `isInitialized(): boolean`
 
-Returns `true` if the initializer has already been executed (i.e., `.value` has
+Returns `true` if the initializer has already been executed (i.e., `.instance` has
 been accessed at least once). Returns `false` otherwise.
 
 ---
@@ -201,9 +201,9 @@ inference — TypeScript derives `T` from the return type of `initializer` autom
 | Decision                                             | Rationale                                                                                                                                                                                             |
 | ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `delete this.initializer__` instead of `= undefined` | Removes the property from the V8 hidden class, giving a stronger GC hint than a simple `undefined` assignment.                                                                                        |
-| `value__` uses `undefined` as sentinel (not `null`)  | Allows `T` to be `null` without ambiguity — `lazy(() => null).value` correctly returns `null`.                                                                                                        |
+| `instance__` uses `undefined` as sentinel (not `null`) | Allows `T` to be `null` without ambiguity — `lazy(() => null).instance` correctly returns `null`.                                                                                                     |
 | No `reset()` method                                  | Lazy values are intended to be permanent singletons. A reset would reintroduce the initializer, complicating the GC story and the state machine. If you need resettable state, use `@alwatr/signal`.  |
-| No async support                                     | Async initialization belongs in `@alwatr/flatomise` (deferred promises) or `@alwatr/signal` (reactive state). Mixing `Promise` into `Lazy` would complicate the synchronous `.value` getter contract. |
+| No async support                                     | Async initialization belongs in `@alwatr/flatomise` (deferred promises) or `@alwatr/signal` (reactive state). Mixing `Promise` into `Lazy` would complicate the synchronous `.instance` getter contract. |
 | `sideEffects: false`                                 | The package has no module-level side effects, enabling full tree-shaking.                                                                                                                             |
 
 ---
