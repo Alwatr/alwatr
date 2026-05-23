@@ -6,7 +6,9 @@ if (typeof document === 'undefined') {
   GlobalRegistrator.register();
 }
 
-import {internalChannel_, logger_} from './lib_.js';
+import {actionService} from './action-service.js';
+
+const {internalChannel_, logger_} = actionService;
 
 // ─── Internal Channel ─────────────────────────────────────────────────────────
 

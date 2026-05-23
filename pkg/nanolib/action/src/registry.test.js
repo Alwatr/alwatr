@@ -8,7 +8,10 @@ if (typeof document === 'undefined') {
 
 // Import internal registries directly to unit-test built-in modifiers and resolvers
 // without going through the full delegation pipeline.
-import {modifierRegistry, payloadRegistry} from './registry_.js';
+import {actionService} from './action-service.js';
+
+const modifierRegistry = actionService.modifierRegistry_;
+const payloadRegistry = actionService.payloadRegistry_;
 
 /**
  * Helper: creates a minimal mock Event with optional overrides.
