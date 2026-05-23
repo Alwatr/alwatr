@@ -94,8 +94,8 @@ describe('PersistentStateSignal', () => {
     jest.advanceTimersByTime(1);
     await task;
 
-    // Debounce default is 500ms — advance past it.
-    jest.advanceTimersByTime(600);
+    // Debounce default is 3000ms — advance past it.
+    jest.advanceTimersByTime(3100);
 
     expect(mockLocalStorage.setItem).toHaveBeenCalledWith('test-persistent-state-signal.v1', '42');
   });
@@ -117,7 +117,7 @@ describe('PersistentStateSignal', () => {
     await t3;
 
     // Advance past debounce delay.
-    jest.advanceTimersByTime(600);
+    jest.advanceTimersByTime(3100);
 
     // Should only write the last value due to debouncing.
     const setCalls = mockLocalStorage.setItem.mock.calls.filter((c) => c[0] === 'test-persistent-state-signal.v1');

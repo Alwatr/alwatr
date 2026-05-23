@@ -91,8 +91,8 @@ describe('SessionStateSignal', () => {
     jest.advanceTimersByTime(1);
     await task;
 
-    // Debounce default is 500ms.
-    jest.advanceTimersByTime(600);
+    // Debounce default is 3000ms.
+    jest.advanceTimersByTime(3100);
 
     expect(mockSessionStorage.setItem).toHaveBeenCalledWith(name, '42');
   });
