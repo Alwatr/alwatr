@@ -9,10 +9,10 @@
  * ## Usage
  *
  * ```ts
- * import {setupKeyboardShortcut, onAction} from '@alwatr/keyboard-shortcut';
+ * import {keyboardShortcutService, onAction} from '@alwatr/keyboard-shortcut';
  *
  * // Initialize keyboard shortcut listener
- * setupKeyboardShortcut();
+ * keyboardShortcutService.setup();
  *
  * // Close drawer on Escape
  * onAction('key_escape', () => closeDrawer());
