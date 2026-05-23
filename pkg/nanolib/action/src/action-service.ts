@@ -97,16 +97,15 @@ export class ActionService {
    * sub.unsubscribe();
    * ```
    */
-  on<K extends keyof ActionRecord>(
-    type: K | K[],
-    handler: (action: Action<K>) => Awaitable<void>,
-  ): SubscribeResult {
+  on<K extends keyof ActionRecord>(type: K | K[], handler: (action: Action<K>) => Awaitable<void>): SubscribeResult {
     this.logger_.logMethodArgs?.('on', {type});
     if (Array.isArray(type)) {
       const typeList = type as K[];
       const unsubscribeList: VoidFunc[] = [];
       for (const type_ of typeList) {
-        unsubscribeList.push(this.internalChannel_.on(type_, handler as (action: Action) => Awaitable<void>).unsubscribe);
+        unsubscribeList.push(
+          this.internalChannel_.on(type_, handler as (action: Action) => Awaitable<void>).unsubscribe,
+        );
       }
       return {
         unsubscribe: () => {
@@ -156,6 +155,7 @@ export class ActionService {
     this.logger_.logMethodArgs?.('registerModifier', {name});
     if (this.modifierRegistry_.has(name)) {
       this.logger_.accident('registerModifier', 'modifier_already_registered', {name});
+      return;
     }
     this.modifierRegistry_.set(name, handler);
   }
@@ -177,6 +177,7 @@ export class ActionService {
     this.logger_.logMethodArgs?.('registerPayloadResolver', {name});
     if (this.payloadRegistry_.has(name)) {
       this.logger_.accident('registerPayloadResolver', 'payload_resolver_already_registered', {name});
+      return;
     }
     this.payloadRegistry_.set(name, resolver);
   }
@@ -292,7 +293,12 @@ export class ActionService {
       if (modifier === 'once') continue;
       const handler = this.modifierRegistry_.get(modifier);
       if (!handler) {
-        this.logger_.accident('handleDelegatedEvent_', 'unknown_modifier', {eventType, modifier, attributeValue, descriptor});
+        this.logger_.accident('handleDelegatedEvent_', 'unknown_modifier', {
+          eventType,
+          modifier,
+          attributeValue,
+          descriptor,
+        });
         return;
       }
       if (handler(event, actionElement, action) === false) return;
