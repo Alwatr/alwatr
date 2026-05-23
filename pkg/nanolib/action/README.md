@@ -294,7 +294,9 @@ actionService.on('ui_submit_order', (action) => {
 The pre-instantiated factory service exported for standard usage.
 
 #### `actionService.on(type, handler)`
+
 Subscribes to a single action or an array of actions. O(1) routing via `ChannelSignal`.
+
 ```ts
 actionService.on<K extends keyof ActionRecord>(
   type: K | K[],
@@ -303,31 +305,41 @@ actionService.on<K extends keyof ActionRecord>(
 ```
 
 #### `actionService.dispatch(action)`
+
 Dispatches an action to all subscribers.
+
 ```ts
 actionService.dispatch<K extends keyof ActionRecord>(action: DispatchParam<K>): void;
 ```
 
 #### `actionService.setupDelegation(eventTypes?)`
+
 Registers global capture listeners on `document.body`. Defaults to `['click', 'submit', 'input', 'change']`.
+
 ```ts
 actionService.setupDelegation(eventTypes?: readonly string[]): void;
 ```
 
 #### `actionService.teardownDelegation()`
+
 Unregisters all delegation listeners and clears the descriptor cache.
+
 ```ts
 actionService.teardownDelegation(): void;
 ```
 
 #### `actionService.registerModifier(name, handler)`
+
 Registers custom modifiers.
+
 ```ts
 actionService.registerModifier(name: string, handler: ModifierHandler): void;
 ```
 
 #### `actionService.registerPayloadResolver(name, resolver)`
+
 Registers custom payload resolvers.
+
 ```ts
 actionService.registerPayloadResolver(name: string, resolver: PayloadResolver): void;
 ```
