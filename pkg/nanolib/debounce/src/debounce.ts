@@ -1,5 +1,5 @@
 import type {AnyFunc} from '@alwatr/type-helper';
-import type {DebouncerConfig} from './type.ts';
+import type {DebouncerConfig} from './type.js';
 
 /**
  * A powerful and type-safe Debouncer class.
