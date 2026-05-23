@@ -139,6 +139,11 @@ export function subscribePageReady<T extends string>(handler: (pageId: T) => Awa
 export function dispatchPageReady(): void {
   logger.logMethod?.('dispatchPageReady');
 
+  if (typeof document === 'undefined') {
+    logger.incident?.('dispatchPageReady', 'document_not_found');
+    return;
+  }
+
   const pageId = document.querySelector('[page-id]')?.getAttribute('page-id')?.trim();
 
   if (pageId == null) {

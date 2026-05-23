@@ -173,6 +173,25 @@ describe('page-ready', () => {
       expect(() => dispatchPageReady()).not.toThrow();
     });
 
+    it('should not throw in SSR/non-DOM environment', () => {
+      const origDocument = globalThis.document;
+      Object.defineProperty(globalThis, 'document', {
+        value: undefined,
+        writable: true,
+        configurable: true
+      });
+
+      try {
+        expect(() => dispatchPageReady()).not.toThrow();
+      } finally {
+        Object.defineProperty(globalThis, 'document', {
+          value: origDocument,
+          writable: true,
+          configurable: true
+        });
+      }
+    });
+
     it('should handle empty page-id attribute', async () => {
       const callback = jest.fn();
       const sub = subscribePageReady(callback);
