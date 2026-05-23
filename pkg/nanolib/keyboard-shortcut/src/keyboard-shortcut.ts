@@ -77,6 +77,10 @@ export class KeyboardShortcutService {
   setup(): void {
     this.logger_.logMethod?.('setup');
     if (this.hasRegistered__) return;
+    if (typeof document === 'undefined') {
+      this.logger_.incident?.('setup', 'document_not_found');
+      return;
+    }
     this.hasRegistered__ = true;
     document.addEventListener('keydown', this.handleKeyDown__, {capture: true});
   }
@@ -92,6 +96,7 @@ export class KeyboardShortcutService {
   teardown(): void {
     this.logger_.logMethod?.('teardown');
     if (!this.hasRegistered__) return;
+    if (typeof document === 'undefined') return;
     this.hasRegistered__ = false;
     document.removeEventListener('keydown', this.handleKeyDown__, {capture: true});
   }

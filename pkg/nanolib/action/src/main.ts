@@ -1,100 +1,142 @@
+import type {SubscribeResult} from '@alwatr/signal';
+import type {Awaitable} from '@alwatr/type-helper';
+
+import {actionService, ActionService} from './action-service.js';
+import type {Action, ActionRecord, DispatchParam, ModifierHandler, PayloadResolver} from './type.js';
+
+export {actionService, ActionService};
+export type {Action, ActionRecord, DispatchParam, ModifierHandler, PayloadResolver};
+
 /**
- * @alwatr/action — Declarative DOM action-dispatch for Unidirectional Data Flow.
+ * Default DOM event types that cover the vast majority of interactive elements.
  *
- * Implements the **Alwatr Flux Standard Action (AFSA)** pattern: every action
- * flowing through the bus is a single, typed `Action<K>` object carrying
- * `type`, `payload`, `context`, and optional `meta`. This replaces the previous
- * two-argument `(id, payload)` API with a unified structure that is extensible
- * without breaking existing call sites.
+ * - `click` — buttons, links, checkboxes, custom interactive elements
+ * - `submit` — form submission
+ * - `input` — live text input, range sliders
+ * - `change` — select boxes, checkboxes, radio buttons (fires on commit)
+ */
+export const DEFAULT_DELEGATED_EVENTS = ActionService.DEFAULT_DELEGATED_EVENTS;
+
+/**
+ * Subscribes to a named action dispatched anywhere in the application.
  *
- * ## Activating `on-<eventType>` attributes
+ * @template K - A key of ActionRecord.
+ * @param type    - Action type or array of action types to subscribe to.
+ * @param handler - Callback invoked with the full Action object.
+ * @returns SubscribeResult containing an `unsubscribe` method.
  *
- * Call `setupActionDelegation()` once at bootstrap. A single capture-phase
- * listener on `document.body` handles every `on-click`, `on-submit`, etc. element —
- * including elements added dynamically after bootstrap — with O(1) initialization cost.
- *
+ * @example
  * ```ts
- * import {setupActionDelegation, onAction} from '@alwatr/action';
+ * import {onAction} from '@alwatr/action';
  *
- * setupActionDelegation();
- * onAction('ui_open_drawer', (action) => openDrawer(action.payload));
- * ```
- *
- * ## Attribute syntax
- *
- * ```
- * on-<eventType>="actionId[:payload][; modifier1,modifier2,…]"
- * ```
- *
- * ```html
- * <button on-click="ui_open_drawer:main">Open</button>
- * <input on-input="ui_search_query:$value" />
- * <form on-submit="ui_submit_form:$formdata; prevent,validate" novalidate>…</form>
- * ```
- *
- * ## Context scoping
- *
- * Wrap elements in an `[action-context]` container to scope their actions.
- * The delegation handler resolves the nearest ancestor and attaches its value
- * to `action.context`:
- *
- * ```html
- * <section action-context="product-list">
- *   <button on-click="ui_add_to_cart:42">Add</button>
- * </section>
- * ```
- *
- * ```ts
- * onAction('ui_add_to_cart', (action) => {
- *   console.log(action.context); // 'product-list'
- *   console.log(action.payload); // '42'
+ * const sub = onAction('ui_open_drawer', (action) => {
+ *   console.log(action.payload);
  * });
+ * sub.unsubscribe();
  * ```
  *
- * ## Programmatic dispatch
+ * @deprecated Use `actionService.on` instead.
+ */
+export function onAction<K extends keyof ActionRecord>(
+  type: K | K[],
+  handler: (action: Action<K>) => Awaitable<void>,
+): SubscribeResult {
+  return actionService.on(type, handler);
+}
+
+/**
+ * Dispatches an action to all subscribers matching `action.type`.
  *
- * Code-originated actions should not use the `ui_` prefix — that prefix is
- * reserved for DOM-originated actions dispatched via HTML attributes.
+ * @template K - A key of ActionRecord.
+ * @param action - Action object containing `type` and `payload`.
  *
+ * @example
  * ```ts
  * import {dispatchAction} from '@alwatr/action';
  *
- * dispatchAction({type: 'navigate', payload: '/dashboard'});
+ * dispatchAction({type: 'upload_complete', payload: 'file-123'});
  * ```
  *
- * ## Registering typed actions
- *
- * Extend `ActionRecord` via declaration merging to get full type safety:
- *
- * ```ts
- * // src/action-record.ts
- * declare module '@alwatr/action' {
- *   interface ActionRecord {
- *     // UI-originated actions — must start with 'ui_'
- *     'ui_open_drawer': string;
- *     'ui_add_to_cart': {productId: number; qty: number};
- *     'ui_logout': void;
- *
- *     // Code-originated actions — no 'ui_' prefix
- *     'upload_complete': string;
- *     'auth_expired': void;
- *   }
- * }
- * ```
- *
- * ## Public API
- *
- * - `Action`          — the AFSA object interface (`type`, `payload`, `context`, `meta`)
- * - `ActionRecord`    — extend this interface to register typed actions
- * - `setupActionDelegation` / `teardownActionDelegation` — global delegation lifecycle
- * - `DEFAULT_DELEGATED_EVENTS` — default event types covered by delegation
- * - `onAction` / `dispatchAction` — subscribe to and dispatch named actions
- * - `registerModifier` / `registerPayloadResolver` — extend the attribute syntax
- *
- * ## Page identity
- *
- * For page-ready signals in SSG/SSR apps, use `@alwatr/page-ready` instead.
+ * @deprecated Use `actionService.dispatch` instead.
  */
-export * from './delegate.js';
-export * from './method.js';
-export type * from './type.js';
+export function dispatchAction<K extends keyof ActionRecord>(action: DispatchParam<K>): void {
+  actionService.dispatch(action);
+}
+
+/**
+ * Registers global event delegation listeners on `document.body`.
+ *
+ * @param eventTypes - List of event types to delegate. Defaults to DEFAULT_DELEGATED_EVENTS.
+ *
+ * @example
+ * ```ts
+ * import {setupActionDelegation} from '@alwatr/action';
+ *
+ * setupActionDelegation();
+ * ```
+ *
+ * @deprecated Use `actionService.setupDelegation` instead.
+ */
+export function setupActionDelegation(eventTypes?: readonly string[]): void {
+  actionService.setupDelegation(eventTypes);
+}
+
+/**
+ * Unregisters all global event delegation listeners.
+ *
+ * @example
+ * ```ts
+ * import {teardownActionDelegation} from '@alwatr/action';
+ *
+ * teardownActionDelegation();
+ * ```
+ *
+ * @deprecated Use `actionService.teardownDelegation` instead.
+ */
+export function teardownActionDelegation(): void {
+  actionService.teardownDelegation();
+}
+
+/**
+ * Registers a custom modifier to enrich or filter actions before dispatch.
+ *
+ * @param name    - Modifier name (lowercase, alphanumeric).
+ * @param handler - Function called when modifier is invoked.
+ *
+ * @example
+ * ```ts
+ * import {registerModifier} from '@alwatr/action';
+ *
+ * registerModifier('trace', (_event, _element, action) => {
+ *   action.meta ??= {};
+ *   action.meta['time'] = Date.now();
+ *   return true;
+ * });
+ * ```
+ *
+ * @deprecated Use `actionService.registerModifier` instead.
+ */
+export function registerModifier(name: string, handler: ModifierHandler): void {
+  actionService.registerModifier(name, handler);
+}
+
+/**
+ * Registers a custom payload resolver to map DOM state to action payload.
+ *
+ * @param name     - Resolver token (by convention starting with `$`).
+ * @param resolver - Function yielding payload from the event and element.
+ *
+ * @example
+ * ```ts
+ * import {registerPayloadResolver} from '@alwatr/action';
+ *
+ * registerPayloadResolver('$data-id', (_event, element) => {
+ *   return element.dataset.id;
+ * });
+ * ```
+ *
+ * @deprecated Use `actionService.registerPayloadResolver` instead.
+ */
+export function registerPayloadResolver(name: string, resolver: PayloadResolver): void {
+  actionService.registerPayloadResolver(name, resolver);
+}

@@ -2,7 +2,9 @@
 
 **Declarative DOM action-dispatch — the Action layer for Unidirectional Data Flow.**
 
-`@alwatr/action` bridges HTML `on-<eventType>` attributes to typed signal handlers using **global event delegation**. One listener on `document.body` covers every element on the page — including elements added dynamically after bootstrap — with O(1) initialization cost regardless of how many elements exist.
+`@alwatr/action` bridges HTML `on-<eventType>` attributes to typed signal handlers using **global event delegation**. It is implemented as a factory service (`ActionService`) with all state and listeners encapsulated. A pre-instantiated singleton `actionService` is exported for immediate use.
+
+One listener on `document.body` covers every element on the page — including elements added dynamically after bootstrap — with O(1) initialization cost regardless of how many elements exist.
 
 ---
 
@@ -40,7 +42,7 @@ document.body capture listener  (1 listener per event type)
            parse attribute → 'ui_add_to_cart:42'
            run modifiers   → none
            resolve payload → '42'
-           internalChannel_.dispatch('ui_add_to_cart', {
+           actionService.dispatch({
              type: 'ui_add_to_cart',
              payload: '42',
              context: 'product-list',
@@ -99,15 +101,18 @@ declare module '@alwatr/action' {
 
 ### 2. Bootstrap delegation
 
+Use the pre-instantiated singleton `actionService`:
+
 ```ts
-import {setupActionDelegation, onAction} from '@alwatr/action';
+import {actionService} from '@alwatr/action';
 import './action-record.js'; // ensure the declaration is loaded
 
-setupActionDelegation();
+// Initialize global event delegation
+actionService.setupDelegation();
 
 // The handler receives the full Action<K> object — payload, context, and meta in one place.
-onAction('ui_open_drawer', (action) => openDrawer(action.payload)); // action.payload: string
-onAction('ui_add_to_cart', (action) => {
+actionService.on('ui_open_drawer', (action) => openDrawer(action.payload)); // action.payload: string
+actionService.on('ui_add_to_cart', (action) => {
   cartService.add(action.payload.productId, action.payload.qty); // fully typed
   console.log(action.context); // e.g. 'product-list' — from nearest [action-context] ancestor
 });
@@ -167,7 +172,7 @@ Wrap a group of elements in an `[action-context]` container to scope their actio
 ```
 
 ```ts
-onAction('ui_slider_change', (action) => {
+actionService.on('ui_slider_change', (action) => {
   if (action.context === 'volume') audioService.setVolume(Number(action.payload));
   if (action.context === 'brightness') displayService.setBrightness(Number(action.payload));
 });
@@ -177,20 +182,20 @@ Context is `undefined` when no `[action-context]` ancestor exists — programmat
 
 ### 5. Programmatic dispatch
 
-Use `dispatchAction` for code-originated actions (after async operations, from services, etc.).
+Use `actionService.dispatch` for code-originated actions (after async operations, from services, etc.).
 These actions should **not** use the `ui_` prefix — that prefix is reserved for DOM-originated actions.
 
 ```ts
-import {dispatchAction} from '@alwatr/action';
+import {actionService} from '@alwatr/action';
 
 // Code-originated actions — no 'ui_' prefix
 await uploadFile(file);
-dispatchAction({type: 'upload_complete', payload: fileId});
+actionService.dispatch({type: 'upload_complete', payload: fileId});
 
-dispatchAction({type: 'navigate', payload: '/dashboard'});
+actionService.dispatch({type: 'navigate', payload: '/dashboard'});
 
 // With explicit context and meta
-dispatchAction({
+actionService.dispatch({
   type: 'slider_change',
   payload: 75,
   context: 'volume',
@@ -260,10 +265,10 @@ interface Action<K extends keyof ActionRecord> {
 Modifiers in the delegation pipeline receive the mutable `action` object and can enrich `meta` before the action reaches subscribers:
 
 ```ts
-import {registerModifier} from '@alwatr/action';
+import {actionService} from '@alwatr/action';
 
 // A modifier that stamps a trace ID into meta
-registerModifier('trace', (_event, _element, action) => {
+actionService.registerModifier('trace', (_event, _element, action) => {
   action.meta ??= {};
   action.meta['traceId'] = crypto.randomUUID();
   return true;
@@ -275,7 +280,7 @@ registerModifier('trace', (_event, _element, action) => {
 ```
 
 ```ts
-onAction('ui_submit_order', (action) => {
+actionService.on('ui_submit_order', (action) => {
   console.log(action.meta?.['traceId']); // e.g. 'a1b2-c3d4-…'
 });
 ```
@@ -284,182 +289,87 @@ onAction('ui_submit_order', (action) => {
 
 ## API Reference
 
-### `Action<K>` (interface)
+### `actionService` (Singleton instance of `ActionService`)
 
-The Alwatr Flux Standard Action object. Every dispatch and every handler callback uses this structure.
+The pre-instantiated factory service exported for standard usage.
 
-```ts
-import type {Action} from '@alwatr/action';
+#### `actionService.on(type, handler)`
 
-// Reading fields in a handler
-onAction('ui_add_to_cart', (action: Action<'ui_add_to_cart'>) => {
-  console.log(action.type); // 'ui_add_to_cart'
-  console.log(action.payload); // {productId: number; qty: number}
-  console.log(action.context); // string | undefined
-  console.log(action.meta); // Record<string, unknown> | undefined
-});
-```
-
----
-
-### `ActionRecord` (interface)
-
-The global action type registry. Extend via declaration merging to register typed actions.
+Subscribes to a single action or an array of actions. O(1) routing via `ChannelSignal`.
 
 ```ts
-declare module '@alwatr/action' {
-  interface ActionRecord {
-    ui_open_drawer: string;
-    ui_logout: void;
-  }
-}
-```
-
----
-
-### `setupActionDelegation(eventTypes?)`
-
-Registers global event delegation on `document.body`. Call once at bootstrap. Idempotent.
-
-```ts
-function setupActionDelegation(eventTypes?: readonly string[]): void;
-```
-
-Defaults to `DEFAULT_DELEGATED_EVENTS`: `['click', 'submit', 'input', 'change']`.
-
-```ts
-import {setupActionDelegation, DEFAULT_DELEGATED_EVENTS} from '@alwatr/action';
-
-setupActionDelegation([...DEFAULT_DELEGATED_EVENTS, 'keydown']);
-```
-
----
-
-### `teardownActionDelegation()`
-
-Removes all delegation listeners and clears the descriptor cache. Useful in tests or micro-frontend teardown.
-
-```ts
-function teardownActionDelegation(): void;
-```
-
----
-
-### `onAction(type, handler)`
-
-Subscribes to a single named action or an array of actions. O(1) routing via `ChannelSignal`. The handler receives the full `Action<K>` object.
-
-```ts
-function onAction<K extends keyof ActionRecord>(
+actionService.on<K extends keyof ActionRecord>(
   type: K | K[],
-  handler: (action: Action<K>) => Awaitable<void>,
+  handler: (action: Action<K>) => Awaitable<void>
 ): SubscribeResult;
 ```
 
+#### `actionService.dispatch(action)`
+
+Dispatches an action to all subscribers.
+
 ```ts
-// Subscribe to a single action
-const sub = onAction('ui_open_drawer', (action) => {
-  openDrawer(action.payload); // payload: string
-  console.log(action.context); // e.g. 'sidebar' or undefined
-});
+actionService.dispatch<K extends keyof ActionRecord>(action: DispatchParam<K>): void;
+```
 
-// Subscribe to multiple actions with a single handler
-const multiSub = onAction(['ui_increment', 'ui_decrement'], (action) => {
-  console.log('Action triggered:', action.type);
-});
+#### `actionService.setupDelegation(eventTypes?)`
 
-sub.unsubscribe(); // prevent memory leaks
-multiSub.unsubscribe();
+Registers global capture listeners on `document.body`. Defaults to `['click', 'submit', 'input', 'change']`.
+
+```ts
+actionService.setupDelegation(eventTypes?: readonly string[]): void;
+```
+
+#### `actionService.teardownDelegation()`
+
+Unregisters all delegation listeners and clears the descriptor cache.
+
+```ts
+actionService.teardownDelegation(): void;
+```
+
+#### `actionService.registerModifier(name, handler)`
+
+Registers custom modifiers.
+
+```ts
+actionService.registerModifier(name: string, handler: ModifierHandler): void;
+```
+
+#### `actionService.registerPayloadResolver(name, resolver)`
+
+Registers custom payload resolvers.
+
+```ts
+actionService.registerPayloadResolver(name: string, resolver: PayloadResolver): void;
 ```
 
 ---
 
-### `dispatchAction(action)`
+### `ActionService` (Class)
 
-Dispatches a named action. Payload type is enforced by `ActionRecord`.
-
-```ts
-function dispatchAction<K extends keyof ActionRecord>(action: Action<K>): void;
-```
+The class constructor, allowing creation of independent instances of the action bus and delegation pipeline if needed (e.g. in multi-app or test micro-environments).
 
 ```ts
-// With payload (code-originated — no 'ui_' prefix)
-dispatchAction({type: 'navigate', payload: 'settings'});
+import {ActionService} from '@alwatr/action';
 
-// Void payload
-dispatchAction({type: 'auth_expired', payload: undefined});
-
-// With context and meta
-dispatchAction({
-  type: 'navigate',
-  payload: 'settings',
-  context: 'header',
-  meta: {triggeredBy: 'keyboard'},
-});
+const myService = new ActionService();
+myService.setupDelegation(['click']);
 ```
 
 ---
 
-### `registerModifier(name, handler)`
+### Deprecated Global Functions (Backwards Compatibility)
 
-Registers a custom modifier. Return `false` to cancel the dispatch.
+For backwards compatibility with previous versions, the following wrapper functions are exported. They delegate directly to the `actionService` singleton instance and are marked as **deprecated**.
 
-Handler signature: `(event: Event, element: HTMLElement, action: Action) => boolean`
-
-The handler receives the mutable `action` object and may write to `action.meta`.
-
-```ts
-import {registerModifier} from '@alwatr/action';
-
-registerModifier('not_disabled', (_event, element) => {
-  return !(element as HTMLButtonElement).disabled;
-});
-
-// A modifier that enriches meta before dispatch
-registerModifier('timestamp', (_event, _element, action) => {
-  action.meta ??= {};
-  action.meta['ts'] = Date.now();
-  return true;
-});
-```
-
-```html
-<button
-  on-click="ui_select_item:$data_id; not_disabled,timestamp"
-  data-id="42"
->
-  Select
-</button>
-```
-
----
-
-### `registerPayloadResolver(name, resolver)`
-
-Registers a custom payload resolver.
-
-Handler signature: `(event: Event, element: HTMLElement) => unknown`
-
-```ts
-import {registerPayloadResolver} from '@alwatr/action';
-
-registerPayloadResolver('$data_id', (_event, element) => {
-  return (element as HTMLElement).dataset.id ?? null;
-});
-```
-
-```html
-<input
-  type="checkbox"
-  on-change="ui_toggle_feature:$checked"
-/>
-<li
-  on-click="ui_select_item:$data_id"
-  data-id="42"
->
-  Item
-</li>
-```
+- `onAction(type, handler)` (deprecated wrapper for `actionService.on`)
+- `dispatchAction(action)` (deprecated wrapper for `actionService.dispatch`)
+- `setupActionDelegation(eventTypes?)` (deprecated wrapper for `actionService.setupDelegation`)
+- `teardownActionDelegation()` (deprecated wrapper for `actionService.teardownDelegation`)
+- `registerModifier(name, handler)` (deprecated wrapper for `actionService.registerModifier`)
+- `registerPayloadResolver(name, resolver)` (deprecated wrapper for `actionService.registerPayloadResolver`)
+- `DEFAULT_DELEGATED_EVENTS` (constant mapped to `ActionService.DEFAULT_DELEGATED_EVENTS`)
 
 ---
 
@@ -472,8 +382,8 @@ registerPayloadResolver('$data_id', (_event, element) => {
 │    <button on-click="ui_add_to_cart:42">Add</button>       │
 │  </section>                                                │
 └─────────────────────────┬──────────────────────────────────┘
-                          │ DOM event bubbles to body
-                          ▼
+                           │ DOM event bubbles to body
+                           ▼
 ┌────────────────────────────────────────────────────────────┐
 │                 Action Layer (@alwatr/action)              │
 │  document.body capture listener (1 per event type)         │
@@ -481,26 +391,26 @@ registerPayloadResolver('$data_id', (_event, element) => {
 │  → closest('[action-context]') → context = 'cart'          │
 │  → run modifiers (may enrich action.meta)                  │
 │  → resolve payload → '42'                                  │
-│  → dispatch Action {type, payload, context, meta}  [O(1)]  │
+│  → actionService.dispatch(Action)                   [O(1)] │
 └─────────────────────────┬──────────────────────────────────┘
-                          │ O(1) routing via ChannelSignal
-                          ▼
+                           │ O(1) routing via ChannelSignal
+                           ▼
 ┌────────────────────────────────────────────────────────────┐
 │                     Business Logic Layer                   │
-│  onAction('ui_add_to_cart', (action) => {                  │
+│  actionService.on('ui_add_to_cart', (action) => {          │
 │    cartService.add(action.payload);                        │
 │    // action.context === 'cart'                            │
 │  })                                                        │
 └─────────────────────────┬──────────────────────────────────┘
-                          │ state update
-                          ▼
+                           │ state update
+                           ▼
 ┌────────────────────────────────────────────────────────────┐
 │                   State Layer (@alwatr/signal)             │
 │  cartSignal.set(newCartState)                              │
 └─────────────────────────┬──────────────────────────────────┘
-                          │ state flows down to UI
-                          ▼
-                     UI re-renders
+                           │ state flows down to UI
+                           ▼
+                      UI re-renders
 ```
 
 ---
@@ -555,59 +465,24 @@ onAction('ui_add_to_cart', (action) => {
 });
 ```
 
-### `registerModifier` handler signature changed
+### Automated AI Migration Prompt
 
-Modifier handlers now receive a third `action` argument for `meta` enrichment.
+If you are using an AI coding assistant (like Cursor, Gemini, Copilot, or Antigravity) to migrate your files to the new `actionService` API, you can use the following prompt to automate the refactoring:
 
-**Before:**
+```text
+Refactor this file to migrate from the deprecated global `@alwatr/action` (or `@alwatr/flux`) functions to the new `actionService` singleton API.
 
-```ts
-registerModifier('not_disabled', (_event, element) => {
-  return !(element as HTMLButtonElement).disabled;
-});
+Follow these rules:
+1. Replace imports of `onAction`, `dispatchAction`, `setupActionDelegation`, `teardownActionDelegation`, `registerModifier`, or `registerPayloadResolver` from `@alwatr/action` (or `@alwatr/flux`) with `actionService`.
+2. Convert all calls:
+   - `onAction(...)` ➔ `actionService.on(...)`
+   - `dispatchAction(...)` ➔ `actionService.dispatch(...)`
+   - `setupActionDelegation(...)` ➔ `actionService.setupDelegation(...)`
+   - `teardownActionDelegation(...)` ➔ `actionService.teardownDelegation(...)`
+   - `registerModifier(...)` ➔ `actionService.registerModifier(...)`
+   - `registerPayloadResolver(...)` ➔ `actionService.registerPayloadResolver(...)`
+3. Maintain exact type safety, callback parameter types, and business logic.
 ```
-
-**After (backward-compatible — third arg is optional to use):**
-
-```ts
-registerModifier('not_disabled', (_event, element, _action) => {
-  return !(element as HTMLButtonElement).disabled;
-});
-```
-
-### Attribute syntax changed
-
-The event type is now encoded in the **attribute name** instead of the value, and modifiers are listed after a semicolon instead of dot-chained before the arrow.
-
-**Before:**
-
-```html
-<button on-action="click->ui_open_drawer:main">Open</button>
-<form
-  on-action="submit.prevent.validate->ui_submit_form:$formdata"
-  novalidate
->
-  …
-</form>
-<button on-action="click.once->ui_welcome_dismissed">Got it</button>
-```
-
-**After:**
-
-```html
-<button on-click="ui_open_drawer:main">Open</button>
-<form
-  on-submit="ui_submit_form:$formdata; prevent,validate"
-  novalidate
->
-  …
-</form>
-<button on-click="ui_welcome_dismissed; once">Got it</button>
-```
-
-### `page-ready` moved to `@alwatr/page-ready`
-
-`dispatchPageId` / `onPageReady` are no longer part of this package.
 
 ---
 
@@ -620,7 +495,7 @@ View (HTML on-<event> attributes + action-context)
   ↓
 Action Layer (@alwatr/action) — global delegation, O(1) routing, AFSA objects
   ↓
-Controller (business logic via onAction — receives full Action object)
+Controller (business logic via actionService.on — receives full Action object)
   ↓
 State Layer (@alwatr/signal) — fine-grained reactivity
   ↓
@@ -633,10 +508,10 @@ View (re-render only affected nodes)
 
 ```typescript
 // Use @alwatr/flux for the complete architecture
-import {setupActionDelegation, onAction, createStateSignal} from '@alwatr/flux';
+import {actionService, createStateSignal} from '@alwatr/flux';
 
 // Or use @alwatr/action standalone for just the action bus
-import {setupActionDelegation, onAction, dispatchAction} from '@alwatr/action';
+import {actionService} from '@alwatr/action';
 ```
 
 → [View the complete Flux documentation](https://github.com/Alwatr/alwatr/tree/next/pkg/flux)

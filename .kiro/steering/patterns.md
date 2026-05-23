@@ -434,10 +434,10 @@ UI (HTML attributes + [action-context] scoping)
 Action Layer (@alwatr/action)
   │  body capture listener → parse → resolve context → build Action object
   │  → run modifiers (may enrich action.meta) → resolve payload
-  │  → internalChannel_.dispatch('ui_add_to_cart', action)
+  │  → actionService.dispatch(action)
   ▼
 Business Logic
-  │  onAction('ui_add_to_cart', (action) => {
+  │  actionService.on('ui_add_to_cart', (action) => {
   │    cartService.add(action.payload);
   │    console.log(action.context); // 'product-list'
   │  })
@@ -451,11 +451,11 @@ UI (re-render)
 ### Bootstrap
 
 ```ts
-import {setupActionDelegation} from '@alwatr/action';
+import {actionService} from '@alwatr/action';
 import {onPageReady, subscribePageReady, dispatchPageReady} from '@alwatr/page-ready';
 
 // One call — covers the entire page including future dynamic content.
-setupActionDelegation();
+actionService.setupDelegation();
 
 // Subscribe to a specific page before dispatching.
 onPageReady('home', () => initHomePage());
@@ -487,26 +487,26 @@ declare module '@alwatr/action' {
 }
 ```
 
-Passing an undeclared action name to `onAction` or `dispatchAction` is a **compile error**.
+Passing an undeclared action name to `actionService.on` or `actionService.dispatch` is a **compile error**.
 
 ### Subscribing to actions
 
 The handler receives the full `Action<K>` object — `payload`, `context`, and `meta` in one place:
 
 ```ts
-import {onAction} from '@alwatr/action';
+import {actionService} from '@alwatr/action';
 
-onAction('ui_open_drawer', (action) => {
+actionService.on('ui_open_drawer', (action) => {
   drawerSignal.set({open: true, panel: action.payload});
 });
 
-onAction('ui_add_to_cart', (action) => {
+actionService.on('ui_add_to_cart', (action) => {
   cartService.add(action.payload.productId, action.payload.qty);
   console.log('from context:', action.context); // e.g. 'product-list'
 });
 
 // Cleanup when component is destroyed
-const sub = onAction('ui_logout', () => authService.logout());
+const sub = actionService.on('ui_logout', () => authService.logout());
 sub.unsubscribe(); // call when no longer needed
 ```
 
@@ -515,14 +515,14 @@ sub.unsubscribe(); // call when no longer needed
 Code-originated actions should **not** use the `ui_` prefix — that prefix is reserved for DOM-originated actions.
 
 ```ts
-import {dispatchAction} from '@alwatr/action';
+import {actionService} from '@alwatr/action';
 
 // After an async operation completes (code-originated — no 'ui_' prefix)
 await uploadFile(file);
-dispatchAction({type: 'upload_complete', payload: fileId});
+actionService.dispatch({type: 'upload_complete', payload: fileId});
 
 // With context and meta
-dispatchAction({
+actionService.dispatch({
   type: 'navigate',
   payload: '/dashboard',
   context: 'sidebar',
@@ -530,7 +530,7 @@ dispatchAction({
 });
 
 // Void payload
-dispatchAction({type: 'auth_expired', payload: undefined});
+actionService.dispatch({type: 'auth_expired', payload: undefined});
 ```
 
 ### HTML attribute syntax
@@ -582,22 +582,22 @@ on-<eventType>="actionId[:payload][; modifier1,modifier2,…]"
 Modifier handlers receive `(event, element, action)` — the third argument is the mutable `Action` object. Modifiers may write to `action.meta` to enrich the action before it reaches subscribers:
 
 ```ts
-import {registerModifier, registerPayloadResolver} from '@alwatr/action';
+import {actionService} from '@alwatr/action';
 
 // Guard modifier — cancel dispatch if element is disabled
-registerModifier('not-disabled', (_event, element) => {
+actionService.registerModifier('not-disabled', (_event, element) => {
   return !(element as HTMLButtonElement).disabled;
 });
 
 // Enrichment modifier — stamp a trace ID into meta
-registerModifier('trace', (_event, _element, action) => {
+actionService.registerModifier('trace', (_event, _element, action) => {
   action.meta ??= {};
   action.meta['traceId'] = crypto.randomUUID();
   return true;
 });
 
 // Custom payload resolver — read a data attribute
-registerPayloadResolver('$data-id', (_event, element) => {
+actionService.registerPayloadResolver('$data-id', (_event, element) => {
   return (element as HTMLElement).dataset.id ?? null;
 });
 ```
