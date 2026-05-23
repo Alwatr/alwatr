@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.27.0](https://github.com/Alwatr/alwatr/compare/v9.26.0...v9.27.0) (2026-05-23)
+
+### 🐛 Bug Fixes
+
+* **action:** enhance ActionService for SSR compatibility and improve error handling ([52b7ae4](https://github.com/Alwatr/alwatr/commit/52b7ae43015ca0661eb93fa5d37656e90bd01d03))
+
+### 🔨 Code Refactoring
+
+* improve formatting and logging in ActionService methods ([2d41986](https://github.com/Alwatr/alwatr/commit/2d419867354b73f26d3e312096e1f9de20f4535f))
+* migrate action handling to action-service module ([c5bb3be](https://github.com/Alwatr/alwatr/commit/c5bb3befcbfd35b4e326dec567eacddb336db212))
+
 ## [9.26.0](https://github.com/Alwatr/alwatr/compare/v9.25.0...v9.26.0) (2026-05-23)
 
 ### ✨ Features
