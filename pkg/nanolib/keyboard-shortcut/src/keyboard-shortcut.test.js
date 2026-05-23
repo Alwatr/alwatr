@@ -43,7 +43,7 @@ describe('keyboardShortcutService', () => {
 
   it('should dispatch normalized action for modifier combos (Ctrl+S)', async () => {
     const callback = mock();
-    const sub = onAction('key_ctrl+s', callback);
+    const sub = onAction('key_ctrl_s', callback);
 
     const event = new KeyboardEvent('keydown', {
       key: 's',
@@ -60,7 +60,7 @@ describe('keyboardShortcutService', () => {
 
   it('should normalize modifier order to ctrl -> shift -> alt (Shift+Alt+Ctrl+U)', async () => {
     const callback = mock();
-    const sub = onAction('key_ctrl+shift+alt+u', callback);
+    const sub = onAction('key_ctrl_shift_alt_u', callback);
 
     const event = new KeyboardEvent('keydown', {
       key: 'u',
@@ -117,7 +117,7 @@ describe('keyboardShortcutService', () => {
 
   it('should dispatch shortcut action in input elements if it carries modifier', async () => {
     const callback = mock();
-    const sub = onAction('key_ctrl+s', callback);
+    const sub = onAction('key_ctrl_s', callback);
 
     const input = document.createElement('input');
     document.body.appendChild(input);

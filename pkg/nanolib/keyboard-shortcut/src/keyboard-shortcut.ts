@@ -9,14 +9,14 @@
  * ## Action naming convention
  *
  * The action type follows the pattern `key_<combo>` where `<combo>` is
- * built from active modifiers + key name, all **lowercase**, joined by `+`:
+ * built from active modifiers + key name, all **lowercase**, joined by `_`:
  *
  * | Keys pressed          | Action type              |
  * | --------------------- | ------------------------ |
  * | Escape                | `key_escape`             |
- * | Ctrl + S              | `key_ctrl+s`             |
- * | Shift + Ctrl + U      | `key_ctrl+shift+u`       |
- * | Alt + Enter           | `key_alt+enter`          |
+ * | Ctrl + S              | `key_ctrl_s`             |
+ * | Shift + Ctrl + U      | `key_ctrl_shift_u`       |
+ * | Alt + Enter           | `key_alt_enter`          |
  *
  * Modifier order is always **ctrl → shift → alt** for consistency.
  *
@@ -32,7 +32,7 @@
  * onAction('key_escape', () => closeDrawer());
  *
  * // Save on Ctrl+S
- * onAction('key_ctrl+s', () => save());
+ * onAction('key_ctrl_s', () => save());
  *
  * // Cleanup when no longer needed
  * keyboardShortcutService.teardown();
@@ -152,7 +152,7 @@ export class KeyboardShortcutService {
 
     parts.push(event.key.toLowerCase());
 
-    return parts.join('+');
+    return parts.join('_');
   }
 }
 

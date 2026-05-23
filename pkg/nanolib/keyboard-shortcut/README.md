@@ -53,7 +53,7 @@ onAction('key_escape', () => {
 });
 
 // Save changes when Ctrl+S is pressed
-onAction('key_ctrl+s', () => {
+onAction('key_ctrl_s', () => {
   saveChanges();
 });
 ```
@@ -66,8 +66,8 @@ Extend the global `ActionRecord` interface via declaration merging in your codeb
 declare module '@alwatr/action' {
   interface ActionRecord {
     'key_escape': void;
-    'key_ctrl+s': void;
-    'key_ctrl+shift+u': void;
+    'key_ctrl_s': void;
+    'key_ctrl_shift_u': void;
   }
 }
 ```
@@ -76,15 +76,15 @@ declare module '@alwatr/action' {
 
 ## Action Naming Convention
 
-Action types are prefixed with `key_` followed by the lowercase combo joined by `+`:
+Action types are prefixed with `key_` followed by the lowercase combo joined by `_`:
 
 | Keys pressed           | Action type            |
 | ---------------------- | ---------------------- |
 | Escape                 | `key_escape`           |
-| Ctrl + S               | `key_ctrl+s`           |
-| Shift + Ctrl + U       | `key_ctrl+shift+u`     |
-| Alt + Enter            | `key_alt+enter`        |
-| Ctrl + Shift + Alt + U | `key_ctrl+shift+alt+u` |
+| Ctrl + S               | `key_ctrl_s`           |
+| Shift + Ctrl + U       | `key_ctrl_shift_u`     |
+| Alt + Enter            | `key_alt_enter`        |
+| Ctrl + Shift + Alt + U | `key_ctrl_shift_alt_u` |
 
 Modifier order is always normalized to: **ctrl → shift → alt** (note: Meta/Command key is treated as Ctrl on Apple devices).
 
