@@ -23,126 +23,150 @@
  * ## Usage
  *
  * ```ts
- * import {setupKeyboardShortcut, onAction} from '@alwatr/flux';
+ * import {keyboardShortcutService, onAction} from '@alwatr/flux';
  *
  * // Initialize keyboard shortcut listener
- * setupKeyboardShortcut();
+ * keyboardShortcutService.setup();
  *
  * // Close drawer on Escape
  * onAction('key_escape', () => closeDrawer());
  *
  * // Save on Ctrl+S
  * onAction('key_ctrl+s', () => save());
+ *
+ * // Cleanup when no longer needed
+ * keyboardShortcutService.teardown();
  * ```
  */
 
 import {dispatchAction} from '@alwatr/action';
 import {createLogger} from '@alwatr/logger';
 
-const logger_ = createLogger('keyboard-shortcut');
-
-// Modifier keys that should not produce standalone actions.
-const modifierKeys__ = new Set(['Control', 'Shift', 'Alt', 'Meta']);
-
-// Editable element tags where bare key presses (no modifier) are user input, not shortcuts.
-const editableTags__ = new Set(['INPUT', 'TEXTAREA', 'SELECT']);
-
 /**
- * Whether the event target is an editable element (input, textarea, select,
- * or any element with `contenteditable`).
- */
-function isEditable__(event: KeyboardEvent): boolean {
-  const target = event.target as HTMLElement | null;
-  if (!target) return false;
-  return editableTags__.has(target.tagName) || target.isContentEditable;
-}
-
-/**
- * Whether the event carries at least one non-shift modifier (ctrl/meta/alt).
+ * Service to manage global keyboard shortcut mapping and dispatching.
  *
- * Shift alone is not considered a modifier shortcut because Shift+Letter
- * is normal typing (uppercase). Only ctrl/meta/alt signal an intentional
- * keyboard shortcut.
+ * Implements global `keydown` event listener on `document` in the capture phase,
+ * normalizes modifier combinations, and dispatches equivalent flux actions.
  */
-function hasModifier__(event: KeyboardEvent): boolean {
-  return event.ctrlKey || event.metaKey || event.altKey;
+export class KeyboardShortcutService {
+  protected readonly logger_ = createLogger('keyboard-shortcut-service');
+
+  // Modifier keys that should not produce standalone actions.
+  private readonly modifierKeys__ = new Set(['Control', 'Shift', 'Alt', 'Meta']);
+
+  // Editable element tags where bare key presses (no modifier) are user input, not shortcuts.
+  private readonly editableTags__ = new Set(['INPUT', 'TEXTAREA', 'SELECT']);
+
+  private hasRegistered__ = false;
+
+  constructor() {
+    this.logger_.logMethod?.('constructor');
+    this.handleKeyDown__ = this.handleKeyDown__.bind(this);
+  }
+
+  /**
+   * Registers global event listener for `keydown` on `document`.
+   * Safe to call multiple times (idempotent).
+   *
+   * @example
+   * ```ts
+   * keyboardShortcutService.setup();
+   * ```
+   */
+  setup(): void {
+    this.logger_.logMethod?.('setup');
+    if (this.hasRegistered__) return;
+    this.hasRegistered__ = true;
+    document.addEventListener('keydown', this.handleKeyDown__, {capture: true});
+  }
+
+  /**
+   * Removes global event listener for `keydown` on `document`.
+   *
+   * @example
+   * ```ts
+   * keyboardShortcutService.teardown();
+   * ```
+   */
+  teardown(): void {
+    this.logger_.logMethod?.('teardown');
+    if (!this.hasRegistered__) return;
+    this.hasRegistered__ = false;
+    document.removeEventListener('keydown', this.handleKeyDown__, {capture: true});
+  }
+
+  /**
+   * Global keydown event listener handler.
+   */
+  private handleKeyDown__(event: KeyboardEvent): void {
+    // Ignore standalone modifier presses — they are not actionable shortcuts.
+    if (this.modifierKeys__.has(event.key)) return;
+
+    // When focus is inside an editable element, only dispatch shortcut actions
+    // that include a real modifier (ctrl/meta/alt). Bare key presses like
+    // letters, digits, Escape, Enter, etc. are normal user input and must
+    // not be intercepted.
+    if (this.isEditable__(event) && !this.hasModifier__(event)) return;
+
+    const combo = this.buildCombo__(event);
+
+    this.logger_.logMethodArgs?.('keyboard_handler', {combo});
+
+    dispatchAction({type: `key_${combo}`});
+  }
+
+  /**
+   * Whether the event target is an editable element (input, textarea, select,
+   * or any element with `contenteditable`).
+   */
+  private isEditable__(event: KeyboardEvent): boolean {
+    const target = event.target as HTMLElement | null;
+    if (!target) return false;
+    return this.editableTags__.has(target.tagName) || target.isContentEditable;
+  }
+
+  /**
+   * Whether the event carries at least one non-shift modifier (ctrl/meta/alt).
+   *
+   * Shift alone is not considered a modifier shortcut because Shift+Letter
+   * is normal typing (uppercase). Only ctrl/meta/alt signal an intentional
+   * keyboard shortcut.
+   */
+  private hasModifier__(event: KeyboardEvent): boolean {
+    return event.ctrlKey || event.metaKey || event.altKey;
+  }
+
+  /**
+   * Builds a normalized, deterministic combo string from a KeyboardEvent.
+   *
+   * Modifier order is fixed (ctrl → shift → alt) so the same
+   * physical combination always produces the same string regardless of
+   * the order the user pressed the modifier keys.
+   */
+  private buildCombo__(event: KeyboardEvent): string {
+    const parts: string[] = [];
+
+    if (event.ctrlKey || event.metaKey) parts.push('ctrl');
+    if (event.shiftKey) parts.push('shift');
+    if (event.altKey) parts.push('alt');
+
+    parts.push(event.key.toLowerCase());
+
+    return parts.join('+');
+  }
 }
 
 /**
- * Builds a normalized, deterministic combo string from a KeyboardEvent.
- *
- * Modifier order is fixed (ctrl → shift → alt) so the same
- * physical combination always produces the same string regardless of
- * the order the user pressed the modifier keys.
- */
-function buildCombo__(event: KeyboardEvent): string {
-  const parts: string[] = [];
-
-  if (event.ctrlKey || event.metaKey) parts.push('ctrl');
-  if (event.shiftKey) parts.push('shift');
-  if (event.altKey) parts.push('alt');
-
-  parts.push(event.key.toLowerCase());
-
-  return parts.join('+');
-}
-
-/**
- * Global keydown event listener handler.
- */
-function handleKeyDown__(event: KeyboardEvent): void {
-  // Ignore standalone modifier presses — they are not actionable shortcuts.
-  if (modifierKeys__.has(event.key)) return;
-
-  // When focus is inside an editable element, only dispatch shortcut actions
-  // that include a real modifier (ctrl/meta/alt). Bare key presses like
-  // letters, digits, Escape, Enter, etc. are normal user input and must
-  // not be intercepted.
-  if (isEditable__(event) && !hasModifier__(event)) return;
-
-  const combo = buildCombo__(event);
-
-  logger_.logMethodArgs?.('keyboard_handler', {combo});
-
-  dispatchAction({type: `key_${combo}`});
-}
-
-let hasRegistered__ = false;
-
-/**
- * Registers global event listener for `keydown` on `document`.
- * Safe to call multiple times (idempotent).
+ * Singleton instance of KeyboardShortcutService.
  *
  * @example
  * ```ts
- * import {setupKeyboardShortcut} from '@alwatr/keyboard-shortcut';
+ * import {keyboardShortcutService} from '@alwatr/keyboard-shortcut';
  *
- * setupKeyboardShortcut();
+ * keyboardShortcutService.setup();
  * ```
  */
-export function setupKeyboardShortcut(): void {
-  logger_.logMethod?.('setupKeyboardShortcut');
-  if (hasRegistered__) return;
-  hasRegistered__ = true;
-  document.addEventListener('keydown', handleKeyDown__, {capture: true});
-}
-
-/**
- * Removes global event listener for `keydown` on `document`.
- *
- * @example
- * ```ts
- * import {teardownKeyboardShortcut} from '@alwatr/keyboard-shortcut';
- *
- * teardownKeyboardShortcut();
- * ```
- */
-export function teardownKeyboardShortcut(): void {
-  logger_.logMethod?.('teardownKeyboardShortcut');
-  if (!hasRegistered__) return;
-  hasRegistered__ = false;
-  document.removeEventListener('keydown', handleKeyDown__, {capture: true});
-}
+export const keyboardShortcutService = new KeyboardShortcutService();
 
 // Type augmentation — register the `key_*` pattern so any module can
 // declare specific shortcuts via ActionRecord merging.
