@@ -82,7 +82,7 @@ export class SessionStateSignal<T> extends StateSignal<T> {
    * Listener for the browser's pagehide events to flush pending saves.
    * @private
    */
-  private readonly windowPageHideListener_ = (): void => {
+  private readonly windowPageHideListener__ = (): void => {
     this.storageDebouncer__.flush();
   };
 
@@ -90,7 +90,7 @@ export class SessionStateSignal<T> extends StateSignal<T> {
    * Listener for the browser's pageshow events to sync from storage when restored from BFCache.
    * @private
    */
-  private readonly windowPageShowListener_ = (event: PageTransitionEvent): void => {
+  private readonly windowPageShowListener__ = (event: PageTransitionEvent): void => {
     if (event.persisted) {
       this.logger_.logMethod?.('windowPageShowListener_//restored_from_bfcache');
       const value = this.storageProvider__.read();
@@ -101,7 +101,7 @@ export class SessionStateSignal<T> extends StateSignal<T> {
   };
 
   constructor(config: SessionStateSignalConfig<T>) {
-    const {name, storageKey = name, saveDebounceDelay = 500, initialValue, onDestroy, parse, stringify} = config;
+    const {name, storageKey = name, saveDebounceDelay = 3000, initialValue, onDestroy, parse, stringify} = config;
 
     const storageProvider = createSessionStorageProvider<T>({
       name: storageKey,
@@ -130,8 +130,8 @@ export class SessionStateSignal<T> extends StateSignal<T> {
     this.storageSyncSubscription__ = this.subscribe(this.storageDebouncer__.trigger, {receivePrevious: false});
 
     if (typeof globalThis.addEventListener === 'function') {
-      globalThis.addEventListener('pagehide', this.windowPageHideListener_, {passive: true});
-      globalThis.addEventListener('pageshow', this.windowPageShowListener_, {passive: true});
+      globalThis.addEventListener('pagehide', this.windowPageHideListener__, {passive: true});
+      globalThis.addEventListener('pageshow', this.windowPageShowListener__, {passive: true});
     }
   }
 
@@ -179,8 +179,8 @@ export class SessionStateSignal<T> extends StateSignal<T> {
   public override destroy(): void {
     this.logger_.logMethod?.('destroy');
     if (typeof globalThis.removeEventListener === 'function') {
-      globalThis.removeEventListener('pagehide', this.windowPageHideListener_);
-      globalThis.removeEventListener('pageshow', this.windowPageShowListener_);
+      globalThis.removeEventListener('pagehide', this.windowPageHideListener__);
+      globalThis.removeEventListener('pageshow', this.windowPageShowListener__);
     }
     // Flush any pending debounced writes before destroying.
     this.storageDebouncer__.flush();
