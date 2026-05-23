@@ -92,3 +92,15 @@ bun run clean
 # Release
 bun run release        # lerna version (conventional commits, branch: next)
 ```
+
+## Verification
+
+After modifying any TypeScript, always run both checks before considering the task done:
+
+```sh
+# Type check across all packages
+bun run lint
+
+# Run all tests
+bun run test
+```

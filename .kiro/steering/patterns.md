@@ -6,6 +6,20 @@ inclusion: always
 
 This document captures the concrete patterns used throughout the codebase. Follow these exactly when writing new code.
 
+## Design Principles
+
+Apply these principles to every implementation decision — TypeScript, CSS, and architecture alike:
+
+- **Unidirectional Data Flow (UDF):** Data flows down to UI; actions (change requests) flow up to logic. Never let UI components call business logic directly.
+- **Open/Closed Principle:** Design components and services to be extended through composition (new directives, new signals, new modifiers) rather than modified. Existing, working code should rarely need to change to accommodate new features.
+- **DRY (Don't Repeat Yourself):** Never duplicate logic or markup. Extract shared behavior into utilities, base classes, or signals. If the same pattern appears twice, it belongs in a shared abstraction.
+- **KISS (Keep It Simple, Stupid):** Prefer the simplest solution that correctly solves the problem. Avoid clever abstractions, over-engineering, or premature optimization.
+- **YAGNI (You Aren't Gonna Need It):** Only implement what is explicitly required right now. Do not add configuration options, extension points, or features "just in case."
+- **Separation of Concerns:** Business logic in services, state in signals, presentation in directives/templates. Never mix these layers.
+- **Single Responsibility Principle:** Each class, directive, service, or function should do exactly one thing. If a unit needs an "and" to describe what it does, split it.
+
+---
+
 ## Naming Conventions
 
 ### Member Visibility via Underscore Suffix
@@ -126,15 +140,15 @@ if (!db.isInitialized()) {
 
 ### Signal Types
 
-| Signal                  | Purpose                                                                       |
-| ----------------------- | ----------------------------------------------------------------------------- |
-| `StateSignal<T>`        | Holds a value, notifies on change. Subscribers get current value immediately. |
-| `EventSignal<T>`        | Stateless event dispatch. Subscribers only get future emissions.              |
-| `ComputedSignal<T>`     | Derived from other signals, auto-updates when dependencies change.            |
-| `EffectSignal`          | Side-effect runner triggered by signal changes.                               |
-| `PersistentStateSignal` | `StateSignal` backed by `localStorage`.                                       |
-| `SessionStateSignal`    | `StateSignal` backed by `sessionStorage`.                                     |
-| `ChannelSignal<TMap>`   | Typed multi-message bus with O(1) per-name routing.                           |
+| Signal                  | Purpose                                                                                                    |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `StateSignal<T>`        | Holds a value, notifies on change. Subscribers get current value immediately.                              |
+| `EventSignal<T>`        | Stateless event dispatch. Subscribers only get future emissions.                                           |
+| `ComputedSignal<T>`     | Derived from other signals, auto-updates when dependencies change. **Always call `.destroy()` when done.** |
+| `EffectSignal`          | Side-effect runner triggered by signal changes. **Always call `.destroy()` when done.**                    |
+| `PersistentStateSignal` | `StateSignal` backed by `localStorage`. Built-in write debouncing and versioning.                          |
+| `SessionStateSignal`    | `StateSignal` backed by `sessionStorage`. Built-in write debouncing and versioning.                        |
+| `ChannelSignal<TMap>`   | Typed multi-message bus with O(1) per-name routing.                                                        |
 
 ### ChannelSignal Usage
 
@@ -390,6 +404,8 @@ const safeConfig = safeCollector.collect(); // guaranteed type or null
 
 ## Action Patterns (`@alwatr/action`)
 
+> **Rule: Never add direct event listeners on DOM elements.** Always use declarative `on-<eventType>` attributes and the global delegation system.
+
 `@alwatr/action` is the **Action layer** in Unidirectional Data Flow. DOM events flow upward as typed **Action objects** (AFSA — Alwatr Flux Standard Action); business logic subscribes and updates state via signals.
 
 Uses **global event delegation**: one capture-phase listener on `document.body` per event type handles every `on-<eventType>` element — O(1) boot time, zero per-element overhead, automatic support for dynamic content.
@@ -549,6 +565,7 @@ on-<eventType>="actionId[:payload][; modifier1,modifier2,…]"
 | Modifier   | Effect                                                                     |
 | ---------- | -------------------------------------------------------------------------- |
 | `prevent`  | `event.preventDefault()`                                                   |
+| `stop`     | `event.stopPropagation()`                                                  |
 | `once`     | Removes `on-<eventType>` attribute after first fire — dispatches only once |
 | `validate` | Cancels dispatch if nearest `<form>` fails `checkValidity()`               |
 

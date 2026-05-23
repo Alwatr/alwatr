@@ -155,6 +155,24 @@ pkg/<name>/
 - Follow Conventional Commits: `feat:`, `fix:`, `perf:`, `refactor:`, `chore:`, `deps:`.
 - Releases are cut from the `next` branch via `lerna version`.
 
+### Canonical Code Reference
+
+When writing new packages or functions, use existing active packages under `pkg/nanolib/` as canonical reference implementations — especially `pkg/nanolib/signal` and `pkg/nanolib/logger`. Pay attention to:
+
+- Directory layout and `src/main.ts` as the sole public entry point
+- Visibility suffixes (`_` protected, `__` private)
+- Co-located `*.test.js` tests
+- `.js` extensions in all imports
+
+### Commenting for AI
+
+Leave clear, context-rich inline comments explaining the **intent**, **business logic**, and **why** a specific approach was chosen. Design these comments as navigational anchors so future AI agents can instantly grasp the context without scanning the entire monorepo.
+
+### Language Rules
+
+- **Code, documentation, inline comments, markdown files, and commit messages:** English only.
+- **Chat responses to the developer:** Persian (Farsi).
+
 ### package.json Field Order
 
 Enforced by syncpack (`.syncpackrc`):
