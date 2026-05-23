@@ -67,6 +67,7 @@ declare module '@alwatr/action' {
   interface ActionRecord {
     'key_escape': void;
     'key_ctrl_s': void;
+    'key_ctrl_space': void;
     'key_ctrl_shift_u': void;
   }
 }
@@ -81,7 +82,9 @@ Action types are prefixed with `key_` followed by the lowercase combo joined by 
 | Keys pressed           | Action type            |
 | ---------------------- | ---------------------- |
 | Escape                 | `key_escape`           |
+| Space                  | `key_space`            |
 | Ctrl + S               | `key_ctrl_s`           |
+| Ctrl + Space           | `key_ctrl_space`       |
 | Shift + Ctrl + U       | `key_ctrl_shift_u`     |
 | Alt + Enter            | `key_alt_enter`        |
 | Ctrl + Shift + Alt + U | `key_ctrl_shift_alt_u` |

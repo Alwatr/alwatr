@@ -77,6 +77,23 @@ describe('keyboardShortcutService', () => {
     sub.unsubscribe();
   });
 
+  it('should map space key to space string (Ctrl+Space)', async () => {
+    const callback = mock();
+    const sub = onAction('key_ctrl_space', callback);
+
+    const event = new KeyboardEvent('keydown', {
+      key: ' ',
+      ctrlKey: true,
+      bubbles: true,
+      cancelable: true,
+    });
+    document.dispatchEvent(event);
+
+    await nextMacrotask();
+    expect(callback).toHaveBeenCalledTimes(1);
+    sub.unsubscribe();
+  });
+
   it('should not dispatch action for standalone modifier key presses', async () => {
     const callback = mock();
     const sub = onAction('key_control', callback);
@@ -156,6 +173,23 @@ describe('keyboardShortcutService', () => {
     expect(callback).not.toHaveBeenCalled();
 
     div.remove();
+    sub.unsubscribe();
+  });
+
+  it('should safely handle non-HTMLElement target', async () => {
+    const callback = mock();
+    const sub = onAction('key_escape', callback);
+
+    // Simulate keydown on document (which is not an HTMLElement)
+    const event = new KeyboardEvent('keydown', {
+      key: 'Escape',
+      bubbles: true,
+      cancelable: true,
+    });
+    document.dispatchEvent(event);
+
+    await nextMacrotask();
+    expect(callback).toHaveBeenCalledTimes(1); // Document is not editable, so bare key Escape should still be dispatched
     sub.unsubscribe();
   });
 

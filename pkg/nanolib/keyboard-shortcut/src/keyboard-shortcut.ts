@@ -14,6 +14,7 @@
  * | Keys pressed          | Action type              |
  * | --------------------- | ------------------------ |
  * | Escape                | `key_escape`             |
+ * | Space                 | `key_space`              |
  * | Ctrl + S              | `key_ctrl_s`             |
  * | Shift + Ctrl + U      | `key_ctrl_shift_u`       |
  * | Alt + Enter           | `key_alt_enter`          |
@@ -120,8 +121,8 @@ export class KeyboardShortcutService {
    * or any element with `contenteditable`).
    */
   private isEditable__(event: KeyboardEvent): boolean {
-    const target = event.target as HTMLElement | null;
-    if (!target) return false;
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) return false;
     return this.editableTags__.has(target.tagName) || target.isContentEditable;
   }
 
@@ -150,7 +151,8 @@ export class KeyboardShortcutService {
     if (event.shiftKey) parts.push('shift');
     if (event.altKey) parts.push('alt');
 
-    parts.push(event.key.toLowerCase());
+    const key = event.key === ' ' ? 'space' : event.key.toLowerCase();
+    parts.push(key);
 
     return parts.join('_');
   }
