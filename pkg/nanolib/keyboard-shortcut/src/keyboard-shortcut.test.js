@@ -1,6 +1,6 @@
-import {describe, beforeEach, afterEach, it, expect, jest} from 'bun:test';
+import {describe, beforeEach, afterEach, it, expect, mock} from 'bun:test';
 import {GlobalRegistrator} from '@happy-dom/global-registrator';
-import {setupKeyboardShortcut, teardownKeyboardShortcut} from '@alwatr/keyboard-shortcut';
+import {keyboardShortcutService} from '@alwatr/keyboard-shortcut';
 import {onAction} from '@alwatr/action';
 
 // Register DOM globals for testing (keyboard-shortcut requires document.addEventListener).
@@ -16,17 +16,17 @@ function nextMacrotask() {
   return new Promise((resolve) => setTimeout(resolve, 5));
 }
 
-describe('keyboard-shortcut', () => {
+describe('keyboardShortcutService', () => {
   beforeEach(() => {
-    setupKeyboardShortcut();
+    keyboardShortcutService.setup();
   });
 
   afterEach(() => {
-    teardownKeyboardShortcut();
+    keyboardShortcutService.teardown();
   });
 
   it('should dispatch action for bare Escape key press', async () => {
-    const callback = jest.fn();
+    const callback = mock();
     const sub = onAction('key_escape', callback);
 
     const event = new KeyboardEvent('keydown', {
@@ -42,7 +42,7 @@ describe('keyboard-shortcut', () => {
   });
 
   it('should dispatch normalized action for modifier combos (Ctrl+S)', async () => {
-    const callback = jest.fn();
+    const callback = mock();
     const sub = onAction('key_ctrl+s', callback);
 
     const event = new KeyboardEvent('keydown', {
@@ -59,7 +59,7 @@ describe('keyboard-shortcut', () => {
   });
 
   it('should normalize modifier order to ctrl -> shift -> alt (Shift+Alt+Ctrl+U)', async () => {
-    const callback = jest.fn();
+    const callback = mock();
     const sub = onAction('key_ctrl+shift+alt+u', callback);
 
     const event = new KeyboardEvent('keydown', {
@@ -78,7 +78,7 @@ describe('keyboard-shortcut', () => {
   });
 
   it('should not dispatch action for standalone modifier key presses', async () => {
-    const callback = jest.fn();
+    const callback = mock();
     const sub = onAction('key_control', callback);
 
     const event = new KeyboardEvent('keydown', {
@@ -95,7 +95,7 @@ describe('keyboard-shortcut', () => {
   });
 
   it('should ignore bare key presses in input elements', async () => {
-    const callback = jest.fn();
+    const callback = mock();
     const sub = onAction('key_escape', callback);
 
     const input = document.createElement('input');
@@ -116,7 +116,7 @@ describe('keyboard-shortcut', () => {
   });
 
   it('should dispatch shortcut action in input elements if it carries modifier', async () => {
-    const callback = jest.fn();
+    const callback = mock();
     const sub = onAction('key_ctrl+s', callback);
 
     const input = document.createElement('input');
@@ -138,7 +138,7 @@ describe('keyboard-shortcut', () => {
   });
 
   it('should ignore bare key presses in contenteditable elements', async () => {
-    const callback = jest.fn();
+    const callback = mock();
     const sub = onAction('key_enter', callback);
 
     const div = document.createElement('div');
@@ -160,10 +160,10 @@ describe('keyboard-shortcut', () => {
   });
 
   it('should not dispatch actions after teardown', async () => {
-    const callback = jest.fn();
+    const callback = mock();
     const sub = onAction('key_escape', callback);
 
-    teardownKeyboardShortcut();
+    keyboardShortcutService.teardown();
 
     const event = new KeyboardEvent('keydown', {
       key: 'Escape',
