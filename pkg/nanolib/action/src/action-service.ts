@@ -194,6 +194,10 @@ export class ActionService {
    */
   setupDelegation(eventTypes: readonly string[] = ActionService.DEFAULT_DELEGATED_EVENTS): void {
     this.logger_.logMethodArgs?.('setupDelegation', {eventTypes});
+    if (typeof document === 'undefined' || !document.body) {
+      this.logger_.incident?.('setupDelegation', 'document_body_not_found');
+      return;
+    }
 
     for (const eventType of eventTypes) {
       if (this.delegatedEventTypes_.has(eventType)) continue;
@@ -212,6 +216,9 @@ export class ActionService {
    */
   teardownDelegation(): void {
     this.logger_.logMethod?.('teardownDelegation');
+    if (typeof document === 'undefined' || !document.body) {
+      return;
+    }
     for (const eventType of this.delegatedEventTypes_) {
       document.body.removeEventListener(eventType, this.handleDelegatedEventBound__, {capture: true});
     }
@@ -301,13 +308,29 @@ export class ActionService {
         });
         return;
       }
-      if (handler(event, actionElement, action) === false) return;
+      try {
+        if (handler(event, actionElement, action) === false) return;
+      } catch (error) {
+        this.logger_.accident('handleDelegatedEvent_', 'modifier_execution_failed', {
+          modifier,
+          error,
+        });
+        return;
+      }
     }
 
     if (descriptor.payload) {
       const resolver = this.payloadRegistry_.get(descriptor.payload);
       if (resolver) {
-        (action as {payload: unknown}).payload = resolver(event, actionElement);
+        try {
+          (action as {payload: unknown}).payload = resolver(event, actionElement);
+        } catch (error) {
+          this.logger_.accident('handleDelegatedEvent_', 'payload_resolver_failed', {
+            resolver: descriptor.payload,
+            error,
+          });
+          return;
+        }
       }
     } else {
       (action as {payload: unknown}).payload = undefined;

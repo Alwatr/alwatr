@@ -63,6 +63,19 @@ describe('ActionService — Instance Independence', () => {
     expect(cbA).toHaveBeenCalledWith({type: 'ui_test_action', payload: 'A'});
     expect(cbB).not.toHaveBeenCalled();
   });
+
+  it('should be safe in SSR/non-DOM environments and not throw', () => {
+    const origDocument = globalThis.document;
+    delete globalThis.document;
+
+    try {
+      const ssrService = new ActionService();
+      expect(() => ssrService.setupDelegation()).not.toThrow();
+      expect(() => ssrService.teardownDelegation()).not.toThrow();
+    } finally {
+      globalThis.document = origDocument;
+    }
+  });
 });
 
 // ─── 2. Programmatic API ───────────────────────────────────────────────────────
