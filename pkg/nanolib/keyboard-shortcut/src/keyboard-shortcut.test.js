@@ -210,4 +210,26 @@ describe('keyboardShortcutService', () => {
     expect(callback).not.toHaveBeenCalled();
     sub.unsubscribe();
   });
+
+  it('should be safe in SSR/non-DOM environments and not throw on setup/teardown', () => {
+    const origDocument = globalThis.document;
+    Object.defineProperty(globalThis, 'document', {
+      value: undefined,
+      writable: true,
+      configurable: true
+    });
+
+    try {
+      keyboardShortcutService.teardown();
+      expect(() => keyboardShortcutService.setup()).not.toThrow();
+      expect(() => keyboardShortcutService.teardown()).not.toThrow();
+    } finally {
+      Object.defineProperty(globalThis, 'document', {
+        value: origDocument,
+        writable: true,
+        configurable: true
+      });
+      keyboardShortcutService.setup();
+    }
+  });
 });
