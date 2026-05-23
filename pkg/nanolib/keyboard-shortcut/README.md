@@ -32,12 +32,12 @@ npm i @alwatr/keyboard-shortcut
 
 ### 1. Initialize the shortcut listener
 
-Call `setupKeyboardShortcut()` at application bootstrap:
+Call `keyboardShortcutService.setup()` at application bootstrap:
 
 ```ts
-import {setupKeyboardShortcut} from '@alwatr/keyboard-shortcut';
+import {keyboardShortcutService} from '@alwatr/keyboard-shortcut';
 
-setupKeyboardShortcut();
+keyboardShortcutService.setup();
 ```
 
 ### 2. Subscribe to shortcuts
@@ -103,22 +103,24 @@ Shortcut combos that **include** a modifier (like `ctrlKey`, `metaKey`, or `altK
 
 ## API Reference
 
-### `setupKeyboardShortcut()`
+### `keyboardShortcutService`
 
-Registers a single `keydown` event listener on `document` with `capture: true`. Safe to call multiple times (idempotent).
+The singleton instance of `KeyboardShortcutService` used to manage the lifecycle of keyboard shortcut dispatching.
+
+#### `.setup()`
+
+Registers the global `keydown` event listener on `document` with `capture: true`. Safe to call multiple times (idempotent).
 
 ```ts
-function setupKeyboardShortcut(): void;
+keyboardShortcutService.setup();
 ```
 
----
-
-### `teardownKeyboardShortcut()`
+#### `.teardown()`
 
 Removes the global `keydown` event listener from the document. Useful for unit tests or micro-frontend unmounting.
 
 ```ts
-function teardownKeyboardShortcut(): void;
+keyboardShortcutService.teardown();
 ```
 
 ---
@@ -131,10 +133,10 @@ In the Flux architecture, it bridges physical keyboard events to the global acti
 
 ```typescript
 // Use @alwatr/flux for the complete architecture
-import {setupKeyboardShortcut, onAction} from '@alwatr/flux';
+import {keyboardShortcutService, onAction} from '@alwatr/flux';
 
 // Or use standalone
-import {setupKeyboardShortcut} from '@alwatr/keyboard-shortcut';
+import {keyboardShortcutService} from '@alwatr/keyboard-shortcut';
 import {onAction} from '@alwatr/action';
 ```
 
