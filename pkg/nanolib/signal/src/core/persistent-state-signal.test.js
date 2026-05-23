@@ -94,7 +94,7 @@ describe('PersistentStateSignal', () => {
     jest.advanceTimersByTime(1);
     await task;
 
-    // Debounce default is 3000ms — advance past it.
+    // Debounce default is 1000ms — advance past it.
     jest.advanceTimersByTime(3100);
 
     expect(mockLocalStorage.setItem).toHaveBeenCalledWith('test-persistent-state-signal.v1', '42');

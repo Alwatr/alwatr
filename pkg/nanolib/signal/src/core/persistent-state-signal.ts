@@ -94,7 +94,7 @@ export class PersistentStateSignal<T> extends StateSignal<T> {
     const {
       name,
       storageKey = name,
-      saveDebounceDelay = 3000,
+      saveDebounceDelay = 1000,
       initialValue,
       onDestroy,
       schemaVersion,

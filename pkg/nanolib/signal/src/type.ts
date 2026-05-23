@@ -355,7 +355,7 @@ export interface PersistentStateSignalConfig<T> extends StateSignalConfig<T>, Lo
   /**
    * The debounce delay (in milliseconds) for saving changes to localStorage.
    * This helps to reduce the frequency of write operations, which can be costly in terms of performance.
-   * @default 3000
+   * @default 1000
    */
   saveDebounceDelay?: number;
 }
@@ -402,7 +402,7 @@ export interface SessionStateSignalConfig<T> extends StateSignalConfig<T>, Sessi
   /**
    * The debounce delay in milliseconds for writing changes to `sessionStorage`.
    *
-   * @default 3000
+   * @default 1000
    */
   saveDebounceDelay?: number;
 }
