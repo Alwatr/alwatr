@@ -453,6 +453,25 @@ onAction('ui_add_to_cart', (action) => {
 });
 ```
 
+### Automated AI Migration Prompt
+
+If you are using an AI coding assistant (like Cursor, Gemini, Copilot, or Antigravity) to migrate your files to the new `actionService` API, you can use the following prompt to automate the refactoring:
+
+```text
+Refactor this file to migrate from the deprecated global `@alwatr/action` (or `@alwatr/flux`) functions to the new `actionService` singleton API.
+
+Follow these rules:
+1. Replace imports of `onAction`, `dispatchAction`, `setupActionDelegation`, `teardownActionDelegation`, `registerModifier`, or `registerPayloadResolver` from `@alwatr/action` (or `@alwatr/flux`) with `actionService`.
+2. Convert all calls:
+   - `onAction(...)` ➔ `actionService.on(...)`
+   - `dispatchAction(...)` ➔ `actionService.dispatch(...)`
+   - `setupActionDelegation(...)` ➔ `actionService.setupDelegation(...)`
+   - `teardownActionDelegation(...)` ➔ `actionService.teardownDelegation(...)`
+   - `registerModifier(...)` ➔ `actionService.registerModifier(...)`
+   - `registerPayloadResolver(...)` ➔ `actionService.registerPayloadResolver(...)`
+3. Maintain exact type safety, callback parameter types, and business logic.
+```
+
 ---
 
 ## 🌊 Part of Alwatr Flux
