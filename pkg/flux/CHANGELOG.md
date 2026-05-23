@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.26.0](https://github.com/Alwatr/alwatr/compare/v9.25.0...v9.26.0) (2026-05-23)
+
+### ✨ Features
+
+* **keyboard-shortcut:** add global keyboard-to-action bridge with event handling and tests ([8d20caa](https://github.com/Alwatr/alwatr/commit/8d20caa649e215780cca3fa6169b43f5e4bd9768))
+
 ## [9.25.0](https://github.com/Alwatr/alwatr/compare/v9.24.0...v9.25.0) (2026-05-21)
 
 **Note:** Version bump only for package @alwatr/flux

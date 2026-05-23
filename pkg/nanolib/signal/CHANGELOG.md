@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.26.0](https://github.com/Alwatr/alwatr/compare/v9.25.0...v9.26.0) (2026-05-23)
+
+### 🐛 Bug Fixes
+
+* **session-state-signal:** correct logger method name in windowPageShowListener ([5862331](https://github.com/Alwatr/alwatr/commit/58623315d44a032726dac135f08a2bfd99c312e6))
+* **signal:** increase default save debounce delay to 3000ms for Persistent and Session State Signals ([6321f4f](https://github.com/Alwatr/alwatr/commit/6321f4fc445c781d2fea33d0ff031476c0d08bcb))
+* **signal:** update default debounce delay to 1000ms for PersistentStateSignal and SessionStateSignal ([4b6bf48](https://github.com/Alwatr/alwatr/commit/4b6bf487101f76ac27b1238c092c5a98f0a03b83))
+
+### 🔨 Code Refactoring
+
+* **session-state-signal:** remove redundant comment about debounce delay ([756ad69](https://github.com/Alwatr/alwatr/commit/756ad69fa3d1223e1582bd7d5579348f6dbc24ad))
+
 ## [9.25.0](https://github.com/Alwatr/alwatr/compare/v9.24.0...v9.25.0) (2026-05-21)
 
 **Note:** Version bump only for package @alwatr/signal

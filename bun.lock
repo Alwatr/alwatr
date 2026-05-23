@@ -17,7 +17,7 @@
     },
     "pkg/core": {
       "name": "@alwatr/core",
-      "version": "9.25.0",
+      "version": "9.26.0",
       "dependencies": {
         "@alwatr/async-queue": "workspace:*",
         "@alwatr/cyrb53": "workspace:*",
@@ -61,7 +61,7 @@
     },
     "pkg/flux": {
       "name": "@alwatr/flux",
-      "version": "9.25.0",
+      "version": "9.26.0",
       "dependencies": {
         "@alwatr/action": "workspace:*",
         "@alwatr/directive": "workspace:*",
@@ -83,7 +83,7 @@
     },
     "pkg/fsm": {
       "name": "@alwatr/fsm",
-      "version": "9.25.0",
+      "version": "9.26.0",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
         "@alwatr/signal": "workspace:*",
@@ -97,7 +97,7 @@
     },
     "pkg/nanolib/action": {
       "name": "@alwatr/action",
-      "version": "9.25.0",
+      "version": "9.26.0",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
         "@alwatr/signal": "workspace:*",
@@ -149,7 +149,7 @@
     },
     "pkg/nanolib/debounce": {
       "name": "@alwatr/debounce",
-      "version": "9.25.0",
+      "version": "9.26.0",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
@@ -200,7 +200,7 @@
     },
     "pkg/nanolib/directive": {
       "name": "@alwatr/directive",
-      "version": "9.25.0",
+      "version": "9.26.0",
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/logger": "workspace:*",
@@ -378,7 +378,7 @@
     },
     "pkg/nanolib/keyboard-shortcut": {
       "name": "@alwatr/keyboard-shortcut",
-      "version": "9.25.0",
+      "version": "9.26.0",
       "dependencies": {
         "@alwatr/action": "workspace:*",
         "@alwatr/logger": "workspace:*",
@@ -451,7 +451,7 @@
     },
     "pkg/nanolib/page-ready": {
       "name": "@alwatr/page-ready",
-      "version": "9.25.0",
+      "version": "9.26.0",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
         "@alwatr/signal": "workspace:*",
@@ -539,7 +539,7 @@
     },
     "pkg/nanolib/signal": {
       "name": "@alwatr/signal",
-      "version": "9.25.0",
+      "version": "9.26.0",
       "dependencies": {
         "@alwatr/debounce": "workspace:*",
         "@alwatr/delay": "workspace:*",

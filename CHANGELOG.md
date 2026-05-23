@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.26.0](https://github.com/Alwatr/alwatr/compare/v9.25.0...v9.26.0) (2026-05-23)
+
+### ✨ Features
+
+* **keyboard-shortcut:** add Ctrl+Space action and update key mapping logic ([e5ab727](https://github.com/Alwatr/alwatr/commit/e5ab727ae927b83ecfe12b80a63cf9f524db67a1))
+* **keyboard-shortcut:** add global keyboard-to-action bridge with event handling and tests ([8d20caa](https://github.com/Alwatr/alwatr/commit/8d20caa649e215780cca3fa6169b43f5e4bd9768))
+
+### 🐛 Bug Fixes
+
+* **debounce:** update import statement to use .js extension for DebouncerConfig ([d6909d0](https://github.com/Alwatr/alwatr/commit/d6909d07cdcd840b225f1166a4af55ce1c7930cc))
+* **session-state-signal:** correct logger method name in windowPageShowListener ([5862331](https://github.com/Alwatr/alwatr/commit/58623315d44a032726dac135f08a2bfd99c312e6))
+* **signal:** increase default save debounce delay to 3000ms for Persistent and Session State Signals ([6321f4f](https://github.com/Alwatr/alwatr/commit/6321f4fc445c781d2fea33d0ff031476c0d08bcb))
+* **signal:** update default debounce delay to 1000ms for PersistentStateSignal and SessionStateSignal ([4b6bf48](https://github.com/Alwatr/alwatr/commit/4b6bf487101f76ac27b1238c092c5a98f0a03b83))
+
+### 🔨 Code Refactoring
+
+* **keyboard-shortcut:** switch to keyboardShortcutService for setup and teardown in tests ([ff70628](https://github.com/Alwatr/alwatr/commit/ff70628ab0e11c859cf4f700e9afe61754292a58))
+* **keyboard-shortcut:** update action naming convention to use underscores instead of plus signs ([090564a](https://github.com/Alwatr/alwatr/commit/090564a311b5fb4f25a14453121a514a46c1acad))
+* **keyboard-shortcut:** update README to reflect usage of keyboardShortcutService ([740cbd0](https://github.com/Alwatr/alwatr/commit/740cbd0a6039dad855b933e4b8612d941da312ad))
+* **keyboard-shortcut:** update to use KeyboardShortcutService for setup and teardown ([0a1cca5](https://github.com/Alwatr/alwatr/commit/0a1cca582a4463e4c11fd3f82b873e8a1f98c4d9))
+* **keyboard-shortcut:** update usage to keyboardShortcutService for setup ([d286592](https://github.com/Alwatr/alwatr/commit/d28659269e2d01eb1c1c90a1d2de0a6920d1e668))
+* **session-state-signal:** remove redundant comment about debounce delay ([756ad69](https://github.com/Alwatr/alwatr/commit/756ad69fa3d1223e1582bd7d5579348f6dbc24ad))
+
+### 🔗 Dependencies update
+
+* update ([9717cef](https://github.com/Alwatr/alwatr/commit/9717cefe1fca2da738880b9afa78efdd965989d5))
+* update all dependencies ([ce97120](https://github.com/Alwatr/alwatr/commit/ce97120bc8e3ad0533069bd243db4e8633b63de9))
+
 ## [9.25.0](https://github.com/Alwatr/alwatr/compare/v9.24.0...v9.25.0) (2026-05-21)
 
 ### ✨ Features
