@@ -17,7 +17,7 @@ Before starting any task, read the steering documents in `.kiro/steering/`:
 
 ## Canonical Code Reference
 
-**Each package under `pkg/` follows the structure defined in `structure.md`.** When writing new TypeScript packages or functions, read and follow the structure of existing active packages under `pkg/nanolib/` (e.g., [pkg/nanolib/signal](file:///Volumes/Alwatr/Projects/alwatr-io/alwatr-devkit/pkg/nanolib/signal) or [pkg/nanolib/logger](file:///Volumes/Alwatr/Projects/alwatr-io/alwatr-devkit/pkg/nanolib/logger)) as canonical reference implementations — especially for directory layout, the `src/main.ts` public entry point, visibility suffixes, co-located `*.test.js` tests, and using `.js` extensions in imports.
+**Each package under `pkg/` follows the structure defined in `structure.md`.** When writing new TypeScript packages or functions, read and follow the structure of existing active packages under `pkg/nanolib/` (e.g., `pkg/nanolib/signal` or `pkg/nanolib/logger`) as canonical reference implementations — especially for directory layout, the `src/main.ts` public entry point, visibility suffixes, co-located `*.test.js` tests, and using `.js` extensions in imports.
 
 ## Primary Directives
 
@@ -128,6 +128,7 @@ Use reactive signals instead of full-page updates or heavy VDOM reconciliation:
   ```
 
   Example: `<button on-click="ui_add_to_cart:42">Add</button>`
+
 - **Scoping Context:** Use `action-context="contextName"` on ancestors to pass context to action handlers.
 - **Payload Resolvers:** Use built-in resolvers: `:$value` (input value), `:$formdata` (nearest form data object), `:$checked` (checkbox state).
 - **Modifiers:** Use modifiers like `prevent` (calls `preventDefault()`), `stop` (calls `stopPropagation()`), `validate` (validates nearest form), and `once` (dispatches once then removes attribute).
