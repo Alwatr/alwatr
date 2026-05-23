@@ -92,7 +92,7 @@ export class SessionStateSignal<T> extends StateSignal<T> {
    */
   private readonly windowPageShowListener__ = (event: PageTransitionEvent): void => {
     if (event.persisted) {
-      this.logger_.logMethod?.('windowPageShowListener_//restored_from_bfcache');
+      this.logger_.logMethod?.('windowPageShowListener__//restored_from_bfcache');
       const value = this.storageProvider__.read();
       if (value !== null) {
         this.set(value);
