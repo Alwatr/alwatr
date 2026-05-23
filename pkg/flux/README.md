@@ -65,15 +65,15 @@ declare module '@alwatr/flux' {
 }
 
 // Get compile-time safety everywhere — handler receives the full Action object
-onAction('ui_add_to_cart', (action) => {
+actionService.on('ui_add_to_cart', (action) => {
   // action.payload is typed as {productId: number; qty: number}
   cartService.add(action.payload.productId, action.payload.qty);
   // action.context is the nearest [action-context] ancestor value (or undefined)
   console.log(action.context); // e.g. 'product-list'
 });
 
-dispatchAction({type: 'ui_add_to_cart', payload: {productId: 42, qty: 1}}); // ✅
-dispatchAction({type: 'ui_add_to_cart', payload: 'wrong'}); // ❌ Compile error
+actionService.dispatch({type: 'ui_add_to_cart', payload: {productId: 42, qty: 1}}); // ✅
+actionService.dispatch({type: 'ui_add_to_cart', payload: 'wrong'}); // ❌ Compile error
 ```
 
 ---
@@ -173,7 +173,7 @@ Connect DOM events to typed actions without writing JavaScript. Wrap elements in
 
 ```typescript
 // Handler receives the full Action object — payload, context, and meta together
-onAction('ui_slider_change', (action) => {
+actionService.on('ui_slider_change', (action) => {
   if (action.context === 'volume') audioService.setVolume(Number(action.payload));
   if (action.context === 'brightness') displayService.setBrightness(Number(action.payload));
 });
@@ -406,13 +406,13 @@ Flux implements a **strict layered architecture** where each layer has a single 
 │  • Resolves payload ($value, $formdata)                   │
 │  • Dispatches full Action {type, payload, context, meta}  │
 └──────────────────┬────────────────────────────────────────┘
-                   │ dispatchAction({type: 'ui_add_to_cart', payload: 42, context: 'cart'})
+                   │ actionService.dispatch({type: 'ui_add_to_cart', payload: 42, context: 'cart'})
                    ▼
 ┌───────────────────────────────────────────────────────────┐
 │                     CONTROLLER LAYER                      │
 │  (Business Logic, Services, Use Cases)                    │
 │                                                           │
-│  • Subscribes to Actions via onAction()                   │
+│  • Subscribes to Actions via actionService.on()           │
 │  • Receives full Action object (type, payload, context,   │
 │    meta) — no need to pass context separately             │
 │  • Executes business logic                                │
@@ -480,7 +480,7 @@ interface Action<K extends keyof ActionRecord> {
 This unified structure replaces the previous two-argument `(id, payload)` API. Every handler now receives the full picture:
 
 ```typescript
-onAction('ui_add_to_cart', (action) => {
+actionService.on('ui_add_to_cart', (action) => {
   console.log(action.type); // 'ui_add_to_cart'
   console.log(action.payload); // {productId: 42, qty: 1} — fully typed
   console.log(action.context); // 'product-list' — from [action-context] ancestor
@@ -491,9 +491,9 @@ onAction('ui_add_to_cart', (action) => {
 Modifiers can enrich `meta` before the action reaches subscribers:
 
 ```typescript
-import {registerModifier} from '@alwatr/flux';
+import {actionService} from '@alwatr/flux';
 
-registerModifier('trace', (_event, _element, action) => {
+actionService.registerModifier('trace', (_event, _element, action) => {
   action.meta ??= {};
   action.meta['traceId'] = crypto.randomUUID();
   return true;
@@ -531,10 +531,10 @@ bun add @alwatr/flux
 ### 1. Bootstrap the Application
 
 ```typescript
-import {setupActionDelegation, dispatchPageReady} from '@alwatr/flux';
+import {actionService, dispatchPageReady} from '@alwatr/flux';
 
 // Activate global event delegation (call once at app start)
-setupActionDelegation();
+actionService.setupDelegation();
 
 // Dispatch page-ready signal (for MPA routing)
 dispatchPageReady();
@@ -569,19 +569,19 @@ export const counterSignal = createStateSignal({
 
 ```typescript
 // src/controllers.ts
-import {onAction} from '@alwatr/flux';
+import {actionService} from '@alwatr/flux';
 import {counterSignal} from './state.js';
 
-onAction('ui_increment', () => {
+actionService.on('ui_increment', () => {
   counterSignal.update((count) => count + 1);
 });
 
-onAction('ui_decrement', () => {
+actionService.on('ui_decrement', () => {
   counterSignal.update((count) => count - 1);
 });
 
 // Handler receives the full Action object — payload is typed from ActionRecord
-onAction('ui_set_count', (action) => {
+actionService.on('ui_set_count', (action) => {
   counterSignal.set(action.payload); // action.payload: number
 });
 ```
@@ -616,11 +616,11 @@ onAction('ui_set_count', (action) => {
 
 ```typescript
 // main.js
-import {setupActionDelegation} from '@alwatr/flux';
+import {actionService} from '@alwatr/flux';
 import {counterSignal} from './state.js';
 import './controllers.js'; // Register action handlers
 
-setupActionDelegation();
+actionService.setupDelegation();
 
 // Subscribe to state changes and update DOM
 counterSignal.subscribe((count) => {
@@ -736,34 +736,38 @@ const mapped = createMappedSignal(source, {
 
 ### Actions
 
-#### `setupActionDelegation(eventTypes?)`
+#### `actionService`
 
-Activates global event delegation. Call once at app bootstrap.
+The pre-instantiated singleton instance of `ActionService` exported for declarative event delegation and action dispatching.
+
+##### `actionService.setupDelegation(eventTypes?)`
+
+Activates global event delegation capture listeners on `document.body`.
 
 ```typescript
-import {setupActionDelegation, DEFAULT_DELEGATED_EVENTS} from '@alwatr/flux';
+import {actionService, DEFAULT_DELEGATED_EVENTS} from '@alwatr/flux';
 
 // Use defaults (click, submit, input, change)
-setupActionDelegation();
+actionService.setupDelegation();
 
 // Or add custom events
-setupActionDelegation([...DEFAULT_DELEGATED_EVENTS, 'keydown', 'focus']);
+actionService.setupDelegation([...DEFAULT_DELEGATED_EVENTS, 'keydown', 'focus']);
 ```
 
-#### `onAction<K>(type, handler)`
+##### `actionService.on(type, handler)`
 
-Subscribes to a single typed action or an array of actions. The handler receives the full `Action<K>` object.
+Subscribes to a single typed action or an array of actions.
 
 ```typescript
 // Subscribe to a single action
-const sub = onAction('ui_add_to_cart', (action) => {
+const sub = actionService.on('ui_add_to_cart', (action) => {
   cartService.add(action.payload.productId, action.payload.qty);
   console.log(action.context); // e.g. 'product-list' or undefined
   console.log(action.meta); // any metadata set by modifiers
 });
 
 // Subscribe to multiple actions with a single handler
-const multiSub = onAction(['ui_increment', 'ui_decrement'], (action) => {
+const multiSub = actionService.on(['ui_increment', 'ui_decrement'], (action) => {
   console.log('Action triggered:', action.type);
 });
 
@@ -771,16 +775,16 @@ sub.unsubscribe(); // Clean up when done
 multiSub.unsubscribe();
 ```
 
-#### `dispatchAction<K>(action)`
+##### `actionService.dispatch(action)`
 
-Dispatches a typed action programmatically. Takes a full `Action<K>` object.
+Dispatches a typed action programmatically.
 
 ```typescript
-dispatchAction({type: 'navigate', payload: '/home'});
-dispatchAction({type: 'auth_expired', payload: undefined}); // void payload
+actionService.dispatch({type: 'navigate', payload: '/home'});
+actionService.dispatch({type: 'auth_expired', payload: undefined}); // void payload
 
 // With context and meta
-dispatchAction({
+actionService.dispatch({
   type: 'upload_complete',
   payload: fileId,
   context: 'product-list',
@@ -788,17 +792,17 @@ dispatchAction({
 });
 ```
 
-#### `registerModifier(name, handler)`
+##### `actionService.registerModifier(name, handler)`
 
-Adds a custom modifier for `on-<event>` attributes. The handler receives the mutable `action` object and may write to `action.meta`.
+Adds a custom modifier for `on-<event>` attributes.
 
 ```typescript
-registerModifier('confirm', () => {
+actionService.registerModifier('confirm', () => {
   return window.confirm('Are you sure?');
 });
 
 // A modifier that stamps a trace ID into meta
-registerModifier('trace', (_event, _element, action) => {
+actionService.registerModifier('trace', (_event, _element, action) => {
   action.meta ??= {};
   action.meta['traceId'] = crypto.randomUUID();
   return true;
@@ -809,12 +813,12 @@ registerModifier('trace', (_event, _element, action) => {
 <button on-click="ui_delete_item:42; confirm,trace">Delete</button>
 ```
 
-#### `registerPayloadResolver(name, resolver)`
+##### `actionService.registerPayloadResolver(name, resolver)`
 
 Adds a custom payload resolver.
 
 ```typescript
-registerPayloadResolver('$data-id', (_event, element) => {
+actionService.registerPayloadResolver('$data-id', (_event, element) => {
   return element.dataset.id;
 });
 ```
@@ -1238,19 +1242,19 @@ export const todosSignal = createStateSignal<Todo[]>({
 });
 
 // controllers.ts
-import {onAction} from '@alwatr/flux';
+import {actionService} from '@alwatr/flux';
 import {todosSignal} from './state.js';
 
 let nextId = 1;
 
-onAction('ui_add_todo', (action) => {
+actionService.on('ui_add_todo', (action) => {
   todosSignal.update((todos) => [
     ...todos,
     {id: nextId++, text: action.payload, done: false},
   ]);
 });
 
-onAction('ui_toggle_todo', (action) => {
+actionService.on('ui_toggle_todo', (action) => {
   todosSignal.update((todos) =>
     todos.map((todo) =>
       todo.id === action.payload ? {...todo, done: !todo.done} : todo
@@ -1258,7 +1262,7 @@ onAction('ui_toggle_todo', (action) => {
   );
 });
 
-onAction('ui_remove_todo', (action) => {
+actionService.on('ui_remove_todo', (action) => {
   todosSignal.update((todos) => todos.filter((t) => t.id !== action.payload));
 });
 
@@ -1269,11 +1273,11 @@ onAction('ui_remove_todo', (action) => {
 </div>
 
 // main.ts
-import {setupActionDelegation, html, render} from '@alwatr/flux';
+import {actionService, html, render} from '@alwatr/flux';
 import {todosSignal} from './state.js';
 import './controllers.js';
 
-setupActionDelegation();
+actionService.setupDelegation();
 
 todosSignal.subscribe((todos) => {
   render(
