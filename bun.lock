@@ -66,6 +66,7 @@
         "@alwatr/action": "workspace:*",
         "@alwatr/directive": "workspace:*",
         "@alwatr/embedded-data": "workspace:*",
+        "@alwatr/keyboard-shortcut": "workspace:*",
         "@alwatr/local-storage": "workspace:*",
         "@alwatr/page-ready": "workspace:*",
         "@alwatr/render-state": "workspace:*",
@@ -203,7 +204,7 @@
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/logger": "workspace:*",
-        "@alwatr/signal": "9.23.3",
+        "@alwatr/signal": "9.25.0",
         "lit-html": "^3.3.3",
       },
       "devDependencies": {
@@ -372,6 +373,21 @@
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
         "@alwatr/type-helper": "workspace:*",
+        "typescript": "^6.0.3",
+      },
+    },
+    "pkg/nanolib/keyboard-shortcut": {
+      "name": "@alwatr/keyboard-shortcut",
+      "version": "9.25.0",
+      "dependencies": {
+        "@alwatr/action": "workspace:*",
+        "@alwatr/logger": "workspace:*",
+      },
+      "devDependencies": {
+        "@alwatr/nano-build": "workspace:*",
+        "@alwatr/standard": "workspace:*",
+        "@alwatr/type-helper": "workspace:*",
+        "@happy-dom/global-registrator": "^20.9.0",
         "typescript": "^6.0.3",
       },
     },
@@ -800,6 +816,8 @@
     "@alwatr/is-number": ["@alwatr/is-number@workspace:pkg/nanolib/is-number"],
 
     "@alwatr/json2csv": ["@alwatr/json2csv@workspace:pkg/nanolib/json2csv"],
+
+    "@alwatr/keyboard-shortcut": ["@alwatr/keyboard-shortcut@workspace:pkg/nanolib/keyboard-shortcut"],
 
     "@alwatr/lazy": ["@alwatr/lazy@workspace:pkg/nanolib/lazy"],
 
