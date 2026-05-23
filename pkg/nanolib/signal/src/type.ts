@@ -401,7 +401,6 @@ export interface SessionStateSignalConfig<T> extends StateSignalConfig<T>, Sessi
 
   /**
    * The debounce delay in milliseconds for writing changes to `sessionStorage`.
-   * A lower value than `PersistentStateSignal` is used because session writes are less costly.
    *
    * @default 3000
    */
