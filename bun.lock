@@ -66,6 +66,7 @@
         "@alwatr/action": "workspace:*",
         "@alwatr/directive": "workspace:*",
         "@alwatr/embedded-data": "workspace:*",
+        "@alwatr/fsm": "workspace:*",
         "@alwatr/keyboard-shortcut": "workspace:*",
         "@alwatr/local-storage": "workspace:*",
         "@alwatr/page-ready": "workspace:*",
@@ -205,7 +206,7 @@
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/logger": "workspace:*",
-        "@alwatr/signal": "9.25.0",
+        "@alwatr/signal": "9.26.0",
         "lit-html": "^3.3.3",
       },
       "devDependencies": {

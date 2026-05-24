@@ -377,6 +377,69 @@ createEffect({
 });
 ```
 
+### 🤖 **Finite State Machine (FSM)**
+
+Flux integrates a declarative, type-safe Finite State Machine (`@alwatr/fsm`) built on top of `@alwatr/signal` to handle complex multi-state logic safely and prevent state-sync bugs (avoiding ad-hoc boolean flags).
+
+```typescript
+import {createFsmService} from '@alwatr/flux';
+import type {StateMachineConfig} from '@alwatr/flux';
+
+// 1. Define Types
+type State = 'idle' | 'loading' | 'success' | 'failed';
+type Event = {type: 'FETCH'} | {type: 'SUCCESS'} | {type: 'ERROR'};
+interface Context {
+  retries: number;
+}
+
+// 2. Define Configuration
+const apiMachineConfig: StateMachineConfig<State, Event, Context> = {
+  name: 'api-fetch-machine',
+  initial: 'idle',
+  context: {retries: 0},
+  states: {
+    idle: {
+      on: {FETCH: {target: 'loading'}},
+    },
+    loading: {
+      on: {
+        SUCCESS: {target: 'success', assigners: [() => ({retries: 0})]},
+        ERROR: [
+          {
+            target: 'loading',
+            guard: ({context}) => context.retries < 3,
+            assigners: [({context}) => ({retries: context.retries + 1})],
+          },
+          {target: 'failed'},
+        ],
+      },
+    },
+    success: {},
+    failed: {
+      on: {FETCH: {target: 'loading', assigners: [() => ({retries: 0})]}},
+    },
+  },
+};
+
+// 3. Create and Use Service
+export const apiFetchService = createFsmService(apiMachineConfig);
+
+// Subscribe to state changes in the view/rendering layer
+apiFetchService.stateSignal.subscribe((state) => {
+  console.log(`State: ${state.name}, Retries: ${state.context.retries}`);
+});
+
+// Dispatch events to trigger transitions
+apiFetchService.dispatch({type: 'FETCH'});
+```
+
+**Key Features of Flux FSM:**
+
+- **Run-To-Completion (RTC)**: Event processing is atomic and queued sequentially to completely eliminate race conditions.
+- **State Persistence**: Supports native persistence of both FSM state and context in `localStorage` or `sessionStorage` via the `persistent` configuration.
+- **Entry/Exit & State Actors**: Spawn asynchronous lifecycle processes (Actors) or fire synchronous effects upon state transitions.
+- **UDF Actor Synergy**: Combine `@alwatr/action` global delegation with `FsmService` to model self-contained Actors.
+
 ---
 
 ## 🏗️ Architecture Overview
@@ -731,6 +794,30 @@ const mapped = createMappedSignal(source, {
   map: (value) => value * 2,
 });
 ```
+
+#### `createFsmService(config)`
+
+Instantiates a Finite State Machine service using the given configuration:
+
+```typescript
+import {createFsmService} from '@alwatr/flux';
+
+const myService = createFsmService({
+  name: 'my-fsm',
+  initial: 'idle',
+  context: {retries: 0},
+  states: {
+    idle: {
+      on: {START: {target: 'working'}},
+    },
+    working: {
+      on: {SUCCESS: {target: 'idle'}},
+    },
+  },
+});
+```
+
+See the complete [FSM Package README](https://github.com/Alwatr/alwatr/tree/next/pkg/fsm#readme) for advanced FSM configuration details (Persistence, Guards, Actors, etc.).
 
 ---
 
@@ -1311,7 +1398,7 @@ todosSignal.subscribe((todos) => {
 - **[@alwatr/action](https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/action)** — Global event delegation action bus (part of Flux)
 - **[@alwatr/directive](https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/directive)** — Attribute-based DOM directives (part of Flux)
 - **[@alwatr/embedded-data](https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/embedded-data)** — Extract and validate embedded JSON from DOM script tags for SSR hydration (part of Flux)
-- **[@alwatr/fsm](https://github.com/Alwatr/alwatr/tree/next/pkg/fsm)** — Type-safe Finite State Machine
+- **[@alwatr/fsm](https://github.com/Alwatr/alwatr/tree/next/pkg/fsm)** — Type-safe Finite State Machine (part of Flux)
 - **[@alwatr/nanotron](https://github.com/Alwatr/alwatr/tree/next/pkg/nanotron)** — Lightweight API server framework
 - **[@alwatr/nitrobase](https://github.com/Alwatr/alwatr/tree/next/pkg/nitrobase)** — In-memory JSON database
 - **[@alwatr/fetch](https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/fetch)** — Enhanced fetch with retry, cache, deduplication

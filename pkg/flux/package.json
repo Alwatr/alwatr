@@ -24,6 +24,7 @@
     "@alwatr/action": "workspace:*",
     "@alwatr/directive": "workspace:*",
     "@alwatr/embedded-data": "workspace:*",
+    "@alwatr/fsm": "workspace:*",
     "@alwatr/keyboard-shortcut": "workspace:*",
     "@alwatr/local-storage": "workspace:*",
     "@alwatr/page-ready": "workspace:*",
