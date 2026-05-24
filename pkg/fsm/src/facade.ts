@@ -88,6 +88,7 @@ export function createFsmService<TState extends string, TEvent extends MachineEv
   return new FsmService(config, stateSignal);
 }
 
+/*
 type State = 'idle' | 'active';
 type Event = {type: 'START'; count: number} | {type: 'STOP'};
 createFsmService<State, Event, {count: number}>({
@@ -107,3 +108,4 @@ createFsmService<State, Event, {count: number}>({
     },
   },
 });
+*/
