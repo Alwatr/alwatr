@@ -91,10 +91,15 @@ export class ActionService {
    *
    * @example
    * ```ts
-   * const sub = actionService.on('ui_open_drawer', (action) => {
+   * // Subscribe to a single action
+   * const sub1 = actionService.on('ui_open_drawer', (action) => {
    *   console.log(action.payload);
    * });
-   * sub.unsubscribe();
+   *
+   * // Subscribe to multiple action types
+   * const sub2 = actionService.on(['ui_open_drawer', 'ui_close_drawer'], (action) => {
+   *   console.log(action.type, action.payload);
+   * });
    * ```
    */
   on<K extends keyof ActionRecord>(type: K | K[], handler: (action: Action<K>) => Awaitable<void>): SubscribeResult {
@@ -128,7 +133,11 @@ export class ActionService {
    *
    * @example
    * ```ts
+   * // Dispatches a typed action (payload is required)
    * actionService.dispatch({type: 'upload_complete', payload: 'file-123'});
+   *
+   * // Dispatches a void action (payload can be omitted)
+   * actionService.dispatch({type: 'auth_expired'});
    * ```
    */
   dispatch<K extends keyof ActionRecord>(action: DispatchParam<K>): void {

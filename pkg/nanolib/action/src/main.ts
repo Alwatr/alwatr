@@ -29,8 +29,9 @@ export const DEFAULT_DELEGATED_EVENTS = ActionService.DEFAULT_DELEGATED_EVENTS;
  * ```ts
  * import {onAction} from '@alwatr/action';
  *
- * const sub = onAction('ui_open_drawer', (action) => {
- *   console.log(action.payload);
+ * // Subscribe to multiple action types
+ * const sub = onAction(['ui_open_drawer', 'ui_close_drawer'], (action) => {
+ *   console.log(action.type, action.payload);
  * });
  * sub.unsubscribe();
  * ```
@@ -54,7 +55,11 @@ export function onAction<K extends keyof ActionRecord>(
  * ```ts
  * import {dispatchAction} from '@alwatr/action';
  *
+ * // Dispatches a typed action (payload is required)
  * dispatchAction({type: 'upload_complete', payload: 'file-123'});
+ *
+ * // Dispatches a void action (payload can be omitted)
+ * dispatchAction({type: 'auth_expired'});
  * ```
  *
  * @deprecated Use `actionService.dispatch` instead.
