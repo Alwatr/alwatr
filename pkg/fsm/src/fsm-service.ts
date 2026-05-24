@@ -90,7 +90,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
   }
 
   /**
-   * Finds the first valid transition for the given event and context by evaluating conditions.
+   * Finds the first valid transition for the given event and context by evaluating guards.
    *
    * @param event The triggering event.
    * @param context The current machine context.
@@ -114,26 +114,26 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
     const transitionsArray = Array.isArray(transitions) ? transitions : [transitions];
 
     return transitionsArray.find((transition, index) => {
-      if (!transition.condition) return true; // A transition without a condition is always valid.
+      if (!transition.guard) return true; // A transition without a guard is always valid.
 
       try {
-        const conditionMet = transition.condition(event, context);
-        this.logger_.logStep?.('findTransition__', 'check_condition', {
+        const guardMet = transition.guard({event, context});
+        this.logger_.logStep?.('findTransition__', 'check_guard', {
           state: currentStateName,
           eventType: event.type,
           transitionIndex: index,
-          condition: transition.condition.name || 'anonymous',
-          result: conditionMet,
+          guard: transition.guard.name || 'anonymous',
+          result: guardMet,
         });
-        return conditionMet;
+        return guardMet;
       } catch (error) {
-        this.logger_.error('findTransition__', 'condition_failed', error, {
+        this.logger_.error('findTransition__', 'guard_failed', error, {
           state: currentStateName,
           eventType: event.type,
           transitionIndex: index,
-          condition: transition.condition.name || 'anonymous',
+          guard: transition.guard.name || 'anonymous',
         });
-        return false; // Treat a failing condition as not met.
+        return false; // Treat a failing guard as not met.
       }
     });
   }
@@ -161,7 +161,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
 
     for (const effect of effectsArray) {
       try {
-        void effect(event, context);
+        effect({event, context});
       } catch (error) {
         this.logger_.error('executeEffects__', 'effect_failed', error, {
           effect: effect.name || 'anonymous',
@@ -201,7 +201,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
       // The entire reduce operation is wrapped in a single try/catch block
       // to ensure atomic updates.
       return assignersArray.reduce((accContext, assigner) => {
-        const partialUpdate = assigner(event, accContext);
+        const partialUpdate = assigner({event, context: accContext});
         this.logger_.logMethodFull?.(
           `event.${event.type}.action.${assigner.name || 'anonymous'}`,
           {event, accContext},

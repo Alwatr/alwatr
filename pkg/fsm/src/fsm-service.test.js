@@ -31,7 +31,7 @@ function createFetchConfig(overrides = {}) {
         on: {
           FETCH: {
             target: 'loading',
-            assigners: (event, context) => ({attempts: context.attempts + 1}),
+            assigners: ({context}) => ({attempts: context.attempts + 1}),
           },
         },
       },
@@ -39,11 +39,11 @@ function createFetchConfig(overrides = {}) {
         on: {
           RESOLVE: {
             target: 'success',
-            assigners: (event) => ({data: event.data, error: null}),
+            assigners: ({event}) => ({data: event.data, error: null}),
           },
           REJECT: {
             target: 'error',
-            assigners: (event) => ({error: event.error, data: null}),
+            assigners: ({event}) => ({error: event.error, data: null}),
           },
         },
       },
@@ -51,7 +51,7 @@ function createFetchConfig(overrides = {}) {
         on: {
           FETCH: {
             target: 'loading',
-            assigners: (event, context) => ({attempts: context.attempts + 1}),
+            assigners: ({context}) => ({attempts: context.attempts + 1}),
           },
         },
       },
@@ -59,7 +59,7 @@ function createFetchConfig(overrides = {}) {
         on: {
           FETCH: {
             target: 'loading',
-            assigners: (event, context) => ({attempts: context.attempts + 1}),
+            assigners: ({context}) => ({attempts: context.attempts + 1}),
           },
         },
       },
@@ -240,8 +240,8 @@ describe('FsmService', () => {
 
   // ── Conditional Transitions ───────────────────────────────────────────────
 
-  describe('conditional transitions', () => {
-    it('should take the transition when condition returns true', async () => {
+  describe('guarded transitions', () => {
+    it('should take the transition when guard returns true', async () => {
       const condFsm = createFsmService({
         name: 'cond-test',
         initial: 'idle',
@@ -249,7 +249,7 @@ describe('FsmService', () => {
         states: {
           idle: {
             on: {
-              GO: [{target: 'special', condition: (_event, context) => context.count > 2}, {target: 'normal'}],
+              GO: [{target: 'special', guard: ({context}) => context.count > 2}, {target: 'normal'}],
             },
           },
           normal: {},
@@ -264,7 +264,7 @@ describe('FsmService', () => {
       condFsm.destroy();
     });
 
-    it('should skip transition when condition returns false and take the next', async () => {
+    it('should skip transition when guard returns false and take the next', async () => {
       const condFsm = createFsmService({
         name: 'cond-test-2',
         initial: 'idle',
@@ -272,7 +272,7 @@ describe('FsmService', () => {
         states: {
           idle: {
             on: {
-              GO: [{target: 'special', condition: (_event, context) => context.count > 2}, {target: 'normal'}],
+              GO: [{target: 'special', guard: ({context}) => context.count > 2}, {target: 'normal'}],
             },
           },
           normal: {},
@@ -287,7 +287,7 @@ describe('FsmService', () => {
       condFsm.destroy();
     });
 
-    it('should handle condition that throws — treat as not met', async () => {
+    it('should handle guard that throws — treat as not met', async () => {
       const condFsm = createFsmService({
         name: 'cond-error-test',
         initial: 'idle',
@@ -298,8 +298,8 @@ describe('FsmService', () => {
               GO: [
                 {
                   target: 'bad',
-                  condition: () => {
-                    throw new Error('condition error');
+                  guard: () => {
+                    throw new Error('guard error');
                   },
                 },
                 {target: 'fallback'},
@@ -332,7 +332,7 @@ describe('FsmService', () => {
             on: {
               INCREMENT: {
                 // No target — internal transition.
-                assigners: (_event, context) => ({count: context.count + 1}),
+                assigners: ({context}) => ({count: context.count + 1}),
               },
             },
           },
@@ -368,7 +368,7 @@ describe('FsmService', () => {
             on: {
               GO: {
                 target: 'done',
-                assigners: [() => ({a: 10}), (_event, context) => ({b: context.a + 5})],
+                assigners: [() => ({a: 10}), ({context}) => ({b: context.a + 5})],
               },
             },
           },
@@ -494,7 +494,7 @@ describe('FsmService', () => {
             exit: exitEffect,
             on: {
               INCREMENT: {
-                assigners: (_event, context) => ({count: context.count + 1}),
+                assigners: ({context}) => ({count: context.count + 1}),
               },
             },
           },

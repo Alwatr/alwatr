@@ -55,7 +55,7 @@ The Alwatr FSM architecture bridges classical statechart theory with modern unid
 | **Transition** | Structural Rule        | A predefined path establishing how the machine moves from a source state to a target state upon receiving an event. |
 | **Assigner**   | Pure Mutation          | A synchronous, deterministic function that updates a slice of the machine's extended `context`.                     |
 | **Effect**     | Imperative Side-Effect | A block of logic (sync or async fire-and-forget) executed upon entering or exiting a given finite state.             |
-| **Condition**  | Guard Predicate        | A boolean evaluator that must pass (`true`) for a transition branch to be authorized.                               |
+| **Guard**      | Guard Predicate        | A boolean evaluator that must pass (`true`) for a transition branch to be authorized.                               |
 
 ---
 
@@ -113,7 +113,7 @@ export const fileUploadConfig: StateMachineConfig<FileState, FileEvent, FileCont
       on: {
         START_UPLOAD: {
           target: 'uploading',
-          assigners: [(event) => ({fileId: event.fileId, progress: 0, errorMessage: null})], // Pure mutation
+          assigners: [({event}) => ({fileId: event.fileId, progress: 0, errorMessage: null})], // Pure mutation
         },
       },
     },
@@ -121,14 +121,14 @@ export const fileUploadConfig: StateMachineConfig<FileState, FileEvent, FileCont
       on: {
         PROGRESS_UPDATE: {
           // Omission of 'target' signifies an internal transition: State remains unchanged, context updates.
-          assigners: [(event) => ({progress: event.percent})],
+          assigners: [({event}) => ({progress: event.percent})],
         },
         UPLOAD_SUCCESS: {
           target: 'success',
         },
         UPLOAD_FAILURE: {
           target: 'failed',
-          assigners: [(event) => ({errorMessage: event.error})],
+          assigners: [({event}) => ({errorMessage: event.error})],
         },
       },
     },
@@ -136,7 +136,7 @@ export const fileUploadConfig: StateMachineConfig<FileState, FileEvent, FileCont
       on: {
         RETRY: {
           target: 'uploading',
-          condition: (_event, context) => context.fileId !== null, // Structural Guard Gate
+          guard: ({context}) => context.fileId !== null, // Structural Guard Gate
         },
       },
     },
@@ -191,15 +191,15 @@ export const fileUploadConfig: StateMachineConfig<FileState, FileEvent, FileCont
 
 ### 2. Multiple Transitions (Guards & Fallbacks)
 
-For any given event in a state, you can specify an array of transitions instead of a single transition. The FSM evaluates the conditions in order and executes the first transition whose condition returns `true` (or the first transition without a condition, acting as a fallback).
+For any given event in a state, you can specify an array of transitions instead of a single transition. The FSM evaluates the guards in order and executes the first transition whose guard returns `true` (or the first transition without a guard, acting as a fallback).
 
 ```typescript
 states: {
   idle: {
     on: {
       CHECK: [
-        { target: 'high', condition: (_event, context) => context.value > 100 },
-        { target: 'medium', condition: (_event, context) => context.value > 5 },
+        { target: 'high', guard: ({context}) => context.value > 100 },
+        { target: 'medium', guard: ({context}) => context.value > 5 },
         { target: 'low' }, // Unconditional fallback
       ],
     },
@@ -215,13 +215,13 @@ You can run multiple side-effects (synchronous or asynchronous fire-and-forget) 
 states: {
   active: {
     entry: [
-      (event, context) => console.log('First entry effect', event),
-      async (event, context) => {
+      ({event}) => console.log('First entry effect', event),
+      async ({context}) => {
         await saveProgress(context);
       },
     ],
     exit: [
-      (event, context) => console.log('Exit effect'),
+      () => console.log('Exit effect'),
     ],
   },
 }
@@ -356,10 +356,10 @@ The primary factory utility to initiate a reactive FSM.
 | **`MachineEvent<T>`**      | The base interface for events. Must have a `type: T` property.                               |
 | **`StateMachineConfig`**   | The main configuration object defining `initial`, `context`, and `states`.                   |
 | **`FsmPersistenceConfig`** | Configuration options for FSM state persistence (`schemaVersion`, `storageKey`).             |
-| **`Transition`**           | Defines a transition with an optional `target`, `condition`, and `assigners`.                |
+| **`Transition`**           | Defines a transition with an optional `target`, `guard`, and `assigners`.                |
 | **`Assigner<E, C>`**       | A synchronous function that returns a partial context object to update context.              |
 | **`Effect<E, C>`**         | A synchronous or asynchronous fire-and-forget function executed on state entry/exit (returns `Awaitable<void>`). |
-| **`Condition<E, C>`**      | A boolean guard function that must return `true` for a transition branch to be taken.        |
+| **`Guard<E, C>`**          | A boolean guard function that must return `true` for a transition branch to be taken.        |
 
 ## Sponsors
 

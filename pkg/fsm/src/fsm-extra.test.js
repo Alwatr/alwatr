@@ -13,7 +13,7 @@ describe('FsmService — extra coverage', () => {
   // ── Multiple transitions (array) ─────────────────────────────────────────
 
   describe('multiple transitions array', () => {
-    it('should evaluate conditions in order and take the first matching', async () => {
+    it('should evaluate guards in order and take the first matching', async () => {
       const fsm = createFsmService({
         name: 'multi-trans-test',
         initial: 'idle',
@@ -22,8 +22,8 @@ describe('FsmService — extra coverage', () => {
           idle: {
             on: {
               CHECK: [
-                {target: 'high', condition: (_e, ctx) => ctx.value > 100},
-                {target: 'medium', condition: (_e, ctx) => ctx.value > 5},
+                {target: 'high', guard: ({context}) => context.value > 100},
+                {target: 'medium', guard: ({context}) => context.value > 5},
                 {target: 'low'},
               ],
             },
@@ -41,7 +41,7 @@ describe('FsmService — extra coverage', () => {
       fsm.destroy();
     });
 
-    it('should fall through to unconditional transition if all conditions fail', async () => {
+    it('should fall through to unconditional transition if all guards fail', async () => {
       const fsm = createFsmService({
         name: 'fallthrough-test',
         initial: 'idle',
@@ -50,8 +50,8 @@ describe('FsmService — extra coverage', () => {
           idle: {
             on: {
               CHECK: [
-                {target: 'high', condition: (_e, ctx) => ctx.value > 100},
-                {target: 'medium', condition: (_e, ctx) => ctx.value > 50},
+                {target: 'high', guard: ({context}) => context.value > 100},
+                {target: 'medium', guard: ({context}) => context.value > 50},
                 {target: 'low'}, // unconditional fallback
               ],
             },
@@ -165,7 +165,7 @@ describe('FsmService — extra coverage', () => {
           idle: {
             on: {
               ADD: {
-                assigners: (event) => ({amount: event.value}),
+                assigners: ({event}) => ({amount: event.value}),
               },
             },
           },
@@ -192,7 +192,7 @@ describe('FsmService — extra coverage', () => {
           idle: {
             on: {
               INCREMENT: {
-                assigners: (_event, context) => context + 1,
+                assigners: ({context}) => context + 1,
               },
             },
           },

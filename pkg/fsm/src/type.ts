@@ -37,11 +37,10 @@ export interface MachineEvent<TEventType extends string = string> {
  * @template TEvent The type of the event that triggered this assigner.
  * @returns A partial context object to merge or the new context value.
  */
-export type Assigner<TEvent extends MachineEvent, TContext> = (
-  event: Readonly<TEvent>,
-  context: Readonly<TContext>,
-  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-) => Partial<TContext> | void;
+export type Assigner<TEvent extends MachineEvent, TContext> = (params: {
+  readonly event: Readonly<TEvent>;
+  readonly context: Readonly<TContext>;
+}) => Partial<TContext> | void;
 
 /**
  * Defines an effect (fire-and-forget side-effect action) executed on state entry/exit.
@@ -51,11 +50,10 @@ export type Assigner<TEvent extends MachineEvent, TContext> = (
  * @template TEvent The type of the event that triggered this effect.
  * @returns void or a Promise<void>.
  */
-export type Effect<TEvent extends MachineEvent, TContext> = (
-  event: Readonly<TEvent>,
-  context: Readonly<TContext>,
-  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-) => Awaitable<void>;
+export type Effect<TEvent extends MachineEvent, TContext> = (params: {
+  readonly event: Readonly<TEvent>;
+  readonly context: Readonly<TContext>;
+}) => Awaitable<void>;
 
 /**
  * Defines a conditional guard function for a transition.
@@ -65,14 +63,14 @@ export type Effect<TEvent extends MachineEvent, TContext> = (
  * @template TEvent The type of the event.
  * @returns `true` if the transition should be taken, `false` otherwise.
  */
-export type Condition<TEvent extends MachineEvent, TContext> = (
-  event: Readonly<TEvent>,
-  context: Readonly<TContext>,
-) => boolean;
+export type Guard<TEvent extends MachineEvent, TContext> = (params: {
+  readonly event: Readonly<TEvent>;
+  readonly context: Readonly<TContext>;
+}) => boolean;
 
 /**
  * Defines a transition for a given state and event. It specifies the target state,
- * actions, and an optional condition.
+ * actions, and an optional guard.
  *
  * @template TState The type of the state.
  * @template TEvent The type of the event.
@@ -81,8 +79,8 @@ export type Condition<TEvent extends MachineEvent, TContext> = (
 export interface Transition<TState extends string, TEvent extends MachineEvent, TContext> {
   /** The target state to transition to. If undefined, it's an internal transition. */
   readonly target?: TState;
-  /** A condition function that must return true for the transition to occur. */
-  readonly condition?: Condition<TEvent, TContext>;
+  /** A guard function that must return true for the transition to occur. */
+  readonly guard?: Guard<TEvent, TContext>;
   /** An array of assigners to execute. These update context synchronously. */
   readonly assigners?: SingleOrArray<Assigner<TEvent, TContext>>;
 }

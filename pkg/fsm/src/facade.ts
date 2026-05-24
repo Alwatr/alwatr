@@ -97,7 +97,7 @@ createFsmService<State, Event, {count: number}>({
   states: {
     idle: {
       on: {
-        START: {target: 'active', assigners: [(event) => ({count: event.count})]},
+        START: {target: 'active', assigners: [({event}) => ({count: event.count})]},
       },
     },
     active: {

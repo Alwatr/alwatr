@@ -42,12 +42,12 @@ const lightMachineConfig = {
         SET_BRIGHTNESS: [
           {
             target: 'off',
-            condition: (event) => event.level === 0,
+            guard: ({event}) => event.level === 0,
             assigners: () => ({brightness: 0}),
           },
           {
-            condition: (event) => event.level > 0 && event.level <= 100,
-            assigners: (event) => ({brightness: event.level}),
+            guard: ({event}) => event.level > 0 && event.level <= 100,
+            assigners: ({event}) => ({brightness: event.level}),
           },
         ],
       },
