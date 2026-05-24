@@ -12,7 +12,7 @@ The Alwatr FSM architecture bridges classical statechart theory with modern unid
 ┌────────────────────────────────────────────────────────┐
 │                     Alwatr Actor Model                 │
 │                                                        │
-│  Global Flux Bus (onAction) ──► Input Controller       │
+│  Global Flux Bus (actionService) ──► Input Controller  │
 │                                       │                │
 │                                       ▼                │
 │  ┌──────────────────────────────────────────────────┐  │
@@ -268,7 +268,7 @@ An Actor complies strictly with three architectural rules:
 
 - **The Brain**: `FsmService` encapsulates your local state (`stateSignal`) and contextual calculations.
 - **The Mailbox**: The FSM's `eventSignal` serves as the private inbound message queue.
-- **The Global Nervous System**: The global `@alwatr/flux` Action Bus (`dispatchAction` / `onAction`) handles asynchronous messaging between different dockets of the system.
+- **The Global Nervous System**: The global `@alwatr/flux` Action Bus (`actionService.dispatch` / `actionService.on`) handles asynchronous messaging between different dockets of the system.
 
 ### Concrete Actor Workflow Implementation
 
@@ -280,7 +280,7 @@ The Input Controller intercepts generic global intents from the `@alwatr/flux` e
 
 ```typescript
 // account-actor-controller.ts
-import {onAction} from '@alwatr/flux';
+import {actionService} from '@alwatr/flux';
 import {accountFsmService} from './account-actor-service.js';
 
 /**
@@ -289,7 +289,7 @@ import {accountFsmService} from './account-actor-service.js';
  */
 export function setupAccountActorController() {
   // Catching global dialog resolutions without importing the Dialog Service directly
-  onAction('ui_confirm_dialog_resolved', (action) => {
+  actionService.on('ui_confirm_dialog_resolved', (action) => {
     // Structural Guard Boundary check: Ensure this confirmation belongs to this actor
     if (action.context !== 'account_purging_flow') return;
 
@@ -308,7 +308,7 @@ The internal machine processes the transition cleanly. When it shifts state, it 
 ```typescript
 // account-actor-config.ts
 import type {StateMachineConfig} from '@alwatr/fsm';
-import {dispatchAction} from '@alwatr/flux';
+import {actionService} from '@alwatr/flux';
 
 export const accountActorConfig: StateMachineConfig<any, any, any> = {
   name: 'account-actor-core',
@@ -324,7 +324,7 @@ export const accountActorConfig: StateMachineConfig<any, any, any> = {
       entry: [
         // AI Note: Outbound Messaging. The Actor sends an instruction out over the nervous system.
         () => {
-          dispatchAction({
+          actionService.dispatch({
             type: 'confirm_dialog_requested',
             payload: {
               targetContext: 'account_purging_flow',
@@ -343,7 +343,7 @@ export const accountActorConfig: StateMachineConfig<any, any, any> = {
       entry: [
         async () => {
           // Perform isolated backend calls...
-          dispatchAction({type: 'confirm_dialog_close_requested'});
+          actionService.dispatch({type: 'confirm_dialog_close_requested'});
         },
       ],
     },
