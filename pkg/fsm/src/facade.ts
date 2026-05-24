@@ -87,25 +87,3 @@ export function createFsmService<TState extends string, TEvent extends MachineEv
 
   return new FsmService(config, stateSignal);
 }
-
-/*
-type State = 'idle' | 'active';
-type Event = {type: 'START'; count: number} | {type: 'STOP'};
-const fsmService = createFsmService<State, Event, {count: number}>({
-  name: 'example',
-  initial: 'idle',
-  context: {count: 0},
-  states: {
-    idle: {
-      on: {
-        START: {target: 'active', assigners: [({event}) => ({count: event.count})]},
-      },
-    },
-    active: {
-      on: {
-        STOP: {target: 'idle'},
-      },
-    },
-  },
-});
-*/

@@ -1,4 +1,5 @@
 import type {SingleOrArray} from '@alwatr/type-helper';
+import {delay} from '@alwatr/delay';
 import {createLogger, type AlwatrLogger} from '@alwatr/logger';
 import {
   createEventSignal,
@@ -8,7 +9,7 @@ import {
   type IReadonlySignal,
 } from '@alwatr/signal';
 
-import type {StateMachineConfig, MachineState, MachineEvent, Transition, Effect, Assigner} from './type.js';
+import type {StateMachineConfig, MachineState, MachineEvent, Transition, Effect, Assigner, Actor} from './type.js';
 
 /**
  * A generic, encapsulated service that creates, runs, and manages a finite state machine.
@@ -28,6 +29,9 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
   /** The public, read-only state signal. Subscribe to react to state changes. */
   public readonly stateSignal: IReadonlySignal<MachineState<TState, TContext>>;
 
+  /** The set of cleanup functions for currently active state actors. */
+  private readonly activeActorCleanups__ = new Set<() => void>();
+
   constructor(
     protected readonly config_: StateMachineConfig<TState, TEvent, TContext>,
     private readonly stateSignal__:
@@ -42,6 +46,9 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
       name: `fsm-event-${this.config_.name}`,
     });
     this.eventSignal__.subscribe(this.processTransition__.bind(this), {receivePrevious: false});
+
+    // Schedule initial state entry effects and actors.
+    delay.nextMicrotask().then(() => this.start_());
   }
 
   /**
@@ -76,9 +83,10 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
 
     const targetStateName = transition.target ?? currentState.name;
 
-    // 1. Execute exit effects of the current state if transitioning to a new state.
+    // 1. Execute exit effects and cleanup actors of the current state if transitioning to a new state.
     if (targetStateName !== currentState.name) {
       this.executeEffects__(event, currentState.context, this.config_.states[currentState.name]?.exit);
+      this.cleanupActors__();
     }
 
     // 2. Apply assigners to compute the next context. This is a pure function.
@@ -93,9 +101,10 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
     // 4. Set the new state, notifying all subscribers.
     this.stateSignal__.set(nextState);
 
-    // 5. Execute entry effects of the new state if a transition occurred.
+    // 5. Execute entry effects and spawn actors of the new state if a transition occurred.
     if (nextState.name !== currentState.name) {
       this.executeEffects__(event, nextState.context, this.config_.states[nextState.name]?.entry);
+      this.spawnActors__(event, nextState.context, this.config_.states[nextState.name]?.actors);
     }
   }
 
@@ -242,11 +251,78 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
   }
 
   /**
+   * Starts the FSM by executing the entry effects and spawning the actors
+   * of the initial/current state. This is scheduled as a microtask
+   * to allow subscribers to listen to stateSignal first.
+   */
+  protected start_(): void {
+    if (this.eventSignal__.isDestroyed) return;
+    this.logger_.logMethod?.('start_');
+    const currentState = this.stateSignal__.get();
+    const initEvent = {type: '__init__'} as unknown as TEvent;
+    this.executeEffects__(initEvent, currentState.context, this.config_.states[currentState.name]?.entry);
+    this.spawnActors__(initEvent, currentState.context, this.config_.states[currentState.name]?.actors);
+  }
+
+  /**
+   * Spawns all configured actors for the entered state.
+   */
+  private spawnActors__(
+    event: TEvent,
+    context: Readonly<TContext>,
+    actors?: SingleOrArray<Actor<TEvent, TContext>>,
+  ): void {
+    if (!actors) {
+      this.logger_.logMethodArgs?.('spawnActors__//skipped', {count: 0});
+      return;
+    }
+    const actorsArray: Actor<TEvent, TContext>[] = Array.isArray(actors) ? actors : [actors];
+
+    this.logger_.logMethodArgs?.('spawnActors__', {count: actorsArray.length});
+
+    for (const actor of actorsArray) {
+      try {
+        const cleanup = actor({
+          event,
+          context,
+          sendBack: this.dispatch.bind(this),
+        });
+        if (typeof cleanup === 'function') {
+          this.activeActorCleanups__.add(cleanup);
+        }
+      } catch (error) {
+        this.logger_.error('spawnActors__', 'actor_failed', error, {
+          actor: actor.name || 'anonymous',
+          state: this.stateSignal__.get().name,
+          event,
+          context,
+        });
+      }
+    }
+  }
+
+  /**
+   * Cleans up (destroys) all currently active state actors.
+   */
+  private cleanupActors__(): void {
+    this.logger_.logMethodArgs?.('cleanupActors__', {count: this.activeActorCleanups__.size});
+    for (const cleanup of this.activeActorCleanups__) {
+      try {
+        cleanup();
+      } catch (error) {
+        this.logger_.error('cleanupActors__', 'cleanup_failed', error);
+      }
+    }
+    this.activeActorCleanups__.clear();
+  }
+
+  /**
    * Destroys the service, cleaning up all internal signals and subscriptions
    * to prevent memory leaks.
    */
   public destroy(): void {
     this.logger_.logMethod?.('destroy');
+    this.cleanupActors__();
     this.eventSignal__.destroy();
     this.stateSignal.destroy();
   }

@@ -501,11 +501,18 @@ describe('FsmService', () => {
         },
       });
 
+      // Wait for startup microtask to execute, which runs the entry effect of the initial state ('active')
+      await nextMacrotask();
+      expect(entryEffect).toHaveBeenCalledTimes(1);
+      expect(exitEffect).not.toHaveBeenCalled();
+
+      // Dispatch internal transition event
       effectFsm.dispatch({type: 'INCREMENT'});
       await nextMacrotask();
       await nextMacrotask(5);
 
-      expect(entryEffect).not.toHaveBeenCalled();
+      // Entry effect should still be called 1 time (no new calls from the internal transition)
+      expect(entryEffect).toHaveBeenCalledTimes(1);
       expect(exitEffect).not.toHaveBeenCalled();
 
       effectFsm.destroy();

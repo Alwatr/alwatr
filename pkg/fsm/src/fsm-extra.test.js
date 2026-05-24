@@ -206,4 +206,103 @@ describe('FsmService — extra coverage', () => {
       fsm.destroy();
     });
   });
+
+  // ── FSM Actors (Invoked Actors) ───────────────────────────────────────────
+
+  describe('FSM Actors', () => {
+    it('should spawn actors on startup and support sendBack', async () => {
+      const actorCleanup = jest.fn();
+      const actorMock = jest.fn(({sendBack}) => {
+        // Asynchronously dispatch back
+        setTimeout(() => sendBack({type: 'RESOLVE'}), 10);
+        return actorCleanup;
+      });
+
+      const fsm = createFsmService({
+        name: 'actor-startup-test',
+        initial: 'idle',
+        context: {},
+        states: {
+          idle: {
+            actors: actorMock,
+            on: {
+              RESOLVE: {target: 'success'},
+            },
+          },
+          success: {},
+        },
+      });
+
+      // Wait for constructor microtask to start FSM (which spawns the actor)
+      await nextMacrotask(5);
+      expect(actorMock).toHaveBeenCalledTimes(1);
+
+      // Wait for the actor async timeout
+      await nextMacrotask(20);
+      expect(fsm.stateSignal.get().name).toBe('success');
+
+      // Since we transitioned to success, the idle state actor should be cleaned up
+      expect(actorCleanup).toHaveBeenCalledTimes(1);
+
+      fsm.destroy();
+    });
+
+    it('should cleanup active actors when FSM is destroyed', async () => {
+      const actorCleanup = jest.fn();
+      const fsm = createFsmService({
+        name: 'actor-destroy-test',
+        initial: 'idle',
+        context: {},
+        states: {
+          idle: {
+            actors: () => actorCleanup,
+          },
+        },
+      });
+
+      await nextMacrotask(5);
+      expect(actorCleanup).not.toHaveBeenCalled();
+
+      fsm.destroy();
+      expect(actorCleanup).toHaveBeenCalledTimes(1);
+    });
+
+    it('should spawn new actors and cleanup previous state actors on transition', async () => {
+      const idleCleanup = jest.fn();
+      const activeCleanup = jest.fn();
+      const activeActor = jest.fn(() => activeCleanup);
+
+      const fsm = createFsmService({
+        name: 'actor-transition-test',
+        initial: 'idle',
+        context: {},
+        states: {
+          idle: {
+            actors: () => idleCleanup,
+            on: {
+              GO: {target: 'active'},
+            },
+          },
+          active: {
+            actors: activeActor,
+          },
+        },
+      });
+
+      await nextMacrotask(5);
+      expect(idleCleanup).not.toHaveBeenCalled();
+
+      fsm.dispatch({type: 'GO'});
+      await nextMacrotask(5);
+
+      // Transition happened: idle actor is cleaned up, active actor is spawned
+      expect(idleCleanup).toHaveBeenCalledTimes(1);
+      expect(activeActor).toHaveBeenCalledTimes(1);
+      expect(activeCleanup).not.toHaveBeenCalled();
+
+      fsm.destroy();
+      expect(activeCleanup).toHaveBeenCalledTimes(1);
+    });
+  });
 });
+

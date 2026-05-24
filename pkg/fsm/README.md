@@ -55,6 +55,7 @@ The Alwatr FSM architecture bridges classical statechart theory with modern unid
 | **Transition** | Structural Rule        | A predefined path establishing how the machine moves from a source state to a target state upon receiving an event. |
 | **Assigner**   | Pure Mutation          | A synchronous, deterministic function that updates a slice of the machine's extended `context`.                     |
 | **Effect**     | Imperative Side-Effect | A block of logic (sync or async fire-and-forget) executed upon entering or exiting a given finite state.             |
+| **Actor**      | Async Lifecycle        | An asynchronous lifecycle process spawned upon entering a state. It can dispatch events back using `sendBack(event)` and return a synchronous cleanup/destruction function. |
 | **Guard**      | Guard Predicate        | A boolean evaluator that must pass (`true`) for a transition branch to be authorized.                               |
 
 ---
@@ -227,6 +228,53 @@ states: {
 }
 ```
 
+### 4. State Actors (Invoked Actors)
+
+State Actors are async lifecycle processes spawned automatically when entering a state. In contrast to **Effects** (which are fire-and-forget synchronous actions), an **Actor**:
+1. Is instantiated dynamically upon state entry.
+2. Receives a `sendBack(event)` callback to asynchronously send events back to the parent FSM.
+3. Can return a synchronous cleanup/teardown function that is executed automatically when the FSM exits the state or is destroyed.
+
+This conforms to XState v5 patterns and is extremely useful for running side-effects with a defined lifecycle, such as polling intervals, websocket listeners, or async fetch requests.
+
+```typescript
+states: {
+  uploading: {
+    actors: [
+      ({event, context, sendBack}) => {
+        console.log('Spawning upload progress polling actor...');
+        
+        const intervalId = setInterval(async () => {
+          try {
+            const progress = await fetchUploadProgress(context.fileId);
+            if (progress >= 100) {
+              sendBack({type: 'UPLOAD_SUCCESS'});
+            } else {
+              sendBack({type: 'PROGRESS_UPDATE', percent: progress});
+            }
+          } catch (error) {
+            sendBack({type: 'UPLOAD_FAILURE', error: error.message});
+          }
+        }, 1000);
+
+        // Return a cleanup function to clear resources when leaving 'uploading'
+        return () => {
+          console.log('Cleaning up upload progress polling actor...');
+          clearInterval(intervalId);
+        };
+      }
+    ],
+    on: {
+      PROGRESS_UPDATE: {
+        assigners: [({event}) => ({progress: event.percent})],
+      },
+      UPLOAD_SUCCESS: { target: 'success' },
+      UPLOAD_FAILURE: { target: 'failed' },
+    }
+  }
+}
+```
+
 ---
 
 ## FSM as an Actor
@@ -359,6 +407,7 @@ The primary factory utility to initiate a reactive FSM.
 | **`Transition`**           | Defines a transition with an optional `target`, `guard`, and `assigners`.                |
 | **`Assigner<E, C>`**       | A synchronous function that returns a partial context object to update context.              |
 | **`Effect<E, C>`**         | A synchronous or asynchronous fire-and-forget function executed on state entry/exit (returns `Awaitable<void>`). |
+| **`Actor<E, C>`**          | A function spawned on state entry that can call `sendBack(event)` and return a cleanup function. |
 | **`Guard<E, C>`**          | A boolean guard function that must return `true` for a transition branch to be taken.        |
 
 ## Sponsors
