@@ -1,4 +1,4 @@
-import type {Awaitable, JsonObject, SingleOrArray} from '@alwatr/type-helper';
+import type {Awaitable, SingleOrArray} from '@alwatr/type-helper';
 import type {SignalConfig} from '@alwatr/signal';
 
 /**
@@ -6,9 +6,9 @@ import type {SignalConfig} from '@alwatr/signal';
  * and its extended state (context).
  *
  * @template TState The union type of the finite state values.
- * @template TContext The type of the context object (extended state).
+ * @template TContext The type of the machine's context (extended state).
  */
-export type MachineState<TState extends string, TContext extends JsonObject> = {
+export type MachineState<TState extends string, TContext> = {
   /** The current finite state value. */
   readonly name: TState;
   /** The context (extended state) of the machine, holding quantitative data. */
@@ -30,13 +30,14 @@ export interface MachineEvent<TEventType extends string = string> {
 
 /**
  * Defines an assigner (synchronous action) that updates the context during transitions.
- * It must return a partial context object to merge.
+ * For object-based contexts, it returns a partial context to merge. For primitives,
+ * it returns the new context value.
  *
  * @template TContext The type of the machine's context.
  * @template TEvent The type of the event that triggered this assigner.
- * @returns A partial context object to be merged into the machine's context.
+ * @returns A partial context object to merge or the new context value.
  */
-export type Assigner<TEvent extends MachineEvent, TContext extends JsonObject> = (
+export type Assigner<TEvent extends MachineEvent, TContext> = (
   event: Readonly<TEvent>,
   context: Readonly<TContext>,
   // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
@@ -50,7 +51,7 @@ export type Assigner<TEvent extends MachineEvent, TContext extends JsonObject> =
  * @template TEvent The type of the event that triggered this effect.
  * @returns void or a Promise<void>.
  */
-export type Effect<TEvent extends MachineEvent, TContext extends JsonObject> = (
+export type Effect<TEvent extends MachineEvent, TContext> = (
   event: Readonly<TEvent>,
   context: Readonly<TContext>,
   // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
@@ -64,7 +65,7 @@ export type Effect<TEvent extends MachineEvent, TContext extends JsonObject> = (
  * @template TEvent The type of the event.
  * @returns `true` if the transition should be taken, `false` otherwise.
  */
-export type Condition<TEvent extends MachineEvent, TContext extends JsonObject> = (
+export type Condition<TEvent extends MachineEvent, TContext> = (
   event: Readonly<TEvent>,
   context: Readonly<TContext>,
 ) => boolean;
@@ -77,7 +78,7 @@ export type Condition<TEvent extends MachineEvent, TContext extends JsonObject> 
  * @template TEvent The type of the event.
  * @template TContext The type of the machine's context.
  */
-export interface Transition<TState extends string, TEvent extends MachineEvent, TContext extends JsonObject> {
+export interface Transition<TState extends string, TEvent extends MachineEvent, TContext> {
   /** The target state to transition to. If undefined, it's an internal transition. */
   readonly target?: TState;
   /** A condition function that must return true for the transition to occur. */
@@ -109,13 +110,12 @@ export interface FsmPersistenceConfig {
  *
  * @template TState The union type of all possible states.
  * @template TEvent The union type of all possible events.
- * @template TContext The type of the context object.
+ * @template TContext The type of the machine's context.
  */
-export interface StateMachineConfig<
-  TState extends string,
-  TEvent extends MachineEvent,
-  TContext extends JsonObject,
-> extends Pick<SignalConfig, 'name'> {
+export interface StateMachineConfig<TState extends string, TEvent extends MachineEvent, TContext> extends Pick<
+  SignalConfig,
+  'name'
+> {
   /** The initial finite state value. */
   readonly initial: TState;
 

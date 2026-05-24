@@ -252,4 +252,31 @@ describe('FsmService — extra coverage', () => {
       fsm.destroy();
     });
   });
+
+  // ── Primitive context support ─────────────────────────────────────────────
+
+  describe('primitive context support', () => {
+    it('should support primitive types for context (e.g. number)', async () => {
+      const fsm = createFsmService({
+        name: 'primitive-context-test',
+        initial: 'idle',
+        context: 0,
+        states: {
+          idle: {
+            on: {
+              INCREMENT: {
+                assigners: (_event, context) => context + 1,
+              },
+            },
+          },
+        },
+      });
+
+      fsm.eventSignal.dispatch({type: 'INCREMENT'});
+      await nextMacrotask();
+
+      expect(fsm.stateSignal.get().context).toBe(1);
+      fsm.destroy();
+    });
+  });
 });

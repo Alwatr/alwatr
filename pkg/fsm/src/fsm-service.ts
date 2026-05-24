@@ -1,4 +1,4 @@
-import type {JsonObject, SingleOrArray} from '@alwatr/type-helper';
+import type {SingleOrArray} from '@alwatr/type-helper';
 import {createLogger, type AlwatrLogger} from '@alwatr/logger';
 import {
   createEventSignal,
@@ -19,7 +19,7 @@ import type {StateMachineConfig, MachineState, MachineEvent, Transition, Effect,
  * @template TEvent The union type of all possible events.
  * @template TContext The type of the machine's context (extended state).
  */
-export class FsmService<TState extends string, TEvent extends MachineEvent, TContext extends JsonObject> {
+export class FsmService<TState extends string, TEvent extends MachineEvent, TContext = unknown> {
   protected readonly logger_: AlwatrLogger;
 
   /** The event signal for sending events to the FSM. */
@@ -216,12 +216,19 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
           {event, accContext},
           partialUpdate,
         );
-        if (typeof partialUpdate === 'object' && partialUpdate !== null) {
+        if (partialUpdate === undefined) {
+          return accContext;
+        }
+        if (
+          typeof accContext === 'object'
+          && accContext !== null
+          && typeof partialUpdate === 'object'
+          && partialUpdate !== null
+        ) {
           // The next assigner receives the updated context from the previous one.
           return {...accContext, ...partialUpdate};
         }
-        // If an assigner returns nothing, pass the accumulated context along.
-        return accContext;
+        return partialUpdate as TContext;
       }, context);
     } catch (error) {
       this.logger_.error('applyAssigners__', 'assigner_failed_atomic', error, {

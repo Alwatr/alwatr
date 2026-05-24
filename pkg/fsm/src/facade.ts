@@ -1,4 +1,3 @@
-import type {JsonObject} from '@alwatr/type-helper';
 import {createPersistentStateSignal, createStateSignal} from '@alwatr/signal';
 
 import {FsmService} from './fsm-service.js';
@@ -65,7 +64,7 @@ import type {MachineEvent, MachineState, StateMachineConfig} from './type.js';
  * // lightService.destroy();
  * ```
  */
-export function createFsmService<TState extends string, TEvent extends MachineEvent, TContext extends JsonObject>(
+export function createFsmService<TState extends string, TEvent extends MachineEvent, TContext>(
   config: StateMachineConfig<TState, TEvent, TContext>,
 ): FsmService<TState, TEvent, TContext> {
   const initialValue: MachineState<TState, TContext> = {
@@ -88,3 +87,23 @@ export function createFsmService<TState extends string, TEvent extends MachineEv
 
   return new FsmService(config, stateSignal);
 }
+
+type State = 'idle' | 'active';
+type Event = {type: 'START'; count: number} | {type: 'STOP'};
+createFsmService<State, Event, {count: number}>({
+  name: 'example',
+  initial: 'idle',
+  context: {count: 0},
+  states: {
+    idle: {
+      on: {
+        START: {target: 'active', assigners: [(event) => ({count: event.count})]},
+      },
+    },
+    active: {
+      on: {
+        STOP: {target: 'idle'},
+      },
+    },
+  },
+});

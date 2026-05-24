@@ -50,7 +50,7 @@ The Alwatr FSM architecture bridges classical statechart theory with modern unid
 | Term           | Domain Scope           | Description                                                                                                         |
 | :------------- | :--------------------- | :------------------------------------------------------------------------------------------------------------------ |
 | **State**      | Finite                 | The current discrete behavioral mode of the system (e.g., `'idle'`, `'processing'`).                                |
-| **Context**    | Infinite               | The extended quantitative state object containing dynamic domain data (e.g., `{ retries: 0, response: null }`).     |
+| **Context**    | Infinite               | The extended quantitative state value containing dynamic domain data (can be any type, e.g., an object `{ retries: 0 }` or a primitive). |
 | **Event**      | Message                | A structured payload containing a unique discriminator `type` string sent to trigger a state evaluation.            |
 | **Transition** | Structural Rule        | A predefined path establishing how the machine moves from a source state to a target state upon receiving an event. |
 | **Assigner**   | Pure Mutation          | A synchronous, deterministic function that updates a slice of the machine's extended `context`.                     |
