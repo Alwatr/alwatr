@@ -50,7 +50,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
    *
    * @param event The event to process.
    */
-  private async processTransition__(event: TEvent): Promise<void> {
+  private processTransition__(event: TEvent): void {
     const currentState = this.stateSignal__.get();
     this.logger_.logMethodArgs?.('processTransition__', {state: currentState.name, event});
 
@@ -68,7 +68,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
 
     // 1. Execute exit effects of the current state if transitioning to a new state.
     if (targetStateName !== currentState.name) {
-      void this.executeEffects__(event, currentState.context, this.config_.states[currentState.name]?.exit);
+      this.executeEffects__(event, currentState.context, this.config_.states[currentState.name]?.exit);
     }
 
     // 2. Apply assigners to compute the next context. This is a pure function.
@@ -85,7 +85,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
 
     // 5. Execute entry effects of the new state if a transition occurred.
     if (nextState.name !== currentState.name) {
-      void this.executeEffects__(event, nextState.context, this.config_.states[nextState.name]?.entry);
+      this.executeEffects__(event, nextState.context, this.config_.states[nextState.name]?.entry);
     }
   }
 
@@ -146,11 +146,11 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
    * @param context The context at the time of execution.
    * @param effects A single effect or an array of effects.
    */
-  private async executeEffects__(
+  private executeEffects__(
     event: TEvent,
     context: Readonly<TContext>,
     effects?: SingleOrArray<Effect<TEvent, TContext>>,
-  ): Promise<void> {
+  ): void {
     if (!effects) {
       this.logger_.logMethodArgs?.('executeEffects__//skipped', {count: 0});
       return;
@@ -161,16 +161,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
 
     for (const effect of effectsArray) {
       try {
-        const result = await effect(event, context);
-        // If an effect returns a new event, dispatch it to be processed next.
-        if (result && 'type' in result) {
-          this.logger_.logStep?.('executeEffects__', 'new_event_from_effect', {
-            effect: effect.name || 'anonymous',
-            state: this.stateSignal__.get().name,
-            newEvent: result.type,
-          });
-          this.eventSignal.dispatch(result);
-        }
+        void effect(event, context);
       } catch (error) {
         this.logger_.error('executeEffects__', 'effect_failed', error, {
           effect: effect.name || 'anonymous',

@@ -44,8 +44,8 @@ export type Assigner<TEvent extends MachineEvent, TContext> = (
 ) => Partial<TContext> | void;
 
 /**
- * Defines an effect (asynchronous side-effect action) executed on state entry/exit.
- * It can interact with the outside world and can dispatch new events.
+ * Defines an effect (fire-and-forget side-effect action) executed on state entry/exit.
+ * It can interact with the outside world, but does not return new events to trigger transitions.
  *
  * @template TContext The type of the machine's context.
  * @template TEvent The type of the event that triggered this effect.
@@ -55,7 +55,7 @@ export type Effect<TEvent extends MachineEvent, TContext> = (
   event: Readonly<TEvent>,
   context: Readonly<TContext>,
   // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-) => Awaitable<TEvent | void>;
+) => Awaitable<void>;
 
 /**
  * Defines a conditional guard function for a transition.

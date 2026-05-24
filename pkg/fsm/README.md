@@ -1,6 +1,6 @@
 # `@alwatr/fsm` — Declarative & Reactive Finite State Machine Engine
 
-A tiny, production-grade, type-safe, and highly reactive Finite State Machine (FSM) engine tailored for performance-critical TypeScript applications. Built on top of `@alwatr/signal`, it natively supports synchronous state mutations, asynchronous side-effects, and persistent storage mechanisms.
+A tiny, production-grade, type-safe, and highly reactive Finite State Machine (FSM) engine tailored for performance-critical TypeScript applications. Built on top of `@alwatr/signal`, it natively supports synchronous state mutations, fire-and-forget side-effects, and persistent storage mechanisms.
 
 ---
 
@@ -25,7 +25,7 @@ The Alwatr FSM architecture bridges classical statechart theory with modern unid
 │  │        │                                         │  │
 │  │        ├──► Assigner ──► State/Context           │  │
 │  │        │                                         │  │
-│  │        └──► Entry/Exit Effects (Async)           │  │
+│  │        └──► Entry/Exit Effects (Fire-Forget)     │  │
 │  │                  │                               │  │
 │  └──────────────────┼───────────────────────────────┘  │
 │                     │                                  │
@@ -54,7 +54,7 @@ The Alwatr FSM architecture bridges classical statechart theory with modern unid
 | **Event**      | Message                | A structured payload containing a unique discriminator `type` string sent to trigger a state evaluation.            |
 | **Transition** | Structural Rule        | A predefined path establishing how the machine moves from a source state to a target state upon receiving an event. |
 | **Assigner**   | Pure Mutation          | A synchronous, deterministic function that updates a slice of the machine's extended `context`.                     |
-| **Effect**     | Imperative Side-Effect | An asynchronous or synchronous block of logic executed upon entering or exiting a given finite state.               |
+| **Effect**     | Imperative Side-Effect | A block of logic (sync or async fire-and-forget) executed upon entering or exiting a given finite state.             |
 | **Condition**  | Guard Predicate        | A boolean evaluator that must pass (`true`) for a transition branch to be authorized.                               |
 
 ---
@@ -209,7 +209,7 @@ states: {
 
 ### 3. Multiple Entry/Exit Effects
 
-You can run multiple synchronous or asynchronous side-effects in order when entering or leaving a state by specifying an array of effects.
+You can run multiple side-effects (synchronous or asynchronous fire-and-forget) in order when entering or leaving a state by specifying an array of effects. Note that these are executed synchronously by the FSM (the FSM does not wait for any returned Promises to resolve).
 
 ```typescript
 states: {
@@ -223,29 +223,6 @@ states: {
     exit: [
       (event, context) => console.log('Exit effect'),
     ],
-  },
-}
-```
-
-### 4. Event Chaining (Chained Transitions)
-
-An entry or exit effect can optionally return a new event object (with a `type` property). If it does, the FSM will automatically dispatch and evaluate this new event next, allowing you to chain transitions together.
-
-```typescript
-states: {
-  loading: {
-    entry: async (event, context) => {
-      try {
-        await fetchData(context.fileId);
-        return { type: 'AUTO_COMPLETE' }; // Automatically triggered next
-      } catch (error) {
-        return { type: 'UPLOAD_FAILURE', error: error.message };
-      }
-    },
-    on: {
-      AUTO_COMPLETE: { target: 'done' },
-      UPLOAD_FAILURE: { target: 'failed' },
-    },
   },
 }
 ```
@@ -381,7 +358,7 @@ The primary factory utility to initiate a reactive FSM.
 | **`FsmPersistenceConfig`** | Configuration options for FSM state persistence (`schemaVersion`, `storageKey`).             |
 | **`Transition`**           | Defines a transition with an optional `target`, `condition`, and `assigners`.                |
 | **`Assigner<E, C>`**       | A synchronous function that returns a partial context object to update context.              |
-| **`Effect<E, C>`**         | A synchronous or asynchronous function executed on state entry/exit. Can return a new event. |
+| **`Effect<E, C>`**         | A synchronous or asynchronous fire-and-forget function executed on state entry/exit (returns `Awaitable<void>`). |
 | **`Condition<E, C>`**      | A boolean guard function that must return `true` for a transition branch to be taken.        |
 
 ## Sponsors
