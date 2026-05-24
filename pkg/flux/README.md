@@ -377,75 +377,71 @@ createEffect({
 });
 ```
 
-### 🤖 **Finite State Machine (FSM)**
+### 🤖 **Finite State Machine (FSM) & Actor Model**
 
-Flux integrates a declarative, type-safe Finite State Machine (`@alwatr/fsm`) built on top of `@alwatr/signal` to handle complex multi-state logic safely and prevent state-sync bugs (avoiding ad-hoc boolean flags).
+Flux natively aggregates `@alwatr/fsm` to eliminate ad-hoc state variables, boolean flags, and race conditions. Instead of writing unpredictable, disjointed spaghetti code, you model your application's lifecycle as a **declarative, type-safe statechart**.
 
 ```typescript
 import {createFsmService} from '@alwatr/flux';
 import type {StateMachineConfig} from '@alwatr/flux';
 
-// 1. Define Types
-type State = 'idle' | 'loading' | 'success' | 'failed';
-type Event = {type: 'FETCH'} | {type: 'SUCCESS'} | {type: 'ERROR'};
-interface Context {
-  retries: number;
-}
+// 1. Define strict Union Types for compile-time safety
+type FetchState = 'idle' | 'loading' | 'success' | 'failed';
+type FetchEvent = {type: 'FETCH'} | {type: 'SUCCESS'} | {type: 'ERROR'};
+interface FetchContext { retries: number }
 
-// 2. Define Configuration
-const apiMachineConfig: StateMachineConfig<State, Event, Context> = {
-  name: 'api-fetch-machine',
+// 2. Configure the machine declaratively
+const fetchConfig: StateMachineConfig<FetchState, FetchEvent, FetchContext> = {
+  name: 'api-fetch-lifecycle',
   initial: 'idle',
   context: {retries: 0},
   states: {
     idle: {
-      on: {FETCH: {target: 'loading'}},
+      on: { FETCH: { target: 'loading' } },
     },
     loading: {
       on: {
-        SUCCESS: {target: 'success', assigners: [() => ({retries: 0})]},
+        SUCCESS: { target: 'success', assigners: [() => ({retries: 0})] },
         ERROR: [
-          {
-            target: 'loading',
-            guard: ({context}) => context.retries < 3,
-            assigners: [({context}) => ({retries: context.retries + 1})],
-          },
-          {target: 'failed'},
+          // Guard evaluates condition; first matching transition branch is chosen
+          { target: 'loading', guard: ({context}) => context.retries < 3, assigners: [({context}) => ({retries: context.retries + 1})] },
+          { target: 'failed' }
         ],
       },
     },
     success: {},
     failed: {
-      on: {FETCH: {target: 'loading', assigners: [() => ({retries: 0})]}},
+      on: { FETCH: { target: 'loading', assigners: [() => ({retries: 0})] } },
     },
   },
 };
 
-// 3. Create and Use Service
-export const apiFetchService = createFsmService(apiMachineConfig);
+// 3. Create the reactive service (FSM Service instance)
+export const fetchService = createFsmService(fetchConfig);
 
-// Subscribe to state changes in the view/rendering layer
-apiFetchService.stateSignal.subscribe((state) => {
-  console.log(`State: ${state.name}, Retries: ${state.context.retries}`);
+// 4. Surgical Reactivity: Subscribe to state changes in the view layer
+fetchService.stateSignal.subscribe((state) => {
+  console.log(`Current State: ${state.name}, Retries: ${state.context.retries}`);
 });
 
-// Dispatch events to trigger transitions
-apiFetchService.dispatch({type: 'FETCH'});
+// 5. Dispatch events to trigger atomic transitions
+fetchService.dispatch({type: 'FETCH'});
 ```
 
-**Key Features of Flux FSM:**
+#### 🛡️ Why is Flux FSM a Game-Changer?
 
-- **Run-To-Completion (RTC)**: Event processing is atomic and queued sequentially to completely eliminate race conditions.
-- **State Persistence**: Supports native persistence of both FSM state and context in `localStorage` or `sessionStorage` via the `persistent` configuration.
-- **Entry/Exit & State Actors**: Spawn asynchronous lifecycle processes (Actors) or fire synchronous effects upon state transitions.
-- **UDF Actor Synergy**: Combine `@alwatr/action` global delegation with `FsmService` to model self-contained Actors.
+- **Eliminates Race Conditions (Run-to-Completion)**: FSM events are queued and processed sequentially. Async callbacks from concurrent network fetches never overwrite or corrupt the state.
+- **Prevents State Explosion**: Ad-hoc booleans (like `isLoading`, `isError`, `hasFetched`) scale exponentially (e.g., 5 booleans = 32 states). FSM forces you to define a finite set of **valid states and transitions** (e.g., exactly 4 states).
+- **Embedded Actor Architecture**: Statecharts can spawn long-running, asynchronous, isolated lifecycles called **Actors** on state entry, complete with auto-cleanup on exit.
+- **Declarative Synergy**: The FSM's internal `stateSignal` integrates flawlessly with the `@alwatr/flux` unidirectional loop, feeding directly into your rendering template.
 
 ---
 
 ## 🏗️ Architecture Overview
 
-Flux implements a **strict layered architecture** where each layer has a single responsibility:
+Flux implements a **strict layered architecture** where each layer has a single responsibility. It supports both standard Unidirectional Data Flow (UDF) and the decentralized **Actor Model** (where components/features behave as isolated micro-services powered by FSMs).
 
+### 1. Unidirectional Data Flow (UDF) Layering
 ```
 ┌───────────────────────────────────────────────────────────┐
 │                         VIEW LAYER                        │
@@ -502,13 +498,68 @@ Flux implements a **strict layered architecture** where each layer has a single 
 └───────────────────────────────────────────────────────────┘
 ```
 
+### 2. Decoupled Actor Model Flow
+
+In complex applications, you can structure features as **Actors** using `@alwatr/fsm` + `@alwatr/action`. An Actor maintains private local state, receives inbound event packets from the global action bus, and broadcasts changes asynchronously back to the ecosystem.
+
+```mermaid
+graph TD
+    %% Styling
+    classDef view fill:#E1F5FE,stroke:#03A9F4,stroke-width:2px,color:#01579B;
+    classDef action fill:#FFF3E0,stroke:#FF9800,stroke-width:2px,color:#E65100;
+    classDef fsm fill:#E8F5E9,stroke:#4CAF50,stroke-width:2px,color:#1B5E20;
+    classDef actor fill:#F3E5F5,stroke:#9C27B0,stroke-width:2px,color:#4A148C;
+    classDef global fill:#ECEFF1,stroke:#607D8B,stroke-width:2px,color:#263238;
+
+    subgraph View ["View Layer (lit-html & Directives)"]
+        V[DOM / UI Elements]
+    end
+
+    subgraph Actions ["Action Bus (Global Delegation)"]
+        AB[actionService.dispatch]
+    end
+
+    subgraph Controllers ["Actor Controller Layer"]
+        C[Input Controller / Message Router]
+    end
+
+    subgraph ActorDomain ["Decoupled Actor (FSM Brain)"]
+        direction TB
+        FSM[FsmService]
+        Ctx[(Extended Context)]
+        Actors[Spawning State Actors]
+    end
+
+    subgraph State ["Reactive State Layer (Signals)"]
+        SS[stateSignal]
+    end
+
+    %% Flow
+    V -->|on-click / on-input| AB
+    AB -->|Global AFSA Message| C
+    C -->|dispatch Event| FSM
+    FSM -->|1. Run-to-Completion| Ctx
+    FSM -->|2. Entry/Exit Effects| Actors
+    FSM -->|3. Update State| SS
+    SS -->|Re-render / Update UI| V
+    Actors -.->|Asynchronous Events| AB
+
+    %% Apply Classes
+    class V view;
+    class AB action;
+    class C global;
+    class FSM,Ctx fsm;
+    class Actors actor;
+    class SS view;
+```
+
 **Key architectural benefits:**
 
-- **Zero coupling** — layers communicate only through well-defined interfaces
-- **Testability** — each layer can be tested in isolation
-- **Scalability** — add features without touching existing code
-- **Predictability** — data flows in one direction only
-- **Performance** — fine-grained updates, no full-tree reconciliation
+- **Zero coupling** — layers and actors communicate only through events, guaranteeing that features can be refactored, extended, or replaced without side effects.
+- **Run-to-Completion (RTC)** — State machines evaluate transitions atomically in a synchronous queue. Race conditions are mathematically impossible.
+- **High Testability** — Since business logic is isolated inside declarative statecharts (`StateMachineConfig`), you can test all transitions and side-effects in node/bun without mounting a DOM.
+- **Surgical Reactivity** — Only the DOM elements bound to the FSM's `stateSignal` or Context properties re-render, keeping CPU usage and memory footprints exceptionally low.
+- **AI-Agent and Developer Friendly** — The explicit separation of routing, transition, and effect layers provides clean boundaries that humans and AI agents can navigate with zero ambiguity.
 
 ---
 
