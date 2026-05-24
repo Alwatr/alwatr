@@ -70,7 +70,7 @@ export type Guard<TEvent extends MachineEvent, TContext> = (params: {
 
 /**
  * Defines an actor (asynchronous lifecycle process) invoked on state entry.
- * It starts an operation and can send events back to the parent FSM via `sendBack`.
+ * It starts an operation and can send events back to the parent FSM via `dispatch`.
  * It can return a cleanup function to be called when exiting the state or destroying the machine.
  *
  * @template TEvent The union type of all events in the machine.
@@ -79,7 +79,7 @@ export type Guard<TEvent extends MachineEvent, TContext> = (params: {
 export type Actor<TEvent extends MachineEvent, TContext> = (params: {
   readonly event: Readonly<TEvent>;
   readonly context: Readonly<TContext>;
-  readonly sendBack: (event: TEvent) => void;
+  readonly dispatch: (event: TEvent) => void;
 }) => (() => void) | void;
 
 /**

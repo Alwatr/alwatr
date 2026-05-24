@@ -210,11 +210,11 @@ describe('FsmService — extra coverage', () => {
   // ── FSM Actors (Invoked Actors) ───────────────────────────────────────────
 
   describe('FSM Actors', () => {
-    it('should spawn actors on startup and support sendBack', async () => {
+    it('should spawn actors on startup and support dispatch', async () => {
       const actorCleanup = jest.fn();
-      const actorMock = jest.fn(({sendBack}) => {
+      const actorMock = jest.fn(({dispatch}) => {
         // Asynchronously dispatch back
-        setTimeout(() => sendBack({type: 'RESOLVE'}), 10);
+        setTimeout(() => dispatch({type: 'RESOLVE'}), 10);
         return actorCleanup;
       });
 

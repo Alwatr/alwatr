@@ -285,7 +285,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
         const cleanup = actor({
           event,
           context,
-          sendBack: this.dispatch.bind(this),
+          dispatch: this.dispatch.bind(this),
         });
         if (typeof cleanup === 'function') {
           this.activeActorCleanups__.add(cleanup);
