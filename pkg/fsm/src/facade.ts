@@ -56,9 +56,9 @@ import type {MachineEvent, MachineState, StateMachineConfig} from './type.js';
  *   console.log(`Light is ${state.name} with brightness ${state.context.brightness}`);
  * });
  *
- * lightService.eventSignal.dispatch({type: 'TOGGLE'}); // Light is on with brightness 100
+ * lightService.dispatch({type: 'TOGGLE'}); // Light is on with brightness 100
  *
- * lightService.eventSignal.dispatch({type: 'SET_BRIGHTNESS', level: 50}); // Light is on with brightness 50
+ * lightService.dispatch({type: 'SET_BRIGHTNESS', level: 50}); // Light is on with brightness 50
  *
  * // 5. Cleanup
  * // lightService.destroy();
@@ -91,7 +91,7 @@ export function createFsmService<TState extends string, TEvent extends MachineEv
 /*
 type State = 'idle' | 'active';
 type Event = {type: 'START'; count: number} | {type: 'STOP'};
-createFsmService<State, Event, {count: number}>({
+const fsmService = createFsmService<State, Event, {count: number}>({
   name: 'example',
   initial: 'idle',
   context: {count: 0},

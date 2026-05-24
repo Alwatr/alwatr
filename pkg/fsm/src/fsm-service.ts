@@ -22,8 +22,8 @@ import type {StateMachineConfig, MachineState, MachineEvent, Transition, Effect,
 export class FsmService<TState extends string, TEvent extends MachineEvent, TContext = unknown> {
   protected readonly logger_: AlwatrLogger;
 
-  /** The event signal for sending events to the FSM. */
-  public readonly eventSignal: EventSignal<TEvent>;
+  /** The private event signal for sending events to the FSM. */
+  private readonly eventSignal__: EventSignal<TEvent>;
 
   /** The public, read-only state signal. Subscribe to react to state changes. */
   public readonly stateSignal: IReadonlySignal<MachineState<TState, TContext>>;
@@ -38,10 +38,20 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
     this.logger_.logMethodArgs?.('constructor', config_);
 
     this.stateSignal = this.stateSignal__.asReadonly();
-    this.eventSignal = createEventSignal<TEvent>({
+    this.eventSignal__ = createEventSignal<TEvent>({
       name: `fsm-event-${this.config_.name}`,
     });
-    this.eventSignal.subscribe(this.processTransition__.bind(this), {receivePrevious: false});
+    this.eventSignal__.subscribe(this.processTransition__.bind(this), {receivePrevious: false});
+  }
+
+  /**
+   * Dispatches an event to the FSM mailbox.
+   *
+   * @param event The event to process.
+   */
+  public dispatch(event: TEvent): void {
+    this.logger_.logMethodArgs?.('dispatch', {event});
+    this.eventSignal__.dispatch(event);
   }
 
   /**
@@ -237,7 +247,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
    */
   public destroy(): void {
     this.logger_.logMethod?.('destroy');
-    this.eventSignal.destroy();
+    this.eventSignal__.destroy();
     this.stateSignal.destroy();
   }
 }

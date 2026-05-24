@@ -95,9 +95,9 @@ describe('FsmService', () => {
       expect(typeof fsm.stateSignal.subscribe).toBe('function');
     });
 
-    it('should expose an eventSignal for dispatching events', () => {
-      expect(fsm.eventSignal).toBeDefined();
-      expect(typeof fsm.eventSignal.dispatch).toBe('function');
+    it('should expose a dispatch method for sending events', () => {
+      expect(fsm.dispatch).toBeDefined();
+      expect(typeof fsm.dispatch).toBe('function');
     });
   });
 
@@ -105,7 +105,7 @@ describe('FsmService', () => {
 
   describe('basic transitions', () => {
     it('should transition from idle to loading on FETCH event', async () => {
-      fsm.eventSignal.dispatch({type: 'FETCH'});
+      fsm.dispatch({type: 'FETCH'});
       await nextMacrotask();
 
       const state = fsm.stateSignal.get();
@@ -114,10 +114,10 @@ describe('FsmService', () => {
     });
 
     it('should transition from loading to success on RESOLVE event', async () => {
-      fsm.eventSignal.dispatch({type: 'FETCH'});
+      fsm.dispatch({type: 'FETCH'});
       await nextMacrotask();
 
-      fsm.eventSignal.dispatch({type: 'RESOLVE', data: 'result'});
+      fsm.dispatch({type: 'RESOLVE', data: 'result'});
       await nextMacrotask();
 
       const state = fsm.stateSignal.get();
@@ -127,10 +127,10 @@ describe('FsmService', () => {
     });
 
     it('should transition from loading to error on REJECT event', async () => {
-      fsm.eventSignal.dispatch({type: 'FETCH'});
+      fsm.dispatch({type: 'FETCH'});
       await nextMacrotask();
 
-      fsm.eventSignal.dispatch({type: 'REJECT', error: 'network error'});
+      fsm.dispatch({type: 'REJECT', error: 'network error'});
       await nextMacrotask();
 
       const state = fsm.stateSignal.get();
@@ -140,12 +140,12 @@ describe('FsmService', () => {
     });
 
     it('should allow re-fetching from success state', async () => {
-      fsm.eventSignal.dispatch({type: 'FETCH'});
+      fsm.dispatch({type: 'FETCH'});
       await nextMacrotask();
-      fsm.eventSignal.dispatch({type: 'RESOLVE', data: 'first'});
+      fsm.dispatch({type: 'RESOLVE', data: 'first'});
       await nextMacrotask();
 
-      fsm.eventSignal.dispatch({type: 'FETCH'});
+      fsm.dispatch({type: 'FETCH'});
       await nextMacrotask();
 
       const state = fsm.stateSignal.get();
@@ -154,12 +154,12 @@ describe('FsmService', () => {
     });
 
     it('should allow re-fetching from error state', async () => {
-      fsm.eventSignal.dispatch({type: 'FETCH'});
+      fsm.dispatch({type: 'FETCH'});
       await nextMacrotask();
-      fsm.eventSignal.dispatch({type: 'REJECT', error: 'fail'});
+      fsm.dispatch({type: 'REJECT', error: 'fail'});
       await nextMacrotask();
 
-      fsm.eventSignal.dispatch({type: 'FETCH'});
+      fsm.dispatch({type: 'FETCH'});
       await nextMacrotask();
 
       const state = fsm.stateSignal.get();
@@ -172,7 +172,7 @@ describe('FsmService', () => {
 
   describe('ignored events', () => {
     it('should ignore RESOLVE event in idle state', async () => {
-      fsm.eventSignal.dispatch({type: 'RESOLVE', data: 'unexpected'});
+      fsm.dispatch({type: 'RESOLVE', data: 'unexpected'});
       await nextMacrotask();
 
       const state = fsm.stateSignal.get();
@@ -181,7 +181,7 @@ describe('FsmService', () => {
     });
 
     it('should ignore REJECT event in idle state', async () => {
-      fsm.eventSignal.dispatch({type: 'REJECT', error: 'unexpected'});
+      fsm.dispatch({type: 'REJECT', error: 'unexpected'});
       await nextMacrotask();
 
       const state = fsm.stateSignal.get();
@@ -189,10 +189,10 @@ describe('FsmService', () => {
     });
 
     it('should ignore FETCH event in loading state', async () => {
-      fsm.eventSignal.dispatch({type: 'FETCH'});
+      fsm.dispatch({type: 'FETCH'});
       await nextMacrotask();
 
-      fsm.eventSignal.dispatch({type: 'FETCH'});
+      fsm.dispatch({type: 'FETCH'});
       await nextMacrotask();
 
       const state = fsm.stateSignal.get();
@@ -208,7 +208,7 @@ describe('FsmService', () => {
       const callback = jest.fn();
       fsm.stateSignal.subscribe(callback, {receivePrevious: false});
 
-      fsm.eventSignal.dispatch({type: 'FETCH'});
+      fsm.dispatch({type: 'FETCH'});
       await nextMacrotask();
 
       expect(callback).toHaveBeenCalledTimes(1);
@@ -231,7 +231,7 @@ describe('FsmService', () => {
       const sub = fsm.stateSignal.subscribe(callback, {receivePrevious: false});
       sub.unsubscribe();
 
-      fsm.eventSignal.dispatch({type: 'FETCH'});
+      fsm.dispatch({type: 'FETCH'});
       await nextMacrotask();
 
       expect(callback).not.toHaveBeenCalled();
@@ -257,7 +257,7 @@ describe('FsmService', () => {
         },
       });
 
-      condFsm.eventSignal.dispatch({type: 'GO'});
+      condFsm.dispatch({type: 'GO'});
       await nextMacrotask();
       expect(condFsm.stateSignal.get().name).toBe('normal');
 
@@ -280,7 +280,7 @@ describe('FsmService', () => {
         },
       });
 
-      condFsm.eventSignal.dispatch({type: 'GO'});
+      condFsm.dispatch({type: 'GO'});
       await nextMacrotask();
       expect(condFsm.stateSignal.get().name).toBe('special');
 
@@ -311,7 +311,7 @@ describe('FsmService', () => {
         },
       });
 
-      condFsm.eventSignal.dispatch({type: 'GO'});
+      condFsm.dispatch({type: 'GO'});
       await nextMacrotask();
       expect(condFsm.stateSignal.get().name).toBe('fallback');
 
@@ -339,14 +339,14 @@ describe('FsmService', () => {
         },
       });
 
-      internalFsm.eventSignal.dispatch({type: 'INCREMENT'});
+      internalFsm.dispatch({type: 'INCREMENT'});
       await nextMacrotask();
 
       const state = internalFsm.stateSignal.get();
       expect(state.name).toBe('active');
       expect(state.context.count).toBe(1);
 
-      internalFsm.eventSignal.dispatch({type: 'INCREMENT'});
+      internalFsm.dispatch({type: 'INCREMENT'});
       await nextMacrotask();
 
       expect(internalFsm.stateSignal.get().context.count).toBe(2);
@@ -376,7 +376,7 @@ describe('FsmService', () => {
         },
       });
 
-      multiFsm.eventSignal.dispatch({type: 'GO'});
+      multiFsm.dispatch({type: 'GO'});
       await nextMacrotask();
 
       const state = multiFsm.stateSignal.get();
@@ -411,7 +411,7 @@ describe('FsmService', () => {
         },
       });
 
-      atomicFsm.eventSignal.dispatch({type: 'GO'});
+      atomicFsm.dispatch({type: 'GO'});
       await nextMacrotask();
 
       const state = atomicFsm.stateSignal.get();
@@ -445,7 +445,7 @@ describe('FsmService', () => {
         },
       });
 
-      effectFsm.eventSignal.dispatch({type: 'GO'});
+      effectFsm.dispatch({type: 'GO'});
       await nextMacrotask();
       // Allow async effects to run.
       await nextMacrotask(5);
@@ -472,7 +472,7 @@ describe('FsmService', () => {
         },
       });
 
-      effectFsm.eventSignal.dispatch({type: 'GO'});
+      effectFsm.dispatch({type: 'GO'});
       await nextMacrotask();
       await nextMacrotask(5);
 
@@ -501,7 +501,7 @@ describe('FsmService', () => {
         },
       });
 
-      effectFsm.eventSignal.dispatch({type: 'INCREMENT'});
+      effectFsm.dispatch({type: 'INCREMENT'});
       await nextMacrotask();
       await nextMacrotask(5);
 
@@ -533,7 +533,7 @@ describe('FsmService', () => {
         },
       });
 
-      effectFsm.eventSignal.dispatch({type: 'GO'});
+      effectFsm.dispatch({type: 'GO'});
       await nextMacrotask();
       await nextMacrotask(5);
 
@@ -541,7 +541,7 @@ describe('FsmService', () => {
       expect(effectFsm.stateSignal.get().name).toBe('active');
 
       // Should still be able to transition.
-      effectFsm.eventSignal.dispatch({type: 'BACK'});
+      effectFsm.dispatch({type: 'BACK'});
       await nextMacrotask();
       expect(effectFsm.stateSignal.get().name).toBe('idle');
 
@@ -558,7 +558,7 @@ describe('FsmService', () => {
 
     it('should throw when dispatching events after destroy', () => {
       fsm.destroy();
-      expect(() => fsm.eventSignal.dispatch({type: 'FETCH'})).toThrow();
+      expect(() => fsm.dispatch({type: 'FETCH'})).toThrow();
     });
   });
 });

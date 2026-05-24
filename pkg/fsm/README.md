@@ -18,7 +18,7 @@ The Alwatr FSM architecture bridges classical statechart theory with modern unid
 │  ┌──────────────────────────────────────────────────┐  │
 │  │ FsmService (The Actor Brain)                     │  │
 │  │                                                  │  │
-│  │   Event Mailbox (eventSignal.dispatch)           │  │
+│  │   Event Mailbox (dispatch)                       │  │
 │  │        │                                         │  │
 │  │        ▼                                         │  │
 │  │   Transition Evaluator (Atomic / RTC)            │  │
@@ -163,7 +163,7 @@ fileUploadService.stateSignal.subscribe((machineState) => {
 });
 
 // Dispatch typed messages to invoke the execution cycle
-fileUploadService.eventSignal.dispatch({type: 'START_UPLOAD', fileId: 'doc_991'});
+fileUploadService.dispatch({type: 'START_UPLOAD', fileId: 'doc_991'});
 ```
 
 ---
@@ -244,7 +244,7 @@ An Actor complies strictly with three architectural rules:
 `@alwatr/fsm` acts as the perfect structural core for an Actor.
 
 - **The Brain**: `FsmService` encapsulates your local state (`stateSignal`) and contextual calculations.
-- **The Mailbox**: The FSM's `eventSignal` serves as the private inbound message queue.
+- **The Mailbox**: The FSM's internal `eventSignal` serves as the private inbound message queue, exposed via the `dispatch` method.
 - **The Global Nervous System**: The global `@alwatr/flux` Action Bus (`actionService.dispatch` / `actionService.on`) handles asynchronous messaging between different dockets of the system.
 
 ### Concrete Actor Workflow Implementation
@@ -273,7 +273,7 @@ export function setupAccountActorController() {
     const isApproved = action.payload === 'approve';
 
     // Map the external system intent safely to the internal actor machine
-    accountFsmService.eventSignal.dispatch(isApproved ? {type: 'CONFIRM'} : {type: 'ABORT'});
+    accountFsmService.dispatch(isApproved ? {type: 'CONFIRM'} : {type: 'ABORT'});
   });
 }
 ```
@@ -345,7 +345,7 @@ The primary factory utility to initiate a reactive FSM.
 - **`config`**: `StateMachineConfig<TState, TEvent, TContext>` — Declarative system matrix detailing properties and state hooks.
 - **Returns**: `FsmService<TState, TEvent, TContext>` — The assigned runtime manager.
   - `stateSignal`: An `IReadonlySignal` broadcasting atomic state shifts.
-  - `eventSignal`: An `EventSignal` mailbox utilized to feed messages into the processing core.
+  - `dispatch(event)`: Dispatches a typed event to the state machine.
   - `destroy()`: Cleans up local allocations to completely prevent memory retention issues.
 
 ### Key Types

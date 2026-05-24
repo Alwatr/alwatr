@@ -80,23 +80,23 @@ const delay = async () => {
 console.log('start, state: %s', lightMachineService.stateSignal.get().name); // start, state: green
 
 await delay();
-lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: yellow
+lightMachineService.dispatch({type: 'TIMER'}); // state changed: yellow
 await delay();
-lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: red
+lightMachineService.dispatch({type: 'TIMER'}); // state changed: red
 await delay();
-lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: green
+lightMachineService.dispatch({type: 'TIMER'}); // state changed: green
 await delay();
-lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: yellow
+lightMachineService.dispatch({type: 'TIMER'}); // state changed: yellow
 await delay();
-lightMachineService.eventSignal.dispatch({type: 'POWER_LOST'}); // state changed: flashingRed, Power lost!
+lightMachineService.dispatch({type: 'POWER_LOST'}); // state changed: flashingRed, Power lost!
 await delay();
-lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // no state change
+lightMachineService.dispatch({type: 'TIMER'}); // no state change
 await delay();
-lightMachineService.eventSignal.dispatch({type: 'POWER_BACK'}); // state changed: green
+lightMachineService.dispatch({type: 'POWER_BACK'}); // state changed: green
 await delay();
-lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: yellow
+lightMachineService.dispatch({type: 'TIMER'}); // state changed: yellow
 await delay();
-lightMachineService.eventSignal.dispatch({type: 'TIMER'}); // state changed: red
+lightMachineService.dispatch({type: 'TIMER'}); // state changed: red
 await delay();
 
 console.log('end, state: %s', lightMachineService.stateSignal.get().name); // end, state: red

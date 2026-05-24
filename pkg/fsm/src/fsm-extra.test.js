@@ -34,7 +34,7 @@ describe('FsmService — extra coverage', () => {
         },
       });
 
-      fsm.eventSignal.dispatch({type: 'CHECK'});
+      fsm.dispatch({type: 'CHECK'});
       await nextMacrotask();
       expect(fsm.stateSignal.get().name).toBe('medium');
 
@@ -62,7 +62,7 @@ describe('FsmService — extra coverage', () => {
         },
       });
 
-      fsm.eventSignal.dispatch({type: 'CHECK'});
+      fsm.dispatch({type: 'CHECK'});
       await nextMacrotask();
       expect(fsm.stateSignal.get().name).toBe('low');
 
@@ -90,7 +90,7 @@ describe('FsmService — extra coverage', () => {
         },
       });
 
-      fsm.eventSignal.dispatch({type: 'GO'});
+      fsm.dispatch({type: 'GO'});
       await nextMacrotask(20);
 
       expect(log).toEqual(['entry1', 'entry2', 'entry3']);
@@ -113,7 +113,7 @@ describe('FsmService — extra coverage', () => {
         },
       });
 
-      fsm.eventSignal.dispatch({type: 'LEAVE'});
+      fsm.dispatch({type: 'LEAVE'});
       await nextMacrotask(20);
 
       expect(log).toEqual(['exit1', 'exit2']);
@@ -144,7 +144,7 @@ describe('FsmService — extra coverage', () => {
         },
       });
 
-      fsm.eventSignal.dispatch({type: 'NOOP'});
+      fsm.dispatch({type: 'NOOP'});
       await nextMacrotask();
 
       expect(fsm.stateSignal.get().name).toBe('done');
@@ -172,7 +172,7 @@ describe('FsmService — extra coverage', () => {
         },
       });
 
-      fsm.eventSignal.dispatch({type: 'ADD', value: 42});
+      fsm.dispatch({type: 'ADD', value: 42});
       await nextMacrotask();
 
       expect(fsm.stateSignal.get().context.amount).toBe(42);
@@ -199,7 +199,7 @@ describe('FsmService — extra coverage', () => {
         },
       });
 
-      fsm.eventSignal.dispatch({type: 'INCREMENT'});
+      fsm.dispatch({type: 'INCREMENT'});
       await nextMacrotask();
 
       expect(fsm.stateSignal.get().context).toBe(1);
