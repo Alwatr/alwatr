@@ -1,80 +1,101 @@
-# `@alwatr/fsm` — Declarative & Reactive Finite State Machine Engine
+# 🤖 Alwatr FSM
 
-A tiny, production-grade, type-safe, and highly reactive Finite State Machine (FSM) engine tailored for performance-critical TypeScript applications. Built on top of `@alwatr/signal`, it natively supports synchronous state mutations, fire-and-forget side-effects, and persistent storage mechanisms.
+**Declarative, Reactive, and Type-Safe Statechart Engine for High-Performance Applications**
+
+[![npm version](https://img.shields.io/npm/v/@alwatr/fsm?color=4CAF50&label=%40alwatr%2Ffsm)](https://www.npmjs.com/package/@alwatr/fsm)
+[![license](https://img.shields.io/github/license/Alwatr/alwatr?color=4CAF50)](https://github.com/Alwatr/alwatr/blob/next/LICENSE)
+
+> A tiny, production-grade, and highly reactive Finite State Machine (FSM) engine built on top of `@alwatr/signal`. It natively enforces Run-To-Completion (RTC) safety, state persistence, nested transitions, and dynamic state actors—allowing you to model complex user flows as deterministic, bulletproof statecharts.
 
 ---
 
-## Architecture Overview
+## 🎯 What is Alwatr FSM?
 
-The Alwatr FSM architecture bridges classical statechart theory with modern unidirectional data flows. It treats application logic as a deterministic black box that accepts messages and emits discrete, readable state signals.
+`@alwatr/fsm` is a type-safe, lightweight engine that replaces loose, error-prone boolean flags (`isLoading`, `isError`, etc.) with a **declarative, mathematically sound statechart**.
 
+It serves as the core logic engine (the "Brain") for the **Actor Model** within unidirectional data flow architectures. By defining states, transitions, guards, and side-effects in a single structured configuration, you ensure your application can never enter an undefined or invalid state.
+
+---
+
+## 🏗️ Architecture & Actor Model Flow
+
+Alwatr FSM acts as a self-contained Actor. It receives external messages via its private mailbox (the `dispatch` method), evaluates them atomically, mutates its internal context, triggers side-effects, and broadcasts state updates to the rest of the application.
+
+```mermaid
+graph TD
+    %% Styling
+    classDef signal fill:#E1F5FE,stroke:#03A9F4,stroke-width:2px,color:#01579B;
+    classDef core fill:#E8F5E9,stroke:#4CAF50,stroke-width:2px,color:#1B5E20;
+    classDef side fill:#FFF3E0,stroke:#FF9800,stroke-width:2px,color:#E65100;
+    classDef actor fill:#F3E5F5,stroke:#9C27B0,stroke-width:2px,color:#4A148C;
+
+    Mailbox[dispatch Event] -->|Inbound Queue| Queue[Run-to-Completion Loop]
+
+    subgraph Engine ["FsmService (Atomic Evaluation)"]
+        Queue -->|Evaluate Guard Predicates| Guards{Guard Met?}
+        Guards -->|Yes| Transition[Apply Transition]
+        Guards -->|No| Ignored[Ignore Event]
+
+        Transition -->|1. Run Exit Effects| Exit[State Exit Effects]
+        Transition -->|2. Pure Assigner Mutation| Context[(Compute Next Context)]
+        Transition -->|3. Run Entry Effects| Entry[State Entry Effects]
+        Transition -->|4. Update stateSignal| Sig[State Signal Update]
+        Transition -->|5. Spawn State Actors| Spawn[State Actors Active]
+    end
+
+    Sig -->|Reactivity| UI[View Layer / Subscribers]
+    Spawn -->|Async Actions| Mailbox
+
+    class Sig,UI signal;
+    class Queue,Guards,Transition,Context core;
+    class Exit,Entry side;
+    class Spawn actor;
 ```
-┌────────────────────────────────────────────────────────┐
-│                     Alwatr Actor Model                 │
-│                                                        │
-│  Global Flux Bus (actionService) ──► Input Controller  │
-│                                       │                │
-│                                       ▼                │
-│  ┌──────────────────────────────────────────────────┐  │
-│  │ FsmService (The Actor Brain)                     │  │
-│  │                                                  │  │
-│  │   Event Mailbox (dispatch)                       │  │
-│  │        │                                         │  │
-│  │        ▼                                         │  │
-│  │   Transition Evaluator (Atomic / RTC)            │  │
-│  │        │                                         │  │
-│  │        ├──► Assigner ──► State/Context           │  │
-│  │        │                                         │  │
-│  │        └──► Entry/Exit Effects (Fire-Forget)     │  │
-│  │                  │                               │  │
-│  └──────────────────┼───────────────────────────────┘  │
-│                     │                                  │
-│                     ▼                                  │
-│  Output Bridge (Effects) ──► Global Flux Bus           │
-└────────────────────────────────────────────────────────┘
-```
 
 ---
 
-## Core Philosophy
+## 🛡️ Core Philosophy
 
-- **Declarative Logic Formulation**: Define the entire system topology—states, transitions, guard predicates, mutations, and asynchronous jobs—inside a unified, highly scannable configuration matrix.
-- **Type-Safe by Design**: Leveraging intense TypeScript inference to validate event payloads, contextual mutations, and conditional flows at compile-time.
-- **Run-to-Completion (RTC) Safety**: Processes every dispatched event atomically. Concurrent events are queued and evaluated sequentially to completely eliminate race conditions.
-- **Fault Resiliency**: User-defined functions (`condition`, `assigner`, `effect`) are safely executed inside guarded boundaries. Exceptions are caught and captured via internal loggers without compromising machine integrity.
-
----
-
-## Core Concepts & Glossary
-
-| Term           | Domain Scope           | Description                                                                                                         |
-| :------------- | :--------------------- | :------------------------------------------------------------------------------------------------------------------ |
-| **State**      | Finite                 | The current discrete behavioral mode of the system (e.g., `'idle'`, `'processing'`).                                |
-| **Context**    | Infinite               | The extended quantitative state value containing dynamic domain data (can be any type, e.g., an object `{ retries: 0 }` or a primitive). |
-| **Event**      | Message                | A structured payload containing a unique discriminator `type` string sent to trigger a state evaluation.            |
-| **Transition** | Structural Rule        | A predefined path establishing how the machine moves from a source state to a target state upon receiving an event. |
-| **Assigner**   | Pure Mutation          | A synchronous, deterministic function that updates a slice of the machine's extended `context`.                     |
-| **Effect**     | Imperative Side-Effect | A block of logic (sync or async fire-and-forget) executed upon entering or exiting a given finite state.             |
-| **Actor**      | Async Lifecycle        | An asynchronous lifecycle process spawned upon entering a state. It can dispatch events back using `dispatch(event)` and return a synchronous cleanup/destruction function. |
-| **Guard**      | Guard Predicate        | A boolean evaluator that must pass (`true`) for a transition branch to be authorized.                               |
+- **Declarative Topology**: Describe your entire state machine logic in a single configuration matrix. Avoid nested `if/else` checks and scattered state variables.
+- **Run-To-Completion (RTC)**: Transitions are evaluated synchronously in microtasks. Concurrent inputs are queued and evaluated sequentially to prevent state-sync bugs and race conditions.
+- **Deep Compile-Time Safety**: Leverage TypeScript's advanced type inference to validate event payloads, contextual mutations, and conditional transitions at build time.
+- **Resilient & Guarded Boundaries**: Assigner, guard, and effect closures run inside try/catch blocks. If a user function throws an error, the machine catches it, logs a diagnostic accident, and safely reverts context updates.
 
 ---
 
-## Installation
+## 🧠 Glossary
+
+| Term           | Domain Scope    | Description                                                                                               |
+| :------------- | :-------------- | :-------------------------------------------------------------------------------------------------------- |
+| **State**      | Finite          | A discrete behavioral mode of the system (e.g., `'idle'`, `'uploading'`).                                 |
+| **Context**    | Infinite        | The extended quantitative state holding quantitative data (e.g., `{ retries: 0 }`).                       |
+| **Event**      | Message         | An object with a unique `type` dispatched to trigger state machine evaluation.                            |
+| **Transition** | Structural Rule | A predefined path establishing how the machine moves from state A to B on receiving an event.             |
+| **Assigner**   | Pure Mutation   | A synchronous, deterministic function that updates a slice of the machine's extended `context`.           |
+| **Effect**     | Side-Effect     | A fire-and-forget synchronous or asynchronous side-effect run on entering or leaving a state.             |
+| **Actor**      | Spawned Process | An async lifecycle process spawned on state entry that can dispatch events back and runs cleanup on exit. |
+| **Guard**      | Gatekeeper      | A boolean evaluator that must return `true` for a transition branch to be authorized.                     |
+
+---
+
+## 📦 Installation
 
 ```bash
-npm i @alwatr/fsm
+# npm
+npm install @alwatr/fsm
+
+# bun
+bun add @alwatr/fsm
 ```
 
 ---
 
-## API & Usage Blueprint
+## 🚀 Quick Start Blueprint
 
-### 1. Concrete Type Instantiation
-
-Always explicitly define your machine parameters to ensure absolute compile-time validation.
+### 1. Define Typed Schemas
 
 ```typescript
+// types.ts
 import type {MachineEvent} from '@alwatr/fsm';
 
 export type FileState = 'idle' | 'uploading' | 'success' | 'failed';
@@ -93,18 +114,13 @@ export type FileEvent =
   | {type: 'RETRY'};
 ```
 
-### 2. Declarative Machine Configuration
-
-Configure your state-chart seamlessly using inline functional primitives.
+### 2. Configure the State Machine
 
 ```typescript
+// config.ts
 import type {StateMachineConfig} from '@alwatr/fsm';
 import type {FileState, FileEvent, FileContext} from './types.js';
 
-/**
- * @context AI: Configuration model detailing the file upload lifecycle.
- * Utilizes direct functional binding to balance KISS principles with reactive UDF execution.
- */
 export const fileUploadConfig: StateMachineConfig<FileState, FileEvent, FileContext> = {
   name: 'file-upload-lifecycle',
   initial: 'idle',
@@ -114,19 +130,18 @@ export const fileUploadConfig: StateMachineConfig<FileState, FileEvent, FileCont
       on: {
         START_UPLOAD: {
           target: 'uploading',
-          assigners: [({event}) => ({fileId: event.fileId, progress: 0, errorMessage: null})], // Pure mutation
+          // Pure assigner updates context slice
+          assigners: [({event}) => ({fileId: event.fileId, progress: 0, errorMessage: null})],
         },
       },
     },
     uploading: {
       on: {
         PROGRESS_UPDATE: {
-          // Omission of 'target' signifies an internal transition: State remains unchanged, context updates.
+          // No 'target' means an internal transition: context changes, state remains 'uploading'
           assigners: [({event}) => ({progress: event.percent})],
         },
-        UPLOAD_SUCCESS: {
-          target: 'success',
-        },
+        UPLOAD_SUCCESS: {target: 'success'},
         UPLOAD_FAILURE: {
           target: 'failed',
           assigners: [({event}) => ({errorMessage: event.error})],
@@ -137,7 +152,7 @@ export const fileUploadConfig: StateMachineConfig<FileState, FileEvent, FileCont
       on: {
         RETRY: {
           target: 'uploading',
-          guard: ({context}) => context.fileId !== null, // Structural Guard Gate
+          guard: ({context}) => context.fileId !== null, // Guard evaluates transition authorization
         },
       },
     },
@@ -146,34 +161,33 @@ export const fileUploadConfig: StateMachineConfig<FileState, FileEvent, FileCont
 };
 ```
 
-### 3. Service Allocation via the Facade Layer
-
-Instantiate your decoupled engine safely using the standard factory interface.
+### 3. Initialize & Use
 
 ```typescript
+// main.ts
 import {createFsmService} from '@alwatr/fsm';
 import {fileUploadConfig} from './config.js';
 
-// AI Note: The facade allocates memory-only signals or persistent signals seamlessly based on configuration bounds.
+// Instantiate the FSM service using the factory function
 export const fileUploadService = createFsmService(fileUploadConfig);
 
-// Subscribe to atomic state changes across the application view layer
-fileUploadService.stateSignal.subscribe((machineState) => {
-  console.log(`Current State Name: ${machineState.name}`);
-  console.log(`Current Context Data:`, machineState.context);
+// Subscribe to state and context changes (fine-grained reactivity)
+fileUploadService.stateSignal.subscribe((state) => {
+  console.log(`Current FSM State: ${state.name}`);
+  console.log(`Context Progress: ${state.context.progress}%`);
 });
 
-// Dispatch typed messages to invoke the execution cycle
-fileUploadService.dispatch({type: 'START_UPLOAD', fileId: 'doc_991'});
+// Dispatch events into the machine mailbox
+fileUploadService.dispatch({type: 'START_UPLOAD', fileId: 'doc_102'});
 ```
 
 ---
 
-## Advanced Features
+## ⚡ Advanced Features
 
-### 1. State Persistence
+### 1. Local / Session State Persistence
 
-You can seamlessly persist the state machine's state (both the finite state name and the extended context) in `localStorage` by adding the `persistent` configuration object.
+Make your state machine crash-resilient by syncing both state and context automatically with `localStorage` or `sessionStorage`.
 
 ```typescript
 export const fileUploadConfig: StateMachineConfig<FileState, FileEvent, FileContext> = {
@@ -181,8 +195,8 @@ export const fileUploadConfig: StateMachineConfig<FileState, FileEvent, FileCont
   initial: 'idle',
   context: {fileId: null, progress: 0, errorMessage: null},
   persistent: {
-    schemaVersion: 1, // Must be incremented if the context shape changes
-    storageKey: 'file-upload-state', // Optional. Defaults to `config.name`
+    schemaVersion: 1, // Automatic clear and reset if version bumps
+    storageKey: 'file-upload-state', // LocalStorage item key
   },
   states: {
     // ...
@@ -190,18 +204,18 @@ export const fileUploadConfig: StateMachineConfig<FileState, FileEvent, FileCont
 };
 ```
 
-### 2. Multiple Transitions (Guards & Fallbacks)
+### 2. Nested Transitions (Guards & Fallbacks)
 
-For any given event in a state, you can specify an array of transitions instead of a single transition. The FSM evaluates the guards in order and executes the first transition whose guard returns `true` (or the first transition without a guard, acting as a fallback).
+You can define an array of transitions for a single event. The engine evaluates guards in order and executes the first valid one. An transition without a guard acts as a fallback.
 
 ```typescript
 states: {
   idle: {
     on: {
-      CHECK: [
-        { target: 'high', guard: ({context}) => context.value > 100 },
-        { target: 'medium', guard: ({context}) => context.value > 5 },
-        { target: 'low' }, // Unconditional fallback
+      VERIFY: [
+        {target: 'high_priority', guard: ({context}) => context.score > 90},
+        {target: 'medium_priority', guard: ({context}) => context.score > 50},
+        {target: 'low_priority'}, // Fallback path
       ],
     },
   },
@@ -231,6 +245,7 @@ states: {
 ### 4. State Actors (Invoked Actors)
 
 State Actors are async lifecycle processes spawned automatically when entering a state. In contrast to **Effects** (which are fire-and-forget synchronous actions), an **Actor**:
+
 1. Is instantiated dynamically upon state entry.
 2. Receives a `dispatch(event)` callback to asynchronously send events back to the parent FSM.
 3. Can return a synchronous cleanup/teardown function that is executed automatically when the FSM exits the state or is destroyed.
@@ -241,43 +256,41 @@ This conforms to XState v5 patterns and is extremely useful for running side-eff
 states: {
   uploading: {
     actors: [
-      ({event, context, dispatch}) => {
-        console.log('Spawning upload progress polling actor...');
-        
+      ({context, dispatch}) => {
+        console.log('Spawning polling actor...');
+
         const intervalId = setInterval(async () => {
           try {
-            const progress = await fetchUploadProgress(context.fileId);
-            if (progress >= 100) {
+            const status = await getStatus(context.fileId);
+            if (status.done) {
               dispatch({type: 'UPLOAD_SUCCESS'});
             } else {
-              dispatch({type: 'PROGRESS_UPDATE', percent: progress});
+              dispatch({type: 'PROGRESS_UPDATE', percent: status.progress});
             }
-          } catch (error) {
-            dispatch({type: 'UPLOAD_FAILURE', error: error.message});
+          } catch (err) {
+            dispatch({type: 'UPLOAD_FAILURE', error: err.message});
           }
         }, 1000);
 
-        // Return a cleanup function to clear resources when leaving 'uploading'
+        // Return a cleanup callback run automatically on state exit
         return () => {
-          console.log('Cleaning up upload progress polling actor...');
+          console.log('Cleaning up polling actor...');
           clearInterval(intervalId);
         };
-      }
+      },
     ],
     on: {
-      PROGRESS_UPDATE: {
-        assigners: [({event}) => ({progress: event.percent})],
-      },
-      UPLOAD_SUCCESS: { target: 'success' },
-      UPLOAD_FAILURE: { target: 'failed' },
-    }
-  }
+      PROGRESS_UPDATE: {assigners: [({event}) => ({progress: event.percent})]},
+      UPLOAD_SUCCESS: {target: 'success'},
+      UPLOAD_FAILURE: {target: 'failed'},
+    },
+  },
 }
 ```
 
 ---
 
-## FSM as an Actor
+## FSM as an Actor Model
 
 In highly scalable architectures, complex user interface elements or backend workflows are best structured using the **Actor Model**. Under this paradigm, every specialized system is treated as an isolated, sovereign entity called an **Actor**.
 
@@ -398,22 +411,37 @@ The primary factory utility to initiate a reactive FSM.
 
 ### Key Types
 
-| Type                       | Description                                                                                  |
-| :------------------------- | :------------------------------------------------------------------------------------------- |
-| **`MachineState<S, C>`**   | Represents the complete state, containing `name: S` and `context: C`.                        |
-| **`MachineEvent<T>`**      | The base interface for events. Must have a `type: T` property.                               |
-| **`StateMachineConfig`**   | The main configuration object defining `initial`, `context`, and `states`.                   |
-| **`FsmPersistenceConfig`** | Configuration options for FSM state persistence (`schemaVersion`, `storageKey`).             |
-| **`Transition`**           | Defines a transition with an optional `target`, `guard`, and `assigners`.                |
-| **`Assigner<E, C>`**       | A synchronous function that returns a partial context object to update context.              |
+| Type                       | Description                                                                                                      |
+| :------------------------- | :--------------------------------------------------------------------------------------------------------------- |
+| **`MachineState<S, C>`**   | Represents the complete state, containing `name: S` and `context: C`.                                            |
+| **`MachineEvent<T>`**      | The base interface for events. Must have a `type: T` property.                                                   |
+| **`StateMachineConfig`**   | The main configuration object defining `initial`, `context`, and `states`.                                       |
+| **`FsmPersistenceConfig`** | Configuration options for FSM state persistence (`schemaVersion`, `storageKey`).                                 |
+| **`Transition`**           | Defines a transition with an optional `target`, `guard`, and `assigners`.                                        |
+| **`Assigner<E, C>`**       | A synchronous function that returns a partial context object to update context.                                  |
 | **`Effect<E, C>`**         | A synchronous or asynchronous fire-and-forget function executed on state entry/exit (returns `Awaitable<void>`). |
-| **`Actor<E, C>`**          | A function spawned on state entry that can call `dispatch(event)` and return a cleanup function. |
-| **`Guard<E, C>`**          | A boolean guard function that must return `true` for a transition branch to be taken.        |
+| **`Actor<E, C>`**          | A function spawned on state entry that can call `dispatch(event)` and return a cleanup function.                 |
+| **`Guard<E, C>`**          | A boolean guard function that must return `true` for a transition branch to be taken.                            |
 
-## Sponsors
+---
 
-The following companies, organizations, and individuals support flux ongoing maintenance and development. Become a Sponsor to get your logo on our README and website.
+## 🏛️ Part of the Alwatr Ecosystem
 
-## Contributing
+`@alwatr/fsm` is part of the **Alwatr Developer Kit**, a monorepo of lightweight TypeScript libraries designed for modularity and performance.
 
-Contributions are welcome! Please read our [contribution guidelines](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) before submitting a pull request.
+- **[@alwatr/flux](https://github.com/Alwatr/alwatr/tree/next/pkg/flux)** — UI and reactive bundle (aggregates signals, actions, and FSM).
+- **[@alwatr/signal](https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/signal)** — Fine-grained reactive signal bus.
+- **[@alwatr/action](https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/action)** — Global event delegation action bus.
+- **[@alwatr/directive](https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/directive)** — Attribute-based DOM directives.
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](https://github.com/Alwatr/alwatr/blob/next/CONTRIBUTING.md).
+
+---
+
+## 📄 License
+
+[MPL-2.0](https://github.com/Alwatr/alwatr/blob/next/LICENSE) © [S. Ali Mihandoost](https://ali.mihandoost.com)
