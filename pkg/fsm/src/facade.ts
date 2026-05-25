@@ -1,4 +1,3 @@
-import type {JsonObject} from '@alwatr/type-helper';
 import {createPersistentStateSignal, createStateSignal} from '@alwatr/signal';
 
 import {FsmService} from './fsm-service.js';
@@ -36,14 +35,14 @@ import type {MachineEvent, MachineState, StateMachineConfig} from './type.js';
  *       on: {
  *         TOGGLE: {
  *           target: 'on',
- *           assigners: [() => ({brightness: 100})],
+ *           assigners: [({context}) => ({...context, brightness: 100})],
  *         },
  *       },
  *     },
  *     on: {
  *       on: {
- *         TOGGLE: {target: 'off', assigners: [() => ({brightness: 0})]},
- *         SET_BRIGHTNESS: {assigners: [(event) => ({brightness: event.level})]},
+ *         TOGGLE: {target: 'off', assigners: [({context}) => ({...context, brightness: 0})]},
+ *         SET_BRIGHTNESS: {assigners: [({context, event}) => ({...context, brightness: event.level})]},
  *       },
  *     },
  *   },
@@ -57,17 +56,19 @@ import type {MachineEvent, MachineState, StateMachineConfig} from './type.js';
  *   console.log(`Light is ${state.name} with brightness ${state.context.brightness}`);
  * });
  *
- * lightService.eventSignal.dispatch({type: 'TOGGLE'}); // Light is on with brightness 100
+ * lightService.dispatch({type: 'TOGGLE'}); // Light is on with brightness 100
  *
- * lightService.eventSignal.dispatch({type: 'SET_BRIGHTNESS', level: 50}); // Light is on with brightness 50
+ * lightService.dispatch({type: 'SET_BRIGHTNESS', level: 50}); // Light is on with brightness 50
  *
  * // 5. Cleanup
  * // lightService.destroy();
  * ```
  */
-export function createFsmService<TState extends string, TEvent extends MachineEvent, TContext extends JsonObject>(
-  config: StateMachineConfig<TState, TEvent, TContext>,
-): FsmService<TState, TEvent, TContext> {
+export function createFsmService<
+  TState extends string,
+  TEvent extends MachineEvent,
+  TContext extends Record<string, unknown> = Record<string, never>,
+>(config: StateMachineConfig<TState, TEvent, TContext>): FsmService<TState, TEvent, TContext> {
   const initialValue: MachineState<TState, TContext> = {
     name: config.initial,
     context: config.context,

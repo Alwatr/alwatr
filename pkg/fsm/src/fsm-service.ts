@@ -1,4 +1,4 @@
-import type {JsonObject, SingleOrArray} from '@alwatr/type-helper';
+import type {SingleOrArray} from '@alwatr/type-helper';
 import {createLogger, type AlwatrLogger} from '@alwatr/logger';
 import {
   createEventSignal,
@@ -8,7 +8,7 @@ import {
   type IReadonlySignal,
 } from '@alwatr/signal';
 
-import type {StateMachineConfig, MachineState, MachineEvent, Transition, Effect, Assigner} from './type.js';
+import type {StateMachineConfig, MachineState, MachineEvent, Transition, Effect, Assigner, Actor} from './type.js';
 
 /**
  * A generic, encapsulated service that creates, runs, and manages a finite state machine.
@@ -19,14 +19,21 @@ import type {StateMachineConfig, MachineState, MachineEvent, Transition, Effect,
  * @template TEvent The union type of all possible events.
  * @template TContext The type of the machine's context (extended state).
  */
-export class FsmService<TState extends string, TEvent extends MachineEvent, TContext extends JsonObject> {
+export class FsmService<
+  TState extends string,
+  TEvent extends MachineEvent,
+  TContext extends Record<string, unknown> = Record<string, never>,
+> {
   protected readonly logger_: AlwatrLogger;
 
-  /** The event signal for sending events to the FSM. */
-  public readonly eventSignal: EventSignal<TEvent>;
+  /** The private event signal for sending events to the FSM. */
+  private readonly eventSignal__: EventSignal<TEvent>;
 
   /** The public, read-only state signal. Subscribe to react to state changes. */
   public readonly stateSignal: IReadonlySignal<MachineState<TState, TContext>>;
+
+  /** The set of cleanup functions for currently active state actors. */
+  private readonly activeActorCleanups__ = new Set<() => void>();
 
   constructor(
     protected readonly config_: StateMachineConfig<TState, TEvent, TContext>,
@@ -38,11 +45,24 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
     this.logger_.logMethodArgs?.('constructor', config_);
 
     this.stateSignal = this.stateSignal__.asReadonly();
-    this.eventSignal = createEventSignal<TEvent>({
+    this.eventSignal__ = createEventSignal<TEvent>({
       name: `fsm-event-${this.config_.name}`,
     });
-    this.eventSignal.subscribe(this.processTransition__.bind(this), {receivePrevious: false});
+    this.eventSignal__.subscribe((event) => this.processTransition__(event), {receivePrevious: false});
+
+    // Execute initial state entry effects and actors.
+    this.start_();
   }
+
+  /**
+   * Dispatches an event to the FSM mailbox.
+   *
+   * @param event The event to process.
+   */
+  public readonly dispatch = (event: TEvent): void => {
+    this.logger_.logMethodArgs?.('dispatch', {event});
+    this.eventSignal__.dispatch(event);
+  };
 
   /**
    * The core FSM logic that processes a single event and transitions the machine to a new state.
@@ -50,7 +70,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
    *
    * @param event The event to process.
    */
-  private async processTransition__(event: TEvent): Promise<void> {
+  private processTransition__(event: TEvent): void {
     const currentState = this.stateSignal__.get();
     this.logger_.logMethodArgs?.('processTransition__', {state: currentState.name, event});
 
@@ -65,10 +85,12 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
     }
 
     const targetStateName = transition.target ?? currentState.name;
+    const isExternalTransition = transition.target !== undefined;
 
-    // 1. Execute exit effects of the current state if transitioning to a new state.
-    if (targetStateName !== currentState.name) {
-      void this.executeEffects__(event, currentState.context, this.config_.states[currentState.name]?.exit);
+    // 1. Execute exit effects and cleanup actors of the current state if it's an external transition.
+    if (isExternalTransition) {
+      this.executeEffects__(event, currentState.context, this.config_.states[currentState.name]?.exit);
+      this.cleanupActors__();
     }
 
     // 2. Apply assigners to compute the next context. This is a pure function.
@@ -83,14 +105,15 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
     // 4. Set the new state, notifying all subscribers.
     this.stateSignal__.set(nextState);
 
-    // 5. Execute entry effects of the new state if a transition occurred.
-    if (nextState.name !== currentState.name) {
-      void this.executeEffects__(event, nextState.context, this.config_.states[nextState.name]?.entry);
+    // 5. Execute entry effects and spawn actors of the new state if it's an external transition.
+    if (isExternalTransition) {
+      this.executeEffects__(event, nextState.context, this.config_.states[nextState.name]?.entry);
+      this.spawnActors__(event, nextState.context, this.config_.states[nextState.name]?.actors);
     }
   }
 
   /**
-   * Finds the first valid transition for the given event and context by evaluating conditions.
+   * Finds the first valid transition for the given event and context by evaluating guards.
    *
    * @param event The triggering event.
    * @param context The current machine context.
@@ -110,32 +133,32 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
 
     if (!transitions) return undefined;
 
-    // Normalize to an array to handle both single and multiple transitions uniformly.
     const transitionsArray = Array.isArray(transitions) ? transitions : [transitions];
 
-    return transitionsArray.find((transition, index) => {
-      if (!transition.condition) return true; // A transition without a condition is always valid.
-
+    for (let index = 0; index < transitionsArray.length; index++) {
+      const transition = transitionsArray[index];
+      if (!transition.guard) return transition;
       try {
-        const conditionMet = transition.condition(event, context);
-        this.logger_.logStep?.('findTransition__', 'check_condition', {
+        const guardMet = transition.guard({event, context});
+        this.logger_.logStep?.('findTransition__', 'check_guard', {
           state: currentStateName,
           eventType: event.type,
           transitionIndex: index,
-          condition: transition.condition.name || 'anonymous',
-          result: conditionMet,
+          guard: transition.guard.name || 'anonymous',
+          result: guardMet,
         });
-        return conditionMet;
+        if (guardMet) return transition;
       } catch (error) {
-        this.logger_.error('findTransition__', 'condition_failed', error, {
+        this.logger_.error('findTransition__', 'guard_failed', error, {
           state: currentStateName,
           eventType: event.type,
           transitionIndex: index,
-          condition: transition.condition.name || 'anonymous',
+          guard: transition.guard.name || 'anonymous',
         });
-        return false; // Treat a failing condition as not met.
       }
-    });
+    }
+
+    return undefined;
   }
 
   /**
@@ -146,30 +169,31 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
    * @param context The context at the time of execution.
    * @param effects A single effect or an array of effects.
    */
-  private async executeEffects__(
+  private executeEffects__(
     event: TEvent,
     context: Readonly<TContext>,
     effects?: SingleOrArray<Effect<TEvent, TContext>>,
-  ): Promise<void> {
+  ): void {
     if (!effects) {
       this.logger_.logMethodArgs?.('executeEffects__//skipped', {count: 0});
       return;
     }
-    const effectsArray: Effect<TEvent, TContext>[] = Array.isArray(effects) ? effects : [effects];
+    const effectsArray = Array.isArray(effects) ? effects : [effects];
 
     this.logger_.logMethodArgs?.('executeEffects__', {count: effectsArray.length});
 
     for (const effect of effectsArray) {
       try {
-        const result = await effect(event, context);
-        // If an effect returns a new event, dispatch it to be processed next.
-        if (result && 'type' in result) {
-          this.logger_.logStep?.('executeEffects__', 'new_event_from_effect', {
-            effect: effect.name || 'anonymous',
-            state: this.stateSignal__.get().name,
-            newEvent: result.type,
+        const result = effect({event, context});
+        if (result instanceof Promise) {
+          result.catch((error) => {
+            this.logger_.error('executeEffects__', 'effect_failed', error, {
+              effect: effect.name || 'anonymous',
+              state: this.stateSignal__.get().name,
+              event,
+              context,
+            });
           });
-          this.eventSignal.dispatch(result);
         }
       } catch (error) {
         this.logger_.error('executeEffects__', 'effect_failed', error, {
@@ -194,7 +218,7 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
    */
   private applyAssigners__(
     event: TEvent,
-    context: Readonly<TContext>,
+    context: TContext,
     assigners?: SingleOrArray<Assigner<TEvent, TContext>>,
   ): TContext {
     if (!assigners) {
@@ -202,27 +226,24 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
       return context;
     }
 
-    const assignersArray: Assigner<TEvent, TContext>[] = Array.isArray(assigners) ? assigners : [assigners];
+    const assignersArray = Array.isArray(assigners) ? assigners : [assigners];
 
     this.logger_.logMethodArgs?.('applyAssigners__', {count: assignersArray.length});
 
     try {
-      // The entire reduce operation is wrapped in a single try/catch block
-      // to ensure atomic updates.
-      return assignersArray.reduce((accContext, assigner) => {
-        const partialUpdate = assigner(event, accContext);
+      let accContext = context;
+      for (const assigner of assignersArray) {
+        const nextContext = assigner({event, context: accContext});
         this.logger_.logMethodFull?.(
           `event.${event.type}.action.${assigner.name || 'anonymous'}`,
           {event, accContext},
-          partialUpdate,
+          nextContext,
         );
-        if (typeof partialUpdate === 'object' && partialUpdate !== null) {
-          // The next assigner receives the updated context from the previous one.
-          return {...accContext, ...partialUpdate};
+        if (nextContext !== undefined && nextContext !== null) {
+          accContext = nextContext;
         }
-        // If an assigner returns nothing, pass the accumulated context along.
-        return accContext;
-      }, context);
+      }
+      return accContext;
     } catch (error) {
       this.logger_.error('applyAssigners__', 'assigner_failed_atomic', error, {
         event,
@@ -234,12 +255,78 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
   }
 
   /**
+   * Starts the FSM by executing the entry effects and spawning the actors
+   * of the initial/current state.
+   */
+  protected start_(): void {
+    if (this.eventSignal__.isDestroyed) return;
+    this.logger_.logMethod?.('start_');
+    const currentState = this.stateSignal__.get();
+    const initEvent = {type: '__init__'} as unknown as TEvent;
+    this.executeEffects__(initEvent, currentState.context, this.config_.states[currentState.name]?.entry);
+    this.spawnActors__(initEvent, currentState.context, this.config_.states[currentState.name]?.actors);
+  }
+
+  /**
+   * Spawns all configured actors for the entered state.
+   */
+  private spawnActors__(
+    event: TEvent,
+    context: Readonly<TContext>,
+    actors?: SingleOrArray<Actor<TEvent, TContext>>,
+  ): void {
+    if (!actors) {
+      this.logger_.logMethodArgs?.('spawnActors__//skipped', {count: 0});
+      return;
+    }
+    const actorsArray = Array.isArray(actors) ? actors : [actors];
+
+    this.logger_.logMethodArgs?.('spawnActors__', {count: actorsArray.length});
+
+    for (const actor of actorsArray) {
+      try {
+        const cleanup = actor({
+          event,
+          context,
+          dispatch: this.dispatch,
+        });
+        if (typeof cleanup === 'function') {
+          this.activeActorCleanups__.add(cleanup);
+        }
+      } catch (error) {
+        this.logger_.error('spawnActors__', 'actor_failed', error, {
+          actor: actor.name || 'anonymous',
+          state: this.stateSignal__.get().name,
+          event,
+          context,
+        });
+      }
+    }
+  }
+
+  /**
+   * Cleans up (destroys) all currently active state actors.
+   */
+  private cleanupActors__(): void {
+    this.logger_.logMethodArgs?.('cleanupActors__', {count: this.activeActorCleanups__.size});
+    for (const cleanup of this.activeActorCleanups__) {
+      try {
+        cleanup();
+      } catch (error) {
+        this.logger_.error('cleanupActors__', 'cleanup_failed', error);
+      }
+    }
+    this.activeActorCleanups__.clear();
+  }
+
+  /**
    * Destroys the service, cleaning up all internal signals and subscriptions
    * to prevent memory leaks.
    */
   public destroy(): void {
     this.logger_.logMethod?.('destroy');
-    this.eventSignal.destroy();
-    this.stateSignal.destroy();
+    this.cleanupActors__();
+    this.eventSignal__.destroy();
+    this.stateSignal__.destroy();
   }
 }

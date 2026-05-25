@@ -112,6 +112,12 @@ actionService.setupDelegation();
 
 // The handler receives the full Action<K> object — payload, context, and meta in one place.
 actionService.on('ui_open_drawer', (action) => openDrawer(action.payload)); // action.payload: string
+
+// Subscribe to multiple action types using an array
+actionService.on(['ui_open_drawer', 'ui_close_drawer'], (action) => {
+  console.log(action.type, action.payload);
+});
+
 actionService.on('ui_add_to_cart', (action) => {
   cartService.add(action.payload.productId, action.payload.qty); // fully typed
   console.log(action.context); // e.g. 'product-list' — from nearest [action-context] ancestor
@@ -302,6 +308,13 @@ actionService.on<K extends keyof ActionRecord>(
   type: K | K[],
   handler: (action: Action<K>) => Awaitable<void>
 ): SubscribeResult;
+
+// Usage:
+// Subscribe to a single action
+actionService.on('ui_open_drawer', (action) => { ... });
+
+// Subscribe to multiple action types
+actionService.on(['ui_open_drawer', 'ui_close_drawer'], (action) => { ... });
 ```
 
 #### `actionService.dispatch(action)`
@@ -310,6 +323,13 @@ Dispatches an action to all subscribers.
 
 ```ts
 actionService.dispatch<K extends keyof ActionRecord>(action: DispatchParam<K>): void;
+
+// Usage:
+// Dispatch a typed action (payload is required)
+actionService.dispatch({type: 'upload_complete', payload: 'file-123'});
+
+// Dispatch a void action (payload can be omitted)
+actionService.dispatch({type: 'auth_expired'});
 ```
 
 #### `actionService.setupDelegation(eventTypes?)`

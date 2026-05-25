@@ -1,4 +1,4 @@
-import type {Awaitable, JsonObject, SingleOrArray} from '@alwatr/type-helper';
+import type {Awaitable, SingleOrArray} from '@alwatr/type-helper';
 import type {SignalConfig} from '@alwatr/signal';
 
 /**
@@ -6,9 +6,9 @@ import type {SignalConfig} from '@alwatr/signal';
  * and its extended state (context).
  *
  * @template TState The union type of the finite state values.
- * @template TContext The type of the context object (extended state).
+ * @template TContext The type of the machine's context (extended state).
  */
-export type MachineState<TState extends string, TContext extends JsonObject> = {
+export type MachineState<TState extends string, TContext extends Record<string, unknown>> = {
   /** The current finite state value. */
   readonly name: TState;
   /** The context (extended state) of the machine, holding quantitative data. */
@@ -30,31 +30,29 @@ export interface MachineEvent<TEventType extends string = string> {
 
 /**
  * Defines an assigner (synchronous action) that updates the context during transitions.
- * It must return a partial context object to merge.
+ * It returns the complete new context object or void/undefined if no changes are made.
  *
  * @template TContext The type of the machine's context.
  * @template TEvent The type of the event that triggered this assigner.
- * @returns A partial context object to be merged into the machine's context.
+ * @returns The complete next context object or void.
  */
-export type Assigner<TEvent extends MachineEvent, TContext extends JsonObject> = (
-  event: Readonly<TEvent>,
-  context: Readonly<TContext>,
-  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-) => Partial<TContext> | void;
+export type Assigner<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (params: {
+  readonly event: Readonly<TEvent>;
+  readonly context: TContext;
+}) => TContext | void;
 
 /**
- * Defines an effect (asynchronous side-effect action) executed on state entry/exit.
- * It can interact with the outside world and can dispatch new events.
+ * Defines an effect (fire-and-forget side-effect action) executed on state entry/exit.
+ * It can interact with the outside world, but does not return new events to trigger transitions.
  *
  * @template TContext The type of the machine's context.
  * @template TEvent The type of the event that triggered this effect.
  * @returns void or a Promise<void>.
  */
-export type Effect<TEvent extends MachineEvent, TContext extends JsonObject> = (
-  event: Readonly<TEvent>,
-  context: Readonly<TContext>,
-  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-) => Awaitable<TEvent | void>;
+export type Effect<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (params: {
+  readonly event: Readonly<TEvent>;
+  readonly context: Readonly<TContext>;
+}) => Awaitable<void>;
 
 /**
  * Defines a conditional guard function for a transition.
@@ -64,24 +62,42 @@ export type Effect<TEvent extends MachineEvent, TContext extends JsonObject> = (
  * @template TEvent The type of the event.
  * @returns `true` if the transition should be taken, `false` otherwise.
  */
-export type Condition<TEvent extends MachineEvent, TContext extends JsonObject> = (
-  event: Readonly<TEvent>,
-  context: Readonly<TContext>,
-) => boolean;
+export type Guard<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (params: {
+  readonly event: Readonly<TEvent>;
+  readonly context: Readonly<TContext>;
+}) => boolean;
+
+/**
+ * Defines an actor (asynchronous lifecycle process) invoked on state entry.
+ * It starts an operation and can send events back to the parent FSM via `dispatch`.
+ * It can return a cleanup function to be called when exiting the state or destroying the machine.
+ *
+ * @template TEvent The union type of all events in the machine.
+ * @template TContext The type of the machine's context.
+ */
+export type Actor<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (params: {
+  readonly event: Readonly<TEvent>;
+  readonly context: Readonly<TContext>;
+  readonly dispatch: (event: TEvent) => void;
+}) => (() => void) | void;
 
 /**
  * Defines a transition for a given state and event. It specifies the target state,
- * actions, and an optional condition.
+ * actions, and an optional guard.
  *
  * @template TState The type of the state.
  * @template TEvent The type of the event.
  * @template TContext The type of the machine's context.
  */
-export interface Transition<TState extends string, TEvent extends MachineEvent, TContext extends JsonObject> {
+export interface Transition<
+  TState extends string,
+  TEvent extends MachineEvent,
+  TContext extends Record<string, unknown>,
+> {
   /** The target state to transition to. If undefined, it's an internal transition. */
   readonly target?: TState;
-  /** A condition function that must return true for the transition to occur. */
-  readonly condition?: Condition<TEvent, TContext>;
+  /** A guard function that must return true for the transition to occur. */
+  readonly guard?: Guard<TEvent, TContext>;
   /** An array of assigners to execute. These update context synchronously. */
   readonly assigners?: SingleOrArray<Assigner<TEvent, TContext>>;
 }
@@ -109,12 +125,12 @@ export interface FsmPersistenceConfig {
  *
  * @template TState The union type of all possible states.
  * @template TEvent The union type of all possible events.
- * @template TContext The type of the context object.
+ * @template TContext The type of the machine's context.
  */
 export interface StateMachineConfig<
   TState extends string,
   TEvent extends MachineEvent,
-  TContext extends JsonObject,
+  TContext extends Record<string, unknown>,
 > extends Pick<SignalConfig, 'name'> {
   /** The initial finite state value. */
   readonly initial: TState;
@@ -136,6 +152,8 @@ export interface StateMachineConfig<
       readonly entry?: SingleOrArray<Effect<TEvent, TContext>>;
       /** An array of side-effect effects to execute upon exiting this state. */
       readonly exit?: SingleOrArray<Effect<TEvent, TContext>>;
+      /** An array of actors to spawn upon entering this state, cleaned up when leaving. */
+      readonly actors?: SingleOrArray<Actor<TEvent, TContext>>;
     };
   };
 }

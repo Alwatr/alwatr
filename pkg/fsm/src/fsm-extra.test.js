@@ -10,83 +10,10 @@ function nextMacrotask(ms = 5) {
 }
 
 describe('FsmService — extra coverage', () => {
-  // ── Effects returning new events (event chaining) ─────────────────────────
-
-  describe('effects returning new events', () => {
-    it('should dispatch a new event returned from an entry effect', async () => {
-      const fsm = createFsmService({
-        name: 'effect-chain-test',
-        initial: 'idle',
-        context: {step: 0},
-        states: {
-          idle: {
-            on: {
-              START: {target: 'loading'},
-            },
-          },
-          loading: {
-            entry: () => ({type: 'AUTO_COMPLETE'}),
-            on: {
-              AUTO_COMPLETE: {
-                target: 'done',
-                assigners: () => ({step: 1}),
-              },
-            },
-          },
-          done: {},
-        },
-      });
-
-      fsm.eventSignal.dispatch({type: 'START'});
-      // Wait for the transition + entry effect + chained event.
-      await nextMacrotask(50);
-
-      const state = fsm.stateSignal.get();
-      expect(state.name).toBe('done');
-      expect(state.context.step).toBe(1);
-
-      fsm.destroy();
-    });
-
-    it('should dispatch a new event returned from an exit effect', async () => {
-      const fsm = createFsmService({
-        name: 'exit-chain-test',
-        initial: 'a',
-        context: {log: ''},
-        states: {
-          a: {
-            exit: () => ({type: 'SIDE_EFFECT'}),
-            on: {
-              GO: {target: 'b'},
-            },
-          },
-          b: {
-            on: {
-              SIDE_EFFECT: {
-                target: 'c',
-                assigners: () => ({log: 'chained'}),
-              },
-            },
-          },
-          c: {},
-        },
-      });
-
-      fsm.eventSignal.dispatch({type: 'GO'});
-      await nextMacrotask(50);
-
-      const state = fsm.stateSignal.get();
-      expect(state.name).toBe('c');
-      expect(state.context.log).toBe('chained');
-
-      fsm.destroy();
-    });
-  });
-
   // ── Multiple transitions (array) ─────────────────────────────────────────
 
   describe('multiple transitions array', () => {
-    it('should evaluate conditions in order and take the first matching', async () => {
+    it('should evaluate guards in order and take the first matching', async () => {
       const fsm = createFsmService({
         name: 'multi-trans-test',
         initial: 'idle',
@@ -95,8 +22,8 @@ describe('FsmService — extra coverage', () => {
           idle: {
             on: {
               CHECK: [
-                {target: 'high', condition: (_e, ctx) => ctx.value > 100},
-                {target: 'medium', condition: (_e, ctx) => ctx.value > 5},
+                {target: 'high', guard: ({context}) => context.value > 100},
+                {target: 'medium', guard: ({context}) => context.value > 5},
                 {target: 'low'},
               ],
             },
@@ -107,14 +34,14 @@ describe('FsmService — extra coverage', () => {
         },
       });
 
-      fsm.eventSignal.dispatch({type: 'CHECK'});
+      fsm.dispatch({type: 'CHECK'});
       await nextMacrotask();
       expect(fsm.stateSignal.get().name).toBe('medium');
 
       fsm.destroy();
     });
 
-    it('should fall through to unconditional transition if all conditions fail', async () => {
+    it('should fall through to unconditional transition if all guards fail', async () => {
       const fsm = createFsmService({
         name: 'fallthrough-test',
         initial: 'idle',
@@ -123,8 +50,8 @@ describe('FsmService — extra coverage', () => {
           idle: {
             on: {
               CHECK: [
-                {target: 'high', condition: (_e, ctx) => ctx.value > 100},
-                {target: 'medium', condition: (_e, ctx) => ctx.value > 50},
+                {target: 'high', guard: ({context}) => context.value > 100},
+                {target: 'medium', guard: ({context}) => context.value > 50},
                 {target: 'low'}, // unconditional fallback
               ],
             },
@@ -135,7 +62,7 @@ describe('FsmService — extra coverage', () => {
         },
       });
 
-      fsm.eventSignal.dispatch({type: 'CHECK'});
+      fsm.dispatch({type: 'CHECK'});
       await nextMacrotask();
       expect(fsm.stateSignal.get().name).toBe('low');
 
@@ -163,7 +90,7 @@ describe('FsmService — extra coverage', () => {
         },
       });
 
-      fsm.eventSignal.dispatch({type: 'GO'});
+      fsm.dispatch({type: 'GO'});
       await nextMacrotask(20);
 
       expect(log).toEqual(['entry1', 'entry2', 'entry3']);
@@ -186,7 +113,7 @@ describe('FsmService — extra coverage', () => {
         },
       });
 
-      fsm.eventSignal.dispatch({type: 'LEAVE'});
+      fsm.dispatch({type: 'LEAVE'});
       await nextMacrotask(20);
 
       expect(log).toEqual(['exit1', 'exit2']);
@@ -217,7 +144,7 @@ describe('FsmService — extra coverage', () => {
         },
       });
 
-      fsm.eventSignal.dispatch({type: 'NOOP'});
+      fsm.dispatch({type: 'NOOP'});
       await nextMacrotask();
 
       expect(fsm.stateSignal.get().name).toBe('done');
@@ -238,18 +165,152 @@ describe('FsmService — extra coverage', () => {
           idle: {
             on: {
               ADD: {
-                assigners: (event) => ({amount: event.value}),
+                assigners: ({context, event}) => ({...context, amount: event.value}),
               },
             },
           },
         },
       });
 
-      fsm.eventSignal.dispatch({type: 'ADD', value: 42});
+      fsm.dispatch({type: 'ADD', value: 42});
       await nextMacrotask();
 
       expect(fsm.stateSignal.get().context.amount).toBe(42);
       fsm.destroy();
     });
   });
+
+
+
+  // ── FSM Actors (Invoked Actors) ───────────────────────────────────────────
+
+  describe('FSM Actors', () => {
+    it('should spawn actors on startup and support dispatch', async () => {
+      const actorCleanup = jest.fn();
+      const actorMock = jest.fn(({dispatch}) => {
+        // Asynchronously dispatch back
+        setTimeout(() => dispatch({type: 'RESOLVE'}), 10);
+        return actorCleanup;
+      });
+
+      const fsm = createFsmService({
+        name: 'actor-startup-test',
+        initial: 'idle',
+        context: {},
+        states: {
+          idle: {
+            actors: actorMock,
+            on: {
+              RESOLVE: {target: 'success'},
+            },
+          },
+          success: {},
+        },
+      });
+
+      // Wait for constructor microtask to start FSM (which spawns the actor)
+      await nextMacrotask(5);
+      expect(actorMock).toHaveBeenCalledTimes(1);
+
+      // Wait for the actor async timeout
+      await nextMacrotask(20);
+      expect(fsm.stateSignal.get().name).toBe('success');
+
+      // Since we transitioned to success, the idle state actor should be cleaned up
+      expect(actorCleanup).toHaveBeenCalledTimes(1);
+
+      fsm.destroy();
+    });
+
+    it('should cleanup active actors when FSM is destroyed', async () => {
+      const actorCleanup = jest.fn();
+      const fsm = createFsmService({
+        name: 'actor-destroy-test',
+        initial: 'idle',
+        context: {},
+        states: {
+          idle: {
+            actors: () => actorCleanup,
+          },
+        },
+      });
+
+      await nextMacrotask(5);
+      expect(actorCleanup).not.toHaveBeenCalled();
+
+      fsm.destroy();
+      expect(actorCleanup).toHaveBeenCalledTimes(1);
+    });
+
+    it('should spawn new actors and cleanup previous state actors on transition', async () => {
+      const idleCleanup = jest.fn();
+      const activeCleanup = jest.fn();
+      const activeActor = jest.fn(() => activeCleanup);
+
+      const fsm = createFsmService({
+        name: 'actor-transition-test',
+        initial: 'idle',
+        context: {},
+        states: {
+          idle: {
+            actors: () => idleCleanup,
+            on: {
+              GO: {target: 'active'},
+            },
+          },
+          active: {
+            actors: activeActor,
+          },
+        },
+      });
+
+      await nextMacrotask(5);
+      expect(idleCleanup).not.toHaveBeenCalled();
+
+      fsm.dispatch({type: 'GO'});
+      await nextMacrotask(5);
+
+      // Transition happened: idle actor is cleaned up, active actor is spawned
+      expect(idleCleanup).toHaveBeenCalledTimes(1);
+      expect(activeActor).toHaveBeenCalledTimes(1);
+      expect(activeCleanup).not.toHaveBeenCalled();
+
+      fsm.destroy();
+      expect(activeCleanup).toHaveBeenCalledTimes(1);
+    });
+
+    it('should cleanup and spawn actor again on self-transition', async () => {
+      const activeCleanup = jest.fn();
+      const activeActor = jest.fn(() => activeCleanup);
+
+      const fsm = createFsmService({
+        name: 'actor-self-transition-test',
+        initial: 'active',
+        context: {},
+        states: {
+          active: {
+            actors: activeActor,
+            on: {
+              SELF: {target: 'active'},
+            },
+          },
+        },
+      });
+
+      await nextMacrotask(5);
+      expect(activeActor).toHaveBeenCalledTimes(1);
+      expect(activeCleanup).not.toHaveBeenCalled();
+
+      fsm.dispatch({type: 'SELF'});
+      await nextMacrotask(5);
+
+      // Self-transition happened: active actor is cleaned up, then active actor is spawned again
+      expect(activeCleanup).toHaveBeenCalledTimes(1);
+      expect(activeActor).toHaveBeenCalledTimes(2);
+
+      fsm.destroy();
+      expect(activeCleanup).toHaveBeenCalledTimes(2); // cleaned up once more on destroy
+    });
+  });
 });
+
