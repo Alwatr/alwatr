@@ -168,11 +168,11 @@ const fetchMachineConfig: StateMachineConfig<FetchState, FetchEvent, FetchContex
       on: {
         RESOLVE: {
           target: 'success',
-          assigners: [(event) => ({user: event.user})], // Update context
+          assigners: [({event, context}) => ({...context, user: event.user})], // Update context
         },
         REJECT: {
           target: 'error',
-          assigners: [(event) => ({error: event.error})], // Update context
+          assigners: [({event, context}) => ({...context, error: event.error})], // Update context
         },
       },
     },
@@ -187,8 +187,8 @@ const fetchMachineConfig: StateMachineConfig<FetchState, FetchEvent, FetchContex
           target: 'pending',
           // A transition can be protected by a condition.
           // یک گذار می‌تواند توسط یک شرط محافظت شود.
-          condition: (event, context) => context.retries < 3,
-          assigners: [(event, context) => ({retries: context.retries + 1})],
+          condition: ({context}) => context.retries < 3,
+          assigners: [({context}) => ({...context, retries: context.retries + 1})],
         },
       },
     },

@@ -131,7 +131,7 @@ export const fileUploadConfig: StateMachineConfig<FileState, FileEvent, FileCont
         START_UPLOAD: {
           target: 'uploading',
           // Pure assigner updates context slice
-          assigners: [({event}) => ({fileId: event.fileId, progress: 0, errorMessage: null})],
+          assigners: [({context, event}) => ({...context, fileId: event.fileId, progress: 0, errorMessage: null})],
         },
       },
     },
@@ -139,12 +139,12 @@ export const fileUploadConfig: StateMachineConfig<FileState, FileEvent, FileCont
       on: {
         PROGRESS_UPDATE: {
           // No 'target' means an internal transition: context changes, state remains 'uploading'
-          assigners: [({event}) => ({progress: event.percent})],
+          assigners: [({context, event}) => ({...context, progress: event.percent})],
         },
         UPLOAD_SUCCESS: {target: 'success'},
         UPLOAD_FAILURE: {
           target: 'failed',
-          assigners: [({event}) => ({errorMessage: event.error})],
+          assigners: [({context, event}) => ({...context, errorMessage: event.error})],
         },
       },
     },
@@ -285,7 +285,7 @@ states: {
       },
     ],
     on: {
-      PROGRESS_UPDATE: {assigners: [({event}) => ({progress: event.percent})]},
+      PROGRESS_UPDATE: {assigners: [({context, event}) => ({...context, progress: event.percent})]},
       UPLOAD_SUCCESS: {target: 'success'},
       UPLOAD_FAILURE: {target: 'failed'},
     },
@@ -437,7 +437,7 @@ The primary factory utility to initiate a reactive FSM.
 | **`StateMachineConfig`**   | The main configuration object defining `initial`, `context`, and `states`.                                       |
 | **`FsmPersistenceConfig`** | Configuration options for FSM state persistence (`schemaVersion`, `storageKey`).                                 |
 | **`Transition`**           | Defines a transition with an optional `target`, `guard`, and `assigners`.                                        |
-| **`Assigner<E, C>`**       | A synchronous function that returns a partial context object to update context.                                  |
+| **`Assigner<E, C>`**       | A synchronous function that returns the next context object or void (if mutated directly).                       |
 | **`Effect<E, C>`**         | A synchronous or asynchronous fire-and-forget function executed on state entry/exit (returns `Awaitable<void>`). |
 | **`Actor<E, C>`**          | A function spawned on state entry that can call `dispatch(event)` and return a cleanup function.                 |
 | **`Guard<E, C>`**          | A boolean guard function that must return `true` for a transition branch to be taken.                            |
