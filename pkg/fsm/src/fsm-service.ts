@@ -1,5 +1,4 @@
 import type {SingleOrArray} from '@alwatr/type-helper';
-import {delay} from '@alwatr/delay';
 import {createLogger, type AlwatrLogger} from '@alwatr/logger';
 import {
   createEventSignal,
@@ -47,8 +46,8 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
     });
     this.eventSignal__.subscribe(this.processTransition__.bind(this), {receivePrevious: false});
 
-    // Schedule initial state entry effects and actors.
-    delay.nextMicrotask().then(() => this.start_());
+    // Execute initial state entry effects and actors.
+    this.start_();
   }
 
   /**
@@ -180,7 +179,17 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
 
     for (const effect of effectsArray) {
       try {
-        effect({event, context});
+        const result = effect({event, context});
+        if (result instanceof Promise) {
+          result.catch((error) => {
+            this.logger_.error('executeEffects__', 'effect_failed', error, {
+              effect: effect.name || 'anonymous',
+              state: this.stateSignal__.get().name,
+              event,
+              context,
+            });
+          });
+        }
       } catch (error) {
         this.logger_.error('executeEffects__', 'effect_failed', error, {
           effect: effect.name || 'anonymous',
