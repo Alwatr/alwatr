@@ -139,12 +139,12 @@ export const fileUploadConfig: StateMachineConfig<FileState, FileEvent, FileCont
       on: {
         PROGRESS_UPDATE: {
           // No 'target' means an internal transition: context changes, state remains 'uploading'
-          assigners: [({event}) => ({progress: event.percent})],
+          assigners: [({context, event}) => ({...context, progress: event.percent})],
         },
         UPLOAD_SUCCESS: {target: 'success'},
         UPLOAD_FAILURE: {
           target: 'failed',
-          assigners: [({event}) => ({errorMessage: event.error})],
+          assigners: [({context, event}) => ({...context, errorMessage: event.error})],
         },
       },
     },
@@ -285,7 +285,7 @@ states: {
       },
     ],
     on: {
-      PROGRESS_UPDATE: {assigners: [({event}) => ({progress: event.percent})]},
+      PROGRESS_UPDATE: {assigners: [({context, event}) => ({...context, progress: event.percent})]},
       UPLOAD_SUCCESS: {target: 'success'},
       UPLOAD_FAILURE: {target: 'failed'},
     },

@@ -401,17 +401,17 @@ const fetchConfig: StateMachineConfig<FetchState, FetchEvent, FetchContext> = {
     },
     loading: {
       on: {
-        SUCCESS: { target: 'success', assigners: [() => ({retries: 0})] },
+        SUCCESS: { target: 'success', assigners: [({context}) => ({...context, retries: 0})] },
         ERROR: [
           // Guard evaluates condition; first matching transition branch is chosen
-          { target: 'loading', guard: ({context}) => context.retries < 3, assigners: [({context}) => ({retries: context.retries + 1})] },
+          { target: 'loading', guard: ({context}) => context.retries < 3, assigners: [({context}) => ({...context, retries: context.retries + 1})] },
           { target: 'failed' }
         ],
       },
     },
     success: {},
     failed: {
-      on: { FETCH: { target: 'loading', assigners: [() => ({retries: 0})] } },
+      on: { FETCH: { target: 'loading', assigners: [({context}) => ({...context, retries: 0})] } },
     },
   },
 };
