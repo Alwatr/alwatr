@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.28.0](https://github.com/Alwatr/alwatr/compare/v9.27.0...v9.28.0) (2026-05-25)
+
+### ✨ Features
+
+* **Flux:** integrate @alwatr/fsm for enhanced state management and update dependencies ([eaa35d6](https://github.com/Alwatr/alwatr/commit/eaa35d607614b22e750574dc2461f8b81796832c))
+
+### 🐛 Bug Fixes
+
+* **FSM:** update assigners to maintain context in state transitions ([7623964](https://github.com/Alwatr/alwatr/commit/76239641591a410c111b90205b01bf222dc13eaf))
+
 ## [9.27.0](https://github.com/Alwatr/alwatr/compare/v9.26.0...v9.27.0) (2026-05-23)
 
 **Note:** Version bump only for package @alwatr/flux

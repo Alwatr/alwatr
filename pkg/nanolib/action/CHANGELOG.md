@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.28.0](https://github.com/Alwatr/alwatr/compare/v9.27.0...v9.28.0) (2026-05-25)
+
+**Note:** Version bump only for package @alwatr/action
+
 ## [9.27.0](https://github.com/Alwatr/alwatr/compare/v9.26.0...v9.27.0) (2026-05-23)
 
 ### 🐛 Bug Fixes

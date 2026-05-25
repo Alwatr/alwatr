@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.28.0](https://github.com/Alwatr/alwatr/compare/v9.27.0...v9.28.0) (2026-05-25)
+
+### ✨ Features
+
+* **Flux:** integrate @alwatr/fsm for enhanced state management and update dependencies ([eaa35d6](https://github.com/Alwatr/alwatr/commit/eaa35d607614b22e750574dc2461f8b81796832c))
+* **FSM:** add support for state actors with lifecycle management and update documentation ([40fc8da](https://github.com/Alwatr/alwatr/commit/40fc8da710b044af9435e5a87e92f1984dd5e9ea))
+* **FSM:** enhance FSM context handling and add support for primitive types in context ([90e7c7c](https://github.com/Alwatr/alwatr/commit/90e7c7cfa30ade34a59a4162533818b53edfdf6e))
+* **FSM:** enhance type definitions for context and improve context handling in FsmService ([f43906f](https://github.com/Alwatr/alwatr/commit/f43906f02e8accaa8c5264c274f990c52bc4492a))
+* **FSM:** improve initial state execution and enhance error handling in effects ([72b08fd](https://github.com/Alwatr/alwatr/commit/72b08fd9aca563e7bbd04d8bc1ca104b8471572b))
+* **FSM:** refine Assigner type to conditionally return Partial<TContext> or TContext based on context structure ([78f6d4a](https://github.com/Alwatr/alwatr/commit/78f6d4a969f2101029b3db0857199514c6fe6dc4))
+* **FSM:** refine transition handling to differentiate between internal and external transitions ([0b73b9b](https://github.com/Alwatr/alwatr/commit/0b73b9bb9aab27d2c58c1380d6d612506893dd5c))
+* **FSM:** replace 'condition' with 'guard' in transitions and update related documentation ([d31dd00](https://github.com/Alwatr/alwatr/commit/d31dd0037e88c8798b87a891339ec64226a3e73e))
+* **FSM:** replace 'eventSignal.dispatch' with 'dispatch' method for event handling consistency ([82bc75d](https://github.com/Alwatr/alwatr/commit/82bc75d84998455dfbdb3132fe0ac81436d50eae))
+* **FSM:** replace 'sendBack' with 'dispatch' for event handling consistency in actors and documentation ([10b91b1](https://github.com/Alwatr/alwatr/commit/10b91b1e857975cac0a60691660dcd0c92127e3b))
+* **FSM:** set default type for TContext in createFsmService and FsmService ([93095c3](https://github.com/Alwatr/alwatr/commit/93095c337ba73491036451ea6aa748e574defdc5))
+* **FSM:** update README for clarity on side-effects and remove event chaining tests ([5c9a9d0](https://github.com/Alwatr/alwatr/commit/5c9a9d093f2d310eb511fdbe6d3389747f0403f3))
+
+### 🐛 Bug Fixes
+
+* **FSM:** correct stateSignal property name in destroy method ([1c469e4](https://github.com/Alwatr/alwatr/commit/1c469e4fa7a021996968ab2706eb6b95b91c489d))
+* **FSM:** refactor applyAssigners__ to use for-of loop for better readability and atomic updates ([392dbff](https://github.com/Alwatr/alwatr/commit/392dbff97c7b16655656f7f80a6ea82431b01186))
+* **FSM:** refactor event subscription and improve context handling in applyAssigners__ ([19263eb](https://github.com/Alwatr/alwatr/commit/19263ebf3a07227ca1b86d11477012ac07c2a416))
+* **FSM:** remove microtask scheduling comment from start_ method ([192c410](https://github.com/Alwatr/alwatr/commit/192c410804c4b94f84dca246676d54135a3883ee))
+* **FSM:** update Assigner type to allow mutable context ([f7e44f2](https://github.com/Alwatr/alwatr/commit/f7e44f2a03c7fe330db7156f02a5067ed821b2c4))
+* **FSM:** update assigners to include context in state transitions ([8314867](https://github.com/Alwatr/alwatr/commit/83148678513fd28ae0b2e3bfd1d34c33ea023f81))
+* **FSM:** update assigners to maintain context in state transitions ([7623964](https://github.com/Alwatr/alwatr/commit/76239641591a410c111b90205b01bf222dc13eaf))
+* **FSM:** update assigners to use complete context object and improve documentation ([39fb862](https://github.com/Alwatr/alwatr/commit/39fb862a3ee3b4840ece1a3e976d88e9b2e51e59))
+
+### 🔨 Code Refactoring
+
+* **FSM:** remove redundant initial state entry effects execution ([0257635](https://github.com/Alwatr/alwatr/commit/0257635307f321dd2cafbdf89c2b91afaa4dc38e))
+
+### 🧹 Miscellaneous Chores
+
+* **FSM:** comment out example usage in createFsmService for clarity ([5c85d10](https://github.com/Alwatr/alwatr/commit/5c85d10d3ca99b118e597e7d1dc415216f2bf859))
+
+### 🔗 Dependencies update
+
+* **FSM:** remove unnecessary dependency on @alwatr/delay from package.json ([184aa9f](https://github.com/Alwatr/alwatr/commit/184aa9f9d543e65a4d6176a941d454476ca087d4))
+
 ## [9.27.0](https://github.com/Alwatr/alwatr/compare/v9.26.0...v9.27.0) (2026-05-23)
 
 ### 🐛 Bug Fixes
