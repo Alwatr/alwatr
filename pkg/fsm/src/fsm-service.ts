@@ -48,8 +48,9 @@ export class FsmService<
     this.eventSignal__ = createEventSignal<TEvent>({
       name: `fsm-event-${this.config_.name}`,
     });
-    this.eventSignal__.subscribe(this.processTransition__.bind(this), {receivePrevious: false});
+    this.eventSignal__.subscribe((event) => this.processTransition__(event), {receivePrevious: false});
 
+    // Execute initial state entry effects and actors.
     this.start_();
   }
 
@@ -58,10 +59,10 @@ export class FsmService<
    *
    * @param event The event to process.
    */
-  public dispatch(event: TEvent): void {
+  public readonly dispatch = (event: TEvent): void => {
     this.logger_.logMethodArgs?.('dispatch', {event});
     this.eventSignal__.dispatch(event);
-  }
+  };
 
   /**
    * The core FSM logic that processes a single event and transitions the machine to a new state.
@@ -132,12 +133,11 @@ export class FsmService<
 
     if (!transitions) return undefined;
 
-    // Normalize to an array to handle both single and multiple transitions uniformly.
     const transitionsArray = Array.isArray(transitions) ? transitions : [transitions];
 
-    return transitionsArray.find((transition, index) => {
-      if (!transition.guard) return true; // A transition without a guard is always valid.
-
+    for (let index = 0; index < transitionsArray.length; index++) {
+      const transition = transitionsArray[index];
+      if (!transition.guard) return transition;
       try {
         const guardMet = transition.guard({event, context});
         this.logger_.logStep?.('findTransition__', 'check_guard', {
@@ -147,7 +147,7 @@ export class FsmService<
           guard: transition.guard.name || 'anonymous',
           result: guardMet,
         });
-        return guardMet;
+        if (guardMet) return transition;
       } catch (error) {
         this.logger_.error('findTransition__', 'guard_failed', error, {
           state: currentStateName,
@@ -155,9 +155,10 @@ export class FsmService<
           transitionIndex: index,
           guard: transition.guard.name || 'anonymous',
         });
-        return false; // Treat a failing guard as not met.
       }
-    });
+    }
+
+    return undefined;
   }
 
   /**
@@ -177,7 +178,7 @@ export class FsmService<
       this.logger_.logMethodArgs?.('executeEffects__//skipped', {count: 0});
       return;
     }
-    const effectsArray: Effect<TEvent, TContext>[] = Array.isArray(effects) ? effects : [effects];
+    const effectsArray = Array.isArray(effects) ? effects : [effects];
 
     this.logger_.logMethodArgs?.('executeEffects__', {count: effectsArray.length});
 
@@ -217,7 +218,7 @@ export class FsmService<
    */
   private applyAssigners__(
     event: TEvent,
-    context: Readonly<TContext>,
+    context: TContext,
     assigners?: SingleOrArray<Assigner<TEvent, TContext>>,
   ): TContext {
     if (!assigners) {
@@ -225,7 +226,7 @@ export class FsmService<
       return context;
     }
 
-    const assignersArray: Assigner<TEvent, TContext>[] = Array.isArray(assigners) ? assigners : [assigners];
+    const assignersArray = Array.isArray(assigners) ? assigners : [assigners];
 
     this.logger_.logMethodArgs?.('applyAssigners__', {count: assignersArray.length});
 
@@ -279,7 +280,7 @@ export class FsmService<
       this.logger_.logMethodArgs?.('spawnActors__//skipped', {count: 0});
       return;
     }
-    const actorsArray: Actor<TEvent, TContext>[] = Array.isArray(actors) ? actors : [actors];
+    const actorsArray = Array.isArray(actors) ? actors : [actors];
 
     this.logger_.logMethodArgs?.('spawnActors__', {count: actorsArray.length});
 
@@ -288,7 +289,7 @@ export class FsmService<
         const cleanup = actor({
           event,
           context,
-          dispatch: this.dispatch.bind(this),
+          dispatch: this.dispatch,
         });
         if (typeof cleanup === 'function') {
           this.activeActorCleanups__.add(cleanup);
