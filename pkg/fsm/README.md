@@ -288,6 +288,20 @@ states: {
 }
 ```
 
+### 5. Internal vs. External Transitions (Self-Transitions)
+
+Transitions are categorized into two types based on the presence of the `target` property:
+
+1. **Internal Transitions** (No `target` specified):
+   - Triggered when a transition updates the machine's `context` (via `assigners`) but keeps the machine in the current state.
+   - **Behavior**: State entry/exit effects are **not** executed, and active state actors are **not** restarted.
+   - **Use Case**: Simple data updates (e.g., updating progress percentages or input values).
+
+2. **External Transitions** (With `target` specified):
+   - Triggered when transitioning to a target state, **even if the target state is the same as the current state** (a self-transition).
+   - **Behavior**: Exits the current state (running `exit` effects and cleaning up active actors) and re-enters the state (running `entry` effects and spawning actors).
+   - **Use Case**: Resetting state-scoped processes, restarting animations, or refetching initial state data upon self-referential triggers.
+
 ---
 
 ## FSM as an Actor Model
