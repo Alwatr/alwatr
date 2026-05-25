@@ -30,16 +30,16 @@ export interface MachineEvent<TEventType extends string = string> {
 
 /**
  * Defines an assigner (synchronous action) that updates the context during transitions.
- * It returns a partial context object to merge or the complete context object.
+ * It returns the complete new context object or void/undefined if no changes are made.
  *
  * @template TContext The type of the machine's context.
  * @template TEvent The type of the event that triggered this assigner.
- * @returns A partial context object to merge.
+ * @returns The complete next context object or void.
  */
 export type Assigner<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (params: {
   readonly event: Readonly<TEvent>;
   readonly context: Readonly<TContext>;
-}) => Partial<TContext> | TContext | void;
+}) => TContext | void;
 
 /**
  * Defines an effect (fire-and-forget side-effect action) executed on state entry/exit.

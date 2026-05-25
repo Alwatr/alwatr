@@ -233,16 +233,13 @@ export class FsmService<
       // The entire reduce operation is wrapped in a single try/catch block
       // to ensure atomic updates.
       return assignersArray.reduce((accContext, assigner) => {
-        const partialUpdate = assigner({event, context: accContext});
+        const nextContext = assigner({event, context: accContext});
         this.logger_.logMethodFull?.(
           `event.${event.type}.action.${assigner.name || 'anonymous'}`,
           {event, accContext},
-          partialUpdate,
+          nextContext,
         );
-        if (partialUpdate === undefined || partialUpdate === null) {
-          return accContext;
-        }
-        return {...accContext, ...partialUpdate};
+        return nextContext ?? accContext;
       }, context);
     } catch (error) {
       this.logger_.error('applyAssigners__', 'assigner_failed_atomic', error, {

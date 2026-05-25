@@ -35,14 +35,14 @@ import type {MachineEvent, MachineState, StateMachineConfig} from './type.js';
  *       on: {
  *         TOGGLE: {
  *           target: 'on',
- *           assigners: [() => ({brightness: 100})],
+ *           assigners: [({context}) => ({...context, brightness: 100})],
  *         },
  *       },
  *     },
  *     on: {
  *       on: {
- *         TOGGLE: {target: 'off', assigners: [() => ({brightness: 0})]},
- *         SET_BRIGHTNESS: {assigners: [(event) => ({brightness: event.level})]},
+ *         TOGGLE: {target: 'off', assigners: [({context}) => ({...context, brightness: 0})]},
+ *         SET_BRIGHTNESS: {assigners: [({context, event}) => ({...context, brightness: event.level})]},
  *       },
  *     },
  *   },
