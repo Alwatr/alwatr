@@ -38,7 +38,7 @@ export interface MachineEvent<TEventType extends string = string> {
  */
 export type Assigner<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (params: {
   readonly event: Readonly<TEvent>;
-  readonly context: Readonly<TContext>;
+  readonly context: TContext;
 }) => TContext | void;
 
 /**
