@@ -85,9 +85,10 @@ export class FsmService<
     }
 
     const targetStateName = transition.target ?? currentState.name;
+    const isExternalTransition = transition.target !== undefined;
 
-    // 1. Execute exit effects and cleanup actors of the current state if transitioning to a new state.
-    if (targetStateName !== currentState.name) {
+    // 1. Execute exit effects and cleanup actors of the current state if it's an external transition.
+    if (isExternalTransition) {
       this.executeEffects__(event, currentState.context, this.config_.states[currentState.name]?.exit);
       this.cleanupActors__();
     }
@@ -104,8 +105,8 @@ export class FsmService<
     // 4. Set the new state, notifying all subscribers.
     this.stateSignal__.set(nextState);
 
-    // 5. Execute entry effects and spawn actors of the new state if a transition occurred.
-    if (nextState.name !== currentState.name) {
+    // 5. Execute entry effects and spawn actors of the new state if it's an external transition.
+    if (isExternalTransition) {
       this.executeEffects__(event, nextState.context, this.config_.states[nextState.name]?.entry);
       this.spawnActors__(event, nextState.context, this.config_.states[nextState.name]?.actors);
     }
