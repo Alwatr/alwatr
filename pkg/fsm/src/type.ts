@@ -40,7 +40,7 @@ export interface MachineEvent<TEventType extends string = string> {
 export type Assigner<TEvent extends MachineEvent, TContext> = (params: {
   readonly event: Readonly<TEvent>;
   readonly context: Readonly<TContext>;
-}) => Partial<TContext> | void;
+}) => TContext extends Record<string | number | symbol, unknown> ? Partial<TContext> | TContext : void;
 
 /**
  * Defines an effect (fire-and-forget side-effect action) executed on state entry/exit.
