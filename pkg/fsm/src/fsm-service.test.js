@@ -31,7 +31,7 @@ function createFetchConfig(overrides = {}) {
         on: {
           FETCH: {
             target: 'loading',
-            assigners: ({context}) => ({attempts: context.attempts + 1}),
+            assigners: ({context}) => ({...context, attempts: context.attempts + 1}),
           },
         },
       },
@@ -39,11 +39,11 @@ function createFetchConfig(overrides = {}) {
         on: {
           RESOLVE: {
             target: 'success',
-            assigners: ({event}) => ({data: event.data, error: null}),
+            assigners: ({context, event}) => ({...context, data: event.data, error: null}),
           },
           REJECT: {
             target: 'error',
-            assigners: ({event}) => ({error: event.error, data: null}),
+            assigners: ({context, event}) => ({...context, error: event.error, data: null}),
           },
         },
       },
@@ -51,7 +51,7 @@ function createFetchConfig(overrides = {}) {
         on: {
           FETCH: {
             target: 'loading',
-            assigners: ({context}) => ({attempts: context.attempts + 1}),
+            assigners: ({context}) => ({...context, attempts: context.attempts + 1}),
           },
         },
       },
@@ -59,7 +59,7 @@ function createFetchConfig(overrides = {}) {
         on: {
           FETCH: {
             target: 'loading',
-            assigners: ({context}) => ({attempts: context.attempts + 1}),
+            assigners: ({context}) => ({...context, attempts: context.attempts + 1}),
           },
         },
       },
@@ -332,7 +332,7 @@ describe('FsmService', () => {
             on: {
               INCREMENT: {
                 // No target — internal transition.
-                assigners: ({context}) => ({count: context.count + 1}),
+                assigners: ({context}) => ({...context, count: context.count + 1}),
               },
             },
           },
@@ -368,7 +368,7 @@ describe('FsmService', () => {
             on: {
               GO: {
                 target: 'done',
-                assigners: [() => ({a: 10}), ({context}) => ({b: context.a + 5})],
+                assigners: [({context}) => ({...context, a: 10}), ({context}) => ({...context, b: context.a + 5})],
               },
             },
           },
@@ -399,7 +399,7 @@ describe('FsmService', () => {
               GO: {
                 target: 'done',
                 assigners: [
-                  () => ({a: 99}),
+                  ({context}) => ({...context, a: 99}),
                   () => {
                     throw new Error('assigner error');
                   },
@@ -494,7 +494,7 @@ describe('FsmService', () => {
             exit: exitEffect,
             on: {
               INCREMENT: {
-                assigners: ({context}) => ({count: context.count + 1}),
+                assigners: ({context}) => ({...context, count: context.count + 1}),
               },
             },
           },

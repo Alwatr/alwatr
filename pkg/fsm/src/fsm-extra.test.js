@@ -165,7 +165,7 @@ describe('FsmService — extra coverage', () => {
           idle: {
             on: {
               ADD: {
-                assigners: ({event}) => ({amount: event.value}),
+                assigners: ({context, event}) => ({...context, amount: event.value}),
               },
             },
           },
