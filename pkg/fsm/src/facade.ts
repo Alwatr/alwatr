@@ -67,7 +67,7 @@ import type {MachineEvent, MachineState, StateMachineConfig} from './type.js';
 export function createFsmService<
   TState extends string,
   TEvent extends MachineEvent,
-  TContext extends Record<string, unknown>,
+  TContext extends Record<string, unknown> = Record<string, never>,
 >(config: StateMachineConfig<TState, TEvent, TContext>): FsmService<TState, TEvent, TContext> {
   const initialValue: MachineState<TState, TContext> = {
     name: config.initial,

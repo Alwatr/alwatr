@@ -19,7 +19,11 @@ import type {StateMachineConfig, MachineState, MachineEvent, Transition, Effect,
  * @template TEvent The union type of all possible events.
  * @template TContext The type of the machine's context (extended state).
  */
-export class FsmService<TState extends string, TEvent extends MachineEvent, TContext extends Record<string, unknown>> {
+export class FsmService<
+  TState extends string,
+  TEvent extends MachineEvent,
+  TContext extends Record<string, unknown> = Record<string, never>,
+> {
   protected readonly logger_: AlwatrLogger;
 
   /** The private event signal for sending events to the FSM. */
