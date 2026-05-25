@@ -64,9 +64,11 @@ import type {MachineEvent, MachineState, StateMachineConfig} from './type.js';
  * // lightService.destroy();
  * ```
  */
-export function createFsmService<TState extends string, TEvent extends MachineEvent, TContext>(
-  config: StateMachineConfig<TState, TEvent, TContext>,
-): FsmService<TState, TEvent, TContext> {
+export function createFsmService<
+  TState extends string,
+  TEvent extends MachineEvent,
+  TContext extends Record<string, unknown>,
+>(config: StateMachineConfig<TState, TEvent, TContext>): FsmService<TState, TEvent, TContext> {
   const initialValue: MachineState<TState, TContext> = {
     name: config.initial,
     context: config.context,

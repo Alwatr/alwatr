@@ -19,7 +19,7 @@ import type {StateMachineConfig, MachineState, MachineEvent, Transition, Effect,
  * @template TEvent The union type of all possible events.
  * @template TContext The type of the machine's context (extended state).
  */
-export class FsmService<TState extends string, TEvent extends MachineEvent, TContext = unknown> {
+export class FsmService<TState extends string, TEvent extends MachineEvent, TContext extends Record<string, unknown>> {
   protected readonly logger_: AlwatrLogger;
 
   /** The private event signal for sending events to the FSM. */
@@ -235,19 +235,10 @@ export class FsmService<TState extends string, TEvent extends MachineEvent, TCon
           {event, accContext},
           partialUpdate,
         );
-        if (partialUpdate === undefined) {
+        if (partialUpdate === undefined || partialUpdate === null) {
           return accContext;
         }
-        if (
-          typeof accContext === 'object'
-          && accContext !== null
-          && typeof partialUpdate === 'object'
-          && partialUpdate !== null
-        ) {
-          // The next assigner receives the updated context from the previous one.
-          return {...accContext, ...partialUpdate};
-        }
-        return partialUpdate as TContext;
+        return {...accContext, ...partialUpdate};
       }, context);
     } catch (error) {
       this.logger_.error('applyAssigners__', 'assigner_failed_atomic', error, {
