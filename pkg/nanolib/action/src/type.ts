@@ -168,3 +168,13 @@ export type ModifierHandler = (event: Event, element: HTMLElement, action: Actio
  * ```
  */
 export type PayloadResolver = (event: Event, element: HTMLElement) => unknown;
+
+/**
+ * Parsed representation of an action attribute descriptor.
+ * @internal
+ */
+export interface ActionDescriptor {
+  readonly modifiers: ReadonlySet<string>;
+  readonly actionId: string;
+  readonly payload: string | undefined;
+}

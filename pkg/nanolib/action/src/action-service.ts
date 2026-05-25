@@ -3,17 +3,7 @@ import {createChannelSignal} from '@alwatr/signal';
 import type {SubscribeResult} from '@alwatr/signal';
 import type {Awaitable, VoidFunc} from '@alwatr/type-helper';
 
-import type {Action, ActionRecord, DispatchParam, ModifierHandler, PayloadResolver} from './type.js';
-
-/**
- * Parsed representation of an action attribute descriptor.
- * @internal
- */
-interface ActionDescriptor {
-  readonly modifiers: ReadonlySet<string>;
-  readonly actionId: string;
-  readonly payload: string | undefined;
-}
+import type {Action, ActionDescriptor, ActionRecord, DispatchParam, ModifierHandler, PayloadResolver} from './type.js';
 
 /**
  * Regex parser for the `on-<eventType>` attribute syntax.
@@ -32,7 +22,7 @@ const syntaxRegex = /^(ui_[a-z0-9_-]+)(?::([^;]+))?(?:;\s*([a-z0-9_,-]+))?$/;
  * const customActionService = new ActionService();
  * ```
  */
-export class ActionService {
+class ActionService {
   /**
    * Default DOM event types that cover the vast majority of interactive elements.
    */
