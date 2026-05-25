@@ -50,7 +50,6 @@ export class FsmService<
     });
     this.eventSignal__.subscribe(this.processTransition__.bind(this), {receivePrevious: false});
 
-    // Execute initial state entry effects and actors.
     this.start_();
   }
 
