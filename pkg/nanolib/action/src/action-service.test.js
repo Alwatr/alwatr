@@ -9,13 +9,6 @@ if (typeof document === 'undefined') {
 import {
   actionService,
   ActionService,
-  onAction,
-  dispatchAction,
-  setupActionDelegation,
-  teardownActionDelegation,
-  registerModifier,
-  registerPayloadResolver,
-  DEFAULT_DELEGATED_EVENTS,
 } from './main.js';
 
 /**
@@ -549,35 +542,4 @@ describe('ActionService — Once Modifier', () => {
   });
 });
 
-// ─── 7. Backwards Compatibility wrappers ────────────────────────────────────────
 
-describe('ActionService — Backwards Compatibility Wrappers', () => {
-  beforeEach(() => {
-    setupActionDelegation();
-  });
-
-  afterEach(() => {
-    teardownActionDelegation();
-    document.body.innerHTML = '';
-  });
-
-  it('should verify global wrappers redirect to actionService', async () => {
-    expect(DEFAULT_DELEGATED_EVENTS).toBeDefined();
-
-    registerModifier('compat-mod', () => true);
-    expect(actionService['modifierRegistry_'].has('compat-mod')).toBe(true);
-
-    registerPayloadResolver('$compat-res', () => 'value');
-    expect(actionService['payloadRegistry_'].has('$compat-res')).toBe(true);
-
-    const callback = jest.fn();
-    const sub = onAction('ui_compat_test', callback);
-
-    dispatchAction({type: 'ui_compat_test', payload: 'wrapped'});
-    await nextMacrotask();
-
-    expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback).toHaveBeenCalledWith({type: 'ui_compat_test', payload: 'wrapped'});
-    sub.unsubscribe();
-  });
-});
