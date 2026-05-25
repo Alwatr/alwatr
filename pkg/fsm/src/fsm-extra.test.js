@@ -278,6 +278,39 @@ describe('FsmService — extra coverage', () => {
       fsm.destroy();
       expect(activeCleanup).toHaveBeenCalledTimes(1);
     });
+
+    it('should cleanup and spawn actor again on self-transition', async () => {
+      const activeCleanup = jest.fn();
+      const activeActor = jest.fn(() => activeCleanup);
+
+      const fsm = createFsmService({
+        name: 'actor-self-transition-test',
+        initial: 'active',
+        context: {},
+        states: {
+          active: {
+            actors: activeActor,
+            on: {
+              SELF: {target: 'active'},
+            },
+          },
+        },
+      });
+
+      await nextMacrotask(5);
+      expect(activeActor).toHaveBeenCalledTimes(1);
+      expect(activeCleanup).not.toHaveBeenCalled();
+
+      fsm.dispatch({type: 'SELF'});
+      await nextMacrotask(5);
+
+      // Self-transition happened: active actor is cleaned up, then active actor is spawned again
+      expect(activeCleanup).toHaveBeenCalledTimes(1);
+      expect(activeActor).toHaveBeenCalledTimes(2);
+
+      fsm.destroy();
+      expect(activeCleanup).toHaveBeenCalledTimes(2); // cleaned up once more on destroy
+    });
   });
 });
 

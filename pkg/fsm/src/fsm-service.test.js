@@ -554,6 +554,43 @@ describe('FsmService', () => {
 
       effectFsm.destroy();
     });
+
+    it('should execute entry/exit effects on self-transitions with explicit target', async () => {
+      const entryEffect = jest.fn();
+      const exitEffect = jest.fn();
+      const effectFsm = createFsmService({
+        name: 'effect-self-transition-test',
+        initial: 'active',
+        context: {},
+        states: {
+          active: {
+            entry: entryEffect,
+            exit: exitEffect,
+            on: {
+              SELF: {
+                target: 'active',
+              },
+            },
+          },
+        },
+      });
+
+      // Wait for startup microtask to execute, which runs the entry effect of the initial state ('active')
+      await nextMacrotask();
+      expect(entryEffect).toHaveBeenCalledTimes(1);
+      expect(exitEffect).not.toHaveBeenCalled();
+
+      // Dispatch self transition event (with explicit target equal to current state)
+      effectFsm.dispatch({type: 'SELF'});
+      await nextMacrotask();
+      await nextMacrotask(5);
+
+      // Both entry and exit effects should have been called again (entry=2, exit=1)
+      expect(entryEffect).toHaveBeenCalledTimes(2);
+      expect(exitEffect).toHaveBeenCalledTimes(1);
+
+      effectFsm.destroy();
+    });
   });
 
   // ── Destroy ───────────────────────────────────────────────────────────────
