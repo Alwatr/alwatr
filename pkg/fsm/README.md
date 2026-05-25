@@ -206,7 +206,7 @@ export const fileUploadConfig: StateMachineConfig<FileState, FileEvent, FileCont
 
 ### 2. Nested Transitions (Guards & Fallbacks)
 
-You can define an array of transitions for a single event. The engine evaluates guards in order and executes the first valid one. An transition without a guard acts as a fallback.
+You can define an array of transitions for a single event. The engine evaluates guards in order and executes the first valid one. A transition without a guard acts as a fallback.
 
 ```typescript
 states: {
