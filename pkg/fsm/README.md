@@ -242,6 +242,11 @@ states: {
 }
 ```
 
+> [!WARNING]
+> **Initial State Entry Events**:
+> When the FSM is initialized, the entry effects and actors of the initial state are executed with a mock event `{ type: '__init__' }` (casted to `TEvent`).
+> If your initial state's entry effects or actors expect specific custom payload properties on the triggering event, they might throw runtime errors. Ensure your initial state's entry logic checks the event type or handles `{ type: '__init__' }` safely.
+
 ### 4. State Actors (Invoked Actors)
 
 State Actors are async lifecycle processes spawned automatically when entering a state. In contrast to **Effects** (which are fire-and-forget synchronous actions), an **Actor**:
