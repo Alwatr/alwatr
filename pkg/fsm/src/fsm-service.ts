@@ -230,17 +230,19 @@ export class FsmService<
     this.logger_.logMethodArgs?.('applyAssigners__', {count: assignersArray.length});
 
     try {
-      // The entire reduce operation is wrapped in a single try/catch block
-      // to ensure atomic updates.
-      return assignersArray.reduce((accContext, assigner) => {
+      let accContext = context;
+      for (const assigner of assignersArray) {
         const nextContext = assigner({event, context: accContext});
         this.logger_.logMethodFull?.(
           `event.${event.type}.action.${assigner.name || 'anonymous'}`,
           {event, accContext},
           nextContext,
         );
-        return nextContext ?? accContext;
-      }, context);
+        if (nextContext !== undefined && nextContext !== null) {
+          accContext = nextContext;
+        }
+      }
+      return accContext;
     } catch (error) {
       this.logger_.error('applyAssigners__', 'assigner_failed_atomic', error, {
         event,
