@@ -40,7 +40,7 @@
  * ```
  */
 
-import {dispatchAction} from '@alwatr/action';
+import {actionService} from '@alwatr/action';
 import {createLogger} from '@alwatr/logger';
 
 /**
@@ -118,7 +118,7 @@ export class KeyboardShortcutService {
 
     this.logger_.logMethodArgs?.('keyboard_handler', {combo});
 
-    dispatchAction({type: `key_${combo}`});
+    actionService.dispatch({type: `key_${combo}`});
   }
 
   /**
