@@ -331,7 +331,6 @@ actionService.dispatch({type: 'upload_complete', payload: 'file-123'});
 // Dispatch a void action (payload can be omitted)
 actionService.dispatch({type: 'auth_expired'});
 ```
-```
 
 #### `actionService.setupDelegation(eventTypes?)`
 
