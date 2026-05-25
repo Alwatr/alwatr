@@ -327,6 +327,6 @@ export class FsmService<
     this.logger_.logMethod?.('destroy');
     this.cleanupActors__();
     this.eventSignal__.destroy();
-    this.stateSignal.destroy();
+    this.stateSignal__.destroy();
   }
 }
