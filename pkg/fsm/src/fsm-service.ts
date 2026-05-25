@@ -256,8 +256,7 @@ export class FsmService<
 
   /**
    * Starts the FSM by executing the entry effects and spawning the actors
-   * of the initial/current state. This is scheduled as a microtask
-   * to allow subscribers to listen to stateSignal first.
+   * of the initial/current state.
    */
   protected start_(): void {
     if (this.eventSignal__.isDestroyed) return;
