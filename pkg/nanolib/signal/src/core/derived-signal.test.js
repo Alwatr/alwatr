@@ -1,5 +1,5 @@
 import {describe, beforeEach, afterEach, it, expect, jest} from 'bun:test';
-import {DerivedSignal, StateSignal} from '@alwatr/signal';
+import {DerivedSignal, StateSignal, createDerivedSignal} from '@alwatr/signal';
 import {delay} from '@alwatr/delay';
 
 describe('DerivedSignal', () => {
@@ -11,7 +11,11 @@ describe('DerivedSignal', () => {
 
   beforeEach(() => {
     source = new StateSignal({name: 'source', initialValue: 10});
-    derived = new DerivedSignal(name, source, (val) => `value-${val}`);
+    derived = new DerivedSignal({
+      name,
+      source,
+      projector: (val) => `value-${val}`,
+    });
   });
 
   afterEach(() => {
@@ -81,3 +85,22 @@ describe('DerivedSignal', () => {
     expect(() => derived.get()).toThrow();
   });
 });
+
+describe('createDerivedSignal creator', () => {
+  it('should instantiate DerivedSignal correctly via factory creator', () => {
+    const source = new StateSignal({name: 'source-creator', initialValue: 5});
+    const derived = createDerivedSignal({
+      name: 'derived-creator',
+      source,
+      projector: (v) => v * 2,
+    });
+    
+    expect(derived).toBeInstanceOf(DerivedSignal);
+    expect(derived.name).toBe('derived-creator');
+    expect(derived.get()).toBe(10);
+    
+    derived.destroy();
+    source.destroy();
+  });
+});
+
