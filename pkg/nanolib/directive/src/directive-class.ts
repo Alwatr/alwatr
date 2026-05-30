@@ -9,7 +9,7 @@ import type {Awaitable} from '@alwatr/type-helper';
 import {delay} from '@alwatr/delay';
 import {createLogger} from '@alwatr/logger';
 import {finalizationRegistry} from './lib.js';
-import type {IBaseSignal, ListenerCallback, SubscribeOptions} from '@alwatr/signal';
+import type {ListenerCallback, Subscribable} from './type.js';
 
 /**
  * A map to keep track of the number of instances for each directive name. This helps in generating unique indices for directives when multiple instances are present on the same page.
@@ -649,7 +649,7 @@ export abstract class Directive {
    * }
    * ```
    */
-  protected subscribe_<T>(signal: IBaseSignal<T>, callback: ListenerCallback<T>, options?: SubscribeOptions): void {
+  protected subscribe_<T, O>(signal: Subscribable<T, O>, callback: ListenerCallback<T>, options?: O): void {
     this.addDestroyHook(signal.subscribe(callback, options).unsubscribe);
   }
 }

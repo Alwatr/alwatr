@@ -23,7 +23,6 @@
   "dependencies": {
     "@alwatr/delay": "workspace:*",
     "@alwatr/logger": "workspace:*",
-    "@alwatr/signal": "9.26.0",
     "lit-html": "^3.3.3"
   },
   "devDependencies": {
