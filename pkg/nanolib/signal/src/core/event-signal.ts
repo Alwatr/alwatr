@@ -33,10 +33,16 @@ import type {IBaseSignal, SignalConfig} from '../type.js';
 export class EventSignal<T = void> extends SignalBase<T> implements IBaseSignal<T> {
   /**
    * The logger instance for this signal.
+   *
    * @protected
    */
   protected logger_: AlwatrLogger;
 
+  /**
+   * Creates a new EventSignal instance.
+   *
+   * @param config Configuration options including the unique event name and custom cleanup hooks.
+   */
   constructor(config: SignalConfig) {
     super(config);
     this.logger_ = createLogger(`event_signal:${this.name}`);
@@ -44,11 +50,12 @@ export class EventSignal<T = void> extends SignalBase<T> implements IBaseSignal<
   }
 
   /**
-   * Dispatches an event with an optional payload to all active listeners.
-   * The notification is scheduled as a microtask to prevent blocking and ensure
-   * a consistent, non-blocking flow.
+   * Dispatches an event with the specified payload to all active listeners.
    *
-   * @param payload The data to send with the event.
+   * To prevent blocking of the main thread and ensure consistent execution order,
+   * the notification execution is scheduled as a microtask using `queueMicrotask`.
+   *
+   * @param payload The data payload to send with the event.
    */
   public dispatch(payload: T): void {
     this.logger_.logMethodArgs?.('dispatch', {payload});

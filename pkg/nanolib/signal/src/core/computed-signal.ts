@@ -49,6 +49,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
 
   /**
    * The logger instance for this signal.
+   *
    * @protected
    */
   protected readonly logger_: AlwatrLogger;
@@ -56,23 +57,33 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
   /**
    * The internal `StateSignal` that holds the computed value.
    * This is how the computed signal provides `.get()` and `.subscribe()` methods.
+   *
    * @protected
    */
   protected readonly internalSignal_: StateSignal<T>;
 
   /**
    * A list of subscriptions to dependency signals.
+   * Used to unsubscribe from dependencies when this signal is destroyed.
+   *
    * @private
    */
-
   private readonly dependencySubscriptions__: SubscribeResult[] = [];
 
   /**
    * A flag to prevent concurrent recalculations.
+   * Avoids queuing multiple updates in the event loop.
+   *
    * @private
    */
   private isRecalculating__ = false;
 
+  /**
+   * Creates a new ComputedSignal instance.
+   * Subscribes to all dependency signals to trigger recalculations.
+   *
+   * @param config_ Configuration options including dependencies, evaluation getter, and cleanup hook.
+   */
   constructor(protected config_: ComputedSignalConfig<T>) {
     this.name = config_.name;
     this.logger_ = createLogger(`computed_signal:${this.name}`);
@@ -106,6 +117,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
   /**
    * Indicates whether the computed signal has been destroyed.
    * A destroyed signal cannot be used and will throw an error if interacted with.
+   *
    * @returns `true` if the signal is destroyed, `false` otherwise.
    */
   public get isDestroyed(): boolean {
@@ -169,7 +181,9 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
    * This method batches updates using a macrotask (`delay.nextMicrotask`) to ensure the
    * `get` function runs only once per event loop tick, even if multiple dependencies
    * change in the same synchronous block of code.
+   *
    * @protected
+   * @returns A promise that resolves when the recalculation is complete.
    */
   protected async recalculate_(): Promise<void> {
     this.logger_.logMethod?.('recalculate_');

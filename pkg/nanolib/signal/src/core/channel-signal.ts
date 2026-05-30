@@ -73,6 +73,7 @@ type InternalHandler = (payload: unknown) => void;
 export class ChannelSignal<TMap extends object> extends SignalBase<ChannelMessage<TMap>> {
   /**
    * The logger instance for this signal.
+   *
    * @protected
    */
   protected logger_: AlwatrLogger;
@@ -92,6 +93,11 @@ export class ChannelSignal<TMap extends object> extends SignalBase<ChannelMessag
    */
   private readonly namedHandlers__ = new Map<keyof TMap, Set<{handler: InternalHandler; once: boolean}>>();
 
+  /**
+   * Creates a new ChannelSignal instance.
+   *
+   * @param config Configuration options including the unique channel name and cleanup hook.
+   */
   constructor(config: ChannelSignalConfig) {
     super(config);
     this.logger_ = createLogger(`channel_signal:${this.name}`);
@@ -121,6 +127,7 @@ export class ChannelSignal<TMap extends object> extends SignalBase<ChannelMessag
    * channel.dispatch('logout', undefined);            // ✅ also fine
    * ```
    *
+   * @template K The specific message name key.
    * @param args Tuple of `[name, payload]` — payload optionality is enforced
    *             by `DispatchArgs<TMap, K>` based on the declared type.
    */
@@ -141,6 +148,7 @@ export class ChannelSignal<TMap extends object> extends SignalBase<ChannelMessag
    * envelope) — since the name is already known at subscription time, passing
    * it again would be redundant.
    *
+   * @template K    The specific message name key.
    * @param name    The message name to listen for.
    * @param handler Callback invoked with the payload each time the named message
    *                is dispatched.
@@ -221,6 +229,9 @@ export class ChannelSignal<TMap extends object> extends SignalBase<ChannelMessag
    * 2. Invokes each handler, removing `once` entries after their first call.
    * 3. Notifies raw-stream subscribers via `SignalBase.notify_()`.
    *
+   * @template K The specific message name key.
+   * @param name The message name to route.
+   * @param payload The payload associated with the message name.
    * @private
    */
   private route__<K extends keyof TMap>(name: K, payload: TMap[K] | undefined): void {

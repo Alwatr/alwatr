@@ -20,6 +20,7 @@ import type {IReadonlySignal} from '../type.js';
  * @returns A new, read-only computed signal with the transformed values.
  *
  * @example
+ * ```typescript
  * const userSignal = createStateSignal({
  *   name: 'user',
  *   initialValue: { name: 'John', age: 30 },
@@ -34,6 +35,7 @@ import type {IReadonlySignal} from '../type.js';
  * // in next macro-task ...
  * userSignal.set({ name: 'Jane', age: 32 });
  * console.log(userNameSignal.get()); // Outputs: "Jane"
+ * ```
  */
 export function createMappedSignal<T, R>(
   sourceSignal: IReadonlySignal<T>,

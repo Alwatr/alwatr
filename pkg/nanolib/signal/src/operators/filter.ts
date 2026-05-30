@@ -24,28 +24,30 @@ import type {IReadonlySignal} from '../type.js';
  * @returns A new computed signal that emits filtered values.
  *
  * @example
+ * ```typescript
  * const numberSignal = createStateSignal({ name: 'number', initialValue: 0 });
  *
  * const evenNumberSignal = createFilteredSignal(
- * numberSignal,
- * (num) => num % 2 === 0,
+ *   numberSignal,
+ *   (num) => num % 2 === 0,
  * );
  *
  * createEffect({
- * deps: [evenNumberSignal],
- * run: () => {
- * // This effect only runs for even numbers.
- * // The value can be `undefined` on the first run if initialValue is not even.
- * if (evenNumberSignal.get() !== undefined) {
- * console.log(`Even number detected: ${evenNumberSignal.get()}`);
- * }
- * },
- * runImmediately: true,
+ *   deps: [evenNumberSignal],
+ *   run: () => {
+ *     // This effect only runs for even numbers.
+ *     // The value can be `undefined` on the first run if initialValue is not even.
+ *     if (evenNumberSignal.get() !== undefined) {
+ *       console.log(`Even number detected: ${evenNumberSignal.get()}`);
+ *     }
+ *   },
+ *   runImmediately: true,
  * });
  * // Logs: "Even number detected: 0"
  *
  * numberSignal.set(1); // Effect does not run
  * numberSignal.set(2); // Logs: "Even number detected: 2"
+ * ```
  */
 export function createFilteredSignal<T>(
   sourceSignal: IReadonlySignal<T>,
