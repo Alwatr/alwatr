@@ -59,7 +59,7 @@ export function createDebouncedSignal<T>(source: IReadonlySignal<T>, config: Deb
   const name = config.name ?? `${source.name}_debounced`;
 
   const internalSignal = new StateSignal<T>({
-    name: `${name}_internal`,
+    name,
     initialValue: source.get(),
     onDestroy() {
       subscription.unsubscribe();
