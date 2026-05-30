@@ -166,6 +166,8 @@ export abstract class Directive {
   private initializeLifecycle_(): void {
     this.logger_.logMethod?.('initializeLifecycle_');
 
+    if (this.isDestroyed()) return;
+
     // Register this instance with the FinalizationRegistry for cleanup when garbage collected
     finalizationRegistry?.register(this, `${this.logger_.name}/instance`);
     finalizationRegistry?.register(this.element_, `${this.logger_.name}/element`);
