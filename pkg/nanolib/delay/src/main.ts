@@ -84,26 +84,78 @@ export const requestIdleCallback: (callback: (deadline: IdleDeadline) => void, o
     }, options?.timeout ?? 20);
   });
 
-// Setup high-performance Zero-Delay Macrotask Channel via MessageChannel bomy
-const channel__ = typeof globalThis.MessageChannel !== 'undefined' ? new globalThis.MessageChannel() : null;
-
 /**
- * High-performance macrotask dispatcher using `MessageChannel`.
+ * Zero-delay macrotask dispatcher.
  *
- * Bypasses the browser's minimum 4ms clamp penalty for nested `setTimeout`.
- * Falls back to `setTimeout(callback, 0)` if `MessageChannel` is unavailable.
+ * Bypasses the browser's minimum 4ms clamp penalty (HTML timer throttling) for nested `setTimeout`
+ * by utilizing a private `MessageChannel` connection. Falls back to `setTimeout(callback, 0)`
+ * if `MessageChannel` is unavailable.
+ *
+ * Utilizes a FIFO queue with a moving head pointer to avoid array shifting overhead,
+ * maintaining high performance and order of execution.
  *
  * @param callback - The function to execute in the next event loop tick.
- * @private
+ *
+ * @example
+ * ```ts
+ * queueMacrotask(() => {
+ *   console.log('Executed in the next macrotask');
+ * });
+ * ```
  */
-const queueMacrotask__ = (callback: VoidFunction): void => {
-  if (channel__ !== null) {
-    channel__.port1.onmessage = () => callback();
-    channel__.port2.postMessage(undefined);
-  } else {
-    setTimeout(callback, 0);
+export const queueMacrotask: (callback: VoidFunction) => void = /* @__PURE__ */ (() => {
+  // --- Fallback: runtimes without MessageChannel (some SSR/Node contexts). ---
+  if (typeof globalThis.MessageChannel === 'undefined') {
+    return (callback: VoidFunction): void => {
+      setTimeout(callback, 0);
+    };
   }
-};
+
+  // --- Primary: ONE channel + ONE persistent handler shared by every task. ---
+  const {port1, port2} = new globalThis.MessageChannel();
+
+  // FIFO queue with a moving `head` pointer. We deliberately avoid
+  // Array.prototype.shift() (which is O(n) due to re-indexing); instead we
+  // advance `head` for O(1) dequeue and compact the buffer only once it is
+  // fully drained. This keeps both enqueue and dequeue allocation-free on the
+  // steady-state hot path.
+  const taskQueue: VoidFunction[] = [];
+  let head = 0;
+
+  // Assigning `onmessage` implicitly starts port1 — no explicit port1.start().
+  port1.onmessage = (): void => {
+    // Defensive guard: a spurious message with an empty queue is a no-op.
+    if (head >= taskQueue.length) return;
+
+    const task = taskQueue[head];
+    taskQueue[head] = undefined as unknown as VoidFunction; // drop ref → let GC reclaim early
+    head++;
+
+    // Reset the backing array once empty so a transient burst can never grow
+    // the buffer unbounded across the app lifetime.
+    if (head === taskQueue.length) {
+      taskQueue.length = 0;
+      head = 0;
+    }
+
+    // Fault isolation: a single throwing task must NOT break the dispatcher
+    // loop or starve the remaining queued tasks. We re-surface the error
+    // asynchronously so it still reaches reportError / window.onerror / DevTools.
+    try {
+      task();
+    } catch (error) {
+      queueMicrotask(() => {
+        throw error;
+      });
+    }
+  };
+
+  return (callback: VoidFunction): void => {
+    // One push, one post. The persistent handler above guarantees a 1:1 match.
+    taskQueue.push(callback);
+    port2.postMessage(undefined);
+  };
+})();
 
 /**
  * A highly optimized utility module to handle asynchronous flow control,
@@ -232,7 +284,7 @@ export const delay = {
    * console.log('Next macrotask');
    * ```
    */
-  nextMacrotask: (): Promise<void> => new Promise((resolve) => queueMacrotask__(resolve)),
+  nextMacrotask: (): Promise<void> => new Promise((resolve) => queueMacrotask(resolve)),
 
   /**
    * Queues a task on the microtask queue.

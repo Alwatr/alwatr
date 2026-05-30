@@ -5,8 +5,9 @@ An optimized, lightweight, and cross-platform asynchronous flow-control and sche
 ## Features
 
 - **Duration Parsing Support**: Pause execution using either raw milliseconds (`number`) or human-readable duration strings like `'1.5s'`, `'10m'` (powered by `@alwatr/parse-duration`).
-- **High-Performance Macrotasks**: `delay.nextMacrotask` bypasses the browser's HTML-standard 4ms minimum nesting delay penalty using a zero-delay `MessageChannel` dispatcher.
-- **Native Microtasks**: `delay.nextMicrotask` queues tasks on the native stack, running before browser repaints or sibling macrotasks.
+- **High-Performance Macrotasks**: `delay.nextMacrotask` and the directly exported `queueMacrotask` bypass the browser's HTML-standard 4ms minimum nesting delay penalty using a zero-delay `MessageChannel` dispatcher.
+- **Robust Queue Management**: `queueMacrotask` resolves consecutive call overwriting bugs by using a memory-safe, allocation-free FIFO task queue with moving head pointer.
+- **Native Microtasks**: `delay.nextMicrotask` and `queueMicrotask` queue tasks on the native stack, running before browser repaints or sibling macrotasks.
 - **Robust Fallbacks**: Automatically falls back to high-fidelity simulated timers when browser-specific APIs (`requestAnimationFrame`, `requestIdleCallback`, `queueMicrotask`) are executed in Node.js, Bun, or older platforms.
 - **Memory-Safe Events**: `delay.domEvent` and `delay.event` auto-unsubscribe from listeners on fulfillment, ensuring zero memory leaks.
 
@@ -128,9 +129,19 @@ console.log('Runs immediately after sync block, before repaint/macrotasks');
 
 ---
 
-### Low-Level Fallback Helpers
+### Low-Level Helpers
 
-The module also exports robust fallback wrappers for browser APIs. These are used internally by `delay` but can be used individually.
+The module also exports robust low-level scheduling utilities.
+
+#### `queueMacrotask(callback: VoidFunction): void`
+
+High-performance zero-delay macrotask dispatcher. Bypasses the browser's 4ms setTimeout nested clamp penalty via a persistent, memory-safe FIFO queue on a shared `MessageChannel`.
+
+```typescript
+queueMacrotask(() => {
+  console.log('Executed in the next event loop tick');
+});
+```
 
 #### `queueMicrotask(callback: VoidFunction): void`
 
