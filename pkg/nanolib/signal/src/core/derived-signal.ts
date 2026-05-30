@@ -120,6 +120,8 @@ export class DerivedSignal<S, T> implements IReadonlySignal<T> {
         if (this.activeConsumerCount__ === 0 && this.sourceSubscription__) {
           this.sourceSubscription__.unsubscribe();
           this.sourceSubscription__ = undefined;
+          this.internalSignal_?.destroy();
+          this.internalSignal_ = undefined;
         }
       },
     };
