@@ -18,6 +18,7 @@ Born from years of building production PWAs and inspired by the best ideas from 
 - **Fine-grained reactivity** via Signals (no Virtual DOM overhead)
 - **Global event delegation** for O(1) boot time (inspired by Qwik's Resumability)
 - **Declarative DOM directives** for clean, maintainable UI code
+- **Declarative reactive DOM data binding** via Bind (surgical view model updates)
 - **Type-safe action bus** with zero runtime overhead
 - **Persistent state management** with automatic localStorage/sessionStorage sync
 
@@ -377,6 +378,58 @@ createEffect({
 });
 ```
 
+### 🔗 **Declarative DOM Data Binding (Bind)**
+
+Flux aggregates `@alwatr/bind` to provide a declarative, low-overhead way to bind elements directly to reactive view models. This enables surgical updates to text, values, and attributes without virtual DOM diffing or full-component re-renders.
+
+```typescript
+import {service_binding, createStateSignal} from '@alwatr/flux';
+
+// 1. Create domain state signal
+const userSignal = createStateSignal({
+  name: 'user',
+  initialValue: {firstName: 'Ali', lastName: 'Mihandoost', cart: []},
+});
+
+// 2. Project domain state to flat view model representation
+service_binding.createViewModel('user', userSignal, (u) => ({
+  firstName: u.firstName,
+  fullName: `${u.firstName} ${u.lastName}`,
+  cartIsEmpty: u.cart.length === 0,
+}));
+```
+
+In your HTML, bind properties using declarative attributes:
+
+```html
+<!-- Text Content Binding -->
+<h2 bind-text="user.fullName">Loading...</h2>
+
+<!-- Value Binding with active cursor position preservation guard -->
+<input
+  type="text"
+  bind-value="user.firstName"
+  on-input="ui_edit_name:$value"
+/>
+
+<!-- Attribute Binding (boolean presence toggling / nullish removal) -->
+<button bind-attrib="disabled=user.cartIsEmpty">Checkout</button>
+
+<!-- Lazy Binding (evaluated only when element enters viewport) -->
+<div
+  bind-text="user.fullName"
+  lazy-bind
+></div>
+```
+
+#### 🌟 Key Advantages of Bind
+
+- **Cursor Preservation**: Writing to input values directly in other frameworks often resets the cursor caret to the end of the text. `@alwatr/bind` compares values and only writes to the DOM if the value changed, preserving typing cursor position perfectly.
+- **Presence-Aware Attributes**: Binds attributes intelligently. A `boolean` value toggles attribute presence, a `nullish` value removes the attribute, and any other value sets the attribute as a string.
+- **Lazy Initialization**: Placing `lazy-bind` on elements defers signal subscription and DOM updates until the element physically intersects the viewport, optimizing rendering performance on large pages.
+
+---
+
 ### 🤖 **Finite State Machine (FSM) & Actor Model**
 
 Flux natively aggregates `@alwatr/fsm` to eliminate ad-hoc state variables, boolean flags, and race conditions. Instead of writing unpredictable, disjointed spaghetti code, you model your application's lifecycle as a **declarative, type-safe statechart**.
@@ -388,7 +441,9 @@ import type {StateMachineConfig} from '@alwatr/flux';
 // 1. Define strict Union Types for compile-time safety
 type FetchState = 'idle' | 'loading' | 'success' | 'failed';
 type FetchEvent = {type: 'FETCH'} | {type: 'SUCCESS'} | {type: 'ERROR'};
-interface FetchContext { retries: number }
+interface FetchContext {
+  retries: number;
+}
 
 // 2. Configure the machine declaratively
 const fetchConfig: StateMachineConfig<FetchState, FetchEvent, FetchContext> = {
@@ -397,21 +452,25 @@ const fetchConfig: StateMachineConfig<FetchState, FetchEvent, FetchContext> = {
   context: {retries: 0},
   states: {
     idle: {
-      on: { FETCH: { target: 'loading' } },
+      on: {FETCH: {target: 'loading'}},
     },
     loading: {
       on: {
-        SUCCESS: { target: 'success', assigners: [({context}) => ({...context, retries: 0})] },
+        SUCCESS: {target: 'success', assigners: [({context}) => ({...context, retries: 0})]},
         ERROR: [
           // Guard evaluates condition; first matching transition branch is chosen
-          { target: 'loading', guard: ({context}) => context.retries < 3, assigners: [({context}) => ({...context, retries: context.retries + 1})] },
-          { target: 'failed' }
+          {
+            target: 'loading',
+            guard: ({context}) => context.retries < 3,
+            assigners: [({context}) => ({...context, retries: context.retries + 1})],
+          },
+          {target: 'failed'},
         ],
       },
     },
     success: {},
     failed: {
-      on: { FETCH: { target: 'loading', assigners: [({context}) => ({...context, retries: 0})] } },
+      on: {FETCH: {target: 'loading', assigners: [({context}) => ({...context, retries: 0})]}},
     },
   },
 };
@@ -442,6 +501,7 @@ fetchService.dispatch({type: 'FETCH'});
 Flux implements a **strict layered architecture** where each layer has a single responsibility. It supports both standard Unidirectional Data Flow (UDF) and the decentralized **Actor Model** (where components/features behave as isolated micro-services powered by FSMs).
 
 ### 1. Unidirectional Data Flow (UDF) Layering
+
 ```
 ┌───────────────────────────────────────────────────────────┐
 │                         VIEW LAYER                        │
@@ -1055,6 +1115,62 @@ class FormDirective extends Directive {
   }
 }
 ```
+
+---
+
+### Bind (Declarative Data Binding)
+
+#### `setupBindDirectives()`
+
+Registers and bootstraps all `@alwatr/bind` attribute directives on application boot.
+
+```typescript
+import {setupBindDirectives} from '@alwatr/flux';
+
+setupBindDirectives();
+```
+
+#### `service_binding`
+
+The registry singleton managing presentation view models and mapping subscriptions.
+
+##### `service_binding.createViewModel(namespace, sourceSignal, project)`
+
+Registers a ViewModel namespaces mapping a domain signal state `S` to a flat presentation record `T`.
+
+```typescript
+import {service_binding} from '@alwatr/flux';
+
+service_binding.createViewModel('user', userSignal, (u) => ({
+  fullName: `${u.firstName} ${u.lastName}`,
+  cartIsEmpty: u.cart.length === 0,
+}));
+```
+
+##### `service_binding.getViewModel(namespace)`
+
+Retrieves a registered ViewModel's computed signal. Returns `null` if the namespace is not registered.
+
+##### `service_binding.removeViewModel(namespace)`
+
+Destroys the ViewModel's computed signal and removes the namespace from the active registry.
+
+#### Directives HTML Syntax
+
+- **`bind-text="namespace.prop"`**
+  Updates the element's `textContent` to the property value. Maps nullish values (`null`/`undefined`) to `''`.
+
+- **`bind-value="namespace.prop"`**
+  Updates input element values safely. Skips DOM writing if the element's value is already equal to the bound value to prevent caret cursor jumping in active text inputs.
+
+- **`bind-attrib="attr1=namespace.prop1; attr2=namespace.prop2"`**
+  Updates target DOM attributes.
+  - A boolean value toggles the attribute's presence.
+  - A nullish value (`null` or `undefined`) removes the attribute.
+  - All other values are coerced to strings.
+
+- **`lazy-bind`**
+  When added to any element with the above bindings, defers initialization and signal subscription until the element physically intersects the viewport.
 
 ---
 
