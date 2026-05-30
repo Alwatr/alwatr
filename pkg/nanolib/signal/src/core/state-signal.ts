@@ -1,8 +1,6 @@
-import {delay} from '@alwatr/delay';
+import {queueMicrotask} from '@alwatr/delay';
 import {createLogger, type AlwatrLogger} from '@alwatr/logger';
-
 import {SignalBase} from './signal-base.js';
-
 import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeResult, IReadonlySignal} from '../type.js';
 
 /**
@@ -41,34 +39,45 @@ import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeRes
 export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> {
   /**
    * The current value of the signal.
+   *
    * @private
    */
   private value__: T;
 
   /**
    * The logger instance for this signal.
+   *
    * @protected
    */
   protected logger_: AlwatrLogger;
 
   /**
    * Indicates if a notification is already scheduled.
+   * Helps batch multiple synchronous `set` operations into a single microtask notification.
+   *
    * @private
    */
   private notifyPending__ = false;
 
   /**
-   * The version of the last notification.
+   * The version of the last notification. Incrementing on every state update.
+   * Used to guard immediate subscriber execution when updates happen within the same tick.
+   *
    * @private
    */
   private notifyVersion__ = 0;
 
+  /**
+   * Creates a new StateSignal instance.
+   *
+   * @param config Configuration options including name, initialValue, and custom cleanup hooks.
+   */
   constructor(config: StateSignalConfig<T>) {
     super({
       name: config.name,
       onDestroy: config.onDestroy,
     });
-    this.logger_ = createLogger(`state-signal:${this.name}`);
+    this.logger_ = createLogger(`state_signal:${this.name}`);
     this.value__ = config.initialValue;
     this.logger_.logMethodArgs?.('constructor', {initialValue: this.value__});
   }
@@ -77,6 +86,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * Retrieves the current value of the signal.
    *
    * @returns The current value.
+   * @throws {Error} If the signal has been destroyed.
    *
    * @example
    * console.log(mySignal.get());
@@ -87,10 +97,11 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
   }
 
   /**
-   * Updates the signal's value and notifies all active listeners.
+   * Updates the signal's value and schedules notifications for all active listeners.
    *
-   * The notification is scheduled as a microtask, which means the update is deferred
-   * slightly to batch multiple synchronous changes.
+   * Primitives are comparison-checked via `Object.is`. If unchanged, the update is ignored.
+   * The notification is scheduled as a microtask, allowing multiple synchronous updates
+   * to be batched and executed once.
    *
    * @param newValue The new value to set.
    *
@@ -115,9 +126,10 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
   }
 
   /**
-   * Notifies all listeners about the current value, even if it hasn't changed.
+   * Forcefully schedules a notification of the current value to all subscribers.
    *
-   * This method is useful when you change the value instance directly (e.g., mutating an object) and want to inform listeners about the change.
+   * Useful when mutating properties within object states directly without assigning a new reference.
+   * Notification is queued as a microtask for batching.
    */
   public notifyChange(): void {
     this.logger_.logMethod?.('notifyChange');
@@ -128,7 +140,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
     this.notifyPending__ = true;
 
     // Dispatch as a microtask to ensure consistent, non-blocking behavior.
-    delay.nextMicrotask().then(() => {
+    queueMicrotask(() => {
       this.notifyPending__ = false;
       this.notify_(this.value__);
     });
@@ -137,10 +149,9 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
   /**
    * Updates the signal's value based on its previous value.
    *
-   * This method is particularly useful for state transitions that depend on the current value,
-   * especially for objects or arrays, as it promotes an immutable update pattern.
+   * A functional update pattern that retrieves the current value, computes the next, and sets it.
    *
-   * @param updater A function that receives the current value and returns the new value.
+   * @param updater A callback function that receives the current value and returns the new value.
    *
    * @example
    * // For a counter
@@ -157,13 +168,13 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
   }
 
   /**
-   * Subscribes a listener to this signal.
+   * Subscribes a listener function to this state signal.
    *
    * By default, the listener is immediately called with the signal's current value (`receivePrevious: true`).
-   * This behavior can be customized via the `options` parameter.
+   * This immediate call is queued as a microtask to match the asynchronous flow of signals.
    *
-   * @param callback The function to be called when the signal's value changes.
-   * @param options Subscription options, including `receivePrevious` and `once`.
+   * @param callback The function to invoke when the state changes.
+   * @param options Custom options, such as `receivePrevious: false` to only listen to future updates.
    * @returns An object with an `unsubscribe` method to remove the listener.
    */
   public override subscribe(callback: ListenerCallback<T>, options: SubscribeOptions = {}): SubscribeResult {
@@ -176,30 +187,38 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
     if (this.notifyPending__) return result; // If a notification is already pending, the callback will be called with the latest value when the notification is processed.
 
     const subscribeVersion = this.notifyVersion__;
-    delay
-      .nextMicrotask()
-      .then((): void => {
-        this.logger_.logStep?.('subscribe', 'immediate_callback');
-        if (this.notifyVersion__ !== subscribeVersion) return; // A notification occurred after subscribing, so skip the immediate callback.
-        if (options.once) {
-          result.unsubscribe();
-        }
+
+    queueMicrotask((): void => {
+      this.logger_.logStep?.('subscribe', 'immediate_callback');
+      if (this.notifyVersion__ !== subscribeVersion) return; // A notification occurred after subscribing, so skip the immediate callback.
+      if (options.once) {
+        result.unsubscribe();
+      }
+      try {
         callback(this.value__);
-      })
-      .catch((err) => this.logger_.error('subscribe', 'immediate_callback_failed', err));
+      } catch (err) {
+        this.logger_.error('subscribe', 'immediate_callback_failed', err);
+      }
+    });
 
     return result;
   }
 
   /**
    * Destroys the signal, clearing its value and all listeners.
-   * This is crucial for memory management to prevent leaks.
+   * Breaks references for garbage collection.
    */
   public override destroy(): void {
     this.value__ = null as T; // Clear the value to allow for garbage collection.
     super.destroy();
   }
 
+  /**
+   * Returns this signal cast to the `IReadonlySignal<T>` interface.
+   * Limits access so external callers can only subscribe/read but not set/update state.
+   *
+   * @returns A readonly representation of this signal.
+   */
   public asReadonly(): IReadonlySignal<T> {
     return this;
   }

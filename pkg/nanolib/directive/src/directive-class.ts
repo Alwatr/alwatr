@@ -5,11 +5,11 @@
  * directives. Extend it to attach declarative behaviour to DOM elements.
  */
 
-import type {Awaitable} from '@alwatr/type-helper';
-import {delay} from '@alwatr/delay';
+import {queueMicrotask, requestAnimationFrame} from '@alwatr/delay';
 import {createLogger} from '@alwatr/logger';
 import {finalizationRegistry} from './lib.js';
-import type {IBaseSignal, ListenerCallback, SubscribeOptions} from '@alwatr/signal';
+import {queueRender} from './queue-render.js';
+import type {ListenerCallback, Subscribable} from './type.js';
 
 /**
  * A map to keep track of the number of instances for each directive name. This helps in generating unique indices for directives when multiple instances are present on the same page.
@@ -70,7 +70,7 @@ export abstract class Directive {
   /**
    * A list of callback functions to be executed when the directive is destroyed.
    */
-  private readonly destroyHookList__: (() => Awaitable<void>)[] = [];
+  private readonly destroyHookList__: (() => void)[] = [];
 
   /**
    * A unique index for this directive instance, generated based on the attribute name and the number of existing instances of that name. This helps differentiate multiple instances of the same directive on the page.
@@ -142,9 +142,10 @@ export abstract class Directive {
    */
   protected intersectionOptions_?: IntersectionObserverInit;
 
+  private initializing__: true | undefined = true;
+
   constructor(element: HTMLElement, attributeName: string) {
     this.index = generateIndexForDirective(attributeName);
-
     const identifier = `directive:${attributeName}/${this.index}`;
     this.logger_ = createLogger(identifier);
     this.logger_.logMethodArgs?.('new', {attributeName, element});
@@ -155,44 +156,38 @@ export abstract class Directive {
     // Parse the initial value from the attribute
     this.attributeValue = this.element_.getAttribute(this.attributeName) ?? '';
 
-    // Register this instance with the FinalizationRegistry for cleanup when garbage collected
-    finalizationRegistry?.register(this, `${identifier}/instance`);
-    finalizationRegistry?.register(this.element_, `${identifier}/element`);
-
-    // Defer the initialization to the next macrotask to ensure that the directive is fully set up and the initial attribute value is parsed before running any logic.
-    delay.nextMacrotask().then(() => this.initializeLifecycle_());
+    // Structural Edge-Case Guard: Ensure element hooks are compiled after the current microtask thread ends
+    queueMicrotask(() => this.initializeLifecycle_());
   }
-
-  private initialized__ = false;
 
   /**
    * Initializes the directive's lifecycle by calling the `init_` method and setting up any necessary observers for lazy initialization and visibility tracking. This method is called after the directive instance is created and the initial attribute value is parsed.
    */
-  private async initializeLifecycle_(): Promise<void> {
+  private initializeLifecycle_(): void {
+    this.logger_.logMethod?.('initializeLifecycle_');
+
+    if (this.isDestroyed()) return;
+
+    // Register this instance with the FinalizationRegistry for cleanup when garbage collected
+    finalizationRegistry?.register(this, `${this.logger_.name}/instance`);
+    finalizationRegistry?.register(this.element_, `${this.logger_.name}/element`);
+
     try {
-      await this.init_?.();
+      this.init_?.();
     } catch (err) {
       this.logger_.error('init_', 'error_in_init', err);
     }
+    this.triggerLazyInit__();
+    this.triggerVisibilityObserver__();
 
-    if (this.lazyInit_) {
-      this.triggerLazyInit_();
-    }
-    if (this.onVisible_ || this.onHidden_) {
-      this.triggerVisibilityObserver_();
-    }
-
-    this.initialized__ = true;
-    if (this.disableUpdate_) {
-      void this.performUpdate__();
-    }
+    delete this.initializing__;
   }
 
   /**
    * The initialization method that must be implemented by subclasses. This is where you should put the logic to set up the directive, such as adding event listeners or manipulating the DOM element. It is called after the directive instance is created and the initial attribute value is parsed.
    * This method can be asynchronous if needed, allowing for any setup that requires waiting (e.g., fetching data).
    */
-  protected init_?(): Awaitable<void>;
+  protected init_?(): void;
 
   /**
    * Optional lifecycle hook — runs **exactly once** the first time the element enters the viewport.
@@ -200,7 +195,7 @@ export abstract class Directive {
    *
    * Use for: lazy loading images, fetching data, heavy DOM setup.
    */
-  protected lazyInit_?(): Awaitable<void>;
+  protected lazyInit_?(): void;
 
   /**
    * Optional lifecycle hook — runs **every time** the element enters the viewport.
@@ -208,7 +203,7 @@ export abstract class Directive {
    *
    * Use for: impression tracking, restarting animations, refreshing dynamic data.
    */
-  protected onVisible_?(): Awaitable<void>;
+  protected onVisible_?(): void;
 
   /**
    * Optional lifecycle hook — runs **every time** the element leaves the viewport.
@@ -216,71 +211,65 @@ export abstract class Directive {
    *
    * Use for: pausing animations, stopping video playback, cancelling in-progress work.
    */
-  protected onHidden_?(): Awaitable<void>;
+  protected onHidden_?(): void;
 
   /**
    * Handles one-shot lazy execution with environment-aware fallbacks.
    * Uses IntersectionObserver when available, falls back to requestIdleCallback or setTimeout(100ms).
    */
-  private triggerLazyInit_(): void {
-    const executeLazyInit_ = async () => {
-      try {
-        if (this.isDestroyed()) return;
-        await this.lazyInit_!();
-      } catch (err) {
-        this.logger_.error('triggerLazyInit_', 'error_in_lazy_init', err);
-      }
-    };
+  private triggerLazyInit__(): void {
+    if (!this.lazyInit_) return;
+    this.logger_.logMethod?.('triggerLazyInit__');
 
     if (typeof IntersectionObserver !== 'undefined') {
       const observer = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
           observer.disconnect();
-          void executeLazyInit_();
+          try {
+            if (this.lazyInit_ && !this.isDestroyed()) {
+              this.lazyInit_();
+            }
+          } catch (err) {
+            this.logger_.error('triggerLazyInit_', 'error_in_lazy_init', err);
+          }
         }
       }, this.intersectionOptions_);
       observer.observe(this.element_);
       this.addDestroyHook(() => observer.disconnect());
-    } else if (typeof requestIdleCallback !== 'undefined') {
-      requestIdleCallback(() => void executeLazyInit_());
     } else {
-      setTimeout(() => void executeLazyInit_(), 100);
+      requestAnimationFrame(() => {
+        try {
+          if (this.lazyInit_ && !this.isDestroyed()) {
+            this.lazyInit_();
+          }
+        } catch (err) {
+          this.logger_.error('triggerLazyInit_', 'error_in_lazy_init', err);
+        }
+      });
     }
   }
 
-  /**
-   * Handles persistent visibility tracking with destroy-safe cleanup.
-   * A single IntersectionObserver handles both onVisible_ and onHidden_ to avoid duplicate observers.
-   * Falls back to a single immediate onVisible_ execution if IntersectionObserver is unavailable.
-   */
-  private triggerVisibilityObserver_(): void {
-    const executeOnVisible_ = async () => {
-      try {
-        if (this.isDestroyed()) return;
-        await this.onVisible_?.();
-      } catch (err) {
-        this.logger_.error('triggerVisibilityObserver_', 'error_in_on_visible', err);
-      }
-    };
-
-    const executeOnHidden_ = async () => {
-      try {
-        if (this.isDestroyed()) return;
-        await this.onHidden_?.();
-      } catch (err) {
-        this.logger_.error('triggerVisibilityObserver_', 'error_in_on_hidden', err);
-      }
-    };
+  private triggerVisibilityObserver__(): void {
+    if (!this.onVisible_ && !this.onHidden_) return;
+    this.logger_.logMethod?.('triggerVisibilityObserver__');
 
     if (typeof IntersectionObserver !== 'undefined') {
       const observer = new IntersectionObserver((entries) => {
         if (this.isDestroyed()) return;
         const entry = entries[0];
         if (entry.isIntersecting) {
-          void executeOnVisible_();
+          try {
+            if (this.onVisible_ && !this.isDestroyed()) {
+              this.onVisible_();
+            }
+          } catch (err) {
+            this.logger_.error('triggerVisibilityObserver_', 'error_in_on_visible', err);
+          }
         } else {
           try {
-            void executeOnHidden_();
+            if (this.onHidden_ && !this.isDestroyed()) {
+              this.onHidden_();
+            }
           } catch (err) {
             this.logger_.error('triggerVisibilityObserver_', 'error_in_on_hidden', err);
           }
@@ -288,9 +277,16 @@ export abstract class Directive {
       }, this.intersectionOptions_);
       observer.observe(this.element_);
       this.addDestroyHook(() => observer.disconnect());
-    } else if (this.onVisible_) {
-      // Fallback: run onVisible_ once after 100ms. onHidden_ has no meaningful fallback.
-      setTimeout(() => void executeOnVisible_(), 100);
+    } else {
+      requestAnimationFrame(() => {
+        try {
+          if (this.onVisible_ && !this.isDestroyed()) {
+            this.onVisible_();
+          }
+        } catch (err) {
+          this.logger_.error('triggerVisibilityObserver_', 'error_in_on_visible', err);
+        }
+      });
     }
   }
 
@@ -327,8 +323,8 @@ export abstract class Directive {
    * );
    * ```
    */
-  public addDestroyHook(task: (this: this) => Awaitable<void>): void {
-    this.logger_.logMethod?.('onDestroy');
+  public addDestroyHook(task: (this: this) => void): void {
+    this.logger_.logMethod?.('addDestroyHook');
     this.destroyHookList__.push(task);
   }
 
@@ -339,19 +335,18 @@ export abstract class Directive {
    * helping with garbage collection. It can be extended by subclasses to perform additional cleanup,
    * such as removing event listeners.
    */
-  public async destroy(): Promise<void> {
+  public destroy(): void {
     this.logger_.logMethod?.('destroy');
 
     // Execute all registered cleanup tasks
     if (this.destroyHookList__.length > 0) {
-      for (const task of this.destroyHookList__) {
+      for (let i = 0; i < this.destroyHookList__.length; i++) {
         try {
-          await task.call(this);
+          this.destroyHookList__[i].call(this);
         } catch (err) {
           this.logger_.error('destroy', 'error_in_destroy_callback', err);
         }
       }
-
       this.destroyHookList__.length = 0; // clear the list after executing all tasks
     }
 
@@ -388,7 +383,7 @@ export abstract class Directive {
    */
   protected on_<K extends keyof HTMLElementEventMap>(
     eventType: K,
-    listener: (this: this, event: HTMLElementEventMap[K]) => Awaitable<void>,
+    listener: (this: this, event: HTMLElementEventMap[K]) => void,
     element?: HTMLElement | string | null,
     options?: AddEventListenerOptions | boolean,
   ): void;
@@ -397,14 +392,14 @@ export abstract class Directive {
    */
   protected on_(
     eventType: string,
-    listener: (this: this, event: Event) => Awaitable<void>,
+    listener: (this: this, event: Event) => void,
     element?: HTMLElement | string | null,
     options?: AddEventListenerOptions | boolean,
   ): void;
 
   protected on_(
     eventType: string,
-    listener: (this: this, event: Event) => Awaitable<void>,
+    listener: (this: this, event: Event) => void,
     element: HTMLElement | string | null = this.element_,
     options?: AddEventListenerOptions | boolean,
   ): void {
@@ -420,57 +415,6 @@ export abstract class Directive {
     element.addEventListener(eventType, boundListener as EventListener, options);
     this.addDestroyHook(() => element.removeEventListener(eventType, boundListener as EventListener, options));
   }
-
-  /**
-   * Controls whether `requestUpdate()` is allowed to schedule a new render cycle.
-   *
-   * This flag serves two purposes simultaneously:
-   *
-   * 1. **Pending-update guard** — set to `true` by `requestUpdate()` and cleared to `false`
-   *    by `performUpdate__()` once the cycle completes (or is aborted by `shouldUpdate_()`).
-   *    This collapses multiple `requestUpdate()` calls within the same macrotask into a single
-   *    render, preventing redundant work.
-   *
-   * 2. **Manual render suppression** — subclasses may set this to `true` at any time to
-   *    permanently pause rendering (e.g. while the directive is in a loading or suspended state).
-   *    Set it back to `false` and call `requestUpdate()` to resume.
-   *
-   * **Interaction with `shouldUpdate_()`:**
-   * `shouldUpdate_()` aborts a single in-flight cycle without preventing future ones.
-   * `disableUpdate_ = true` prevents any cycle from being scheduled at all until it is reset.
-   * Use `shouldUpdate_()` for per-cycle conditions; use `disableUpdate_` for sustained pauses.
-   *
-   * @example — Pause rendering during a multi-step async operation
-   * ```ts
-   * protected override async init_(): Promise<void> {
-   *   // Prevent any signal-triggered renders while we are still setting up
-   *   this.disableUpdate_ = true;
-   *
-   *   this.subscribe_(userSignal, (user) => {
-   *     this.user_ = user;
-   *     this.requestUpdate(); // silently ignored while disableUpdate_ is true
-   *   });
-   *
-   *   await this.loadInitialData_();
-   *
-   *   this.disableUpdate_ = false; // re-enable rendering
-   *   this.requestUpdate();        // trigger the first render with fully loaded state
-   * }
-   * ```
-   *
-   * @example — Suspend rendering when the directive enters a background tab
-   * ```ts
-   * protected override onHidden_(): void {
-   *   this.disableUpdate_ = true; // no renders while off-screen
-   * }
-   *
-   * protected override onVisible_(): void {
-   *   this.disableUpdate_ = false;
-   *   this.requestUpdate(); // catch up with any missed state changes
-   * }
-   * ```
-   */
-  protected disableUpdate_ = false;
 
   /**
    * Schedules a batched re-render for the next macrotask.
@@ -509,30 +453,38 @@ export abstract class Directive {
    */
   public requestUpdate(): void {
     this.logger_.logMethod?.('requestUpdate');
-    if (this.disableUpdate_) return;
-    this.disableUpdate_ = true;
-    void this.performUpdate__();
+    queueRender(this);
   }
 
   /**
    * Performs the update cycle by calling `update_()` and then `updated_()`.
    * This method is responsible for executing the update logic in a batched manner, ensuring that multiple calls to `requestUpdate()` within the same macrotask result in only one execution of `update_()` and `updated_()`.
    */
-  private async performUpdate__(): Promise<void> {
-    await delay.nextMacrotask();
-    this.logger_.logMethod?.('performUpdate__');
-    if (this.shouldUpdate_() === false) {
-      this.logger_.logOther?.('update_aborted_by_should_update');
-      this.disableUpdate_ = false;
+  public performUpdate_(): void {
+    this.logger_.logMethod?.('performUpdate_');
+    if (this.isDestroyed()) return;
+    if (this.initializing__) {
+      // reschedule for after initialization completes
+      queueRender(this);
       return;
     }
-    if (this.initialized__ === false || this.isDestroyed()) return;
-    try {
-      this.update_();
-    } finally {
-      this.disableUpdate_ = false;
+
+    if (this.shouldUpdate_?.() === false) {
+      this.logger_.incident?.('performUpdate_', 'update_aborted_by_should_update');
+      return;
     }
-    this.updated_();
+
+    try {
+      this.update_?.();
+    } catch (err) {
+      this.logger_.error('performUpdate_', 'error_in_update', err);
+    }
+
+    try {
+      this.updated_?.();
+    } catch (err) {
+      this.logger_.error('performUpdate_', 'error_in_updated', err);
+    }
   }
 
   /**
@@ -589,7 +541,7 @@ export abstract class Directive {
    * }
    * ```
    */
-  protected shouldUpdate_(): boolean | void {}
+  protected shouldUpdate_?(): boolean;
 
   /**
    * Called during each scheduled update cycle, immediately before `updated_()`.
@@ -602,9 +554,7 @@ export abstract class Directive {
    * Do **not** call `requestUpdate()` from inside `update_()` — it will be ignored because the
    * pending flag is still set at that point.
    */
-  protected update_(): void {
-    this.logger_.logMethod?.('update_');
-  }
+  protected update_?(): void;
 
   /**
    * Called immediately after `update_()` completes in each update cycle.
@@ -622,9 +572,7 @@ export abstract class Directive {
    * }
    * ```
    */
-  protected updated_(): void {
-    this.logger_.logMethod?.('updated_');
-  }
+  protected updated_?(): void;
 
   /**
    * Subscribes to a signal and automatically unsubscribes when the directive is destroyed.
@@ -649,7 +597,7 @@ export abstract class Directive {
    * }
    * ```
    */
-  protected subscribe_<T>(signal: IBaseSignal<T>, callback: ListenerCallback<T>, options?: SubscribeOptions): void {
+  protected subscribe_<T, O>(signal: Subscribable<T, O>, callback: ListenerCallback<T>, options?: O): void {
     this.addDestroyHook(signal.subscribe(callback, options).unsubscribe);
   }
 }

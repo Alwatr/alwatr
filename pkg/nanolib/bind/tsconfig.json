@@ -1,0 +1,10 @@
+{
+  "extends": "@alwatr/standard/tsconfig",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "types": ["@alwatr/nano-build"],
+    "composite": true
+  },
+  "include": ["src/**/*.ts"]
+}

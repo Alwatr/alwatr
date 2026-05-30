@@ -1,4 +1,3 @@
-import type {Awaitable} from '@alwatr/type-helper';
 import type {DebouncerConfig} from '@alwatr/debounce';
 import type {LocalStorageProviderConfig} from '@alwatr/local-storage';
 import type {SessionStorageProviderConfig} from '@alwatr/session-storage';
@@ -11,7 +10,7 @@ import type {SessionStorageProviderConfig} from '@alwatr/session-storage';
  *
  * @template T The type of the value that the signal holds or dispatches.
  */
-export type ListenerCallback<T> = (value: T) => Awaitable<void>;
+export type ListenerCallback<T> = (value: T) => void;
 
 /**
  * Options for fine-tuning the behavior of a subscription to a signal.
@@ -258,7 +257,7 @@ export interface EffectSignalConfig {
    *   run: () => console.log(`The counter is now: ${counter.get()}`),
    * });
    */
-  run: () => Awaitable<void>;
+  run: () => void;
 
   /**
    * If `true`, the effect's `run` function will be executed once immediately upon initialization.
@@ -406,3 +405,55 @@ export interface SessionStateSignalConfig<T> extends StateSignalConfig<T>, Sessi
    */
   saveDebounceDelay?: number;
 }
+
+/**
+ * Determines whether the payload argument for a given channel message is
+ * required or optional, based solely on the declared type in `TMap`.
+ *
+ * - `void | undefined` → payload is optional (second arg may be omitted).
+ * - anything else      → payload is **required** (omitting it is a compile error).
+ *
+ * This is used to build the rest-parameter tuple for `dispatch()` so that
+ * TypeScript enforces the correct call signature at every dispatch site.
+ *
+ * @template TMap A record mapping message names to their payload types.
+ * @template K    The specific message name key.
+ *
+ * @example
+ * ```ts
+ * // ActionRecord: { 'logout': void; 'add-to-cart': {productId: number} }
+ * type A = DispatchArgs<ActionRecord, 'logout'>;       // [name: 'logout', payload?: void]
+ * type B = DispatchArgs<ActionRecord, 'add-to-cart'>;  // [name: 'add-to-cart', payload: {productId: number}]
+ * ```
+ */
+export type DispatchArgs<TMap extends object, K extends keyof TMap> =
+  TMap[K] extends void | undefined ? [name: K, payload?: TMap[K]] : [name: K, payload: TMap[K]];
+
+/**
+ * A single message dispatched through a `ChannelSignal`.
+ *
+ * `name` identifies the message type (e.g. `'open-drawer'`, `'add-to-cart'`).
+ * `payload` carries the associated data, whose type is determined by the generic `TMap` based on the `name`.
+ *
+ * @template TMap A record mapping message names to their payload types.
+ * @template K    The specific message name key (inferred, not set manually).
+ */
+export type ChannelMessage<TMap extends object, K extends keyof TMap = keyof TMap> = {name: K; payload: TMap[K]};
+
+/**
+ * A typed handler for a specific named message on a `ChannelSignal`.
+ * Receives only the `payload` — the name is already known at subscription time.
+ *
+ * The payload type mirrors `DispatchArgs`: it is `TMap[K] | undefined` only
+ * when the declared type is `void | undefined`; otherwise it is exactly `TMap[K]`
+ * (non-optional) so handlers do not need unnecessary null-guards.
+ *
+ * @template TMap A record mapping message names to their payload types.
+ * @template K    The specific message name key.
+ */
+export type ChannelHandler<TMap extends object, K extends keyof TMap = keyof TMap> = (payload: TMap[K]) => void;
+
+/**
+ * Configuration for creating a `ChannelSignal`.
+ */
+export interface ChannelSignalConfig extends SignalConfig {}

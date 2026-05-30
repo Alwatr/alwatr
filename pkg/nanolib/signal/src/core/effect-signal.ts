@@ -1,7 +1,6 @@
-import { delay } from '@alwatr/delay';
-import { createLogger, type AlwatrLogger } from '@alwatr/logger';
-
-import type { EffectSignalConfig, IEffectSignal, SubscribeResult } from '../type.js';
+import {delay} from '@alwatr/delay';
+import {createLogger, type AlwatrLogger} from '@alwatr/logger';
+import type {EffectSignalConfig, IEffectSignal, SubscribeResult} from '../type.js';
 
 /**
  * Manages a side-effect that runs in response to changes in dependency signals.
@@ -50,24 +49,30 @@ export class EffectSignal implements IEffectSignal {
 
   /**
    * The logger instance for this signal.
+   *
    * @protected
    */
   protected readonly logger_: AlwatrLogger;
 
   /**
    * A list of subscriptions to dependency signals.
+   * Used to unsubscribe from dependencies when this signal is destroyed.
+   *
    * @private
    */
   private readonly dependencySubscriptions__: SubscribeResult[] = [];
 
   /**
    * A flag to prevent concurrent executions of the effect.
+   * Avoids scheduling multiple runs within the same event loop.
+   *
    * @private
    */
   private isRunning__ = false;
 
   /**
    * A flag indicating whether the effect has been destroyed.
+   *
    * @private
    */
   private isDestroyed__ = false;
@@ -82,6 +87,12 @@ export class EffectSignal implements IEffectSignal {
     return this.isDestroyed__;
   }
 
+  /**
+   * Creates a new EffectSignal instance.
+   * Subscribes to all dependency signals to listen for updates.
+   *
+   * @param config_ Configuration options including dependencies, side-effect runner callback, and immediate execution flag.
+   */
   constructor(protected config_: EffectSignalConfig) {
     this.name = config_.name ?? `[${config_.deps.map((dep) => dep.name).join(', ')}]`;
     this.logger_ = createLogger(`effect-signal:${this.name}`);
@@ -92,8 +103,8 @@ export class EffectSignal implements IEffectSignal {
     // Subscribe to all dependencies. We don't need the previous value,
     // as the `runImmediately` option controls the initial execution.
     for (const signal of config_.deps) {
-      this.logger_.logStep?.('constructor', 'subscribing_to_dependency', { signal: signal.name });
-      this.dependencySubscriptions__.push(signal.subscribe(this.scheduleExecution_, { receivePrevious: false }));
+      this.logger_.logStep?.('constructor', 'subscribing_to_dependency', {signal: signal.name});
+      this.dependencySubscriptions__.push(signal.subscribe(this.scheduleExecution_, {receivePrevious: false}));
     }
 
     // Run the effect immediately if requested.
@@ -107,10 +118,12 @@ export class EffectSignal implements IEffectSignal {
   /**
    * Schedules the execution of the effect's `run` function.
    *
-   * This method batches updates using a macrotask (`delay.nextMacrotask`) to ensure the
+   * This method batches updates using a macrotask (`delay.nextMicrotask`) to ensure the
    * `run` function executes only once per event loop tick, even if multiple
    * dependencies change simultaneously.
+   *
    * @protected
+   * @returns A promise that resolves when the execution schedules or runs.
    */
   protected async scheduleExecution_(): Promise<void> {
     this.logger_.logMethod?.('scheduleExecution_');
@@ -129,7 +142,7 @@ export class EffectSignal implements IEffectSignal {
 
     try {
       // Wait for the next macrotask to batch simultaneous updates.
-      await delay.nextMacrotask();
+      await delay.nextMicrotask();
       if (this.isDestroyed__) {
         this.logger_.incident?.('scheduleExecution_', 'destroyed_during_delay');
         this.isRunning__ = false;
@@ -137,9 +150,8 @@ export class EffectSignal implements IEffectSignal {
       }
 
       this.logger_.logStep?.('scheduleExecution_', 'executing_effect');
-      await this.config_.run();
-    }
-    catch (err) {
+      this.config_.run();
+    } catch (err) {
       this.logger_.error('scheduleExecution_', 'effect_failed', err);
     }
 

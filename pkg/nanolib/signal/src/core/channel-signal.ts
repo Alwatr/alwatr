@@ -1,61 +1,15 @@
-import type {Awaitable} from '@alwatr/type-helper';
-import {delay} from '@alwatr/delay';
+import {queueMicrotask} from '@alwatr/delay';
 import {createLogger, type AlwatrLogger} from '@alwatr/logger';
-
 import {SignalBase} from './signal-base.js';
-
-import type {SignalConfig, SubscribeOptions, SubscribeResult, ListenerCallback} from '../type.js';
-
-// ─── Types ────────────────────────────────────────────────────────────────────
-
-/**
- * Determines whether the payload argument for a given channel message is
- * required or optional, based solely on the declared type in `TMap`.
- *
- * - `void | undefined` → payload is optional (second arg may be omitted).
- * - anything else      → payload is **required** (omitting it is a compile error).
- *
- * This is used to build the rest-parameter tuple for `dispatch()` so that
- * TypeScript enforces the correct call signature at every dispatch site.
- *
- * @template TMap A record mapping message names to their payload types.
- * @template K    The specific message name key.
- *
- * @example
- * ```ts
- * // ActionRecord: { 'logout': void; 'add-to-cart': {productId: number} }
- * type A = DispatchArgs<ActionRecord, 'logout'>;       // [name: 'logout', payload?: void]
- * type B = DispatchArgs<ActionRecord, 'add-to-cart'>;  // [name: 'add-to-cart', payload: {productId: number}]
- * ```
- */
-export type DispatchArgs<TMap extends object, K extends keyof TMap> =
-  TMap[K] extends void | undefined ? [name: K, payload?: TMap[K]] : [name: K, payload: TMap[K]];
-
-/**
- * A single message dispatched through a `ChannelSignal`.
- *
- * `name` identifies the message type (e.g. `'open-drawer'`, `'add-to-cart'`).
- * `payload` carries the associated data, whose type is determined by the generic `TMap` based on the `name`.
- *
- * @template TMap A record mapping message names to their payload types.
- * @template K    The specific message name key (inferred, not set manually).
- */
-export type ChannelMessage<TMap extends object, K extends keyof TMap = keyof TMap> = {name: K; payload: TMap[K]};
-
-/**
- * A typed handler for a specific named message on a `ChannelSignal`.
- * Receives only the `payload` — the name is already known at subscription time.
- *
- * The payload type mirrors `DispatchArgs`: it is `TMap[K] | undefined` only
- * when the declared type is `void | undefined`; otherwise it is exactly `TMap[K]`
- * (non-optional) so handlers do not need unnecessary null-guards.
- *
- * @template TMap A record mapping message names to their payload types.
- * @template K    The specific message name key.
- */
-export type ChannelHandler<TMap extends object, K extends keyof TMap = keyof TMap> = (
-  payload: TMap[K],
-) => Awaitable<void>;
+import type {
+  SubscribeOptions,
+  SubscribeResult,
+  ListenerCallback,
+  ChannelHandler,
+  ChannelMessage,
+  ChannelSignalConfig,
+  DispatchArgs,
+} from '../type.js';
 
 /**
  * Internal handler type used inside `namedHandlers__`.
@@ -68,12 +22,7 @@ export type ChannelHandler<TMap extends object, K extends keyof TMap = keyof TMa
  *
  * @internal
  */
-type InternalHandler = (payload: unknown) => Awaitable<void>;
-
-/**
- * Configuration for creating a `ChannelSignal`.
- */
-export interface ChannelSignalConfig extends SignalConfig {}
+type InternalHandler = (payload: unknown) => void;
 
 // ─── Class ────────────────────────────────────────────────────────────────────
 
@@ -124,6 +73,7 @@ export interface ChannelSignalConfig extends SignalConfig {}
 export class ChannelSignal<TMap extends object> extends SignalBase<ChannelMessage<TMap>> {
   /**
    * The logger instance for this signal.
+   *
    * @protected
    */
   protected logger_: AlwatrLogger;
@@ -143,9 +93,14 @@ export class ChannelSignal<TMap extends object> extends SignalBase<ChannelMessag
    */
   private readonly namedHandlers__ = new Map<keyof TMap, Set<{handler: InternalHandler; once: boolean}>>();
 
+  /**
+   * Creates a new ChannelSignal instance.
+   *
+   * @param config Configuration options including the unique channel name and cleanup hook.
+   */
   constructor(config: ChannelSignalConfig) {
     super(config);
-    this.logger_ = createLogger(`channel-signal:${this.name}`);
+    this.logger_ = createLogger(`channel_signal:${this.name}`);
     this.logger_.logMethod?.('constructor');
   }
 
@@ -172,6 +127,7 @@ export class ChannelSignal<TMap extends object> extends SignalBase<ChannelMessag
    * channel.dispatch('logout', undefined);            // ✅ also fine
    * ```
    *
+   * @template K The specific message name key.
    * @param args Tuple of `[name, payload]` — payload optionality is enforced
    *             by `DispatchArgs<TMap, K>` based on the declared type.
    */
@@ -179,7 +135,7 @@ export class ChannelSignal<TMap extends object> extends SignalBase<ChannelMessag
     const [name, payload] = args;
     this.logger_.logMethodArgs?.('dispatch', {name, payload});
     this.checkDestroyed_();
-    delay.nextMicrotask().then(() => this.route__(name, payload));
+    queueMicrotask(() => this.route__(name, payload));
   }
 
   /**
@@ -192,6 +148,7 @@ export class ChannelSignal<TMap extends object> extends SignalBase<ChannelMessag
    * envelope) — since the name is already known at subscription time, passing
    * it again would be redundant.
    *
+   * @template K    The specific message name key.
    * @param name    The message name to listen for.
    * @param handler Callback invoked with the payload each time the named message
    *                is dispatched.
@@ -272,6 +229,9 @@ export class ChannelSignal<TMap extends object> extends SignalBase<ChannelMessag
    * 2. Invokes each handler, removing `once` entries after their first call.
    * 3. Notifies raw-stream subscribers via `SignalBase.notify_()`.
    *
+   * @template K The specific message name key.
+   * @param name The message name to route.
+   * @param payload The payload associated with the message name.
    * @private
    */
   private route__<K extends keyof TMap>(name: K, payload: TMap[K] | undefined): void {
@@ -285,10 +245,7 @@ export class ChannelSignal<TMap extends object> extends SignalBase<ChannelMessag
           if (handlerSet.size === 0) this.namedHandlers__.delete(name);
         }
         try {
-          const result = entry.handler(payload);
-          if (result instanceof Promise) {
-            result.catch((err) => this.logger_.error('route__', 'async_named_handler_failed', err));
-          }
+          entry.handler(payload);
         } catch (err) {
           this.logger_.error('route__', 'sync_named_handler_failed', err);
         }

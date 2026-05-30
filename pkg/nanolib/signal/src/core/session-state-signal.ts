@@ -1,8 +1,6 @@
 import {createDebouncer} from '@alwatr/debounce';
 import {createSessionStorageProvider} from '@alwatr/session-storage';
-
 import {StateSignal} from './state-signal.js';
-
 import type {SessionStateSignalConfig} from '../type.js';
 import type {SessionStorageProvider} from '@alwatr/session-storage';
 
@@ -44,7 +42,7 @@ import type {SessionStorageProvider} from '@alwatr/session-storage';
  *
  * // Example 2: Custom state type with parse and stringify
  * const dateSignal = new SessionStateSignal<Date>({
- *   name: 'last-interaction',
+ *   name: 'timestamp-signal',
  *   initialValue: new Date(),
  *   parse: (str: string) => new Date(str),
  *   stringify: (date: Date) => date.toISOString(),
@@ -62,24 +60,31 @@ import type {SessionStorageProvider} from '@alwatr/session-storage';
 export class SessionStateSignal<T> extends StateSignal<T> {
   /**
    * The underlying session storage provider instance.
+   *
    * @private
    */
   private readonly storageProvider__: SessionStorageProvider<T>;
 
   /**
    * Debouncer to limit how often we write to sessionStorage.
+   * Helps reduce synchronous overhead from session storage updates.
+   *
    * @private
    */
   private readonly storageDebouncer__;
 
   /**
    * Subscription to the signal's own changes for sessionStorage sync.
+   * Writes the value to sessionStorage after a debounce delay.
+   *
    * @private
    */
   private readonly storageSyncSubscription__;
 
   /**
    * Listener for the browser's pagehide events to flush pending saves.
+   * Ensures pending state changes are flushed to sessionStorage before leaving the page.
+   *
    * @private
    */
   private readonly windowPageHideListener__ = (): void => {
@@ -88,6 +93,8 @@ export class SessionStateSignal<T> extends StateSignal<T> {
 
   /**
    * Listener for the browser's pageshow events to sync from storage when restored from BFCache.
+   * Ensures in-memory sync when restored from the back-forward cache.
+   *
    * @private
    */
   private readonly windowPageShowListener__ = (event: PageTransitionEvent): void => {
@@ -100,6 +107,13 @@ export class SessionStateSignal<T> extends StateSignal<T> {
     }
   };
 
+  /**
+   * Creates a new SessionStateSignal instance.
+   * Loads initial value from sessionStorage if found, otherwise uses config's initialValue.
+   * Sets up page hide/show lifecycle handlers.
+   *
+   * @param config Configuration options including storageKeys, custom parse/stringify, and debounce delay.
+   */
   constructor(config: SessionStateSignalConfig<T>) {
     const {name, storageKey = name, saveDebounceDelay = 1000, initialValue, onDestroy, parse, stringify} = config;
 
@@ -140,6 +154,7 @@ export class SessionStateSignal<T> extends StateSignal<T> {
    * Called automatically by the debouncer after each state change.
    *
    * @param newValue The new value to sync.
+   * @private
    */
   private syncStorage__(newValue: T): void {
     this.logger_.logMethodArgs?.('syncStorage__', newValue);
@@ -165,7 +180,7 @@ export class SessionStateSignal<T> extends StateSignal<T> {
   }
 
   /**
-   * Destroys the signal, flushing pending writes and cleaning up all resources.
+   * Destroys the signal, flushing pending writes and cleaning up all resources and events.
    *
    * Always call this when the signal is no longer needed (e.g., on component unmount)
    * to prevent memory leaks.

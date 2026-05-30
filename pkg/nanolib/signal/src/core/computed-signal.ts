@@ -1,9 +1,7 @@
-import { delay } from '@alwatr/delay';
-import { createLogger, type AlwatrLogger } from '@alwatr/logger';
-
-import { StateSignal } from './state-signal.js';
-
-import type { ComputedSignalConfig, IReadonlySignal, SubscribeResult, SubscribeOptions } from '../type.js';
+import {delay} from '@alwatr/delay';
+import {createLogger, type AlwatrLogger} from '@alwatr/logger';
+import {StateSignal} from './state-signal.js';
+import type {ComputedSignalConfig, IReadonlySignal, SubscribeResult, SubscribeOptions} from '../type.js';
 
 /**
  * A read-only signal that derives its value from a set of dependency signals.
@@ -51,6 +49,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
 
   /**
    * The logger instance for this signal.
+   *
    * @protected
    */
   protected readonly logger_: AlwatrLogger;
@@ -58,26 +57,36 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
   /**
    * The internal `StateSignal` that holds the computed value.
    * This is how the computed signal provides `.get()` and `.subscribe()` methods.
+   *
    * @protected
    */
   protected readonly internalSignal_: StateSignal<T>;
 
   /**
    * A list of subscriptions to dependency signals.
+   * Used to unsubscribe from dependencies when this signal is destroyed.
+   *
    * @private
    */
-
   private readonly dependencySubscriptions__: SubscribeResult[] = [];
 
   /**
    * A flag to prevent concurrent recalculations.
+   * Avoids queuing multiple updates in the event loop.
+   *
    * @private
    */
   private isRecalculating__ = false;
 
+  /**
+   * Creates a new ComputedSignal instance.
+   * Subscribes to all dependency signals to trigger recalculations.
+   *
+   * @param config_ Configuration options including dependencies, evaluation getter, and cleanup hook.
+   */
   constructor(protected config_: ComputedSignalConfig<T>) {
     this.name = config_.name;
-    this.logger_ = createLogger(`computed-signal:${this.name}`);
+    this.logger_ = createLogger(`computed_signal:${this.name}`);
     this.recalculate_ = this.recalculate_.bind(this);
 
     this.logger_.logMethod?.('constructor');
@@ -89,8 +98,8 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
 
     // Subscribe to all dependencies to trigger recalculation on change.
     for (const signal of config_.deps) {
-      this.logger_.logStep?.('constructor', 'subscribing_to_dependency', { signal: signal.name });
-      this.dependencySubscriptions__.push(signal.subscribe(this.recalculate_, { receivePrevious: false }));
+      this.logger_.logStep?.('constructor', 'subscribing_to_dependency', {signal: signal.name});
+      this.dependencySubscriptions__.push(signal.subscribe(this.recalculate_, {receivePrevious: false}));
     }
   }
 
@@ -108,6 +117,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
   /**
    * Indicates whether the computed signal has been destroyed.
    * A destroyed signal cannot be used and will throw an error if interacted with.
+   *
    * @returns `true` if the signal is destroyed, `false` otherwise.
    */
   public get isDestroyed(): boolean {
@@ -168,10 +178,12 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
   /**
    * Schedules a recalculation of the signal's value.
    *
-   * This method batches updates using a macrotask (`delay.nextMacrotask`) to ensure the
+   * This method batches updates using a microtask (`delay.nextMicrotask`) to ensure the
    * `get` function runs only once per event loop tick, even if multiple dependencies
    * change in the same synchronous block of code.
+   *
    * @protected
+   * @returns A promise that resolves when the recalculation is complete.
    */
   protected async recalculate_(): Promise<void> {
     this.logger_.logMethod?.('recalculate_');
@@ -193,7 +205,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
     try {
       // Wait for the next macrotask to start the recalculation.
       // This batches all synchronous dependency updates in the current event loop.
-      await delay.nextMacrotask();
+      await delay.nextMicrotask();
 
       if (this.isDestroyed) {
         this.logger_.incident?.('recalculate_', 'destroyed_during_delay');
@@ -205,8 +217,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
 
       // Set the new value on the internal signal, which will notify our subscribers.
       this.internalSignal_.set(this.config_.get());
-    }
-    catch (err) {
+    } catch (err) {
       this.logger_.error('recalculate_', 'recalculation_failed', err);
     }
 

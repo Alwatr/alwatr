@@ -360,11 +360,9 @@ describe('onVisible_', () => {
 
 describe('lazyInit_ fallback chain', () => {
   let originalIntersectionObserver: typeof IntersectionObserver | undefined;
-  let originalRequestIdleCallback: typeof requestIdleCallback | undefined;
 
   beforeEach(() => {
     originalIntersectionObserver = (globalThis as any).IntersectionObserver;
-    originalRequestIdleCallback = (globalThis as any).requestIdleCallback;
   });
 
   afterEach(() => {
@@ -373,25 +371,15 @@ describe('lazyInit_ fallback chain', () => {
     } else {
       delete (globalThis as any).IntersectionObserver;
     }
-    if (originalRequestIdleCallback !== undefined) {
-      (globalThis as any).requestIdleCallback = originalRequestIdleCallback;
-    } else {
-      delete (globalThis as any).requestIdleCallback;
-    }
   });
 
   // 6.1 test 1 — Requirements 5.1
-  it('schedules lazyInit_() via requestIdleCallback when IntersectionObserver is unavailable', async () => {
+  it('schedules lazyInit_() via requestAnimationFrame when IntersectionObserver is unavailable', async () => {
     delete (globalThis as any).IntersectionObserver;
 
     const lazyInitMock = mock(() => {});
-    const idleCallbackMock = mock((cb: IdleRequestCallback) => {
-      cb({didTimeout: false, timeRemaining: () => 50} as IdleDeadline);
-      return 0;
-    });
-    (globalThis as any).requestIdleCallback = idleCallbackMock;
 
-    class RicFallbackDirective extends Directive {
+    class RafFallbackDirective extends Directive {
       protected init_(): void {}
       protected lazyInit_(): void {
         lazyInitMock();
@@ -399,38 +387,13 @@ describe('lazyInit_ fallback chain', () => {
     }
 
     const root = document.createElement('div');
-    new RicFallbackDirective(root, 'test');
+    new RafFallbackDirective(root, 'test');
 
-    await waitForInit();
-
-    expect(idleCallbackMock).toHaveBeenCalledTimes(1);
-    expect(lazyInitMock).toHaveBeenCalledTimes(1);
-  });
-
-  // 6.1 test 2 — Requirements 5.2
-  it('schedules lazyInit_() via setTimeout ~100ms when both IntersectionObserver and requestIdleCallback are unavailable', async () => {
-    delete (globalThis as any).IntersectionObserver;
-    delete (globalThis as any).requestIdleCallback;
-
-    const lazyInitMock = mock(() => {});
-
-    class SetTimeoutFallbackDirective extends Directive {
-      protected init_(): void {}
-      protected lazyInit_(): void {
-        lazyInitMock();
-      }
-    }
-
-    const root = document.createElement('div');
-    new SetTimeoutFallbackDirective(root, 'test');
-
-    await waitForInit();
-
-    // Not yet called — setTimeout(100ms) hasn't fired
+    // Not yet called immediately (scheduled via microtask + RAF)
     expect(lazyInitMock).toHaveBeenCalledTimes(0);
 
-    // Wait 150ms for the 100ms setTimeout to fire
-    await new Promise<void>((resolve) => setTimeout(resolve, 150));
+    // Wait for the fallback requestAnimationFrame/timeout to fire
+    await new Promise<void>((resolve) => setTimeout(resolve, 80));
 
     expect(lazyInitMock).toHaveBeenCalledTimes(1);
   });
@@ -456,7 +419,7 @@ describe('onVisible_ fallback', () => {
   });
 
   // 6.2 test 1 — Requirements 6.1, 6.2
-  it('calls onVisible_() exactly once immediately when IntersectionObserver is unavailable', async () => {
+  it('schedules onVisible_() via requestAnimationFrame when IntersectionObserver is unavailable', async () => {
     delete (globalThis as any).IntersectionObserver;
 
     const onVisibleMock = mock(() => {});
@@ -471,8 +434,11 @@ describe('onVisible_ fallback', () => {
     const root = document.createElement('div');
     new ImmediateFallbackDirective(root, 'test');
 
-    // Wait 150ms for the 100ms setTimeout to fire
-    await new Promise<void>((resolve) => setTimeout(resolve, 150));
+    // Not yet called immediately (scheduled via microtask + RAF)
+    expect(onVisibleMock).toHaveBeenCalledTimes(0);
+
+    // Wait for the fallback requestAnimationFrame/timeout to fire
+    await new Promise<void>((resolve) => setTimeout(resolve, 80));
 
     expect(onVisibleMock).toHaveBeenCalledTimes(1);
   });

@@ -2,11 +2,11 @@
  * Represents the AlwatrLogger interface for logging various types of information at different levels of detail.
  * This interface allows for structured logging of events, method calls, errors, and more,
  * aiding in debugging and understanding application behavior.
- * 
+ *
  * @example
  * import {createLogger} from '@alwatr/logger';
  * const logger = createLogger('my-module'); // Create a logger with a specific scope
- * 
+ *
  * function greet(name: string) {
  *   logger.logMethodArgs?.('greet', {name}); // Log the method call with its arguments
  *   // ...
@@ -16,10 +16,9 @@
  */
 export interface AlwatrLogger {
   /**
-   * Indicates whether debug mode is enabled for the current scope.
-   * This state is typically determined based on the `debug` pattern in localStorage.
+   * Logger name
    */
-  debugMode: boolean;
+  readonly name: string;
 
   /**
    * Logs a property change with its new value using `console.debug`. Useful for tracking changes in application state.

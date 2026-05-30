@@ -1,5 +1,5 @@
 import {describe, it, expect} from 'bun:test';
-import {delay} from '@alwatr/delay';
+import {delay, queueMacrotask} from '@alwatr/delay';
 
 describe('delay', () => {
   describe('delay.by', () => {
@@ -112,6 +112,32 @@ describe('delay', () => {
     it('should accept options parameter', async () => {
       const deadline = await delay.idleCallback({timeout: 100});
       expect(typeof deadline.timeRemaining).toBe('function');
+    });
+  });
+
+  describe('queueMacrotask', () => {
+    it('should execute callback asynchronously in the next macrotask', async () => {
+      let executed = false;
+      queueMacrotask(() => {
+        executed = true;
+      });
+      expect(executed).toBe(false);
+      await delay.nextMacrotask();
+      expect(executed).toBe(true);
+    });
+
+    it('should process consecutive synchronous calls in FIFO order without dropping any', async () => {
+      /** @type {number[]} */
+      const executionOrder = [];
+      
+      queueMacrotask(() => executionOrder.push(1));
+      queueMacrotask(() => executionOrder.push(2));
+      queueMacrotask(() => executionOrder.push(3));
+      
+      expect(executionOrder).toEqual([]);
+      await delay.nextMacrotask();
+      // Since all three are scheduled, they should all execute before the next tick resolves
+      expect(executionOrder).toEqual([1, 2, 3]);
     });
   });
 });

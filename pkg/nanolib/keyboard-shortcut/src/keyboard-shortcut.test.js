@@ -1,7 +1,7 @@
 import {describe, beforeEach, afterEach, it, expect, mock} from 'bun:test';
 import {GlobalRegistrator} from '@happy-dom/global-registrator';
 import {keyboardShortcutService} from '@alwatr/keyboard-shortcut';
-import {onAction} from '@alwatr/action';
+import {actionService} from '@alwatr/action';
 
 // Register DOM globals for testing (keyboard-shortcut requires document.addEventListener).
 if (typeof document === 'undefined') {
@@ -27,7 +27,7 @@ describe('keyboardShortcutService', () => {
 
   it('should dispatch action for bare Escape key press', async () => {
     const callback = mock();
-    const sub = onAction('key_escape', callback);
+    const sub = actionService.on('key_escape', callback);
 
     const event = new KeyboardEvent('keydown', {
       key: 'Escape',
@@ -43,7 +43,7 @@ describe('keyboardShortcutService', () => {
 
   it('should dispatch normalized action for modifier combos (Ctrl+S)', async () => {
     const callback = mock();
-    const sub = onAction('key_ctrl_s', callback);
+    const sub = actionService.on('key_ctrl_s', callback);
 
     const event = new KeyboardEvent('keydown', {
       key: 's',
@@ -60,7 +60,7 @@ describe('keyboardShortcutService', () => {
 
   it('should normalize modifier order to ctrl -> shift -> alt (Shift+Alt+Ctrl+U)', async () => {
     const callback = mock();
-    const sub = onAction('key_ctrl_shift_alt_u', callback);
+    const sub = actionService.on('key_ctrl_shift_alt_u', callback);
 
     const event = new KeyboardEvent('keydown', {
       key: 'u',
@@ -79,7 +79,7 @@ describe('keyboardShortcutService', () => {
 
   it('should map space key to space string (Ctrl+Space)', async () => {
     const callback = mock();
-    const sub = onAction('key_ctrl_space', callback);
+    const sub = actionService.on('key_ctrl_space', callback);
 
     const event = new KeyboardEvent('keydown', {
       key: ' ',
@@ -96,7 +96,7 @@ describe('keyboardShortcutService', () => {
 
   it('should not dispatch action for standalone modifier key presses', async () => {
     const callback = mock();
-    const sub = onAction('key_control', callback);
+    const sub = actionService.on('key_control', callback);
 
     const event = new KeyboardEvent('keydown', {
       key: 'Control',
@@ -113,7 +113,7 @@ describe('keyboardShortcutService', () => {
 
   it('should ignore bare key presses in input elements', async () => {
     const callback = mock();
-    const sub = onAction('key_escape', callback);
+    const sub = actionService.on('key_escape', callback);
 
     const input = document.createElement('input');
     document.body.appendChild(input);
@@ -134,7 +134,7 @@ describe('keyboardShortcutService', () => {
 
   it('should dispatch shortcut action in input elements if it carries modifier', async () => {
     const callback = mock();
-    const sub = onAction('key_ctrl_s', callback);
+    const sub = actionService.on('key_ctrl_s', callback);
 
     const input = document.createElement('input');
     document.body.appendChild(input);
@@ -156,7 +156,7 @@ describe('keyboardShortcutService', () => {
 
   it('should ignore bare key presses in contenteditable elements', async () => {
     const callback = mock();
-    const sub = onAction('key_enter', callback);
+    const sub = actionService.on('key_enter', callback);
 
     const div = document.createElement('div');
     div.contentEditable = 'true';
@@ -178,7 +178,7 @@ describe('keyboardShortcutService', () => {
 
   it('should safely handle non-HTMLElement target', async () => {
     const callback = mock();
-    const sub = onAction('key_escape', callback);
+    const sub = actionService.on('key_escape', callback);
 
     // Simulate keydown on document (which is not an HTMLElement)
     const event = new KeyboardEvent('keydown', {
@@ -195,7 +195,7 @@ describe('keyboardShortcutService', () => {
 
   it('should not dispatch actions after teardown', async () => {
     const callback = mock();
-    const sub = onAction('key_escape', callback);
+    const sub = actionService.on('key_escape', callback);
 
     keyboardShortcutService.teardown();
 
@@ -216,7 +216,7 @@ describe('keyboardShortcutService', () => {
     Object.defineProperty(globalThis, 'document', {
       value: undefined,
       writable: true,
-      configurable: true
+      configurable: true,
     });
 
     try {
@@ -227,7 +227,7 @@ describe('keyboardShortcutService', () => {
       Object.defineProperty(globalThis, 'document', {
         value: origDocument,
         writable: true,
-        configurable: true
+        configurable: true,
       });
       keyboardShortcutService.setup();
     }

@@ -1,8 +1,6 @@
 import {createDebouncer} from '@alwatr/debounce';
 import {createLocalStorageProvider} from '@alwatr/local-storage';
-
 import {StateSignal} from './state-signal.js';
-
 import type {PersistentStateSignalConfig} from '../type.js';
 import type {LocalStorageProvider} from '@alwatr/local-storage';
 
@@ -50,12 +48,16 @@ import type {LocalStorageProvider} from '@alwatr/local-storage';
 export class PersistentStateSignal<T> extends StateSignal<T> {
   /**
    * The underlying storage provider instance.
+   * Handles read, write, and schema version management under the hood.
+   *
    * @private
    */
   private readonly storageProvider__: LocalStorageProvider<T>;
 
   /**
    * Debouncer to limit how often we write to localStorage.
+   * Reduces performance overhead from excessive disk writes.
+   *
    * @private
    */
   private readonly storageDebouncer__;
@@ -64,12 +66,15 @@ export class PersistentStateSignal<T> extends StateSignal<T> {
    * The subscription to the signal's own changes to sync with storage.
    * We subscribe to our own signal. When the value is set from anywhere,
    * this listener will trigger and write it to localStorage.
+   *
    * @private
    */
   private readonly storageSyncSubscription__;
 
   /**
    * Listener for the browser's pagehide events to flush pending saves.
+   * Ensures that pending changes are saved before the page unloading.
+   *
    * @private
    */
   private readonly windowPageHideListener_ = (): void => {
@@ -78,6 +83,8 @@ export class PersistentStateSignal<T> extends StateSignal<T> {
 
   /**
    * Listener for the browser's pageshow events to sync from storage when restored from BFCache.
+   * Refreshes the in-memory value if retrieved from the Back/Forward Cache.
+   *
    * @private
    */
   private readonly windowPageShowListener_ = (event: PageTransitionEvent): void => {
@@ -90,6 +97,13 @@ export class PersistentStateSignal<T> extends StateSignal<T> {
     }
   };
 
+  /**
+   * Creates a new PersistentStateSignal instance.
+   * Restores initial value from storage if it exists, otherwise uses default initialValue.
+   * Sets up window page visibility and BFCache listeners to guarantee write flushes.
+   *
+   * @param config Configuration options including storage keys, debounce delays, schema, parse, and stringify overrides.
+   */
   constructor(config: PersistentStateSignalConfig<T>) {
     const {
       name,
@@ -137,7 +151,10 @@ export class PersistentStateSignal<T> extends StateSignal<T> {
 
   /**
    * Syncs the new value to storage.
-   * @param newValue The new value to sync to storage.
+   * Invoked automatically by the debouncer.
+   *
+   * @param newValue The new value to write to storage.
+   * @private
    */
   private syncStorage__(newValue: T): void {
     this.logger_.logMethodArgs?.('syncStorage__', newValue);
@@ -156,7 +173,7 @@ export class PersistentStateSignal<T> extends StateSignal<T> {
   }
 
   /**
-   * Overrides the destroy method to also clean up the storage sync subscription.
+   * Overrides the destroy method to also clean up the storage sync subscription and event listeners.
    */
   public override destroy(): void {
     this.logger_.logMethod?.('destroy');

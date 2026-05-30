@@ -1,16 +1,16 @@
 {
-  "name": "@alwatr/directive",
-  "version": "9.26.0",
-  "description": "Connect your TypeScript classes to the DOM, declaratively.",
+  "name": "@alwatr/bind",
+  "version": "9.28.0",
+  "description": "A high-performance and lightweight binding utility for unidirectional data flow and reactive DOM/context interactions.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alwatr/alwatr",
-    "directory": "pkg/nanolib/directive"
+    "directory": "pkg/nanolib/bind"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/directive#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/bind#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
@@ -21,21 +21,21 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@alwatr/delay": "workspace:*",
-    "@alwatr/logger": "workspace:*",
-    "lit-html": "^3.3.3"
+    "@alwatr/directive": "^9.26.0",
+    "@alwatr/logger": "^9.25.0",
+    "@alwatr/signal": "^9.26.0"
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
     "@alwatr/standard": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
-    "@happy-dom/global-registrator": "^20.9.0",
+    "@types/node": "^24.12.4",
     "typescript": "^6.0.3"
   },
   "scripts": {
     "b": "bun run build",
     "build": "bun run build:ts && bun run build:es",
-    "build:es": "nano-build --preset=module-web src/main.ts",
+    "build:es": "nano-build --preset=module src/main.ts",
     "build:ts": "tsc --build",
     "cl": "bun run clean",
     "clean": "rm -rfv dist *.tsbuildinfo",
@@ -60,24 +60,22 @@
   },
   "keywords": [
     "alwatr",
-    "browser-api",
-    "declarative-ui",
-    "decorator",
-    "directive",
-    "dom",
+    "bind",
+    "binding",
+    "browser",
+    "cross-platform",
     "esm",
-    "frontend",
-    "idempotent",
+    "framework-agnostic",
     "javascript",
-    "lightweight",
     "module",
     "nanolib",
-    "spa",
-    "synapse",
+    "node",
+    "nodejs",
+    "reactive",
+    "tree-shakable",
+    "type-safe",
     "typescript",
-    "ui-library",
-    "vanilla-js",
-    "web-components",
-    "web-development"
+    "util",
+    "utility"
   ]
 }

@@ -12,14 +12,13 @@ const defaultDebugMode = (() => {
   if (platformInfo.development) {
     if (platformInfo.isCli) {
       return process.env.ALWATR_DEBUG !== '0';
-    }
-    else {
+    } else {
       return typeof localStorage !== 'undefined' && localStorage.getItem('ALWATR_DEBUG') !== '0';
     }
   }
   // else
-  return platformInfo.isCli
-    ? Boolean(process.env.DEBUG)
+  return platformInfo.isCli ?
+      Boolean(process.env.DEBUG)
     : typeof localStorage !== 'undefined' && localStorage.getItem('ALWATR_DEBUG') === '1';
 })();
 
@@ -27,9 +26,9 @@ const defaultDebugMode = (() => {
  * A list of aesthetically pleasing colors for console logging, adapted for CLI and browser environments.
  */
 const colorList = (() =>
-  platformInfo.isCli
-    ? ['0;36', '0;35', '0;34', '0;33', '0;32'] // CLI-safe colors
-    : [
+  platformInfo.isCli ?
+    ['0;36', '0;35', '0;34', '0;33', '0;32'] // CLI-safe colors
+  : [
       '#35b997',
       '#f05561',
       '#ee224a',
@@ -73,14 +72,13 @@ function getNextColor_(): string {
 }
 
 /**
- * Sanitizes and formats the logger domain string by wrapping it in brackets if not already.
+ * Sanitizes and formats the logger name string by wrapping it in brackets if not already.
  */
-function sanitizeDomain_(domain: string): string {
-  domain = domain.trim();
-  if (!/^[[{<]/.test(domain)) {
-    domain = `{${domain}}`;
+function sanitizeName_(name: string): string {
+  if (!/^[[{<]/.test(name)) {
+    name = `{${name}}`;
   }
-  return domain;
+  return name;
 }
 
 // --- Core Factory ---
@@ -99,35 +97,42 @@ function sanitizeDomain_(domain: string): string {
  * logger.logMethodArgs?.('myMethod', {a: 1}); // This line is ignored if debugMode is false.
  * ```
  */
-export function createLogger(domain: string, debugMode = defaultDebugMode): AlwatrLogger {
+export function createLogger(name: string, forceDebugMode = defaultDebugMode): AlwatrLogger {
   const color = getNextColor_();
   const styleScope = style_.scope.replace('{{color}}', color);
-  const sanitizedDomain = sanitizeDomain_(domain);
+  const sanitizedDomain = sanitizeName_(name);
 
   /**
    * Logger methods that are always available, regardless of debugMode.
    */
   const requiredItems: AlwatrLogger = {
-    debugMode,
+    name,
 
-    banner: platformInfo.isCli
-      ? console_.log.bind(console_, `\x1b[1;37;45m {{{ %s }}} ${style_.reset}`)
+    banner:
+      platformInfo.isCli ?
+        console_.log.bind(console_, `\x1b[1;37;45m {{{ %s }}} ${style_.reset}`)
       : console_.log.bind(
-        console_,
-        '%c%s',
-        'font-size: 2rem; background-color: #5858e8; color: #fff; padding: 1rem 4rem; border-radius: 0.5rem;',
-      ),
+          console_,
+          '%c%s',
+          'font-size: 2rem; background-color: #5858e8; color: #fff; padding: 1rem 4rem; border-radius: 0.5rem;',
+        ),
 
-    accident: platformInfo.isCli
-      ? console_.warn.bind(console_, `${styleScope}⚠️\n%s\x1b[33m.%s() Accident \`%s\`!${style_.reset}`, sanitizedDomain)
+    accident:
+      platformInfo.isCli ?
+        console_.warn.bind(
+          console_,
+          `${styleScope}⚠️\n%s\x1b[33m.%s() Accident \`%s\`!${style_.reset}`,
+          sanitizedDomain,
+        )
       : console_.warn.bind(console_, '%c%s%c.%s() Accident `%s`!', styleScope, sanitizedDomain, style_.reset),
 
-    error: platformInfo.isCli
-      ? console_.error.bind(console_, `${styleScope}❌\n%s\x1b[31m.%s() Error \`%s\`${style_.reset}\n`, sanitizedDomain)
+    error:
+      platformInfo.isCli ?
+        console_.error.bind(console_, `${styleScope}❌\n%s\x1b[31m.%s() Error \`%s\`${style_.reset}\n`, sanitizedDomain)
       : console_.error.bind(console_, '%c%s%c.%s() Error `%s`\n', styleScope, sanitizedDomain, style_.reset),
   };
 
-  if (!debugMode) {
+  if (!forceDebugMode) {
     return requiredItems;
   }
 
@@ -146,7 +151,13 @@ export function createLogger(domain: string, debugMode = defaultDebugMode): Alwa
 
     logMethodArgs: console_.debug.bind(console_, keySection_ + '.%s(%o);', styleScope, sanitizedDomain, style_.reset),
 
-    logMethodFull: console_.debug.bind(console_, keySection_ + '.%s(%o) => %o', styleScope, sanitizedDomain, style_.reset),
+    logMethodFull: console_.debug.bind(
+      console_,
+      keySection_ + '.%s(%o) => %o',
+      styleScope,
+      sanitizedDomain,
+      style_.reset,
+    ),
 
     logStep: console_.debug.bind(console_, keySection_ + '.%s() -> %s', styleScope, sanitizedDomain, style_.reset),
 
@@ -154,11 +165,16 @@ export function createLogger(domain: string, debugMode = defaultDebugMode): Alwa
 
     logTable: console_.table.bind(console_),
 
-    incident: platformInfo.isCli
-      ? console_.log.bind(console_, `${styleScope}🚸\n%s${style_.reset}.%s() Incident \`%s\`!${style_.reset}`, sanitizedDomain)
+    incident:
+      platformInfo.isCli ?
+        console_.log.bind(
+          console_,
+          `${styleScope}🚸\n%s${style_.reset}.%s() Incident \`%s\`!${style_.reset}`,
+          sanitizedDomain,
+        )
       : console_.log.bind(console_, '%c%s%c.%s() Incident `%s`!', styleScope, sanitizedDomain, 'color: orange;'),
 
     time: (label: string) => console_.time(sanitizedDomain + '.' + label),
     timeEnd: (label: string) => console_.timeEnd(sanitizedDomain + '.' + label),
-  } as const;
+  };
 }

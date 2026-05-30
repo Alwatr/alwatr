@@ -2,40 +2,55 @@ import type {Observer_, SubscribeOptions, SubscribeResult, ListenerCallback, Sig
 import type {AlwatrLogger} from '@alwatr/logger';
 
 /**
- * An abstract base class for signal implementations.
- * It provides the core functionality for managing subscriptions (observers).
+ * An abstract base class for all signal implementations in the `@alwatr/signal` package.
  *
- * @template T The type of data that the signal holds or dispatches.
+ * It provides core subscription management capabilities, including priority observer queues,
+ * microtask/macrotask-friendly updates, type-safe unsubscribes, async promise resolution via `untilNext`,
+ * and safe destruction lifecycles to prevent memory leaks.
+ *
+ * @template T The type of data that the signal holds, dispatches, or streams.
  */
 export abstract class SignalBase<T> {
   /**
    * The unique identifier for this signal instance.
-   * Useful for debugging and logging.
+   * Highly useful for debugging, filtering logs, and tracing data flows.
    */
   public readonly name: string;
 
   /**
    * The logger instance for this signal.
+   * Custom scoped logger based on the signal name and type.
+   *
    * @protected
    */
   protected abstract logger_: AlwatrLogger;
 
   /**
-   * The list of observers (listeners) subscribed to this signal.
+   * High-priority observers that are executed first during notifications.
+   * Typically used for internal framework callbacks (like promise resolvers in `untilNext`)
+   * to ensure they complete before user-defined handlers run.
+   *
    * @protected
    */
   protected readonly priorityObservers_ = new Set<Observer_<T>>();
+
+  /**
+   * Standard-priority observers executed after priority observers.
+   *
+   * @protected
+   */
   protected readonly observers_ = new Set<Observer_<T>>();
 
   /**
-   * A flag indicating whether the signal has been destroyed.
+   * Internal flag representing whether the signal has been destroyed.
+   *
    * @private
    */
   private isDestroyed__ = false;
 
   /**
    * Indicates whether the signal has been destroyed.
-   * A destroyed signal cannot be used and will throw an error if interacted with.
+   * A destroyed signal cannot be subscribed to or dispatched to.
    *
    * @returns `true` if the signal is destroyed, `false` otherwise.
    */
@@ -43,14 +58,19 @@ export abstract class SignalBase<T> {
     return this.isDestroyed__;
   }
 
+  /**
+   * Creates a new instance of the signal base.
+   *
+   * @param config_ Configuration options including the unique signal name and cleanup hooks.
+   */
   constructor(protected config_: SignalConfig) {
     this.name = config_.name;
   }
 
   /**
-   * Removes a specific observer from the observers list.
+   * Removes a specific observer from both the standard and priority observer queues.
    *
-   * @param observer The observer instance to remove.
+   * @param observer The observer wrapper object containing the callback and options to remove.
    * @protected
    */
   protected removeObserver_(observer: Observer_<T>): void {
@@ -68,11 +88,11 @@ export abstract class SignalBase<T> {
   /**
    * Subscribes a listener function to this signal.
    *
-   * The listener will be called whenever the signal is notified (e.g., when `dispatch` or `set` is called).
+   * The listener will be called whenever the signal notifies its observers.
    *
-   * @param callback The function to be called when the signal is dispatched.
-   * @param options Subscription options to customize the behavior (e.g., `once`, `priority`).
-   * @returns A `SubscribeResult` object with an `unsubscribe` method to remove the listener.
+   * @param callback The function to invoke when the signal dispatches a new value.
+   * @param options Custom options to control priority, immediate callback, or single execution.
+   * @returns An object with an `unsubscribe` method to remove the subscription.
    */
   public subscribe(callback: ListenerCallback<T>, options?: SubscribeOptions): SubscribeResult {
     this.logger_.logMethodArgs?.('subscribe.base', options);
@@ -86,19 +106,17 @@ export abstract class SignalBase<T> {
       this.observers_.add(observer);
     }
 
-    // The returned unsubscribe function is a closure that calls the internal removal method.
+    // Return an unsubscribe handler as a closure to prevent memory leaks.
     return {
       unsubscribe: (): void => this.removeObserver_(observer),
     };
   }
 
   /**
-   * Notifies all registered observers about a new value.
+   * Notifies all registered priority and standard observers with the given value.
+   * Iterates synchronously over current queues.
    *
-   * This method iterates through a snapshot of the current observers to prevent issues
-   * with subscriptions changing during notification (e.g., an observer unsubscribing itself).
-   *
-   * @param value The new value to notify observers about.
+   * @param value The value to pass to each observer's callback.
    * @protected
    */
   protected notify_(value: T): void {
@@ -109,46 +127,49 @@ export abstract class SignalBase<T> {
       return;
     }
 
+    // Execute priority observers first
     for (const observer of this.priorityObservers_) {
       this.executeObserver__(observer, value);
     }
 
+    // Execute standard observers second
     for (const observer of this.observers_) {
       this.executeObserver__(observer, value);
     }
   }
 
   /**
-   * Executes a given observer's callback with the provided value, handling both synchronous and asynchronous callbacks.
+   * Executes a single observer's callback, handles auto-unsubscribing for `once` listeners,
+   * and wraps execution in a try-catch block to prevent observer exceptions from crashing the signal.
+   *
+   * @param observer The observer descriptor to execute.
+   * @param value The value to supply to the observer's callback.
+   * @private
    */
   private executeObserver__(observer: Observer_<T>, value: T): void {
     if (observer.options?.once) {
       this.removeObserver_(observer);
     }
     try {
-      const result = observer.callback(value);
-      if (result instanceof Promise) {
-        result.catch((err) => this.logger_.error('notify_', 'async_callback_failed', err, {observer}));
-      }
+      observer.callback(value);
     } catch (err) {
       this.logger_.error('notify_', 'sync_callback_failed', err);
     }
   }
 
+  /**
+   * Holds the promise rejection functions of any pending `untilNext` invocations
+   * to reject them if the signal is destroyed.
+   *
+   * @private
+   */
   private pendingRejects__ = new Set<(reason?: any) => void>();
 
   /**
-   * Returns a Promise that resolves with the next value dispatched by the signal.
-   * This provides an elegant way to wait for a single, future event using `async/await`.
+   * Returns a Promise that resolves with the next value/payload dispatched by the signal.
+   * Use this for async orchestration (e.g. `await signal.untilNext()`).
    *
-   * @returns A Promise that resolves with the next dispatched value.
-   *
-   * @example
-   * async function onButtonClick() {
-   *   console.log('Waiting for the next signal...');
-   *   const nextValue = await mySignal.untilNext();
-   *   console.log('Signal received:', nextValue);
-   * }
+   * @returns A Promise that resolves with the next value dispatched by the signal.
    */
   public untilNext(): Promise<T> {
     this.logger_.logMethod?.('untilNext');
@@ -156,25 +177,23 @@ export abstract class SignalBase<T> {
     return new Promise((resolve, reject) => {
       this.pendingRejects__.add(reject);
       this.subscribe(
-        (value) => {
-          this.pendingRejects__.delete(reject);
-          resolve(value);
-        },
-        {
-          once: true,
-          priority: true, // Resolve the promise before other listeners are called.
-          receivePrevious: false, // We only want the *next* value, not the current one.
-        },
+          (value) => {
+            this.pendingRejects__.delete(reject);
+            resolve(value);
+          },
+          {
+            once: true,
+            priority: true, // Internal promise resolution is prioritized over normal observers.
+            receivePrevious: false, // Wait only for the next value change.
+          },
       );
     });
   }
 
   /**
-   * Destroys the signal, clearing all its listeners and making it inactive.
-   *
-   * After destruction, any interaction with the signal (like `subscribe` or `untilNext`)
-   * will throw an error. This is crucial for preventing memory leaks by allowing
-   * garbage collection of the signal and its observers.
+   * Permanently destroys the signal instance.
+   * Clears all observers, rejects pending `untilNext` promises with a 'signal_destroyed' error,
+   * invokes the optional `onDestroy` config hook, and breaks internal references to facilitate GC.
    */
   public destroy(): void {
     this.logger_.logMethod?.('destroy');
@@ -182,25 +201,27 @@ export abstract class SignalBase<T> {
       this.logger_.incident?.('destroy_', 'double_destroy_attempt');
       return;
     }
-    this.isDestroyed__ = true; // Mark the signal as destroyed.
-    // Reject all pending promises.
+    this.isDestroyed__ = true;
+
+    // Reject all pending promises to prevent hang-ups.
     if (this.pendingRejects__.size) {
       const error = new Error('signal_destroyed');
       for (const reject of this.pendingRejects__) {
         reject(error);
       }
-      this.pendingRejects__.clear(); // Clear all pending rejects.
+      this.pendingRejects__.clear();
     }
-    this.priorityObservers_.clear(); // Clear all priority observers.
-    this.observers_.clear(); // Clear all normal observers.
-    this.config_.onDestroy?.(); // Call the optional onDestroy callback.
-    this.config_ = null as unknown as SignalConfig; // Help GC by breaking references.
+    this.priorityObservers_.clear();
+    this.observers_.clear();
+    this.config_.onDestroy?.();
+    this.config_ = null as unknown as SignalConfig;
   }
 
   /**
-   * Throws an error if the signal has been destroyed.
-   * This is a safeguard to prevent interaction with a defunct signal.
+   * Checks if the signal has been destroyed. If so, throws an error and logs an accident.
+   *
    * @protected
+   * @throws {Error} If the signal has been destroyed.
    */
   protected checkDestroyed_(): void {
     if (this.isDestroyed__) {
