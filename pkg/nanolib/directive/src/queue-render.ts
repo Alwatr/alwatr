@@ -21,7 +21,13 @@ function flushQueue__(): void {
 
   for (let i = 0; i < currentBatch.length; i++) {
     // Explicit call to execute the update loop immediately
-    currentBatch[i].performUpdate_();
+    try {
+      currentBatch[i].performUpdate_();
+    } catch (err) {
+      queueMicrotask(() => {
+        throw err; // Re-throw asynchronously to avoid disrupting the current batch loop
+      });
+    }
   }
 }
 
