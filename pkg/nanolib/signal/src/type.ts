@@ -225,6 +225,23 @@ export interface ComputedSignalConfig<T> extends SignalConfig {
 }
 
 /**
+ * Configuration for creating a `DerivedSignal`.
+ * @template S The type of the source signal state.
+ * @template T The type of the projected derived state.
+ */
+export interface DerivedSignalConfig<S, T> extends SignalConfig {
+  /**
+   * The single upstream readonly source signal.
+   */
+  readonly source: IReadonlySignal<S>;
+
+  /**
+   * Projection mapping function transforming source S to derived T.
+   */
+  readonly projector: (value: S) => T;
+}
+
+/**
  * Configuration for creating an `EffectSignal`.
  */
 export interface EffectSignalConfig {

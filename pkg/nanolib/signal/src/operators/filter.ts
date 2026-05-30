@@ -1,7 +1,4 @@
-import {createComputedSignal} from '../creators/computed.js';
 import {createStateSignal} from '../creators/state.js';
-
-import type {ComputedSignal} from '../core/computed-signal.js';
 import type {IReadonlySignal} from '../type.js';
 
 /**
@@ -52,14 +49,17 @@ import type {IReadonlySignal} from '../type.js';
 export function createFilteredSignal<T>(
   sourceSignal: IReadonlySignal<T>,
   predicate: (value: T) => boolean,
-  name = `${sourceSignal.name}-filtered`,
-): ComputedSignal<T | undefined> {
+  name = `${sourceSignal.name}_filtered`,
+): IReadonlySignal<T | undefined> {
   const sourceValue = sourceSignal.get();
   const initialValue = predicate(sourceValue) ? sourceValue : undefined;
 
   const internalSignal = createStateSignal({
-    name: `${name}-internal`,
+    name,
     initialValue,
+    onDestroy() {
+      subscription.unsubscribe();
+    },
   });
 
   const subscription = sourceSignal.subscribe((newValue) => {
@@ -68,13 +68,5 @@ export function createFilteredSignal<T>(
     }
   });
 
-  return createComputedSignal({
-    name: name,
-    deps: [internalSignal],
-    get: () => internalSignal.get(),
-    onDestroy: () => {
-      subscription.unsubscribe();
-      internalSignal.destroy();
-    },
-  });
+  return internalSignal;
 }

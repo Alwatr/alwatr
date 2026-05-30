@@ -27,19 +27,19 @@ export abstract class SignalBase<T> {
 
   /**
    * High-priority observers that are executed first during notifications.
-   * Typically used for internal framework callbacks (like promise resolvers in `untilNext`)
-   * to ensure they complete before user-defined handlers run.
+   * Allocated lazily upon the first priority subscription to guard heap memory.
    *
    * @protected
    */
-  protected readonly priorityObservers_ = new Set<Observer_<T>>();
+  protected priorityObservers_?: Set<Observer_<T>>;
 
   /**
    * Standard-priority observers executed after priority observers.
+   * Allocated lazily upon the first standard subscription to guard heap memory.
    *
    * @protected
    */
-  protected readonly observers_ = new Set<Observer_<T>>();
+  protected observers_?: Set<Observer_<T>>;
 
   /**
    * Internal flag representing whether the signal has been destroyed.
@@ -81,8 +81,17 @@ export abstract class SignalBase<T> {
       return;
     }
 
-    this.priorityObservers_.delete(observer);
-    this.observers_.delete(observer);
+    if (observer.options?.priority) {
+      this.priorityObservers_?.delete(observer);
+      if (this.priorityObservers_?.size === 0) {
+        this.priorityObservers_ = undefined;
+      }
+    } else {
+      this.observers_?.delete(observer);
+      if (this.observers_?.size === 0) {
+        this.observers_ = undefined;
+      }
+    }
   }
 
   /**
@@ -101,8 +110,10 @@ export abstract class SignalBase<T> {
     const observer: Observer_<T> = {callback, options};
 
     if (options?.priority) {
+      this.priorityObservers_ ??= new Set();
       this.priorityObservers_.add(observer);
     } else {
+      this.observers_ ??= new Set();
       this.observers_.add(observer);
     }
 
@@ -128,13 +139,17 @@ export abstract class SignalBase<T> {
     }
 
     // Execute priority observers first
-    for (const observer of this.priorityObservers_) {
-      this.executeObserver__(observer, value);
+    if (this.priorityObservers_?.size) {
+      for (const observer of this.priorityObservers_) {
+        this.executeObserver__(observer, value);
+      }
     }
 
     // Execute standard observers second
-    for (const observer of this.observers_) {
-      this.executeObserver__(observer, value);
+    if (this.observers_?.size) {
+      for (const observer of this.observers_) {
+        this.executeObserver__(observer, value);
+      }
     }
   }
 
@@ -163,7 +178,7 @@ export abstract class SignalBase<T> {
    *
    * @private
    */
-  private pendingRejects__ = new Set<(reason?: any) => void>();
+  private pendingRejects__?: Set<(reason?: any) => void>;
 
   /**
    * Returns a Promise that resolves with the next value/payload dispatched by the signal.
@@ -175,17 +190,18 @@ export abstract class SignalBase<T> {
     this.logger_.logMethod?.('untilNext');
     this.checkDestroyed_();
     return new Promise((resolve, reject) => {
+      this.pendingRejects__ ??= new Set();
       this.pendingRejects__.add(reject);
       this.subscribe(
-          (value) => {
-            this.pendingRejects__.delete(reject);
-            resolve(value);
-          },
-          {
-            once: true,
-            priority: true, // Internal promise resolution is prioritized over normal observers.
-            receivePrevious: false, // Wait only for the next value change.
-          },
+        (value) => {
+          this.pendingRejects__?.delete(reject);
+          resolve(value);
+        },
+        {
+          once: true,
+          priority: true, // Internal promise resolution is prioritized over normal observers.
+          receivePrevious: false, // Wait only for the next value change.
+        },
       );
     });
   }
@@ -204,15 +220,15 @@ export abstract class SignalBase<T> {
     this.isDestroyed__ = true;
 
     // Reject all pending promises to prevent hang-ups.
-    if (this.pendingRejects__.size) {
+    if (this.pendingRejects__?.size) {
       const error = new Error('signal_destroyed');
       for (const reject of this.pendingRejects__) {
         reject(error);
       }
       this.pendingRejects__.clear();
     }
-    this.priorityObservers_.clear();
-    this.observers_.clear();
+    this.priorityObservers_?.clear();
+    this.observers_?.clear();
     this.config_.onDestroy?.();
     this.config_ = null as unknown as SignalConfig;
   }

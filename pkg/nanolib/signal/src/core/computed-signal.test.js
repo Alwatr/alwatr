@@ -71,10 +71,10 @@ describe('ComputedSignal', () => {
     const callback = jest.fn();
     signal.subscribe(callback, {receivePrevious: false});
     dep1.set(3);
-    await delay.nextMicrotask();
+    await delay.nextMacrotask();
     dep2.set(4);
-    await signal.untilNext();
-    expect(callback).toHaveBeenCalledTimes(1);
+    await delay.nextMacrotask();
+    expect(callback).toHaveBeenCalledTimes(2);
     expect(callback).toHaveBeenCalledWith(7); // 3 + 4
   });
 

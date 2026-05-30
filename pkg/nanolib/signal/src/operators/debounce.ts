@@ -1,9 +1,5 @@
 import {createDebouncer} from '@alwatr/debounce';
-
 import {StateSignal} from '../core/state-signal.js';
-import {createComputedSignal} from '../creators/computed.js';
-
-import type {ComputedSignal} from '../core/computed-signal.js';
 import type {IReadonlySignal, DebounceSignalConfig} from '../type.js';
 
 /**
@@ -20,7 +16,7 @@ import type {IReadonlySignal, DebounceSignalConfig} from '../type.js';
  *
  * @template T The type of the signal's value.
  *
- * @param {IReadonlySignal<T>} sourceSignal The original signal to debounce.
+ * @param {IReadonlySignal<T>} source The original signal to debounce.
  * It can be a `StateSignal`, `ComputedSignal`, or any signal implementing `IReadonlySignal`.
  * @param {DebounceSignalConfig} config Configuration object for the debouncer,
  * including `delay`, `leading`, and `trailing` options from `@alwatr/debounce`.
@@ -59,12 +55,18 @@ import type {IReadonlySignal, DebounceSignalConfig} from '../type.js';
  * // debouncedSearch.destroy();
  * ```
  */
-export function createDebouncedSignal<T>(sourceSignal: IReadonlySignal<T>, config: DebounceSignalConfig): ComputedSignal<T> {
-  const name = config.name ?? `${sourceSignal.name}-debounced`;
+export function createDebouncedSignal<T>(source: IReadonlySignal<T>, config: DebounceSignalConfig): IReadonlySignal<T> {
+  const name = config.name ?? `${source.name}_debounced`;
 
   const internalSignal = new StateSignal<T>({
-    name: `${name}-internal`,
-    initialValue: sourceSignal.get(),
+    name,
+    initialValue: source.get(),
+    onDestroy() {
+      subscription.unsubscribe();
+      debouncer.cancel();
+      config.onDestroy?.();
+      config = null as unknown as DebounceSignalConfig;
+    },
   });
 
   const debouncer = createDebouncer({
@@ -73,19 +75,7 @@ export function createDebouncedSignal<T>(sourceSignal: IReadonlySignal<T>, confi
     func: internalSignal.set,
   });
 
-  const subscription = sourceSignal.subscribe(debouncer.trigger, {receivePrevious: false});
+  const subscription = source.subscribe(debouncer.trigger, {receivePrevious: false});
 
-  return createComputedSignal({
-    name: name,
-    deps: [internalSignal],
-    get: () => internalSignal.get(),
-    onDestroy: () => {
-      if (internalSignal.isDestroyed) return;
-      subscription.unsubscribe();
-      debouncer.cancel();
-      internalSignal.destroy();
-      config.onDestroy?.();
-      config = null as unknown as DebounceSignalConfig;
-    },
-  });
+  return internalSignal;
 }

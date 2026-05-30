@@ -9,7 +9,7 @@ describe('createDebouncedSignal', () => {
     await task;
   };
 
-  /** @type {ComputedSignal<number>} */
+  /** @type {import('@alwatr/signal').IReadonlySignal<number>} */
   let debouncedSignal;
   /** @type {StateSignal<number>} */
   let sourceSignal;
@@ -32,7 +32,7 @@ describe('createDebouncedSignal', () => {
   it('should create a debounced signal with default config', () => {
     debouncedSignal = createDebouncedSignal(sourceSignal, {delay: 100});
     expect(debouncedSignal.get()).toBe(0);
-    expect(debouncedSignal.name).toBe(`${name}-debounced`);
+    expect(debouncedSignal.name).toBe(`${name}_debounced`);
   });
 
   it('should debounce updates with trailing edge', async () => {

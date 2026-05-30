@@ -16,7 +16,7 @@ describe('createFilteredSignal', () => {
 
   it('should create a filtered signal with the correct default name', () => {
     const filtered = createFilteredSignal(sourceSignal, (v) => v > 0);
-    expect(filtered.name).toBe('source-filtered');
+    expect(filtered.name).toBe('source_filtered');
     filtered.destroy();
   });
 
