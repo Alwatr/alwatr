@@ -1,4 +1,3 @@
-import type {Awaitable} from '@alwatr/type-helper';
 import type {DebouncerConfig} from '@alwatr/debounce';
 import type {LocalStorageProviderConfig} from '@alwatr/local-storage';
 import type {SessionStorageProviderConfig} from '@alwatr/session-storage';
@@ -11,7 +10,7 @@ import type {SessionStorageProviderConfig} from '@alwatr/session-storage';
  *
  * @template T The type of the value that the signal holds or dispatches.
  */
-export type ListenerCallback<T> = (value: T) => Awaitable<void>;
+export type ListenerCallback<T> = (value: T) => void;
 
 /**
  * Options for fine-tuning the behavior of a subscription to a signal.
@@ -258,7 +257,7 @@ export interface EffectSignalConfig {
    *   run: () => console.log(`The counter is now: ${counter.get()}`),
    * });
    */
-  run: () => Awaitable<void>;
+  run: () => void;
 
   /**
    * If `true`, the effect's `run` function will be executed once immediately upon initialization.

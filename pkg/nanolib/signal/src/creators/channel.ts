@@ -1,6 +1,5 @@
 import {ChannelSignal} from '../core/channel-signal.js';
-
-import type {ChannelSignalConfig} from '../core/channel-signal.js';
+import type {ChannelSignalConfig} from '../type.js';
 
 /**
  * Creates a stateless multi-channel signal that acts as a typed message bus.
