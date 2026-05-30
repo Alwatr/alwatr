@@ -6,10 +6,7 @@ if (typeof document === 'undefined') {
   GlobalRegistrator.register();
 }
 
-import {
-  actionService,
-  ActionService,
-} from './main.js';
+import {actionService, ActionService} from '@alwatr/action';
 
 /**
  * Helper to wait for event loop ticks (microtasks/macrotasks) to complete.
@@ -301,10 +298,12 @@ describe('ActionService — Event Delegation & Attribute Parsing', () => {
     await nextMacrotask();
 
     expect(callback).toHaveBeenCalledTimes(1);
-    expect(callback.mock.calls[0][0]).toEqual(expect.objectContaining({
-      type: 'ui_test_click',
-      payload: 'click-payload',
-    }));
+    expect(callback.mock.calls[0][0]).toEqual(
+      expect.objectContaining({
+        type: 'ui_test_click',
+        payload: 'click-payload',
+      }),
+    );
     sub.unsubscribe();
   });
 
@@ -541,5 +540,3 @@ describe('ActionService — Once Modifier', () => {
     sub.unsubscribe();
   });
 });
-
-

@@ -22,7 +22,7 @@ const syntaxRegex = /^(ui_[a-z0-9_-]+)(?::([^;]+))?(?:;\s*([a-z0-9_,-]+))?$/;
  * const customActionService = new ActionService();
  * ```
  */
-class ActionService {
+export class ActionService {
   /**
    * Default DOM event types that cover the vast majority of interactive elements.
    */
