@@ -1,6 +1,12 @@
 import {createLogger, type AlwatrLogger} from '@alwatr/logger';
 import {StateSignal} from './state-signal.js';
-import type {IReadonlySignal, ListenerCallback, SubscribeOptions, SubscribeResult} from '../type.js';
+import type {
+  IReadonlySignal,
+  DerivedSignalConfig,
+  ListenerCallback,
+  SubscribeOptions,
+  SubscribeResult,
+} from '../type.js';
 
 /**
  * Ultra-performance read-only signal mapping exactly 1-to-1 over a single upstream source.
@@ -21,7 +27,7 @@ export class DerivedSignal<S, T> implements IReadonlySignal<T> {
   /** Scoped logger for tracking derived operations. */
   protected readonly logger_: AlwatrLogger;
 
-  /** Wrapped internal state carrier - Enforcing COMPOSITION over inheritance */
+  /** Wrapped internal state carrier - Enforcing COMPOSITION over inheritance, allocated lazily */
   protected internalSignal_?: StateSignal<T> | null;
 
   /** Subscription handle to the upstream source signal, active only when awake. */
@@ -33,16 +39,10 @@ export class DerivedSignal<S, T> implements IReadonlySignal<T> {
   /**
    * Creates a new DerivedSignal instance.
    *
-   * @param name The unique name of this signal.
-   * @param source__ The upstream signal supplying values.
-   * @param projector__ Projection mapping function transforming source S to derived T.
+   * @param config_ Configuration options including name, source, and projector.
    */
-  constructor(
-    name: string,
-    private readonly source__: IReadonlySignal<S>,
-    private readonly projector__: (value: S) => T,
-  ) {
-    this.name = name;
+  constructor(protected config_: DerivedSignalConfig<S, T>) {
+    this.name = this.config_.name;
     this.logger_ = createLogger(`derived_signal:${this.name}`);
   }
   untilNext(): Promise<T> {
@@ -58,8 +58,9 @@ export class DerivedSignal<S, T> implements IReadonlySignal<T> {
    * @returns The current projected value.
    */
   public get(): T {
+    this.checkDestroyed__();
     if (this.activeConsumerCount__ === 0) {
-      return this.projector__(this.source__.get());
+      return this.config_.projector(this.config_.source.get());
     }
     return this.internalSignal_!.get();
   }
@@ -68,7 +69,7 @@ export class DerivedSignal<S, T> implements IReadonlySignal<T> {
    * Indicates whether the signal has been destroyed.
    */
   public get isDestroyed(): boolean {
-    return this.internalSignal_ === null;
+    return this.config_ === null;
   }
 
   /**
@@ -82,18 +83,18 @@ export class DerivedSignal<S, T> implements IReadonlySignal<T> {
    * @returns Unsubscribe handle object.
    */
   public subscribe(callback: ListenerCallback<T>, options?: SubscribeOptions): SubscribeResult {
+    this.checkDestroyed__();
     this.activeConsumerCount__++;
-
-    this.internalSignal_ ??= new StateSignal<T>({
-      name: `derived-internal:${this.name}`,
-      initialValue: this.projector__(this.source__.get()),
-    });
 
     // Wake-up phase: if this is the first active consumer, dynamically clamp to the upstream core source
     if (this.activeConsumerCount__ === 1) {
-      this.sourceSubscription__ = this.source__.subscribe(
+      this.internalSignal_ = new StateSignal<T>({
+        name: `derived-internal:${this.name}`,
+        initialValue: this.config_.projector(this.config_.source.get()),
+      });
+      this.sourceSubscription__ = this.config_.source.subscribe(
         (newValue) => {
-          this.internalSignal_!.set(this.projector__(newValue));
+          this.internalSignal_!.set(this.config_.projector(newValue));
         },
         {receivePrevious: false},
       );
@@ -119,11 +120,27 @@ export class DerivedSignal<S, T> implements IReadonlySignal<T> {
    * Destroys the derived signal and unsubscribes from the source signal if currently awake.
    */
   public destroy(): void {
+    if (this.isDestroyed) return;
+
     if (this.sourceSubscription__) {
       this.sourceSubscription__.unsubscribe();
       this.sourceSubscription__ = undefined;
     }
+
     this.internalSignal_?.destroy();
-    this.internalSignal_ = null;
+    this.config_.onDestroy?.();
+    this.config_ = null as unknown as DerivedSignalConfig<S, T>;
+  }
+
+  /**
+   * Checks if the signal has been destroyed.
+   *
+   * @private
+   * @throws {Error} If destroyed.
+   */
+  private checkDestroyed__(): void {
+    if (this.isDestroyed) {
+      throw new Error(`Cannot interact with a destroyed signal (id: ${this.name})`);
+    }
   }
 }
