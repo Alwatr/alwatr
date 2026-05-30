@@ -72,14 +72,13 @@ function getNextColor_(): string {
 }
 
 /**
- * Sanitizes and formats the logger domain string by wrapping it in brackets if not already.
+ * Sanitizes and formats the logger name string by wrapping it in brackets if not already.
  */
-function sanitizeDomain_(domain: string): string {
-  domain = domain.trim();
-  if (!/^[[{<]/.test(domain)) {
-    domain = `{${domain}}`;
+function sanitizeName_(name: string): string {
+  if (!/^[[{<]/.test(name)) {
+    name = `{${name}}`;
   }
-  return domain;
+  return name;
 }
 
 // --- Core Factory ---
@@ -101,7 +100,7 @@ function sanitizeDomain_(domain: string): string {
 export function createLogger(name: string, forceDebugMode = defaultDebugMode): AlwatrLogger {
   const color = getNextColor_();
   const styleScope = style_.scope.replace('{{color}}', color);
-  const sanitizedDomain = sanitizeDomain_(name);
+  const sanitizedDomain = sanitizeName_(name);
 
   /**
    * Logger methods that are always available, regardless of debugMode.
