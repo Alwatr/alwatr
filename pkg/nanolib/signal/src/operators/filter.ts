@@ -50,7 +50,7 @@ import {createDerivedSignal} from '../main.js';
 export function createFilteredSignal<T>(
   sourceSignal: IReadonlySignal<T>,
   predicate: (value: T) => boolean,
-  name = `${sourceSignal.name}-filtered`,
+  name = `${sourceSignal.name}_filtered`,
 ): IReadonlySignal<T | undefined> {
   const sourceValue = sourceSignal.get();
   const initialValue = predicate(sourceValue) ? sourceValue : undefined;
@@ -58,6 +58,10 @@ export function createFilteredSignal<T>(
   const internalSignal = createStateSignal({
     name: `${name}_internal`,
     initialValue,
+    onDestroy() {
+      subscription.unsubscribe();
+      internalSignal.destroy();
+    },
   });
 
   const subscription = sourceSignal.subscribe((newValue) => {
@@ -66,13 +70,5 @@ export function createFilteredSignal<T>(
     }
   });
 
-  return createDerivedSignal({
-    name: name,
-    source: internalSignal,
-    projector: () => internalSignal.get(),
-    onDestroy: () => {
-      subscription.unsubscribe();
-      internalSignal.destroy();
-    },
-  });
+  return internalSignal;
 }

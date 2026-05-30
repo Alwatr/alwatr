@@ -45,6 +45,7 @@ export class DerivedSignal<S, T> implements IReadonlySignal<T> {
     this.name = this.config_.name;
     this.logger_ = createLogger(`derived_signal:${this.name}`);
   }
+
   untilNext(): Promise<T> {
     throw new Error('Method not implemented.');
   }
