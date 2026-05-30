@@ -47,7 +47,15 @@ export class DerivedSignal<S, T> implements IReadonlySignal<T> {
   }
 
   untilNext(): Promise<T> {
-    throw new Error('untilNext not implemented.');
+    this.checkDestroyed__();
+    return new Promise<T>((resolve) => {
+      this.subscribe(
+        (value) => {
+          resolve(value);
+        },
+        {receivePrevious: false, once: true},
+      );
+    });
   }
 
   /**
