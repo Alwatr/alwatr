@@ -59,7 +59,6 @@ export function createFilteredSignal<T>(
     initialValue,
     onDestroy() {
       subscription.unsubscribe();
-      internalSignal.destroy();
     },
   });
 

@@ -64,7 +64,6 @@ export function createDebouncedSignal<T>(source: IReadonlySignal<T>, config: Deb
     onDestroy() {
       subscription.unsubscribe();
       debouncer.cancel();
-      internalSignal.destroy();
       config.onDestroy?.();
       config = null as unknown as DebounceSignalConfig;
     },
