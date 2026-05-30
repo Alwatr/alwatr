@@ -178,7 +178,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
   /**
    * Schedules a recalculation of the signal's value.
    *
-   * This method batches updates using a macrotask (`delay.nextMicrotask`) to ensure the
+   * This method batches updates using a microtask (`delay.nextMicrotask`) to ensure the
    * `get` function runs only once per event loop tick, even if multiple dependencies
    * change in the same synchronous block of code.
    *
