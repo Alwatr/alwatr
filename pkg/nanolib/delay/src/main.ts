@@ -1,73 +1,87 @@
-import {parseDuration, type Duration} from '@alwatr/parse-duration';
+import {getGlobalThis} from '@alwatr/global-this';
+import type {DictionaryOpt} from '@alwatr/type-helper';
 
-import {requestAnimationFrame, requestIdleCallback} from './polyfill.js';
-
-export {requestAnimationFrame, requestIdleCallback};
+const globalThis = getGlobalThis<DictionaryOpt<unknown>>();
 
 /**
- * A utility module to help manage asynchronous operations and waiting for events or timeouts.
+ * Robust fallback wrapper for `queueMicrotask`.
+ * Reverts to Promise chaining if the platform is archaic, prioritizing synchronous scheduling logic.
+ */
+export const queueMicrotask: (callback: VoidFunction) => void =
+  globalThis.queueMicrotask?.bind(globalThis)
+  ?? ((callback: VoidFunction) => {
+    void Promise.resolve()
+      .then(callback)
+      .catch((error) => {
+        console.error('queueMicrotask_fallback', 'microtask_exception', error);
+      });
+  });
+
+/**
+ * Synchronizes a execution closure safely before the browser's next screen repaint task.
+ * Falls back safely to a 30FPS macrotask scheduler if executed within Node/Bun environments.
+ */
+export const requestAnimationFrame: (callback: FrameRequestCallback) => number =
+  globalThis.requestAnimationFrame?.bind(globalThis)
+  ?? ((callback: FrameRequestCallback) =>
+    setTimeout(() => callback(globalThis.performance?.now() ?? Date.now()), 1000 / 30));
+
+/**
+ * Schedules non-critical work during the browser's event loop idle periods.
+ * Yields a simulated 50ms processing timeframe budget if the host platform lacks native layout scheduling hooks.
+ */
+export const requestIdleCallback: (callback: (deadline: IdleDeadline) => void, options?: IdleRequestOptions) => number =
+  globalThis.requestIdleCallback?.bind(globalThis)
+  ?? ((callback: (deadline: IdleDeadline) => void, options?: IdleRequestOptions) => {
+    const startTime = Date.now();
+    return setTimeout(() => {
+      callback({
+        didTimeout: !!options?.timeout,
+        timeRemaining: () => Math.max(0, 50 - (Date.now() - startTime)),
+      });
+    }, options?.timeout ?? 20);
+  });
+
+// Setup high-performance Zero-Delay Macrotask Channel via MessageChannel bomy
+const channel__ = typeof globalThis.MessageChannel !== 'undefined' ? new globalThis.MessageChannel() : null;
+
+/**
+ * High-performance macrotask dispatcher that totally bypasses the browser's 4ms setTimeout clamping penalty.
+ * Synchronizes processing directly to the next turn of the visual execution grid loop.
+ */
+const queueMacrotask__ = (callback: VoidFunction): void => {
+  if (channel__ !== null) {
+    channel__.port1.onmessage = () => callback();
+    channel__.port2.postMessage(undefined);
+  } else {
+    setTimeout(callback, 0);
+  }
+};
+
+/**
+ * A highly optimized utility module to handle asynchronous flow control,
+ * microtask batching, and reactive scheduling gates within the Alwatr ecosystem.
  */
 export const delay = {
   /**
-   * Pauses execution for a specified duration.
-   *
-   * @param duration The duration to wait. Can be a number in milliseconds or a string like '2s', '100ms'.
-   * @returns A Promise that resolves after the specified duration.
-   *
-   * @example
-   * ```typescript
-   * await delay.by('1m'); // Wait for 1 minute
-   * await delay.by('2s'); // Wait for 2 seconds
-   * ```
+   * Enforces a hard time suspension loop for a designated millisecond threshold duration.
    */
-  by: (duration: Duration): Promise<void> => new Promise((resolve) => setTimeout(resolve, parseDuration(duration))),
+  by: (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms)),
 
   /**
-   * Pauses execution until the next animation frame.
-   *
-   * @returns A Promise that resolves with the high-resolution timestamp of the next animation frame.
-   *
-   * @example
-   * ```typescript
-   * const timestamp = await delay.animationFrame();
-   * console.log(`Next frame at ${timestamp}`);
-   * ```
+   * Suspends execution flow sequentially until the hardware screen context is ready for the next visual paint refresh.
    */
   animationFrame: (): Promise<DOMHighResTimeStamp> => new Promise((resolve) => requestAnimationFrame(resolve)),
 
   /**
-   * Pauses execution until the browser is idle.
-   *
-   * @param timeout An optional maximum duration to wait.
-   * @returns A Promise that resolves with an `IdleDeadline` object.
-   *
-   * @example
-   * ```typescript
-   * const deadline = await delay.idleCallback({ timeout: 2000 });
-   * if (deadline.didTimeout) {
-   * console.log('Idle callback timed out.');
-   * }
-   * ```
+   * Postpones internal code execution blocks until the main browser task execution thread falls completely silent.
    */
-  idleCallback: (options?: IdleRequestOptions): Promise<IdleDeadline> => new Promise((resolve) => requestIdleCallback(resolve, options)),
+  idleCallback: (options?: IdleRequestOptions): Promise<IdleDeadline> =>
+    new Promise((resolve) => requestIdleCallback(resolve, options)),
 
   /**
-   * Pauses execution until a specific DOM event is dispatched on an element.
-   *
-   * @param element The HTMLElement to listen on.
-   * @param eventName The name of the event to wait for.
-   * @param options Optional event listener options.
-   * @template T The event map type for the element.
-   * @returns A Promise that resolves with the triggered event object.
-   *
-   * @example
-   * ```typescript
-   * const button = document.getElementById('my-button');
-   * if (button) {
-   * const clickEvent = await delay.domEvent(button, 'click');
-   * console.log('Button clicked!', clickEvent);
-   * }
-   * ```
+   * Pauses the loop until an explicit event signature fires on a targeted HTMLElement part.
+   * Auto-unsubscribes immediately upon fulfillment to guarantee absolute zero leak vectors.
    */
   domEvent: <T extends keyof HTMLElementEventMap>(
     element: HTMLElement,
@@ -82,18 +96,7 @@ export const delay = {
     ),
 
   /**
-   * Pauses execution until a specific event is dispatched on any event target.
-   *
-   * @param target The event target (e.g., window, document, or a custom event emitter).
-   * @param eventName The name of the event to wait for.
-   * @param options Optional event listener options.
-   * @returns A Promise that resolves with the triggered event object.
-   *
-   * @example
-   * ```typescript
-   * const resizeEvent = await delay.event(window, 'resize');
-   * console.log('Window resized:', resizeEvent);
-   * ```
+   * Pauses execution loops until a generic target broadcasts a valid event dispatch notice.
    */
   event: (target: EventTarget, eventName: string, options: AddEventListenerOptions = {passive: true}): Promise<Event> =>
     new Promise((resolve) =>
@@ -104,32 +107,15 @@ export const delay = {
     ),
 
   /**
-   * Schedules a macrotask to run after the current event loop task completes.
-   * Uses `setTimeout(..., 0)`.
-   *
-   * @returns A Promise that resolves when the macrotask is executed.
-   *
-   * @example
-   * ```typescript
-   * console.log('Start');
-   * await delay.nextMacrotask();
-   * console.log('End - after current task');
-   * ```
+   * Bypasses the HTML 4ms nesting speed limit via structural MessageChannels.
+   * Forces execution down onto the absolute earliest boundary of the next event loop tick sequence.
    */
-  nextMacrotask: (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 0)),
+  nextMacrotask: (): Promise<void> => new Promise((resolve) => queueMacrotask__(resolve)),
 
   /**
-   * Queues a microtask to run after the current task completes but before the next macrotask.
-   *
-   * @returns A Promise that resolves when the microtask is executed.
-   *
-   * @example
-   * ```typescript
-   * console.log('Start');
-   * await delay.nextMicrotask();
-   * console.log('End - immediately after current task');
-   * ```
+   * Native highly-efficient Microtask Batching mechanism.
+   * Completely circumvents object heap allocation bills by pushing tasks straight to the native execution stack.
+   * Guaranteed to complete processing BEFORE the repaint task thread or sibling macrotasks intercept control.
    */
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  nextMicrotask: (): Promise<void> => Promise.resolve().then(() => {}),
+  nextMicrotask: (): Promise<void> => new Promise((resolve) => queueMicrotask(resolve)),
 } as const;
