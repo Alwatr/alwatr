@@ -1,6 +1,5 @@
 import {createStateSignal} from '../creators/state.js';
 import type {IReadonlySignal} from '../type.js';
-import {createDerivedSignal} from '../main.js';
 
 /**
  * Creates a new computed signal that only emits values from a source signal
@@ -56,7 +55,7 @@ export function createFilteredSignal<T>(
   const initialValue = predicate(sourceValue) ? sourceValue : undefined;
 
   const internalSignal = createStateSignal({
-    name: `${name}_internal`,
+    name,
     initialValue,
     onDestroy() {
       subscription.unsubscribe();

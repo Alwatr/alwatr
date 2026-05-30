@@ -47,7 +47,7 @@ export class DerivedSignal<S, T> implements IReadonlySignal<T> {
   }
 
   untilNext(): Promise<T> {
-    throw new Error('Method not implemented.');
+    throw new Error('untilNext not implemented.');
   }
 
   /**

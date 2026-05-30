@@ -56,7 +56,7 @@ import type {IReadonlySignal, DebounceSignalConfig} from '../type.js';
  * ```
  */
 export function createDebouncedSignal<T>(source: IReadonlySignal<T>, config: DebounceSignalConfig): IReadonlySignal<T> {
-  const name = config.name ?? `${source.name}-debounced`;
+  const name = config.name ?? `${source.name}_debounced`;
 
   const internalSignal = new StateSignal<T>({
     name: `${name}_internal`,
