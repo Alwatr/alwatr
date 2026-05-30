@@ -1,7 +1,6 @@
 import {createDebouncer} from '@alwatr/debounce';
 import {StateSignal} from '../core/state-signal.js';
 import type {IReadonlySignal, DebounceSignalConfig} from '../type.js';
-import {createDerivedSignal} from '../main.js';
 
 /**
  * Creates a new computed signal that debounces updates from a source signal.
@@ -17,7 +16,7 @@ import {createDerivedSignal} from '../main.js';
  *
  * @template T The type of the signal's value.
  *
- * @param {IReadonlySignal<T>} sourceSignal The original signal to debounce.
+ * @param {IReadonlySignal<T>} source The original signal to debounce.
  * It can be a `StateSignal`, `ComputedSignal`, or any signal implementing `IReadonlySignal`.
  * @param {DebounceSignalConfig} config Configuration object for the debouncer,
  * including `delay`, `leading`, and `trailing` options from `@alwatr/debounce`.
@@ -56,15 +55,19 @@ import {createDerivedSignal} from '../main.js';
  * // debouncedSearch.destroy();
  * ```
  */
-export function createDebouncedSignal<T>(
-  sourceSignal: IReadonlySignal<T>,
-  config: DebounceSignalConfig,
-): IReadonlySignal<T> {
-  const name = config.name ?? `${sourceSignal.name}-debounced`;
+export function createDebouncedSignal<T>(source: IReadonlySignal<T>, config: DebounceSignalConfig): IReadonlySignal<T> {
+  const name = config.name ?? `${source.name}-debounced`;
 
   const internalSignal = new StateSignal<T>({
-    name: `${name}-internal`,
-    initialValue: sourceSignal.get(),
+    name: `${name}_internal`,
+    initialValue: source.get(),
+    onDestroy() {
+      subscription.unsubscribe();
+      debouncer.cancel();
+      internalSignal.destroy();
+      config.onDestroy?.();
+      config = null as unknown as DebounceSignalConfig;
+    },
   });
 
   const debouncer = createDebouncer({
@@ -73,19 +76,7 @@ export function createDebouncedSignal<T>(
     func: internalSignal.set,
   });
 
-  const subscription = sourceSignal.subscribe(debouncer.trigger, {receivePrevious: false});
+  const subscription = source.subscribe(debouncer.trigger, {receivePrevious: false});
 
-  return createDerivedSignal({
-    name: name,
-    source: internalSignal,
-    projector: () => internalSignal.get(),
-    onDestroy: () => {
-      if (internalSignal.isDestroyed) return;
-      subscription.unsubscribe();
-      debouncer.cancel();
-      internalSignal.destroy();
-      config.onDestroy?.();
-      config = null as unknown as DebounceSignalConfig;
-    },
-  });
+  return internalSignal;
 }
