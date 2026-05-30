@@ -1,10 +1,7 @@
 import {createDebouncer} from '@alwatr/debounce';
-
 import {StateSignal} from '../core/state-signal.js';
-import {createComputedSignal} from '../creators/computed.js';
-
-import type {ComputedSignal} from '../core/computed-signal.js';
 import type {IReadonlySignal, DebounceSignalConfig} from '../type.js';
+import {createDerivedSignal} from '../main.js';
 
 /**
  * Creates a new computed signal that debounces updates from a source signal.
@@ -59,7 +56,10 @@ import type {IReadonlySignal, DebounceSignalConfig} from '../type.js';
  * // debouncedSearch.destroy();
  * ```
  */
-export function createDebouncedSignal<T>(sourceSignal: IReadonlySignal<T>, config: DebounceSignalConfig): ComputedSignal<T> {
+export function createDebouncedSignal<T>(
+  sourceSignal: IReadonlySignal<T>,
+  config: DebounceSignalConfig,
+): IReadonlySignal<T> {
   const name = config.name ?? `${sourceSignal.name}-debounced`;
 
   const internalSignal = new StateSignal<T>({
@@ -75,10 +75,10 @@ export function createDebouncedSignal<T>(sourceSignal: IReadonlySignal<T>, confi
 
   const subscription = sourceSignal.subscribe(debouncer.trigger, {receivePrevious: false});
 
-  return createComputedSignal({
+  return createDerivedSignal({
     name: name,
-    deps: [internalSignal],
-    get: () => internalSignal.get(),
+    source: internalSignal,
+    projector: () => internalSignal.get(),
     onDestroy: () => {
       if (internalSignal.isDestroyed) return;
       subscription.unsubscribe();
