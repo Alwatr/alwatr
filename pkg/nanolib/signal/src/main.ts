@@ -19,6 +19,5 @@ export * from './creators/channel.js';
 
 export * from './operators/debounce.js';
 export * from './operators/filter.js';
-export * from './operators/map.js';
 
 export type * from './type.js';
