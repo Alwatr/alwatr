@@ -1,105 +1,148 @@
 # @alwatr/delay
 
-A robust and lightweight utility library for managing asynchronous operations in JavaScript and TypeScript. `@alwatr/delay` provides a collection of promise-based functions to pause execution until specific conditions are met, such as timeouts, animation frames, idle callbacks, or DOM events. This helps create clean, readable, and predictable asynchronous code.
+An optimized, lightweight, and cross-platform asynchronous flow-control and scheduling utility module for the Alwatr ecosystem. It provides Promise-based waiting utilities for timeouts, browser paint repaints, idle states, DOM events, and micro/macrotask cycles with built-in runtime fallbacks.
+
+## Features
+
+- **Duration Parsing Support**: Pause execution using either raw milliseconds (`number`) or human-readable duration strings like `'1.5s'`, `'10m'` (powered by `@alwatr/parse-duration`).
+- **High-Performance Macrotasks**: `delay.nextMacrotask` bypasses the browser's HTML-standard 4ms minimum nesting delay penalty using a zero-delay `MessageChannel` dispatcher.
+- **Native Microtasks**: `delay.nextMicrotask` queues tasks on the native stack, running before browser repaints or sibling macrotasks.
+- **Robust Fallbacks**: Automatically falls back to high-fidelity simulated timers when browser-specific APIs (`requestAnimationFrame`, `requestIdleCallback`, `queueMicrotask`) are executed in Node.js, Bun, or older platforms.
+- **Memory-Safe Events**: `delay.domEvent` and `delay.event` auto-unsubscribe from listeners on fulfillment, ensuring zero memory leaks.
 
 ## Installation
 
 ```bash
+# Using bun
+bun add @alwatr/delay
+
 # Using npm
 npm install @alwatr/delay
-
 # Using yarn
 yarn add @alwatr/delay
 ```
 
 ## Usage
 
-All functions are available under the `delay` object and return a `Promise`. You can use them with `async/await` for clean and linear code flow.
+All async utilities return a `Promise`, allowing seamless use with `async/await`.
 
 ```typescript
 import {delay} from '@alwatr/delay';
 
 async function main() {
-  console.log('Waiting for 1 second...');
-  await delay.by('1s');
-  console.log('Done.');
+  console.log('Task A started');
+
+  // Pause for 1.5 seconds
+  await delay.by('1.5s');
+
+  console.log('Task A finished');
 }
 ```
 
-### API Reference
+---
 
-- **`delay.by(duration: Duration): Promise<void>`**
+## API Reference
 
-  Pauses execution for a specified duration. The duration can be a number (in milliseconds) or a string (e.g., `'2s'`, `'500ms'`).
+### Promise-based Utilities (`delay`)
 
-  ```typescript
-  await delay.by(2000); // Waits for 2 seconds
-  await delay.by('5m'); // Waits for 5 minutes
-  ```
+#### `delay.by(duration: Duration): Promise<void>`
 
-- **`delay.animationFrame(): Promise<DOMHighResTimeStamp>`**
+Suspends the execution flow for a designated duration.
 
-  Resolves at the beginning of the next browser animation frame. Useful for synchronizing animations and DOM updates with the browser's rendering cycle to avoid layout thrashing.
+- **`duration`**: `number` (milliseconds) or `Duration` string (e.g. `'2s'`, `'5m'`, `'100ms'`).
+- **Returns**: `Promise<void>` that resolves after the specified duration.
 
-  ```typescript
-  const timestamp = await delay.animationFrame();
-  console.log(`Rendering next frame at ${timestamp}`);
-  // Perform DOM updates here
-  ```
+```typescript
+await delay.by(100); // 100 milliseconds
+await delay.by('2.5s'); // 2.5 seconds
+await delay.by('10m'); // 10 minutes
+```
 
-- **`delay.idleCallback(options?: IdleRequestOptions): Promise<IdleDeadline>`**
+#### `delay.animationFrame(): Promise<DOMHighResTimeStamp>`
 
-  Resolves when the browser's event loop is idle. Ideal for deferring non-critical background tasks to avoid impacting user experience.
+Suspends execution flow sequentially until the hardware screen context is ready for the next visual paint refresh. Excellent for layout updates to avoid layout thrashing.
 
-  ```typescript
-  const deadline = await delay.idleCallback({timeout: 1000});
-  if (!deadline.didTimeout) {
-    console.log('Running background task during idle time.');
-  }
-  ```
+- **Returns**: `Promise<DOMHighResTimeStamp>` resolving with the frame timestamp.
 
-- **`delay.domEvent<T extends keyof HTMLElementEventMap>(element: HTMLElement, eventName: T, options?: AddEventListenerOptions): Promise<HTMLElementEventMap[T]>`**
+```typescript
+const frameTime = await delay.animationFrame();
+updateUIPosition(frameTime);
+```
 
-  Waits for a specific DOM event to be dispatched on an `HTMLElement`.
+#### `delay.idleCallback(options?: IdleRequestOptions): Promise<IdleDeadline>`
 
-  ```typescript
-  const button = document.getElementById('my-button');
-  if (button) {
-    const event = await delay.domEvent(button, 'click');
-    console.log('Button was clicked!', event);
-  }
-  ```
+Postpones code execution blocks until the main browser task execution thread falls completely silent (idle).
 
-- **`delay.event(target: EventTarget, eventName: string, options?: AddEventListenerOptions): Promise<Event>`**
+- **`options`**: Optional `IdleRequestOptions` containing a `timeout` configuration.
+- **Returns**: `Promise<IdleDeadline>` containing standard idle metadata.
 
-  A more generic version of `domEvent`. Waits for any event on any `EventTarget` (e.g., `window`, `document`, or custom event emitters).
+```typescript
+const deadline = await delay.idleCallback({timeout: 1000});
+if (deadline.timeRemaining() > 0) {
+  runLowPriorityLogs();
+}
+```
 
-  ```typescript
-  console.log('Waiting for window resize...');
-  await delay.event(window, 'resize');
-  console.log('Window was resized!');
-  ```
+#### `delay.domEvent<T>(element: HTMLElement, eventName: T, options?: AddEventListenerOptions): Promise<Event>`
 
-- **`delay.nextMacrotask(): Promise<void>`**
+Pauses the current loop until an explicit event signature fires on a targeted `HTMLElement`. Automatically unsubscribes immediately upon fulfillment to guarantee absolute zero leak vectors.
 
-  Schedules a macrotask to run in the next cycle of the event loop. This is useful for yielding control back to the browser, allowing it to handle rendering and other user-facing tasks. Implemented with `setTimeout(..., 0)`.
+- **`element`**: Target `HTMLElement`.
+- **`eventName`**: The event key to wait for (e.g., `'click'`).
+- **`options`**: Optional event listener settings (defaults to `{ passive: true }`).
+- **Returns**: `Promise` resolving with the event object.
 
-  ```typescript
-  console.log('A');
-  await delay.nextMacrotask();
-  console.log('B'); // This will log after 'A' and after the browser has had a chance to breathe.
-  ```
+```typescript
+const clickEvent = await delay.domEvent(button, 'click');
+console.log('User clicked:', clickEvent.clientX);
+```
 
-- **`delay.nextMicrotask(): Promise<void>`**
+#### `delay.event(target: EventTarget, eventName: string, options?: AddEventListenerOptions): Promise<Event>`
 
-  Queues a microtask to be executed immediately after the current task completes, before the event loop proceeds to the next macrotask. Useful for scheduling work that needs to happen synchronously after an operation but without blocking the main thread.
+A generic version of `domEvent` supporting any `EventTarget` (e.g., `window`, `document`, custom event emitters). Automatically unsubscribes on fulfillment.
 
-  ```typescript
-  console.log('A');
-  Promise.resolve().then(() => console.log('C'));
-  await delay.nextMicrotask();
-  console.log('B'); // Logs A, C, B
-  ```
+```typescript
+await delay.event(window, 'resize');
+console.log('Window layout resized!');
+```
+
+#### `delay.nextMacrotask(): Promise<void>`
+
+Bypasses the HTML 4ms nesting speed limit via structural `MessageChannel` ports, pushing execution to the absolute earliest boundary of the next event loop tick sequence.
+
+```typescript
+console.log('First macrotask');
+await delay.nextMacrotask();
+console.log('Runs at the very beginning of the next macrotask');
+```
+
+#### `delay.nextMicrotask(): Promise<void>`
+
+Native, highly-efficient microtask batching mechanism. Pushes tasks straight to the native execution stack, guaranteeing execution BEFORE the repaint task thread or sibling macrotasks intercept control.
+
+```typescript
+console.log('Sync block');
+await delay.nextMicrotask();
+console.log('Runs immediately after sync block, before repaint/macrotasks');
+```
+
+---
+
+### Low-Level Fallback Helpers
+
+The module also exports robust fallback wrappers for browser APIs. These are used internally by `delay` but can be used individually.
+
+#### `queueMicrotask(callback: VoidFunction): void`
+
+Safe fallback for native `queueMicrotask`. Prioritizes native implementation; reverts to Promise chaining on older runtimes.
+
+#### `requestAnimationFrame(callback: FrameRequestCallback): number`
+
+Safe fallback for browser paint repaints. Simulates a `setTimeout` loop targeting 30FPS if executed in Node.js/Bun or headless environments.
+
+#### `requestIdleCallback(callback: (deadline: IdleDeadline) => void, options?: IdleRequestOptions): number`
+
+Schedules non-critical work during event loop idle periods. Yields a simulated 50ms processing timeframe budget if the host platform lacks native layout scheduling hooks.
 
 ## Contributing
 
