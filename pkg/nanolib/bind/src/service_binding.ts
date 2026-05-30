@@ -1,5 +1,5 @@
 import {createLogger} from '@alwatr/logger';
-import {createComputedSignal, type IReadonlySignal} from '@alwatr/signal';
+import {createDerivedSignal, type IReadonlySignal} from '@alwatr/signal';
 
 import type {BindingValue} from './type.js';
 
@@ -52,7 +52,7 @@ class BindingService {
    *
    * @param namespace The unique namespace identifier for the view model (e.g., `'user'`).
    * @param source The source domain signal (e.g., a StateSignal or ComputedSignal).
-   * @param project A mapping function that projects the domain state `S` into presentation record `T`.
+   * @param projector A mapping function that projects the domain state `S` into presentation record `T`.
    *
    * @example
    * ```typescript
@@ -70,14 +70,19 @@ class BindingService {
   createViewModel<S, T extends Record<string, BindingValue>>(
     namespace: string,
     source: IReadonlySignal<S>,
-    project: (value: S) => T,
+    projector: (value: S) => T,
   ): void {
     this.logger_.logMethodArgs?.('createViewModel', {namespace});
 
-    const viewModelSignal = createComputedSignal({
+    if (this.viewModels_.has(namespace)) {
+      this.logger_.accident?.('createViewModel', 'duplicate_namespace_rejected', {namespace});
+      return;
+    }
+
+    const viewModelSignal = createDerivedSignal({
       name: `view_model:${namespace}`,
-      deps: [source],
-      get: () => project(source.get()),
+      source,
+      projector: () => projector(source.get()),
     });
     this.viewModels_.set(namespace, viewModelSignal);
   }
@@ -99,9 +104,7 @@ class BindingService {
 
     const viewModel = this.viewModels_.get(namespace);
     if (viewModel) {
-      if ('destroy' in viewModel) {
-        (viewModel as {destroy: () => void}).destroy();
-      }
+      viewModel.destroy();
       this.viewModels_.delete(namespace);
     }
   }
