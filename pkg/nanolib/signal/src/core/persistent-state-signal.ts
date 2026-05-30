@@ -1,8 +1,6 @@
 import {createDebouncer} from '@alwatr/debounce';
 import {createLocalStorageProvider} from '@alwatr/local-storage';
-
 import {StateSignal} from './state-signal.js';
-
 import type {PersistentStateSignalConfig} from '../type.js';
 import type {LocalStorageProvider} from '@alwatr/local-storage';
 

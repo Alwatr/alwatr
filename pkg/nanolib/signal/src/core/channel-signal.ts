@@ -1,7 +1,5 @@
-import type {Awaitable} from '@alwatr/type-helper';
-import {delay} from '@alwatr/delay';
+import {queueMicrotask} from '@alwatr/delay';
 import {createLogger, type AlwatrLogger} from '@alwatr/logger';
-
 import {SignalBase} from './signal-base.js';
 import type {
   SubscribeOptions,
@@ -24,12 +22,7 @@ import type {
  *
  * @internal
  */
-type InternalHandler = (payload: unknown) => Awaitable<void>;
-
-/**
- * Configuration for creating a `ChannelSignal`.
- */
-export interface ChannelSignalConfig extends SignalConfig {}
+type InternalHandler = (payload: unknown) => void;
 
 // ─── Class ────────────────────────────────────────────────────────────────────
 
@@ -101,7 +94,7 @@ export class ChannelSignal<TMap extends object> extends SignalBase<ChannelMessag
 
   constructor(config: ChannelSignalConfig) {
     super(config);
-    this.logger_ = createLogger(`channel-signal:${this.name}`);
+    this.logger_ = createLogger(`channel_signal:${this.name}`);
     this.logger_.logMethod?.('constructor');
   }
 
@@ -135,7 +128,7 @@ export class ChannelSignal<TMap extends object> extends SignalBase<ChannelMessag
     const [name, payload] = args;
     this.logger_.logMethodArgs?.('dispatch', {name, payload});
     this.checkDestroyed_();
-    delay.nextMicrotask().then(() => this.route__(name, payload));
+    queueMicrotask(() => this.route__(name, payload));
   }
 
   /**
@@ -241,10 +234,7 @@ export class ChannelSignal<TMap extends object> extends SignalBase<ChannelMessag
           if (handlerSet.size === 0) this.namedHandlers__.delete(name);
         }
         try {
-          const result = entry.handler(payload);
-          if (result instanceof Promise) {
-            result.catch((err) => this.logger_.error('route__', 'async_named_handler_failed', err));
-          }
+          entry.handler(payload);
         } catch (err) {
           this.logger_.error('route__', 'sync_named_handler_failed', err);
         }

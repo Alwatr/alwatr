@@ -1,9 +1,7 @@
-import { delay } from '@alwatr/delay';
-import { createLogger, type AlwatrLogger } from '@alwatr/logger';
-
-import { StateSignal } from './state-signal.js';
-
-import type { ComputedSignalConfig, IReadonlySignal, SubscribeResult, SubscribeOptions } from '../type.js';
+import {delay} from '@alwatr/delay';
+import {createLogger, type AlwatrLogger} from '@alwatr/logger';
+import {StateSignal} from './state-signal.js';
+import type {ComputedSignalConfig, IReadonlySignal, SubscribeResult, SubscribeOptions} from '../type.js';
 
 /**
  * A read-only signal that derives its value from a set of dependency signals.
@@ -77,7 +75,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
 
   constructor(protected config_: ComputedSignalConfig<T>) {
     this.name = config_.name;
-    this.logger_ = createLogger(`computed-signal:${this.name}`);
+    this.logger_ = createLogger(`computed_signal:${this.name}`);
     this.recalculate_ = this.recalculate_.bind(this);
 
     this.logger_.logMethod?.('constructor');
@@ -89,8 +87,8 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
 
     // Subscribe to all dependencies to trigger recalculation on change.
     for (const signal of config_.deps) {
-      this.logger_.logStep?.('constructor', 'subscribing_to_dependency', { signal: signal.name });
-      this.dependencySubscriptions__.push(signal.subscribe(this.recalculate_, { receivePrevious: false }));
+      this.logger_.logStep?.('constructor', 'subscribing_to_dependency', {signal: signal.name});
+      this.dependencySubscriptions__.push(signal.subscribe(this.recalculate_, {receivePrevious: false}));
     }
   }
 
@@ -168,7 +166,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
   /**
    * Schedules a recalculation of the signal's value.
    *
-   * This method batches updates using a macrotask (`delay.nextMacrotask`) to ensure the
+   * This method batches updates using a macrotask (`delay.nextMicrotask`) to ensure the
    * `get` function runs only once per event loop tick, even if multiple dependencies
    * change in the same synchronous block of code.
    * @protected
@@ -193,7 +191,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
     try {
       // Wait for the next macrotask to start the recalculation.
       // This batches all synchronous dependency updates in the current event loop.
-      await delay.nextMacrotask();
+      await delay.nextMicrotask();
 
       if (this.isDestroyed) {
         this.logger_.incident?.('recalculate_', 'destroyed_during_delay');
@@ -205,8 +203,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
 
       // Set the new value on the internal signal, which will notify our subscribers.
       this.internalSignal_.set(this.config_.get());
-    }
-    catch (err) {
+    } catch (err) {
       this.logger_.error('recalculate_', 'recalculation_failed', err);
     }
 

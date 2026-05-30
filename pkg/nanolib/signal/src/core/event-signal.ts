@@ -1,8 +1,6 @@
-import {delay} from '@alwatr/delay';
+import {queueMicrotask} from '@alwatr/delay';
 import {createLogger, type AlwatrLogger} from '@alwatr/logger';
-
 import {SignalBase} from './signal-base.js';
-
 import type {IBaseSignal, SignalConfig} from '../type.js';
 
 /**
@@ -41,7 +39,7 @@ export class EventSignal<T = void> extends SignalBase<T> implements IBaseSignal<
 
   constructor(config: SignalConfig) {
     super(config);
-    this.logger_ = createLogger(`event-signal:${this.name}`);
+    this.logger_ = createLogger(`event_signal:${this.name}`);
     this.logger_.logMethod?.('constructor');
   }
 
@@ -56,6 +54,6 @@ export class EventSignal<T = void> extends SignalBase<T> implements IBaseSignal<
     this.logger_.logMethodArgs?.('dispatch', {payload});
     this.checkDestroyed_();
     // Dispatch as a microtask to ensure consistent, non-blocking behavior.
-    delay.nextMicrotask().then(() => this.notify_(payload));
+    queueMicrotask(() => this.notify_(payload));
   }
 }

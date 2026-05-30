@@ -1,8 +1,6 @@
 import {createDebouncer} from '@alwatr/debounce';
 import {createSessionStorageProvider} from '@alwatr/session-storage';
-
 import {StateSignal} from './state-signal.js';
-
 import type {SessionStateSignalConfig} from '../type.js';
 import type {SessionStorageProvider} from '@alwatr/session-storage';
 

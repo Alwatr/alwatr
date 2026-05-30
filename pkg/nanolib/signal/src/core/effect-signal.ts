@@ -1,7 +1,6 @@
-import { delay } from '@alwatr/delay';
-import { createLogger, type AlwatrLogger } from '@alwatr/logger';
-
-import type { EffectSignalConfig, IEffectSignal, SubscribeResult } from '../type.js';
+import {delay} from '@alwatr/delay';
+import {createLogger, type AlwatrLogger} from '@alwatr/logger';
+import type {EffectSignalConfig, IEffectSignal, SubscribeResult} from '../type.js';
 
 /**
  * Manages a side-effect that runs in response to changes in dependency signals.
@@ -92,8 +91,8 @@ export class EffectSignal implements IEffectSignal {
     // Subscribe to all dependencies. We don't need the previous value,
     // as the `runImmediately` option controls the initial execution.
     for (const signal of config_.deps) {
-      this.logger_.logStep?.('constructor', 'subscribing_to_dependency', { signal: signal.name });
-      this.dependencySubscriptions__.push(signal.subscribe(this.scheduleExecution_, { receivePrevious: false }));
+      this.logger_.logStep?.('constructor', 'subscribing_to_dependency', {signal: signal.name});
+      this.dependencySubscriptions__.push(signal.subscribe(this.scheduleExecution_, {receivePrevious: false}));
     }
 
     // Run the effect immediately if requested.
@@ -107,7 +106,7 @@ export class EffectSignal implements IEffectSignal {
   /**
    * Schedules the execution of the effect's `run` function.
    *
-   * This method batches updates using a macrotask (`delay.nextMacrotask`) to ensure the
+   * This method batches updates using a macrotask (`delay.nextMicrotask`) to ensure the
    * `run` function executes only once per event loop tick, even if multiple
    * dependencies change simultaneously.
    * @protected
@@ -129,7 +128,7 @@ export class EffectSignal implements IEffectSignal {
 
     try {
       // Wait for the next macrotask to batch simultaneous updates.
-      await delay.nextMacrotask();
+      await delay.nextMicrotask();
       if (this.isDestroyed__) {
         this.logger_.incident?.('scheduleExecution_', 'destroyed_during_delay');
         this.isRunning__ = false;
@@ -137,9 +136,8 @@ export class EffectSignal implements IEffectSignal {
       }
 
       this.logger_.logStep?.('scheduleExecution_', 'executing_effect');
-      await this.config_.run();
-    }
-    catch (err) {
+      this.config_.run();
+    } catch (err) {
       this.logger_.error('scheduleExecution_', 'effect_failed', err);
     }
 

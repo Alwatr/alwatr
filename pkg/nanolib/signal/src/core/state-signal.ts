@@ -1,8 +1,6 @@
-import {delay} from '@alwatr/delay';
+import {queueMicrotask} from '@alwatr/delay';
 import {createLogger, type AlwatrLogger} from '@alwatr/logger';
-
 import {SignalBase} from './signal-base.js';
-
 import type {StateSignalConfig, ListenerCallback, SubscribeOptions, SubscribeResult, IReadonlySignal} from '../type.js';
 
 /**
@@ -68,7 +66,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
       name: config.name,
       onDestroy: config.onDestroy,
     });
-    this.logger_ = createLogger(`state-signal:${this.name}`);
+    this.logger_ = createLogger(`state_signal:${this.name}`);
     this.value__ = config.initialValue;
     this.logger_.logMethodArgs?.('constructor', {initialValue: this.value__});
   }
@@ -128,7 +126,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
     this.notifyPending__ = true;
 
     // Dispatch as a microtask to ensure consistent, non-blocking behavior.
-    delay.nextMicrotask().then(() => {
+    queueMicrotask(() => {
       this.notifyPending__ = false;
       this.notify_(this.value__);
     });
@@ -176,17 +174,19 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
     if (this.notifyPending__) return result; // If a notification is already pending, the callback will be called with the latest value when the notification is processed.
 
     const subscribeVersion = this.notifyVersion__;
-    delay
-      .nextMicrotask()
-      .then((): void => {
-        this.logger_.logStep?.('subscribe', 'immediate_callback');
-        if (this.notifyVersion__ !== subscribeVersion) return; // A notification occurred after subscribing, so skip the immediate callback.
-        if (options.once) {
-          result.unsubscribe();
-        }
+
+    queueMicrotask((): void => {
+      this.logger_.logStep?.('subscribe', 'immediate_callback');
+      if (this.notifyVersion__ !== subscribeVersion) return; // A notification occurred after subscribing, so skip the immediate callback.
+      if (options.once) {
+        result.unsubscribe();
+      }
+      try {
         callback(this.value__);
-      })
-      .catch((err) => this.logger_.error('subscribe', 'immediate_callback_failed', err));
+      } catch (err) {
+        this.logger_.error('subscribe', 'immediate_callback_failed', err);
+      }
+    });
 
     return result;
   }

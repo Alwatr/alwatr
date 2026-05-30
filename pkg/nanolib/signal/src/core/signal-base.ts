@@ -126,10 +126,7 @@ export abstract class SignalBase<T> {
       this.removeObserver_(observer);
     }
     try {
-      const result = observer.callback(value);
-      if (result instanceof Promise) {
-        result.catch((err) => this.logger_.error('notify_', 'async_callback_failed', err, {observer}));
-      }
+      observer.callback(value);
     } catch (err) {
       this.logger_.error('notify_', 'sync_callback_failed', err);
     }
