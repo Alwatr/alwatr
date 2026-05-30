@@ -83,8 +83,14 @@ export abstract class SignalBase<T> {
 
     if (observer.options?.priority) {
       this.priorityObservers_?.delete(observer);
+      if (this.priorityObservers_?.size === 0) {
+        this.priorityObservers_ = undefined;
+      }
     } else {
       this.observers_?.delete(observer);
+      if (this.observers_?.size === 0) {
+        this.observers_ = undefined;
+      }
     }
   }
 
@@ -187,15 +193,15 @@ export abstract class SignalBase<T> {
       this.pendingRejects__ ??= new Set();
       this.pendingRejects__.add(reject);
       this.subscribe(
-          (value) => {
-            this.pendingRejects__?.delete(reject);
-            resolve(value);
-          },
-          {
-            once: true,
-            priority: true, // Internal promise resolution is prioritized over normal observers.
-            receivePrevious: false, // Wait only for the next value change.
-          },
+        (value) => {
+          this.pendingRejects__?.delete(reject);
+          resolve(value);
+        },
+        {
+          once: true,
+          priority: true, // Internal promise resolution is prioritized over normal observers.
+          receivePrevious: false, // Wait only for the next value change.
+        },
       );
     });
   }
