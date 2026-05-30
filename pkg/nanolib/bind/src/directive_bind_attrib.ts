@@ -30,7 +30,7 @@ export class BindAttribDirective extends Directive {
       const pair = rawPair.trim();
       if (pair === '') continue;
 
-      const [attributeName, viewKey_] = pair.split('=');
+      const [attributeName, viewKey_ = ''] = pair.split('=');
       const [namespace, prop] = viewKey_.split('.');
       if (!attributeName || !namespace || !prop) {
         this.logger_.accident?.('bindingInit_', 'invalid_binding_pair', {pair});
