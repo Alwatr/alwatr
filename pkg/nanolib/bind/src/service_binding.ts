@@ -82,7 +82,7 @@ class BindingService {
     const viewModelSignal = createDerivedSignal({
       name: `view_model:${namespace}`,
       source,
-      projector: () => projector(source.get()),
+      projector,
     });
     this.viewModels_.set(namespace, viewModelSignal);
   }
