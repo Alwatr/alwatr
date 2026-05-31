@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.29.0](https://github.com/Alwatr/alwatr/compare/v9.28.0...v9.29.0) (2026-05-31)
+
+### ✨ Features
+
+* **delay:** add @alwatr/platform-info as a dependency ([95df848](https://github.com/Alwatr/alwatr/commit/95df848bea7c45f81ec0d87ee514bd030ac64bcb))
+* **delay:** enhance delay module with robust scheduling functions and remove polyfill ([f349b80](https://github.com/Alwatr/alwatr/commit/f349b8008f9d573c80492a8f9545dce4f4f55acc))
+* **delay:** enhance queueMacrotask implementation with robust FIFO management and detailed documentation ([2c13be8](https://github.com/Alwatr/alwatr/commit/2c13be80bfbb67273ddafd3eee79dd1056504074))
+* **delay:** implement new delay utility with various asynchronous control methods and add queueMacrotask functionality ([e8b2d63](https://github.com/Alwatr/alwatr/commit/e8b2d6369be47bd3fe3bd1b6ac983ff2e6f2629a))
+* **queueMacrotask:** enhance fallback logic and improve documentation clarity ([302a6e1](https://github.com/Alwatr/alwatr/commit/302a6e1ec63734d39585a498219902e82c5d40ae))
+
 ## [9.25.0](https://github.com/Alwatr/alwatr/compare/v9.24.0...v9.25.0) (2026-05-21)
 
 **Note:** Version bump only for package @alwatr/delay

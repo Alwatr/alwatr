@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.29.0](https://github.com/Alwatr/alwatr/compare/v9.28.0...v9.29.0) (2026-05-31)
+
+### ✨ Features
+
+* **debounce:** refactor createDebouncedSignal to use createDerivedSignal for improved functionality ([d1716d9](https://github.com/Alwatr/alwatr/commit/d1716d9df7d8f168f8c75c29f3afbfba7dd68b97))
+* **derived-signal:** add createDerivedSignal utility function for read-only signal mapping ([f6b2825](https://github.com/Alwatr/alwatr/commit/f6b2825c807508dbdf7da5b04b8145fe4d612e65))
+* **derived-signal:** enhance DerivedSignal with configuration-based constructor and improved destruction handling ([c35a849](https://github.com/Alwatr/alwatr/commit/c35a849c1289387cbcaab8968f62b00bbdba24dd))
+* **derived-signal:** implement DerivedSignal class for efficient read-only signal mapping ([fb79c4f](https://github.com/Alwatr/alwatr/commit/fb79c4f81068ff3ff21d294e4c56c46ed1887820))
+* **filter:** refactor createFilteredSignal to use createDerivedSignal for improved functionality ([320bec0](https://github.com/Alwatr/alwatr/commit/320bec0c74687359265e5fa38b69bda4c30fdf8a))
+* **signal:** add derived signal exports to main module for improved accessibility ([a3fb4ea](https://github.com/Alwatr/alwatr/commit/a3fb4eaceb3683781720ed5e09ff784fddc5774f))
+* **signal:** add DerivedSignalConfig interface for derived signal configuration ([ac488c3](https://github.com/Alwatr/alwatr/commit/ac488c3e4ed366f6351b9da9b40a3d15b6bb7cb9))
+
+### 🐛 Bug Fixes
+
+* **computed-signal:** correct terminology from "macrotask" to "microtask" in recalculation comment ([ea45940](https://github.com/Alwatr/alwatr/commit/ea4594022dae8e64d890c0b7fd61508f8441911b))
+* **debounce, filter:** remove internal signal destruction on unsubscribe ([4ff1d1a](https://github.com/Alwatr/alwatr/commit/4ff1d1aaede8dbd3d3fbafe707b6490464efbd73))
+* **debounce:** update naming convention for debounced signal and improve test coverage ([15ce3ae](https://github.com/Alwatr/alwatr/commit/15ce3ae4f85a955f4d2421aff9930f8176a49136))
+* **derived-signal:** add logging for method calls and state checks ([852d46a](https://github.com/Alwatr/alwatr/commit/852d46a6ccecfda27979cd0eb2804373411b2adb))
+* **derived-signal:** ensure internal signal is destroyed when no active consumers ([09f4953](https://github.com/Alwatr/alwatr/commit/09f49530f4fc94a91fe1abe54c9fbe0557e500e9))
+* **derived-signal:** implement untilNext method to resolve on next value ([4bfc5e1](https://github.com/Alwatr/alwatr/commit/4bfc5e1c90ecd4ed7d4733bff3d96fc7905f71fe))
+* **filter:** update createFilteredSignal to use underscore in name and improve cleanup on destroy ([a5db64c](https://github.com/Alwatr/alwatr/commit/a5db64cec614e6d7cfe231fa569564ba3a35bd4d))
+* **signal:** clean up empty observer sets on unsubscribe ([efe98ce](https://github.com/Alwatr/alwatr/commit/efe98ced9bb57cc0cb79a917cb927921993211e2))
+* **signal:** update naming convention for filtered and debounced signals ([550ea81](https://github.com/Alwatr/alwatr/commit/550ea812c49e07b8bc617246f22dbdaca1ff4d3c))
+
+### 🔨 Code Refactoring
+
+* **ChannelSignal:** move DispatchArgs, ChannelMessage, and ChannelHandler types to type.ts for better organization ([ebfc75e](https://github.com/Alwatr/alwatr/commit/ebfc75e124e510a3394354528ca85a80e5abd077))
+* **computed-signal:** optimize recalculation logic and improve subscription handling ([637f8cc](https://github.com/Alwatr/alwatr/commit/637f8cce78b14f4da0c8cf8fec9326740d5e601d))
+* **mapped-signal:** remove createMappedSignal implementation and tests ([d404487](https://github.com/Alwatr/alwatr/commit/d404487117e5e695e909afa523f545de7dbf8bc7))
+* **signal:** change observers to lazy allocation and update deletion logic ([e05a32d](https://github.com/Alwatr/alwatr/commit/e05a32d3fc2115533f3af712a17e58bd45c2ae13))
+* **signal:** refactor createDebouncedSignal to simplify implementation and improve parameter naming ([d89a7c4](https://github.com/Alwatr/alwatr/commit/d89a7c447242e6103a2b832d34a4d1eb13e34b28))
+* **signal:** remove unused map operator export from main.ts ([9dd55b4](https://github.com/Alwatr/alwatr/commit/9dd55b45a4c1138fb8e0fb2e0c43187099c8a852))
+* **signal:** replace delay with queueMicrotask for improved scheduling and logging consistency ([7f55de0](https://github.com/Alwatr/alwatr/commit/7f55de0a4bb560b2bc0c5844b026f45f714b5815))
+* **types:** update ListenerCallback and EffectSignalConfig to remove Awaitable type ([1c28664](https://github.com/Alwatr/alwatr/commit/1c28664e3f5618369608cbbd43c35dbfe233dfcf))
+
 ## [9.26.0](https://github.com/Alwatr/alwatr/compare/v9.25.0...v9.26.0) (2026-05-23)
 
 ### 🐛 Bug Fixes

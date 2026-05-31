@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.29.0](https://github.com/Alwatr/alwatr/compare/v9.28.0...v9.29.0) (2026-05-31)
+
+### ✨ Features
+
+* **queue-render:** implement global batcher queue for headless directives ([12bbb92](https://github.com/Alwatr/alwatr/commit/12bbb92b7bc5ba1321778bdf3966f8e2f5ae4939))
+
+### 🐛 Bug Fixes
+
+* **directive:** prevent lifecycle initialization if instance is destroyed ([b4034ba](https://github.com/Alwatr/alwatr/commit/b4034ba1ca4a31a1ca2fa6437ee0ea4a46c86207))
+* **queue-render:** handle errors in performUpdate_ to avoid disrupting the update loop ([2383aed](https://github.com/Alwatr/alwatr/commit/2383aed6f4b9a8feb5254895c6a3e4fe220ab259))
+
+### 🔨 Code Refactoring
+
+* **directive:** remove @alwatr/signal dependency and update subscribe_ method signature ([c509225](https://github.com/Alwatr/alwatr/commit/c50922527ab6b9c8db69e1d6004baa5191a1a0ed))
+* **directive:** replace Awaitable with void in lifecycle hooks and update initialization logic ([e73eba4](https://github.com/Alwatr/alwatr/commit/e73eba4d9f55b57efebc20fecea9734ab54cd2c9))
+* **lit-directive:** remove redundant update_ and shouldUpdate_ method calls ([d3c1fd6](https://github.com/Alwatr/alwatr/commit/d3c1fd6fc06f1720f5b1c3d6afa1f53d2d85a747))
+
 ## [9.26.0](https://github.com/Alwatr/alwatr/compare/v9.25.0...v9.26.0) (2026-05-23)
 
 **Note:** Version bump only for package @alwatr/directive

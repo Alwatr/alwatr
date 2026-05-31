@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.29.0](https://github.com/Alwatr/alwatr/compare/v9.28.0...v9.29.0) (2026-05-31)
+
+### 🔨 Code Refactoring
+
+* **logger:** improve logger function parameters and update AlwatrLogger interface ([d5bdfdd](https://github.com/Alwatr/alwatr/commit/d5bdfdda582d8d5ab0b1745f00ac623fb1975343))
+* **logger:** rename sanitizeDomain_ to sanitizeName_ for clarity ([e1b5841](https://github.com/Alwatr/alwatr/commit/e1b584155e7d07440affb237a377e2b2501f9412))
+
 ## [9.25.0](https://github.com/Alwatr/alwatr/compare/v9.24.0...v9.25.0) (2026-05-21)
 
 **Note:** Version bump only for package @alwatr/logger

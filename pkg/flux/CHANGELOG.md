@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.29.0](https://github.com/Alwatr/alwatr/compare/v9.28.0...v9.29.0) (2026-05-31)
+
+### ✨ Features
+
+* add @alwatr/bind dependency and export in main module ([422f397](https://github.com/Alwatr/alwatr/commit/422f397e80c4cba4d7924004e8832744eae073a0))
+
 ## [9.28.0](https://github.com/Alwatr/alwatr/compare/v9.27.0...v9.28.0) (2026-05-25)
 
 ### ✨ Features

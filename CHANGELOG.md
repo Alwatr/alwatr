@@ -3,6 +3,75 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.29.0](https://github.com/Alwatr/alwatr/compare/v9.28.0...v9.29.0) (2026-05-31)
+
+### ✨ Features
+
+* add @alwatr/bind dependency and export in main module ([422f397](https://github.com/Alwatr/alwatr/commit/422f397e80c4cba4d7924004e8832744eae073a0))
+* add initial implementation of Alwatr Bind with license, README, package.json, and TypeScript configuration ([3768cc5](https://github.com/Alwatr/alwatr/commit/3768cc50d1c328df6ebc02073e377eb951b0ae68))
+* **bind:** add BindAttribDirective for dynamic attribute binding ([07e86d8](https://github.com/Alwatr/alwatr/commit/07e86d876cf42c10c01f29f4c39ec7d41f9d54e7))
+* **bind:** add BindValueDirective for two-way data binding with input elements ([4841ca3](https://github.com/Alwatr/alwatr/commit/4841ca309366608ebfdb666efed9494dd3de6607))
+* **bind:** create main setup file for binding directives registration ([e197e92](https://github.com/Alwatr/alwatr/commit/e197e92968961bf910713095e3e5bb9c45731c59))
+* **bind:** implement BindingService with ViewModel management methods ([e294a8f](https://github.com/Alwatr/alwatr/commit/e294a8f4a10e0dcfe913590f663032ec503d9451))
+* **bind:** implement BindTextDirective for dynamic text binding ([eff0736](https://github.com/Alwatr/alwatr/commit/eff0736758fa77c586fd21fc7a95809158671f1c))
+* **binding-service:** refactor createViewModel to use createDerivedSignal and improve namespace handling ([f33957f](https://github.com/Alwatr/alwatr/commit/f33957f67ef1747038ffed928368ce2846f7bd60))
+* **debounce:** refactor createDebouncedSignal to use createDerivedSignal for improved functionality ([d1716d9](https://github.com/Alwatr/alwatr/commit/d1716d9df7d8f168f8c75c29f3afbfba7dd68b97))
+* **delay:** add @alwatr/platform-info as a dependency ([95df848](https://github.com/Alwatr/alwatr/commit/95df848bea7c45f81ec0d87ee514bd030ac64bcb))
+* **delay:** enhance delay module with robust scheduling functions and remove polyfill ([f349b80](https://github.com/Alwatr/alwatr/commit/f349b8008f9d573c80492a8f9545dce4f4f55acc))
+* **delay:** enhance queueMacrotask implementation with robust FIFO management and detailed documentation ([2c13be8](https://github.com/Alwatr/alwatr/commit/2c13be80bfbb67273ddafd3eee79dd1056504074))
+* **delay:** implement new delay utility with various asynchronous control methods and add queueMacrotask functionality ([e8b2d63](https://github.com/Alwatr/alwatr/commit/e8b2d6369be47bd3fe3bd1b6ac983ff2e6f2629a))
+* **derived-signal:** add createDerivedSignal utility function for read-only signal mapping ([f6b2825](https://github.com/Alwatr/alwatr/commit/f6b2825c807508dbdf7da5b04b8145fe4d612e65))
+* **derived-signal:** enhance DerivedSignal with configuration-based constructor and improved destruction handling ([c35a849](https://github.com/Alwatr/alwatr/commit/c35a849c1289387cbcaab8968f62b00bbdba24dd))
+* **derived-signal:** implement DerivedSignal class for efficient read-only signal mapping ([fb79c4f](https://github.com/Alwatr/alwatr/commit/fb79c4f81068ff3ff21d294e4c56c46ed1887820))
+* **filter:** refactor createFilteredSignal to use createDerivedSignal for improved functionality ([320bec0](https://github.com/Alwatr/alwatr/commit/320bec0c74687359265e5fa38b69bda4c30fdf8a))
+* **queue-render:** implement global batcher queue for headless directives ([12bbb92](https://github.com/Alwatr/alwatr/commit/12bbb92b7bc5ba1321778bdf3966f8e2f5ae4939))
+* **queueMacrotask:** enhance fallback logic and improve documentation clarity ([302a6e1](https://github.com/Alwatr/alwatr/commit/302a6e1ec63734d39585a498219902e82c5d40ae))
+* **signal:** add derived signal exports to main module for improved accessibility ([a3fb4ea](https://github.com/Alwatr/alwatr/commit/a3fb4eaceb3683781720ed5e09ff784fddc5774f))
+* **signal:** add DerivedSignalConfig interface for derived signal configuration ([ac488c3](https://github.com/Alwatr/alwatr/commit/ac488c3e4ed366f6351b9da9b40a3d15b6bb7cb9))
+
+### 🐛 Bug Fixes
+
+* **computed-signal:** correct terminology from "macrotask" to "microtask" in recalculation comment ([ea45940](https://github.com/Alwatr/alwatr/commit/ea4594022dae8e64d890c0b7fd61508f8441911b))
+* **debounce, filter:** remove internal signal destruction on unsubscribe ([4ff1d1a](https://github.com/Alwatr/alwatr/commit/4ff1d1aaede8dbd3d3fbafe707b6490464efbd73))
+* **debounce:** update naming convention for debounced signal and improve test coverage ([15ce3ae](https://github.com/Alwatr/alwatr/commit/15ce3ae4f85a955f4d2421aff9930f8176a49136))
+* **derived-signal:** add logging for method calls and state checks ([852d46a](https://github.com/Alwatr/alwatr/commit/852d46a6ccecfda27979cd0eb2804373411b2adb))
+* **derived-signal:** ensure internal signal is destroyed when no active consumers ([09f4953](https://github.com/Alwatr/alwatr/commit/09f49530f4fc94a91fe1abe54c9fbe0557e500e9))
+* **derived-signal:** implement untilNext method to resolve on next value ([4bfc5e1](https://github.com/Alwatr/alwatr/commit/4bfc5e1c90ecd4ed7d4733bff3d96fc7905f71fe))
+* **directive:** handle missing viewKey_ in binding pair split ([797f633](https://github.com/Alwatr/alwatr/commit/797f63342383c0d0212619c6c49e80ec125a0fdc))
+* **directive:** prevent lifecycle initialization if instance is destroyed ([b4034ba](https://github.com/Alwatr/alwatr/commit/b4034ba1ca4a31a1ca2fa6437ee0ea4a46c86207))
+* **filter:** update createFilteredSignal to use underscore in name and improve cleanup on destroy ([a5db64c](https://github.com/Alwatr/alwatr/commit/a5db64cec614e6d7cfe231fa569564ba3a35bd4d))
+* **queue-render:** handle errors in performUpdate_ to avoid disrupting the update loop ([2383aed](https://github.com/Alwatr/alwatr/commit/2383aed6f4b9a8feb5254895c6a3e4fe220ab259))
+* **signal:** clean up empty observer sets on unsubscribe ([efe98ce](https://github.com/Alwatr/alwatr/commit/efe98ced9bb57cc0cb79a917cb927921993211e2))
+* **signal:** update naming convention for filtered and debounced signals ([550ea81](https://github.com/Alwatr/alwatr/commit/550ea812c49e07b8bc617246f22dbdaca1ff4d3c))
+
+### 🔨 Code Refactoring
+
+* **ActionService tests:** remove deprecated compatibility wrappers and clean up imports ([04acd66](https://github.com/Alwatr/alwatr/commit/04acd664d77ff727e73341dc0e63a3351e197b87))
+* **ActionService:** move ActionDescriptor interface to type.ts and clean up imports ([5fe8e33](https://github.com/Alwatr/alwatr/commit/5fe8e33f3be4e1fa3c93bbc8dafb9f5f2b8948f8))
+* **binding-service:** simplify projector function in createDerivedSignal ([a528805](https://github.com/Alwatr/alwatr/commit/a5288059b589bc930824b153986167d4c7f71819))
+* **ChannelSignal:** move DispatchArgs, ChannelMessage, and ChannelHandler types to type.ts for better organization ([ebfc75e](https://github.com/Alwatr/alwatr/commit/ebfc75e124e510a3394354528ca85a80e5abd077))
+* **computed-signal:** optimize recalculation logic and improve subscription handling ([637f8cc](https://github.com/Alwatr/alwatr/commit/637f8cce78b14f4da0c8cf8fec9326740d5e601d))
+* **directive:** remove @alwatr/signal dependency and update subscribe_ method signature ([c509225](https://github.com/Alwatr/alwatr/commit/c50922527ab6b9c8db69e1d6004baa5191a1a0ed))
+* **directive:** replace Awaitable with void in lifecycle hooks and update initialization logic ([e73eba4](https://github.com/Alwatr/alwatr/commit/e73eba4d9f55b57efebc20fecea9734ab54cd2c9))
+* **KeyboardShortcutService:** replace dispatchAction with actionService for improved action handling ([f219415](https://github.com/Alwatr/alwatr/commit/f219415849ae8b692b9dc0ad3dd37523114c107e))
+* **lit-directive:** remove redundant update_ and shouldUpdate_ method calls ([d3c1fd6](https://github.com/Alwatr/alwatr/commit/d3c1fd6fc06f1720f5b1c3d6afa1f53d2d85a747))
+* **logger:** improve logger function parameters and update AlwatrLogger interface ([d5bdfdd](https://github.com/Alwatr/alwatr/commit/d5bdfdda582d8d5ab0b1745f00ac623fb1975343))
+* **logger:** rename sanitizeDomain_ to sanitizeName_ for clarity ([e1b5841](https://github.com/Alwatr/alwatr/commit/e1b584155e7d07440affb237a377e2b2501f9412))
+* **main.ts:** remove deprecated functions and clean up exports ([27d7b2d](https://github.com/Alwatr/alwatr/commit/27d7b2dac6fa0374f00582b58c087e065b4e0ce7))
+* **mapped-signal:** remove createMappedSignal implementation and tests ([d404487](https://github.com/Alwatr/alwatr/commit/d404487117e5e695e909afa523f545de7dbf8bc7))
+* **signal:** change observers to lazy allocation and update deletion logic ([e05a32d](https://github.com/Alwatr/alwatr/commit/e05a32d3fc2115533f3af712a17e58bd45c2ae13))
+* **signal:** refactor createDebouncedSignal to simplify implementation and improve parameter naming ([d89a7c4](https://github.com/Alwatr/alwatr/commit/d89a7c447242e6103a2b832d34a4d1eb13e34b28))
+* **signal:** remove unused map operator export from main.ts ([9dd55b4](https://github.com/Alwatr/alwatr/commit/9dd55b45a4c1138fb8e0fb2e0c43187099c8a852))
+* **signal:** replace delay with queueMicrotask for improved scheduling and logging consistency ([7f55de0](https://github.com/Alwatr/alwatr/commit/7f55de0a4bb560b2bc0c5844b026f45f714b5815))
+* **types:** update ListenerCallback and EffectSignalConfig to remove Awaitable type ([1c28664](https://github.com/Alwatr/alwatr/commit/1c28664e3f5618369608cbbd43c35dbfe233dfcf))
+
+### 🔗 Dependencies update
+
+* add @alwatr/platform-info as a dependency with version ^9.25.0 ([5a135de](https://github.com/Alwatr/alwatr/commit/5a135de8e46978c5ee4f33c3422802aeda6ee78d))
+* update ([d635fd9](https://github.com/Alwatr/alwatr/commit/d635fd91422d9304775fefd53c2813f615708da6))
+* update all recursive deps ([ed86f33](https://github.com/Alwatr/alwatr/commit/ed86f33b1619a01ae40319f1cd9e8dd35a4bdac0))
+* update lerna-lite dependencies to version 5.2.2 ([627c4b4](https://github.com/Alwatr/alwatr/commit/627c4b4d6d86b98f4e45f235c38f494df5ec4870))
+
 ## [9.28.0](https://github.com/Alwatr/alwatr/compare/v9.27.0...v9.28.0) (2026-05-25)
 
 ### ✨ Features

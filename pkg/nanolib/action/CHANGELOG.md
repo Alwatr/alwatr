@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.29.0](https://github.com/Alwatr/alwatr/compare/v9.28.0...v9.29.0) (2026-05-31)
+
+### 🔨 Code Refactoring
+
+* **ActionService tests:** remove deprecated compatibility wrappers and clean up imports ([04acd66](https://github.com/Alwatr/alwatr/commit/04acd664d77ff727e73341dc0e63a3351e197b87))
+* **ActionService:** move ActionDescriptor interface to type.ts and clean up imports ([5fe8e33](https://github.com/Alwatr/alwatr/commit/5fe8e33f3be4e1fa3c93bbc8dafb9f5f2b8948f8))
+* **main.ts:** remove deprecated functions and clean up exports ([27d7b2d](https://github.com/Alwatr/alwatr/commit/27d7b2dac6fa0374f00582b58c087e065b4e0ce7))
+
 ## [9.28.0](https://github.com/Alwatr/alwatr/compare/v9.27.0...v9.28.0) (2026-05-25)
 
 **Note:** Version bump only for package @alwatr/action
