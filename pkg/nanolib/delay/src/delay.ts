@@ -46,6 +46,27 @@ export const delay = {
   animationFrame: (): Promise<DOMHighResTimeStamp> => new Promise((resolve) => requestAnimationFrame(resolve)),
 
   /**
+   * Suspends execution flow until the next two consecutive animation frames have occurred.
+   *
+   * Ensures that any pending DOM updates have been rendered before resuming execution.
+   * Resolves after the second animation frame, providing a safe point to perform post-render calculations.
+   *
+   * @returns A Promise that resolves after two animation frames.
+   *
+   * @example
+   * ```ts
+   * await delay.nextRender();
+   * performPostRenderCalculations();
+   * ```
+   */
+  nextRender: () =>
+    new Promise<void>((resolve) => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => resolve());
+      });
+    }),
+
+  /**
    * Postpones execution until the browser's event loop becomes idle.
    *
    * Ideal for scheduling non-critical background tasks without impacting UI responsiveness.
