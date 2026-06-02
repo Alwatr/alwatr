@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.30.0](https://github.com/Alwatr/alwatr/compare/v9.29.0...v9.30.0) (2026-06-02)
+
+### ✨ Features
+
+* **delay:** add nextRender utility to wait for two animation frames ([4827156](https://github.com/Alwatr/alwatr/commit/4827156e04d753156e5ebea5a7fccfaa423a86a2))
+
 ## [9.29.0](https://github.com/Alwatr/alwatr/compare/v9.28.0...v9.29.0) (2026-05-31)
 
 ### ✨ Features
