@@ -76,25 +76,28 @@ export function bootstrapNewDirective_(
   }
 
   for (const element of elementList) {
+    let initializedDirectives = initializedDirectiveElements_.get(element);
+
+    if (initializedDirectives?.has(attributeName)) {
+      logger.logOther?.('bootstrapDirectives', 'directive_already_initialized', {attributeName, element});
+      continue;
+    }
+
+    if (!initializedDirectives) {
+      initializedDirectives = new Set([attributeName]);
+      initializedDirectiveElements_.set(element, initializedDirectives);
+    }
+
     try {
-      let initializedDirectives = initializedDirectiveElements_.get(element);
-
-      if (initializedDirectives?.has(attributeName)) {
-        logger.logOther?.('bootstrapDirectives', 'directive_already_initialized', {attributeName, element});
-        continue;
-      }
-
-      if (!initializedDirectives) {
-        initializedDirectives = new Set([attributeName]);
-        initializedDirectiveElements_.set(element, initializedDirectives);
-      }
       const directiveInstance = new constructor(element, attributeName);
-      initializedDirectives.add(attributeName);
       directiveInstance.addDestroyHook(cleanOnDestroy_);
       directiveInstanceRegistry_.add(directiveInstance);
     } catch (err) {
       logger.error('bootstrapDirectives', 'directive_instantiation_error', {attributeName, element}, err);
+      continue;
     }
+
+    initializedDirectives.add(attributeName);
   }
 }
 
