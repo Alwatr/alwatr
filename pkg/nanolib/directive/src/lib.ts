@@ -40,6 +40,23 @@ export const finalizationRegistry =
     })
   : null;
 
+/**
+ * Safely queries the DOM for elements matching the specified selector, while handling potential errors from invalid selectors.
+ * If the selector is invalid, it logs an error and returns null instead of throwing an exception.
+ *
+ * @param root The root element to query within.
+ * @param selector The CSS selector string to match elements against.
+ * @returns A NodeList of matching elements, or null if the selector is invalid.
+ */
+export function querySelectorAllSafe_(root: HTMLElement, selector: string): NodeListOf<HTMLElement> | null {
+  try {
+    return root.querySelectorAll<HTMLElement>(selector);
+  } catch (err) {
+    logger.error('querySelectorAllSafe', 'invalid_selector', {selector}, err);
+    return null;
+  }
+}
+
 interface Updatable {
   performUpdate_(): void;
 }
