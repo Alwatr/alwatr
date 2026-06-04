@@ -59,9 +59,9 @@ export function querySelectorAllSafe_(parent: ParentNode, selector: string): Nod
 /**
  * Bootstraps a single directive by finding all elements with the specified attribute and initializing the directive on them.
  *
- * @param parent The root element to search within.
- * @param constructor The constructor function for the directive to initialize.
  * @param name The name of the attribute that identifies the directive.
+ * @param constructor The constructor function for the directive to initialize.
+ * @param parent The root element to search within.
  */
 export function bootstrapNewDirective_(
   name: string,
@@ -75,30 +75,37 @@ export function bootstrapNewDirective_(
     return;
   }
 
-  for (let i = 0; i < elementList.length; i++) {
-    const element = elementList[i];
+  const len = elementList.length;
+  for (let i = 0; i < len; i++) {
+    bootstrapElement(name, constructor, elementList[i]);
+  }
+}
 
-    let initializedDirectives = initializedDirectiveElements_.get(element);
-    if (initializedDirectives !== undefined && initializedDirectives.has(name)) {
-      logger.logOther?.('bootstrapDirectives', 'directive_already_initialized', {name, element});
-      continue;
-    }
+/**
+ * Bootstraps a directive on a specific element by creating an instance of the directive and tracking it in the registry.
+ *
+ * @param name The name of the directive being bootstrapped.
+ * @param constructor The constructor function for the directive to initialize.
+ * @param element The DOM element on which to initialize the directive.
+ */
+export function bootstrapElement(name: string, constructor: DirectiveConstructor, element: HTMLElement): void {
+  let initializedDirectives = initializedDirectiveElements_.get(element);
+  if (initializedDirectives !== undefined && initializedDirectives.has(name)) {
+    logger.logOther?.('bootstrapDirectives', 'directive_already_initialized', {name, element});
+    return;
+  }
 
-    if (!initializedDirectives) {
-      initializedDirectives = new Set([name]);
+  try {
+    const directiveInstance = new constructor(element, name);
+    directiveInstance.addDestroyHook(cleanOnDestroy_);
+    directiveInstanceRegistry_.add(directiveInstance);
+    if (initializedDirectives === undefined) {
+      initializedDirectives = new Set();
       initializedDirectiveElements_.set(element, initializedDirectives);
     }
-
-    try {
-      const directiveInstance = new constructor(element, name);
-      directiveInstance.addDestroyHook(cleanOnDestroy_);
-      directiveInstanceRegistry_.add(directiveInstance);
-    } catch (err) {
-      logger.error('bootstrapDirectives', 'directive_instantiation_error', {name, element}, err);
-      continue;
-    }
-
     initializedDirectives.add(name);
+  } catch (err) {
+    logger.error('bootstrapDirectives', 'directive_instantiation_error', {name, element}, err);
   }
 }
 
