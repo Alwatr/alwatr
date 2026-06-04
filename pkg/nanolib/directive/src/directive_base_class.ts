@@ -336,6 +336,7 @@ export abstract class Directive {
    */
   public destroy(): void {
     this.logger_.logMethod?.('destroy');
+    if (this.isDestroyed()) return;
 
     // Execute all registered cleanup tasks
     if (this.destroyHookList__.length > 0) {
