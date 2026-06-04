@@ -30,6 +30,8 @@ export function bootstrapDirectives(rootElement?: HTMLElement): void {
     document.addEventListener('DOMContentLoaded', () => bootstrapDirectives(rootElement), {once: true});
     return;
   }
-  rootElement ??= document.body;
-  directiveRegistry_.forEach(bootstrapNewDirective_.bind(null, rootElement));
+
+  directiveRegistry_.forEach((constructor, attributeName) => {
+    bootstrapNewDirective_(attributeName, constructor, rootElement);
+  });
 }
