@@ -22,7 +22,7 @@ import {bootstrapNewDirective_, directiveRegistry_, logger} from './lib.js';
  * bootstrapDirectives(newContent);
  * ```
  */
-export function bootstrapDirectives(rootElement?: HTMLElement): void {
+export function bootstrapDirectives(rootElement?: ParentNode): void {
   logger.logMethod?.('bootstrapDirectives');
   if (typeof document === 'undefined') return;
   if (document.readyState === 'loading') {
