@@ -1,8 +1,7 @@
 import {queueMicrotask} from '@alwatr/delay';
 import {createLogger} from '@alwatr/logger';
-
-import type {DirectiveConstructor} from './decorator_directive.js';
 import type {Directive} from './directive_base_class.js';
+import type {DirectiveConstructor} from './type.js';
 
 /**
  * Alwatr Directive System Logger
@@ -57,6 +56,71 @@ export function querySelectorAllSafe_(root: HTMLElement, selector: string): Node
   }
 }
 
+/**
+ * Bootstraps a single directive by finding all elements with the specified attribute and initializing the directive on them.
+ *
+ * @param rootElement The root element to search within.
+ * @param constructor The constructor function for the directive to initialize.
+ * @param attributeName The name of the attribute that identifies the directive.
+ */
+export function bootstrapNewDirective_(
+  rootElement: HTMLElement,
+  constructor: DirectiveConstructor,
+  attributeName: string,
+) {
+  const elementList = querySelectorAllSafe_(rootElement, `[${attributeName}]`);
+
+  if (elementList === null || elementList.length === 0) {
+    logger.logOther?.('no_elements_found', {attributeName});
+    return;
+  }
+
+  for (const element of elementList) {
+    try {
+      let initializedDirectives = initializedDirectiveElements_.get(element);
+
+      if (initializedDirectives?.has(attributeName)) {
+        logger.logOther?.('bootstrapDirectives', 'directive_already_initialized', {attributeName, element});
+        continue;
+      }
+
+      if (!initializedDirectives) {
+        initializedDirectives = new Set([attributeName]);
+        initializedDirectiveElements_.set(element, initializedDirectives);
+      }
+      const directiveInstance = new constructor(element, attributeName);
+      initializedDirectives.add(attributeName);
+      directiveInstance.addDestroyHook(cleanOnDestroy_);
+      directiveInstanceRegistry_.add(directiveInstance);
+    } catch (err) {
+      logger.error('bootstrapDirectives', 'directive_instantiation_error', {attributeName, element}, err);
+    }
+  }
+}
+
+/**
+ * Cleans up the directive instance when it is destroyed.
+ * @param this The directive instance to clean up.
+ */
+export function cleanOnDestroy_(this: Directive) {
+  this.logger_.logMethod?.('cleanOnDestroy');
+  directiveInstanceRegistry_.delete(this);
+
+  const initializedDirectives = initializedDirectiveElements_.get(this.element_);
+  if (initializedDirectives) {
+    initializedDirectives.delete(this.attributeName);
+    if (initializedDirectives.size === 0) {
+      initializedDirectiveElements_.delete(this.element_);
+    }
+  }
+}
+
+// =======
+
+/**
+ * Interface representing an object that can be updated by the directive system.
+ * This is used for the global batch update mechanism, allowing directives to schedule updates that will be processed together in a single microtask.
+ */
 interface Updatable {
   performUpdate_(): void;
 }
