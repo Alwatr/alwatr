@@ -1,5 +1,5 @@
 import {directiveInstanceRegistry_, directiveRegistry_, initializedDirectiveElements_, logger} from './lib.js';
-import type {Directive} from './directive-class.js';
+import type {Directive} from './directive_base_class.js';
 
 /**
  * Initializes all registered directives within a given root element.

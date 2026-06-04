@@ -1,4 +1,4 @@
-import {directiveInstanceRegistry_, logger} from './lib';
+import {directiveInstanceRegistry_, logger} from './lib.js';
 
 export function autoDestructDirectives(): void {
   logger.logMethod?.('autoDestructDirectives');

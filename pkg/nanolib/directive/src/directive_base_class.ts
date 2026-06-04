@@ -7,8 +7,7 @@
 
 import {queueMicrotask, requestAnimationFrame} from '@alwatr/delay';
 import {createLogger} from '@alwatr/logger';
-import {finalizationRegistry} from './lib.js';
-import {queueRender} from './queue-render.js';
+import {finalizationRegistry, queueRender} from './lib.js';
 import type {ListenerCallback, Subscribable} from './type.js';
 
 /**
