@@ -1,6 +1,6 @@
 import type {Directive} from './directive_base_class.js';
-import type {DirectiveConstructor} from './decorator_directive.js';
-import {directiveRegistry_, logger} from './lib.js';
+import {bootstrapNewDirective_, directiveRegistry_, logger} from './lib.js';
+import type {DirectiveConstructor} from './type.js';
 
 /**
  * Creates a lazy registration function for a directive.
@@ -40,8 +40,8 @@ export function lazyDirective<T extends Directive>(
     logger.logMethodArgs?.('lazyDirective', name);
     directiveRegistry_.set(name, constructor);
 
-    if (autoBootstrap) {
-      // Implementation for auto-bootstrap if needed
+    if (autoBootstrap && typeof document !== 'undefined') {
+      bootstrapNewDirective_(document.body, constructor, name);
     }
   };
 }
