@@ -7,7 +7,7 @@ import {bootstrapNewDirective_, directiveRegistry_, logger} from './lib.js';
  * This function is idempotent; it will not re-initialize a directive on an element
  * that has already been processed.
  *
- * @param rootElement The element to scan for directives. Defaults to `document.body`.
+ * @param rootElement The element to scan for directives. Defaults to `document`.
  *
  * @example
  * ```ts
