@@ -1,14 +1,5 @@
 import {directiveRegistry_, logger} from './lib.js';
-import type {Directive} from './directive_base_class.js';
-
-/**
- * Type definition for a directive constructor.
- * A directive class must have a constructor that accepts an HTMLElement.
- */
-export type DirectiveConstructor<T extends Directive = Directive> = new (
-  element: HTMLElement,
-  attributeName: string,
-) => T;
+import type {DirectiveConstructor} from './type.js';
 
 /**
  * A class decorator that registers a class as an attribute-based directive.
