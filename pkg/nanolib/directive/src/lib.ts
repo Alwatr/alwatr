@@ -43,13 +43,13 @@ export const finalizationRegistry =
  * Safely queries the DOM for elements matching the specified selector, while handling potential errors from invalid selectors.
  * If the selector is invalid, it logs an error and returns null instead of throwing an exception.
  *
- * @param root The root element to query within.
+ * @param parent The root element to query within.
  * @param selector The CSS selector string to match elements against.
  * @returns A NodeList of matching elements, or null if the selector is invalid.
  */
-export function querySelectorAllSafe_(root: HTMLElement, selector: string): NodeListOf<HTMLElement> | null {
+export function querySelectorAllSafe_(parent: ParentNode, selector: string): NodeListOf<HTMLElement> | null {
   try {
-    return root.querySelectorAll<HTMLElement>(selector);
+    return parent.querySelectorAll<HTMLElement>(selector);
   } catch (err) {
     logger.error('querySelectorAllSafe', 'invalid_selector', {selector}, err);
     return null;
@@ -59,45 +59,46 @@ export function querySelectorAllSafe_(root: HTMLElement, selector: string): Node
 /**
  * Bootstraps a single directive by finding all elements with the specified attribute and initializing the directive on them.
  *
- * @param rootElement The root element to search within.
+ * @param parent The root element to search within.
  * @param constructor The constructor function for the directive to initialize.
- * @param attributeName The name of the attribute that identifies the directive.
+ * @param name The name of the attribute that identifies the directive.
  */
 export function bootstrapNewDirective_(
-  rootElement: HTMLElement,
+  name: string,
   constructor: DirectiveConstructor,
-  attributeName: string,
-) {
-  const elementList = querySelectorAllSafe_(rootElement, `[${attributeName}]`);
+  parent: ParentNode = document,
+): void {
+  const elementList = querySelectorAllSafe_(parent, `[${name}]`);
 
   if (elementList === null || elementList.length === 0) {
-    logger.logOther?.('no_elements_found', {attributeName});
+    logger.logOther?.('no_elements_found', {name});
     return;
   }
 
-  for (const element of elementList) {
-    let initializedDirectives = initializedDirectiveElements_.get(element);
+  for (let i = 0; i < elementList.length; i++) {
+    const element = elementList[i];
 
-    if (initializedDirectives?.has(attributeName)) {
-      logger.logOther?.('bootstrapDirectives', 'directive_already_initialized', {attributeName, element});
+    let initializedDirectives = initializedDirectiveElements_.get(element);
+    if (initializedDirectives !== undefined && initializedDirectives.has(name)) {
+      logger.logOther?.('bootstrapDirectives', 'directive_already_initialized', {name, element});
       continue;
     }
 
     if (!initializedDirectives) {
-      initializedDirectives = new Set([attributeName]);
+      initializedDirectives = new Set([name]);
       initializedDirectiveElements_.set(element, initializedDirectives);
     }
 
     try {
-      const directiveInstance = new constructor(element, attributeName);
+      const directiveInstance = new constructor(element, name);
       directiveInstance.addDestroyHook(cleanOnDestroy_);
       directiveInstanceRegistry_.add(directiveInstance);
     } catch (err) {
-      logger.error('bootstrapDirectives', 'directive_instantiation_error', {attributeName, element}, err);
+      logger.error('bootstrapDirectives', 'directive_instantiation_error', {name, element}, err);
       continue;
     }
 
-    initializedDirectives.add(attributeName);
+    initializedDirectives.add(name);
   }
 }
 
