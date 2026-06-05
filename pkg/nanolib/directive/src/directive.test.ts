@@ -8,7 +8,7 @@
 
 import {describe, it, expect, mock, beforeEach, afterEach} from 'bun:test';
 import {GlobalRegistrator} from '@happy-dom/global-registrator';
-import {Directive} from './directive-class.js';
+import {Directive} from './directive_base_class.js';
 
 // Register DOM globals if not already done (guard against double-registration)
 if (typeof document === 'undefined') {

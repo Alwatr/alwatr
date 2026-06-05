@@ -1,7 +1,7 @@
 import {describe, expect, it} from 'bun:test';
 import {GlobalRegistrator} from '@happy-dom/global-registrator';
-import {Directive} from './directive-class.js';
-import {attribute, on, query, queryAll, state} from './util-decorators.js';
+import {Directive} from '@alwatr/directive';
+import {attribute, on, query, queryAll, state} from '@alwatr/directive';
 
 // Guard against double-registration (directive-class.test.ts may have already registered)
 if (typeof document === 'undefined') {

@@ -7,8 +7,7 @@
 
 import {queueMicrotask, requestAnimationFrame} from '@alwatr/delay';
 import {createLogger} from '@alwatr/logger';
-import {finalizationRegistry} from './lib.js';
-import {queueRender} from './queue-render.js';
+import {finalizationRegistry, queueRender} from './lib.js';
 import type {ListenerCallback, Subscribable} from './type.js';
 
 /**
@@ -337,6 +336,7 @@ export abstract class Directive {
    */
   public destroy(): void {
     this.logger_.logMethod?.('destroy');
+    if (this.isDestroyed()) return;
 
     // Execute all registered cleanup tasks
     if (this.destroyHookList__.length > 0) {

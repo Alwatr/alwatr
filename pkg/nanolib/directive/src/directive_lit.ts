@@ -7,7 +7,7 @@
  */
 
 import {render} from 'lit-html';
-import {Directive} from './directive-class.js';
+import {Directive} from './directive_base_class.js';
 
 /**
  * A `Directive` subclass that renders its DOM output using `lit-html`.

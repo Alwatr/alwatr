@@ -1,6 +1,11 @@
-export * from './bootstrap.js';
-export * from './auto-destruct.js';
-export * from './directive-decorator.js';
-export * from './directive-class.js';
-export * from './lit-directive.js';
-export * from './util-decorators.js';
+export * from './auto_destruct.js';
+export * from './bootstrap_directives.js';
+export * from './decorator_attribute.js';
+export * from './decorator_directive.js';
+export * from './decorator_on.js';
+export * from './decorator_query.js';
+export * from './decorator_state.js';
+export * from './directive_base_class.js';
+export * from './directive_lit.js';
+export * from './lazy_directive.js';
+export type {DirectiveConstructor} from './type.js';
