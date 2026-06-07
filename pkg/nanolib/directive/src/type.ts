@@ -19,3 +19,11 @@ export type DirectiveConstructor<T extends Directive = Directive> = new (
   element: HTMLElement,
   attributeName: string,
 ) => T;
+
+/**
+ * Lazy registration function for a directive. When called, it registers the directive and optionally bootstraps it on the page.
+ *
+ * @param autoBootstrap If true (default), the directive will be automatically bootstrapped on the page immediately after registration. If false, the consumer must call `bootstrapDirectives()` manually to initialize the directive on the page.
+ * @param bootstrapRoot An optional root element to limit the scope of directive initialization. If not provided, it defaults to `document`, meaning the directive will be initialized across the entire document.
+ */
+export type RegisterDirectiveFunction = (autoBootstrap: boolean, bootstrapRoot?: HTMLElement | Document) => void;

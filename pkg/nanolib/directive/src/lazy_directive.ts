@@ -1,6 +1,6 @@
 import type {Directive} from './directive_base_class.js';
 import {bootstrapNewDirective_, directiveRegistry_, logger} from './lib.js';
-import type {DirectiveConstructor} from './type.js';
+import type {DirectiveConstructor, RegisterDirectiveFunction} from './type.js';
 
 /**
  * Creates a lazy registration function for a directive.
@@ -33,11 +33,9 @@ import type {DirectiveConstructor} from './type.js';
 export function lazyDirective<T extends Directive>(
   name: string,
   constructor: DirectiveConstructor<T>,
-  autoBootstrap = true,
-  bootstrapRoot?: HTMLElement | Document,
-): () => void {
+): RegisterDirectiveFunction {
   // Return a closure — no registration happens here, only when the returned function is called.
-  return function registerDirective(): void {
+  return function registerDirective(autoBootstrap: boolean, bootstrapRoot?: HTMLElement | Document): void {
     if (directiveRegistry_.has(name)) {
       logger.accident('lazyDirective', 'duplicate_directive_registration', {name});
       return;
