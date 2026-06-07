@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.32.0](https://github.com/Alwatr/alwatr/compare/v9.31.0...v9.32.0) (2026-06-07)
+
+### ✨ Features
+
+* **delay:** add delay.scheduleIdleBatch promise to handle task batching during idle periods ([7d1dab0](https://github.com/Alwatr/alwatr/commit/7d1dab0d30b7ac8ba1cf021486a5c5d8bfa2c2c9))
+* **delay:** add requestNextRender function to handle post-render calculations ([9f26fe1](https://github.com/Alwatr/alwatr/commit/9f26fe11dee60fda4b0e824d4e02762bb5dc76cf))
+* **delay:** implement scheduleIdleBatch function for batching non-critical tasks ([70849f1](https://github.com/Alwatr/alwatr/commit/70849f1ca394296ac39c99f0d2fac6aff676f263))
+* **delay:** refactor nextRender function to use requestNextRender for improved performance ([729474d](https://github.com/Alwatr/alwatr/commit/729474d2ddaab77d17d63ca27a12fbc67b60725e))
+
+### 🐛 Bug Fixes
+
+* **delay:** correct import paths for consistency across delay module files ([566ebb3](https://github.com/Alwatr/alwatr/commit/566ebb336281f8452944928bb9b707f19271c9cb))
+
+### 🔨 Code Refactoring
+
+* **delay:** rename files ([77d036b](https://github.com/Alwatr/alwatr/commit/77d036bac7eb7f3345b1f3c69c46b563e973cc19))
+
 ## [9.31.0](https://github.com/Alwatr/alwatr/compare/v9.30.0...v9.31.0) (2026-06-07)
 
 ### 🔗 Dependencies update

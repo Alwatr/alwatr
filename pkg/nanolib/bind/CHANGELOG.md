@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.32.0](https://github.com/Alwatr/alwatr/compare/v9.31.0...v9.32.0) (2026-06-07)
+
+### ✨ Features
+
+* **bind:** update setupBindDirectives to accept autoBootstrap parameter ([ffe2883](https://github.com/Alwatr/alwatr/commit/ffe28831f80fd69846ae367268c0baf37cb0145e))
+
 ## [9.31.0](https://github.com/Alwatr/alwatr/compare/v9.30.0...v9.31.0) (2026-06-07)
 
 ### 🔗 Dependencies update

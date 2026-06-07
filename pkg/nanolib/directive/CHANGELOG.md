@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.32.0](https://github.com/Alwatr/alwatr/compare/v9.31.0...v9.32.0) (2026-06-07)
+
+### ✨ Features
+
+* **delay:** enhance lazyDirective with autoBootstrap and bootstrapRoot parameters ([f3c71e1](https://github.com/Alwatr/alwatr/commit/f3c71e12421141ffd40704b1aeee9b539f80d22b))
+* **directive:** export RegisterDirectiveFunction type from main.ts ([462e667](https://github.com/Alwatr/alwatr/commit/462e667f04b7cef5497b72aa0fdbe9f35f2bbe61))
+
 ## [9.31.0](https://github.com/Alwatr/alwatr/compare/v9.30.0...v9.31.0) (2026-06-07)
 
 ### ✨ Features
