@@ -1,4 +1,5 @@
 import {requestNextRender} from './request_next_render.js';
+import {requestIdleCallback} from './request_idle_callback.js';
 
 // The single source of truth for our pending render tasks
 const idleTaskQueue_: Array<() => void> = [];

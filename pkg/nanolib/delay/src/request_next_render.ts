@@ -1,4 +1,4 @@
-import {requestAnimationFrame} from './request-animation-frame.js';
+import {requestAnimationFrame} from './request_animation_frame.js';
 
 /**
  * Suspends execution flow until the next two consecutive animation frames have occurred.
@@ -10,9 +10,9 @@ import {requestAnimationFrame} from './request-animation-frame.js';
  *
  * @example
  * ```ts
- * delay.nextRender(() => {
- *   performPostRenderCalculations();
- * });
+ * await delay.requestNextRender();
+ * performPostRenderCalculations();
+ * ```
  */
 export const requestNextRender = (callback: FrameRequestCallback): void => {
   requestAnimationFrame(() => {
