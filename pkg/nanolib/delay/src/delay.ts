@@ -1,9 +1,10 @@
 import {parseDuration} from '@alwatr/parse-duration';
 import type {Duration} from '@alwatr/parse-duration';
-import {queueMicrotask} from './queue-microtask.js';
-import {requestAnimationFrame} from './request-animation-frame.js';
-import {requestIdleCallback} from './request-idle-callback.js';
-import {queueMacrotask} from './queue-macrotask.js';
+import {queueMicrotask} from './queue_microtask.js';
+import {requestAnimationFrame} from './request_animation_frame.js';
+import {requestIdleCallback} from './request_idle_callback.js';
+import {queueMacrotask} from './queue_macrotask.js';
+import {requestNextRender} from './request_next_render.js';
 
 /**
  * A highly optimized utility module to handle asynchronous flow control,
