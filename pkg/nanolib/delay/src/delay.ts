@@ -59,12 +59,7 @@ export const delay = {
    * performPostRenderCalculations();
    * ```
    */
-  nextRender: () =>
-    new Promise<void>((resolve) => {
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => resolve());
-      });
-    }),
+  nextRender: (): Promise<DOMHighResTimeStamp> => new Promise((resolve) => requestNextRender(resolve)),
 
   /**
    * Postpones execution until the browser's event loop becomes idle.
