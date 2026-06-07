@@ -1,9 +1,11 @@
 import {parseDuration} from '@alwatr/parse-duration';
+import {queueMicrotask} from './queue_microtask.js';
+import {requestAnimationFrame} from './request_animation_frame.js';
+import {requestIdleCallback} from './request_idle_callback.js';
+import {queueMacrotask} from './queue_macrotask.js';
+import {requestNextRender} from './request_next_render.js';
+import {scheduleIdleBatch} from './schedule_idle_batch.js';
 import type {Duration} from '@alwatr/parse-duration';
-import {queueMicrotask} from './queue-microtask.js';
-import {requestAnimationFrame} from './request-animation-frame.js';
-import {requestIdleCallback} from './request-idle-callback.js';
-import {queueMacrotask} from './queue-macrotask.js';
 
 /**
  * A highly optimized utility module to handle asynchronous flow control,
@@ -59,12 +61,7 @@ export const delay = {
    * performPostRenderCalculations();
    * ```
    */
-  nextRender: () =>
-    new Promise<void>((resolve) => {
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => resolve());
-      });
-    }),
+  nextRender: (): Promise<DOMHighResTimeStamp> => new Promise((resolve) => requestNextRender(resolve)),
 
   /**
    * Postpones execution until the browser's event loop becomes idle.
@@ -171,4 +168,13 @@ export const delay = {
    * ```
    */
   nextMicrotask: (): Promise<void> => new Promise((resolve) => queueMicrotask(resolve)),
+
+  /**
+   * Schedules a batch of tasks to run during the browser's idle periods.
+   *
+   * Allows you to group multiple non-urgent tasks together, which will execute when the browser is idle.
+   * This can help improve performance by reducing the number of individual idle callbacks and minimizing overhead.
+   */
+  scheduleIdleBatch: (options?: IdleRequestOptions): Promise<void> =>
+    new Promise((resolve) => scheduleIdleBatch(resolve, options)),
 } as const;

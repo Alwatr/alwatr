@@ -26,11 +26,11 @@ export * from './type.js';
  * import {setupBindDirectives} from '@alwatr/bind';
  *
  * // Call during application bootstrap
- * setupBindDirectives();
+ * setupBindDirectives(true);
  * ```
  */
-export function setupBindDirectives(): void {
-  registerBindTextDirective();
-  registerBindValueDirective();
-  registerBindAttribDirective();
+export function setupBindDirectives(autoBootstrap: boolean): void {
+  registerBindTextDirective(autoBootstrap);
+  registerBindValueDirective(autoBootstrap);
+  registerBindAttribDirective(autoBootstrap);
 }

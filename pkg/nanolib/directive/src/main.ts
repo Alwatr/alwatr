@@ -8,4 +8,4 @@ export * from './decorator_state.js';
 export * from './directive_base_class.js';
 export * from './directive_lit.js';
 export * from './lazy_directive.js';
-export type {DirectiveConstructor} from './type.js';
+export type {DirectiveConstructor, RegisterDirectiveFunction} from './type.js';

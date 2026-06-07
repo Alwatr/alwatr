@@ -1,6 +1,5 @@
 import {platformInfo} from '@alwatr/platform-info';
-import {globalThis_} from './lib.js';
-import {queueMicrotask} from './queue-microtask.js';
+import {queueMicrotask} from './queue_microtask.js';
 
 /**
  * Zero-delay macrotask dispatcher.
@@ -39,14 +38,14 @@ export const queueMacrotask: (callback: VoidFunction) => void = /* @__PURE__ */ 
   actually assert.
   */
 
-  if (!platformInfo.isBrowser || typeof globalThis_.MessageChannel === 'undefined') {
+  if (!platformInfo.isBrowser || typeof MessageChannel === 'undefined') {
     return (callback: VoidFunction): void => {
       setTimeout(callback, 0);
     };
   }
 
   // --- DOM main thread: shared MessageChannel + FIFO queue (clamp-free). ---
-  const {port1, port2} = new globalThis_.MessageChannel();
+  const {port1, port2} = new MessageChannel();
 
   /*
     FIFO queue with a moving `head` pointer. We deliberately avoid
