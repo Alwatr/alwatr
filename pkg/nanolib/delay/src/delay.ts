@@ -5,6 +5,7 @@ import {requestAnimationFrame} from './request_animation_frame.js';
 import {requestIdleCallback} from './request_idle_callback.js';
 import {queueMacrotask} from './queue_macrotask.js';
 import {requestNextRender} from './request_next_render.js';
+import {scheduleIdleBatch} from './schedule_idle_batch.js';
 
 /**
  * A highly optimized utility module to handle asynchronous flow control,
@@ -167,4 +168,13 @@ export const delay = {
    * ```
    */
   nextMicrotask: (): Promise<void> => new Promise((resolve) => queueMicrotask(resolve)),
+
+  /**
+   * Schedules a batch of tasks to run during the browser's idle periods.
+   *
+   * Allows you to group multiple non-urgent tasks together, which will execute when the browser is idle.
+   * This can help improve performance by reducing the number of individual idle callbacks and minimizing overhead.
+   */
+  scheduleIdleBatch: (options?: IdleRequestOptions): Promise<void> =>
+    new Promise((resolve) => scheduleIdleBatch(resolve, options)),
 } as const;
