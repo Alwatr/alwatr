@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.31.0](https://github.com/Alwatr/alwatr/compare/v9.30.0...v9.31.0) (2026-06-07)
+
+### ✨ Features
+
+* **directive:** add querySelectorAllSafe function for safe DOM querying ([4a110b5](https://github.com/Alwatr/alwatr/commit/4a110b5075bffaa38a7852034d94f6dec3d228bd))
+* **directive:** implement auto-bootstrap logic in lazyDirective function ([9e2e85b](https://github.com/Alwatr/alwatr/commit/9e2e85b5772d39f1b60e9bbf0284ae180a90d957))
+* **directive:** implement bootstrapNewDirective function for directive initialization ([b459415](https://github.com/Alwatr/alwatr/commit/b459415e344fa969f13946e91c4c2f788d03f099))
+
+### 🐛 Bug Fixes
+
+* **directive:** improve error handling and initialization logic in bootstrapNewDirective function ([ff09a01](https://github.com/Alwatr/alwatr/commit/ff09a013bc630bf5f84c42273a62085180d3eb55))
+* **directive:** prevent multiple destroy calls by checking isDestroyed method ([4b4fcf2](https://github.com/Alwatr/alwatr/commit/4b4fcf281aee77341b3813db05723cd77a408d9a))
+
+### 🔨 Code Refactoring
+
+* **directive:** change parameter type of bootstrapDirectives function from HTMLElement to ParentNode for broader compatibility ([10df4b5](https://github.com/Alwatr/alwatr/commit/10df4b5fd322a9292882e6bf715b6ddf04b08f03))
+* **directive:** move DirectiveConstructor type definition to type.ts ([fa86c53](https://github.com/Alwatr/alwatr/commit/fa86c5317fbcb7138f41865d877a45e3b5ae6157))
+* **directive:** reorder parameters in bootstrapNewDirective and bootstrapElement functions for clarity ([76941d2](https://github.com/Alwatr/alwatr/commit/76941d2883fbe0f15641fa7ebbcd5f71b1c6013b))
+* **directive:** simplify bootstrapDirectives function and remove unused code ([4949bef](https://github.com/Alwatr/alwatr/commit/4949bef87ca72cefe6c59d7b2b7037044b05c0b9))
+* **directive:** update bootstrapDirectives to use explicit constructor and attributeName mapping ([2c1978c](https://github.com/Alwatr/alwatr/commit/2c1978c812331ea69ea33d91ee0d1855a986c547))
+* **directive:** update export statement for DirectiveConstructor type in main.ts ([6ba5ed8](https://github.com/Alwatr/alwatr/commit/6ba5ed83a093d8daae183585447762d59a382285))
+* **directive:** update parameter descriptions in bootstrapDirectives and lazyDirective functions for clarity ([3317854](https://github.com/Alwatr/alwatr/commit/3317854fddb8cdd4933d09b5119f956e561e6785))
+* **directive:** update parameter names in querySelectorAllSafe and bootstrapNewDirective functions for clarity ([6a2abc5](https://github.com/Alwatr/alwatr/commit/6a2abc5d8e370943d024feefee6cd6a14421f920))
+* reimplement all directive utils and classes ([9f31cf3](https://github.com/Alwatr/alwatr/commit/9f31cf3dc25e134d5b8a35c6e67d2d55ef4a41c5))
+
+### 🔗 Dependencies update
+
+* update @types/node and @happy-dom/global-registrator dependencies to latest versions ([98e8325](https://github.com/Alwatr/alwatr/commit/98e83252c3db81092e3ac1c8d214a696a7513517))
+* update @types/node and @happy-dom/global-registrator dependencies to latest versions ([5b3f9cf](https://github.com/Alwatr/alwatr/commit/5b3f9cf3d1a99e5ceb0c3bd70e215e63155b0308))
+
 ## [9.30.0](https://github.com/Alwatr/alwatr/compare/v9.29.0...v9.30.0) (2026-06-02)
 
 **Note:** Version bump only for package @alwatr/directive

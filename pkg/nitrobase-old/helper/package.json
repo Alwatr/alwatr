@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/nitrobase-helper",
-  "version": "9.29.0",
+  "version": "9.31.0",
   "description": "Extremely fast and compact JSON-based database that operates in memory, includes a JSON file backup, and serve over the highly accelerated Nginx.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

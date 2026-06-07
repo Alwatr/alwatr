@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/bind",
-  "version": "9.30.0",
+  "version": "9.31.0",
   "description": "A high-performance and lightweight binding utility for unidirectional data flow and reactive DOM/context interactions.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
@@ -21,9 +21,9 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@alwatr/directive": "9.30.0",
-    "@alwatr/logger": "9.29.0",
-    "@alwatr/signal": "9.30.0"
+    "@alwatr/directive": "9.31.0",
+    "@alwatr/logger": "9.31.0",
+    "@alwatr/signal": "9.31.0"
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",

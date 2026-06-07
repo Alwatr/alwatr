@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/dedupe",
-  "version": "9.25.0",
+  "version": "9.31.0",
   "description": "A package manager helper tool for debug list of defined (imported) packages in your ecosystem and prevent to duplicate import (install) multiple versions of the same package in your project (deduplicate packages).",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
