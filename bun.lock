@@ -128,9 +128,9 @@
       "name": "@alwatr/bind",
       "version": "9.32.0",
       "dependencies": {
-        "@alwatr/directive": "9.32.0",
-        "@alwatr/logger": "9.31.0",
-        "@alwatr/signal": "9.32.0",
+        "@alwatr/directive": "workspace:*",
+        "@alwatr/logger": "workspace:*",
+        "@alwatr/signal": "workspace:*",
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
@@ -775,7 +775,7 @@
       "name": "@alwatr/standard",
       "version": "9.16.0",
       "devDependencies": {
-        "prettier": "^3.8.3",
+        "prettier": "^3.8.4",
       },
     },
   },
@@ -1262,7 +1262,7 @@
 
     "postcss-selector-parser": ["postcss-selector-parser@7.1.1", "", { "dependencies": { "cssesc": "^3.0.0", "util-deprecate": "^1.0.2" } }, "sha512-orRsuYpJVw8LdAwqqLykBj9ecS5/cRHlI5+nvTo8LcCKmzDmqVORXtOIYEEQuL9D4BxtA1lm5isAqzQZCoQ6Eg=="],
 
-    "prettier": ["prettier@3.8.3", "", { "bin": { "prettier": "bin/prettier.cjs" } }, "sha512-7igPTM53cGHMW8xWuVTydi2KO233VFiTNyF5hLJqpilHfmn8C8gPf+PS7dUT64YcXFbiMGZxS9pCSxL/Dxm/Jw=="],
+    "prettier": ["prettier@3.8.4", "", { "bin": { "prettier": "bin/prettier.cjs" } }, "sha512-N2MylSdi48+5N/6S5j+maeHbUSIzzZ5uOcX5Hm4QpV8Dkb1HFjfAKTKX6yNPJQD9AhcT3ifHNB66tWTTJDi11Q=="],
 
     "proc-log": ["proc-log@6.1.0", "", {}, "sha512-iG+GYldRf2BQ0UDUAd6JQ/RwzaQy6mXmsk/IzlYyal4A4SNFw54MeH4/tLkF4I5WoWG9SQwuqWzS99jaFQHBuQ=="],
 
