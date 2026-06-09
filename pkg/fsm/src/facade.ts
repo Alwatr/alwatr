@@ -69,23 +69,5 @@ export function createFsmService<
   TEvent extends MachineEvent,
   TContext extends Record<string, unknown> = Record<string, never>,
 >(config: StateMachineConfig<TState, TEvent, TContext>): FsmService<TState, TEvent, TContext> {
-  const initialValue: MachineState<TState, TContext> = {
-    name: config.initial,
-    context: config.context,
-  };
-
-  const stateSignal =
-    config.persistent ?
-      createPersistentStateSignal<MachineState<TState, TContext>>({
-        name: `fsm-state-${config.name}`,
-        storageKey: config.persistent.storageKey ?? config.name,
-        initialValue,
-        schemaVersion: config.persistent.schemaVersion,
-      })
-    : createStateSignal<MachineState<TState, TContext>>({
-        name: `fsm-state-${config.name}`,
-        initialValue: initialValue,
-      });
-
-  return new FsmService(config, stateSignal);
+  return new FsmService(config);
 }

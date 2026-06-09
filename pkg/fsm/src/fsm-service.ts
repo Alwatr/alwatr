@@ -3,6 +3,8 @@ import type {SingleOrArray} from '@alwatr/type-helper';
 import {
   createEventSignal,
   EventSignal,
+  createPersistentStateSignal,
+  createStateSignal,
   type StateSignal,
   type PersistentStateSignal,
   type IReadonlySignal,
@@ -35,14 +37,34 @@ export class FsmService<
   /** The set of cleanup functions for currently active state actors. */
   private readonly activeActorCleanups__ = new Set<() => void>();
 
+  private readonly stateSignal__:
+    | StateSignal<MachineState<TState, TContext>>
+    | PersistentStateSignal<MachineState<TState, TContext>>;
+
   constructor(
     protected readonly config_: StateMachineConfig<TState, TEvent, TContext>,
-    private readonly stateSignal__:
-      | StateSignal<MachineState<TState, TContext>>
-      | PersistentStateSignal<MachineState<TState, TContext>>,
+    stateSignal?: StateSignal<MachineState<TState, TContext>> | PersistentStateSignal<MachineState<TState, TContext>>,
   ) {
     this.logger_ = createLogger(`fsm:${this.config_.name}`);
     this.logger_.logMethodArgs?.('constructor', config_);
+
+    const initialValue: MachineState<TState, TContext> = {
+      name: config_.initial,
+      context: config_.context,
+    };
+    this.stateSignal__ =
+      stateSignal
+      ?? (config_.persistent ?
+        createPersistentStateSignal<MachineState<TState, TContext>>({
+          name: `fsm-state-${config_.name}`,
+          storageKey: config_.persistent.storageKey ?? config_.name,
+          initialValue,
+          schemaVersion: config_.persistent.schemaVersion,
+        })
+      : createStateSignal<MachineState<TState, TContext>>({
+          name: `fsm-state-${config_.name}`,
+          initialValue,
+        }));
 
     this.stateSignal = this.stateSignal__.asReadonly();
     this.eventSignal__ = createEventSignal<TEvent>({
