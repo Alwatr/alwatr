@@ -21,9 +21,9 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@alwatr/directive": "9.32.0",
-    "@alwatr/logger": "9.31.0",
-    "@alwatr/signal": "9.32.0"
+    "@alwatr/directive": "workspace:*",
+    "@alwatr/logger": "workspace:*",
+    "@alwatr/signal": "workspace:*"
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
