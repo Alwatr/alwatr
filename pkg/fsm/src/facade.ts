@@ -1,8 +1,6 @@
-import {createPersistentStateSignal, createStateSignal} from '@alwatr/signal';
-
 import {FsmService} from './fsm-service.js';
 
-import type {MachineEvent, MachineState, StateMachineConfig} from './type.js';
+import type {MachineEvent, StateMachineConfig} from './type.js';
 
 /**
  * A simple and clean factory function for creating an `FsmService` instance.
