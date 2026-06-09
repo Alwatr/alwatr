@@ -1,10 +1,10 @@
-import type {SingleOrArray} from '@alwatr/type-helper';
 import {createLogger, type AlwatrLogger} from '@alwatr/logger';
+import type {SingleOrArray} from '@alwatr/type-helper';
 import {
   createEventSignal,
+  EventSignal,
   type StateSignal,
   type PersistentStateSignal,
-  EventSignal,
   type IReadonlySignal,
 } from '@alwatr/signal';
 
@@ -286,7 +286,6 @@ export class FsmService<
     for (const actor of actorsArray) {
       try {
         const cleanup = actor({
-          event,
           context,
           dispatch: this.dispatch,
         });

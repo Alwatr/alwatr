@@ -76,7 +76,6 @@ export type Guard<TEvent extends MachineEvent, TContext extends Record<string, u
  * @template TContext The type of the machine's context.
  */
 export type Actor<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (params: {
-  readonly event: Readonly<TEvent>;
   readonly context: Readonly<TContext>;
   readonly dispatch: (event: TEvent) => void;
 }) => (() => void) | void;
