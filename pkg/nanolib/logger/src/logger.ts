@@ -76,7 +76,7 @@ const keySection_ = isCli_ ? '%s%s%s' : '%c%s%c';
  */
 function detectSilentLog_(): boolean {
   if (isCli_) {
-    return process.env.ALWATR_DEBUG === '0';
+    return process.env?.ALWATR_DEBUG === '0';
   } else {
     return typeof localStorage !== 'undefined' && localStorage.getItem('ALWATR_DEBUG') === '0';
   }
