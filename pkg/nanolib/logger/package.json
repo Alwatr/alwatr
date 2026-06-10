@@ -21,10 +21,6 @@
     }
   },
   "sideEffects": false,
-  "dependencies": {
-    "@alwatr/global-this": "workspace:*",
-    "@alwatr/platform-info": "workspace:*"
-  },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
     "@alwatr/standard": "workspace:*",
