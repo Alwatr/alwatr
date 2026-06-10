@@ -36,10 +36,10 @@ export interface MachineEvent<TEventType extends string = string> {
  * @template TEvent The type of the event that triggered this assigner.
  * @returns The complete next context object or void.
  */
-export type Assigner<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (params: {
-  readonly event: Readonly<TEvent>;
-  readonly context: TContext;
-}) => TContext | void;
+export type Assigner<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (
+  event: Readonly<TEvent>,
+  context: TContext,
+) => TContext | void;
 
 /**
  * Defines an effect (fire-and-forget side-effect action) executed on state entry/exit.
