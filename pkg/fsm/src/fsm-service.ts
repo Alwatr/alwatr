@@ -96,6 +96,12 @@ export class FsmService<
     return this.stateSignal__.get();
   }
 
+  /**
+   * Convenience predicate: returns true if the current finite state matches any
+   * of the given names. Sugar for `service.state.name === 'x' || ...`.
+   */
+  public matches(...names: TState[]): boolean {
+    return names.includes(this.stateSignal__.get().name);
   }
 
   /**
