@@ -36,13 +36,13 @@ export class ActionService {
    */
   static readonly DEFAULT_DELEGATED_EVENTS: readonly string[] = ['click', 'submit', 'input', 'change'];
 
-  private readonly logger__ = createLogger('action-service');
+  private readonly logger__ = createLogger('action_service');
 
   /**
    * Internal ChannelSignal used for routing dispatched actions.
    * @private
    */
-  private readonly internalChannel__ = createChannelSignal<Record<string, Action>>({name: 'action-service'});
+  private readonly internalChannel__ = createChannelSignal<Record<string, Action>>({name: 'action_service'});
 
   /**
    * Registry mapping custom modifiers to their handlers.
@@ -139,7 +139,7 @@ export class ActionService {
    * ```
    */
   subscribeAll(listeners: {
-    readonly [K in keyof ActionRecord]?: (action: Action<K>) => Awaitable<void>;
+    readonly [K in keyof ActionRecord]?: (action: Action<K>) => void;
   }): SubscribeResult {
     DEV_MODE && this.logger__.logMethodArgs?.('subscribeAll', Object.keys(listeners));
     const keys = Object.keys(listeners) as (keyof ActionRecord)[];
@@ -148,7 +148,7 @@ export class ActionService {
     for (let index = 0; index < keys.length; index++) {
       const actionId = keys[index];
       const handler = listeners[actionId];
-      unsubscribeList[index] = this.on(actionId, handler as (action: Action) => Awaitable<void>).unsubscribe;
+      unsubscribeList[index] = this.on(actionId, handler as (action: Action) => void).unsubscribe;
     }
 
     return {
@@ -375,7 +375,7 @@ export class ActionService {
     const descriptor = this.parseDescriptor__(attributeValue);
     if (!descriptor) return;
 
-    DEV_MODE && this.logger__.logMethodArgs?.('handleDelegatedEvent_.action', {eventType, descriptor});
+    DEV_MODE && this.logger__.logMethodArgs?.('handleDelegatedEvent__.action', {eventType, descriptor});
 
     if (descriptor.modifiers.has('once')) {
       actionElement.removeAttribute(actionAttrib);
