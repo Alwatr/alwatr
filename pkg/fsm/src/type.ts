@@ -52,7 +52,7 @@ export type Assigner<TEvent extends MachineEvent, TContext extends Record<string
  * a state/context that no longer exists. This mirrors the design of SCXML actions,
  * XState actions, and Erlang's gen_statem.
  *
- * **Any asynchronous work belongs in an {@link Actor}**, which has a proper
+ * **Any asynchronous work belongs in an {@link StateActor}**, which has a proper
  * lifecycle (spawn on entry, cleanup on exit) and communicates results back to
  * the machine via `dispatch`, keeping the core deterministic.
  *
@@ -82,10 +82,10 @@ export type Guard<TEvent extends MachineEvent, TContext extends Record<string, u
 ) => boolean;
 
 /**
- * Defines an actor — an **asynchronous lifecycle process** spawned on state entry.
+ * Defines a state actor — an **asynchronous lifecycle process** spawned on state entry.
  *
  * This is the ONLY sanctioned home for async work in the machine (network requests,
- * polling intervals, websocket listeners, timers). An actor:
+ * polling intervals, websocket listeners, timers). A state actor:
  *
  * 1. Is spawned when the machine enters the state.
  * 2. Receives `dispatch` to asynchronously send events back to the parent FSM.
@@ -95,7 +95,7 @@ export type Guard<TEvent extends MachineEvent, TContext extends Record<string, u
  * @template TEvent The union type of all events in the machine.
  * @template TContext The type of the machine's context.
  */
-export type Actor<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (
+export type StateActor<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (
   context: Readonly<TContext>,
   dispatch: (event: TEvent) => void,
 ) => VoidFunction | void;
@@ -185,7 +185,7 @@ export interface StateMachineConfig<
       /** Synchronous side-effects executed upon exiting this state. */
       readonly exit?: SingleOrArray<Effect<TEvent, TContext>>;
       /** Async lifecycle actors spawned upon entering this state, cleaned up (LIFO) when leaving. */
-      readonly actor?: SingleOrArray<Actor<TEvent, TContext>>;
+      readonly actor?: SingleOrArray<StateActor<TEvent, TContext>>;
     };
   };
 }
