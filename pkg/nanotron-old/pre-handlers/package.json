@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/pre-handlers",
-  "version": "9.33.0",
+  "version": "9.33.1",
   "description": "Functions that will run before processing every defined route.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

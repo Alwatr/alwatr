@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.33.1](https://github.com/Alwatr/alwatr/compare/v9.33.0...v9.33.1) (2026-06-10)
+
+### 🔨 Code Refactoring
+
+* **exports:** remove node-specific export configuration ([1f12808](https://github.com/Alwatr/alwatr/commit/1f1280868f1e268049f124a743babe141e66bb44))
+
 ## [9.33.0](https://github.com/Alwatr/alwatr/compare/v9.32.0...v9.33.0) (2026-06-10)
 
 **Note:** Version bump only for package @alwatr/core

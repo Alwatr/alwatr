@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/platform-info",
-  "version": "9.33.0",
+  "version": "9.33.1",
   "description": "This module provides a way to detect the current platform where the script is running. It defines a constant `platformInfo` which holds the information about the current platform.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

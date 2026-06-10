@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.33.1](https://github.com/Alwatr/alwatr/compare/v9.33.0...v9.33.1) (2026-06-10)
+
+### 🐛 Bug Fixes
+
+* remove event parameter from dispatch_after_destroy incident logging ([4a7d434](https://github.com/Alwatr/alwatr/commit/4a7d434f8a2835ba2b2d4d282f7c00359190cd81))
+
+### 🔨 Code Refactoring
+
+* conditionally log method arguments and events in DEV_MODE to reduce production build size ([b3842e0](https://github.com/Alwatr/alwatr/commit/b3842e09d56973b3a04e739fe8314050cd1975c4))
+
 ## [9.33.0](https://github.com/Alwatr/alwatr/compare/v9.32.0...v9.33.0) (2026-06-10)
 
 ### ✨ Features

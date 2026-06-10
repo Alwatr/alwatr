@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.33.1](https://github.com/Alwatr/alwatr/compare/v9.33.0...v9.33.1) (2026-06-10)
+
+### 🐛 Bug Fixes
+
+* standardize formatting and improve descriptions across multiple packages ([24f22e4](https://github.com/Alwatr/alwatr/commit/24f22e451cf3a1edb891943ef179cc18192079bf))
+
+### 🔨 Code Refactoring
+
+* **delay:** remove platform-info dependency and improve browser check ([b7135e4](https://github.com/Alwatr/alwatr/commit/b7135e4d2a929069c5d1c91f558932f7019a49e1))
+
 ## [9.33.0](https://github.com/Alwatr/alwatr/compare/v9.32.0...v9.33.0) (2026-06-10)
 
 ### 🔗 Dependencies update

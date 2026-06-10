@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.33.1](https://github.com/Alwatr/alwatr/compare/v9.33.0...v9.33.1) (2026-06-10)
+
+### 🐛 Bug Fixes
+
+* **devtools:** add import path for node module export ([85e70f3](https://github.com/Alwatr/alwatr/commit/85e70f32fc1b9ac245282bcff20a6ce8bcbee029))
+* **logger:** add optional chaining for ALWATR_DEBUG environment variable check ([df2887d](https://github.com/Alwatr/alwatr/commit/df2887ddd19ed2e32314d13d3def7ab0138980a1))
+* **nitrobase:** add import path for client module export ([d8403ee](https://github.com/Alwatr/alwatr/commit/d8403ee1acf18879f6c42fc916cc6eb279e2a6c2))
+* remove event parameter from dispatch_after_destroy incident logging ([4a7d434](https://github.com/Alwatr/alwatr/commit/4a7d434f8a2835ba2b2d4d282f7c00359190cd81))
+* standardize formatting and improve descriptions across multiple packages ([24f22e4](https://github.com/Alwatr/alwatr/commit/24f22e451cf3a1edb891943ef179cc18192079bf))
+
+### 🔨 Code Refactoring
+
+* conditionally log method arguments and events in DEV_MODE to reduce production build size ([b3842e0](https://github.com/Alwatr/alwatr/commit/b3842e09d56973b3a04e739fe8314050cd1975c4))
+* **delay:** remove platform-info dependency and improve browser check ([b7135e4](https://github.com/Alwatr/alwatr/commit/b7135e4d2a929069c5d1c91f558932f7019a49e1))
+* **exports:** remove node-specific export configuration ([1f12808](https://github.com/Alwatr/alwatr/commit/1f1280868f1e268049f124a743babe141e66bb44))
+* **logger:** enhance build scripts for improved development and production outputs ([4eae5ef](https://github.com/Alwatr/alwatr/commit/4eae5efd988e842daf3ff2363a7973e0afe7e369))
+* **logger:** improve CLI detection logic for better accuracy ([71df391](https://github.com/Alwatr/alwatr/commit/71df391558dd4e3064c562d0d3e17c1e1bc8924e))
+* **logger:** rewrite logger implementation for improved performance and reduce build size ([d7ae1b7](https://github.com/Alwatr/alwatr/commit/d7ae1b73366d8f9198e20d88402d163d94223d4f))
+* **nano-build:** rename __dev_mode__ to DEV_MODE for consistency in CLI and documentation ([a7de366](https://github.com/Alwatr/alwatr/commit/a7de366ed9fe26f8a54898bbd9caf00fbfb3d5f8))
+* **random:** remove global-this dependency for improved performance ([91bed8e](https://github.com/Alwatr/alwatr/commit/91bed8e0e440ca1de6eb5814b299ad4f7253ae0f))
+
+### 🔗 Dependencies update
+
+* **logger:** remove unused dependencies for cleaner package.json ([e2190a8](https://github.com/Alwatr/alwatr/commit/e2190a84a1ea27d479b34a8fb37ab1e4c06fe954))
+* remove unused dependencies from bun.lock ([de4acc1](https://github.com/Alwatr/alwatr/commit/de4acc1afc8a6baa80a94e5ac96686b368860c4d))
+* update pacote, postcss-selector-parser, and semver to latest versions ([0a3b5dd](https://github.com/Alwatr/alwatr/commit/0a3b5dd7b13909b66b8572650f43c97987bb59b6))
+
 ## [9.33.0](https://github.com/Alwatr/alwatr/compare/v9.32.0...v9.33.0) (2026-06-10)
 
 ### ✨ Features

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.33.1](https://github.com/Alwatr/alwatr/compare/v9.33.0...v9.33.1) (2026-06-10)
+
+### 🔨 Code Refactoring
+
+* **random:** remove global-this dependency for improved performance ([91bed8e](https://github.com/Alwatr/alwatr/commit/91bed8e0e440ca1de6eb5814b299ad4f7253ae0f))
+
 ## [9.33.0](https://github.com/Alwatr/alwatr/compare/v9.32.0...v9.33.0) (2026-06-10)
 
 **Note:** Version bump only for package @alwatr/random

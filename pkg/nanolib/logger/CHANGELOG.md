@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.33.1](https://github.com/Alwatr/alwatr/compare/v9.33.0...v9.33.1) (2026-06-10)
+
+### 🐛 Bug Fixes
+
+* **logger:** add optional chaining for ALWATR_DEBUG environment variable check ([df2887d](https://github.com/Alwatr/alwatr/commit/df2887ddd19ed2e32314d13d3def7ab0138980a1))
+
+### 🔨 Code Refactoring
+
+* **logger:** enhance build scripts for improved development and production outputs ([4eae5ef](https://github.com/Alwatr/alwatr/commit/4eae5efd988e842daf3ff2363a7973e0afe7e369))
+* **logger:** improve CLI detection logic for better accuracy ([71df391](https://github.com/Alwatr/alwatr/commit/71df391558dd4e3064c562d0d3e17c1e1bc8924e))
+* **logger:** rewrite logger implementation for improved performance and reduce build size ([d7ae1b7](https://github.com/Alwatr/alwatr/commit/d7ae1b73366d8f9198e20d88402d163d94223d4f))
+
+### 🔗 Dependencies update
+
+* **logger:** remove unused dependencies for cleaner package.json ([e2190a8](https://github.com/Alwatr/alwatr/commit/e2190a84a1ea27d479b34a8fb37ab1e4c06fe954))
+
 ## [9.33.0](https://github.com/Alwatr/alwatr/compare/v9.32.0...v9.33.0) (2026-06-10)
 
 **Note:** Version bump only for package @alwatr/logger
