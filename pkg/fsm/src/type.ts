@@ -49,10 +49,10 @@ export type Assigner<TEvent extends MachineEvent, TContext extends Record<string
  * @template TEvent The type of the event that triggered this effect.
  * @returns void or a Promise<void>.
  */
-export type Effect<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (params: {
-  readonly event: Readonly<TEvent>;
-  readonly context: Readonly<TContext>;
-}) => Awaitable<void>;
+export type Effect<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (
+  event: Readonly<TEvent>,
+  context: Readonly<TContext>,
+) => void;
 
 /**
  * Defines a conditional guard function for a transition.
