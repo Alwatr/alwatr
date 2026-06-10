@@ -112,10 +112,10 @@ export function createFsmHelpers<
     defineEffect: (effect: Effect<TEvent, TContext>): Effect<TEvent, TContext> => effect,
     defineEffects: <T extends Record<string, Effect<TEvent, TContext>>>(effects: T): T => effects,
 
-    defineAssigner: (assigner: Assigner<TEvent, TContext>): Assigner<TEvent, TContext> => assigner,
+    defineAssigner: <E extends TEvent = TEvent>(assigner: Assigner<E, TContext>): Assigner<E, TContext> => assigner,
     defineAssigners: <T extends Record<string, Assigner<TEvent, TContext>>>(assigners: T): T => assigners,
 
-    defineGuard: (guard: Guard<TEvent, TContext>): Guard<TEvent, TContext> => guard,
+    defineGuard: <E extends TEvent = TEvent>(guard: Guard<E, TContext>): Guard<E, TContext> => guard,
     defineGuards: <T extends Record<string, Guard<TEvent, TContext>>>(guards: T): T => guards,
 
     not:
