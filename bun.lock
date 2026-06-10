@@ -86,6 +86,7 @@
       "name": "@alwatr/fsm",
       "version": "9.32.0",
       "dependencies": {
+        "@alwatr/delay": "workspace:*",
         "@alwatr/logger": "workspace:*",
         "@alwatr/signal": "workspace:*",
       },

@@ -22,6 +22,7 @@
   "sideEffects": false,
   "dependencies": {
     "@alwatr/logger": "workspace:*",
+    "@alwatr/delay": "workspace:*",
     "@alwatr/signal": "workspace:*"
   },
   "devDependencies": {
