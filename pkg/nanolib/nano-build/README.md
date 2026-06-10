@@ -47,7 +47,7 @@ Measured on a 16-inch M1 MacBook Pro using the three.js bundle benchmark:
 
 | Constant              | Type      | Value                               |
 | --------------------- | --------- | ----------------------------------- |
-| `__dev_mode__`        | `boolean` | `true` unless `NODE_ENV=production` |
+| `DEV_MODE`            | `boolean` | `true` unless `NODE_ENV=production` |
 | `__package_name__`    | `string`  | `name` field from `package.json`    |
 | `__package_version__` | `string`  | `version` field from `package.json` |
 
@@ -56,7 +56,7 @@ enabling dead code elimination. For example:
 
 ```ts
 // Source
-if (__dev_mode__) logger.logMethod?.('init');
+if (DEV_MODE) logger.logMethod?.('init');
 
 // After production build (NODE_ENV=production)
 // → entire if-block is removed by the bundler
@@ -73,7 +73,7 @@ in your `tsconfig.json`:
 }
 ```
 
-> **Note:** Do not access these via `globalThis.__dev_mode__` — they are not runtime globals.
+> **Note:** Do not access these via `globalThis.DEV_MODE` — they are not runtime globals.
 > In unbundled contexts (e.g. `bun test`), they resolve to the literal values injected by the
 > test runner or remain as-is if not replaced.
 

@@ -22,8 +22,7 @@
   "sideEffects": false,
   "dependencies": {
     "@alwatr/global-this": "workspace:*",
-    "@alwatr/parse-duration": "workspace:*",
-    "@alwatr/platform-info": "workspace:*"
+    "@alwatr/parse-duration": "workspace:*"
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",

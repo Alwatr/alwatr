@@ -1,9 +1,5 @@
-import {getGlobalThis} from '@alwatr/global-this';
-
-const globalThis = getGlobalThis();
-
 // Use the native crypto module when available for better randomness
-const hasCrypto = (() => typeof globalThis.crypto !== 'undefined')();
+const hasCrypto = typeof crypto !== 'undefined';
 
 /**
  * Converts a Uint8Array or number array into a hexadecimal string representation.
@@ -188,7 +184,11 @@ export function randPick<T>(array: T[]): T {
  * randArray(new Array<number>(8), -100, 100); // Values between -100 and 100
  * ```
  */
-export function randArray<T extends number[] | Uint8Array | Uint16Array | Uint32Array>(array: T, min = 0, max = 255): T {
+export function randArray<T extends number[] | Uint8Array | Uint16Array | Uint32Array>(
+  array: T,
+  min = 0,
+  max = 255,
+): T {
   for (let i = array.length - 1; i >= 0; i--) {
     array[i] = randInteger(min, max);
   }
@@ -210,8 +210,8 @@ export type UUID = `${string}-${string}-${string}-${string}-${string}`;
  * ```
  */
 export function randUuid(): UUID {
-  if (hasCrypto && globalThis.crypto?.randomUUID) {
-    return globalThis.crypto.randomUUID() as UUID;
+  if (hasCrypto && crypto?.randomUUID) {
+    return crypto.randomUUID() as UUID;
   }
 
   // Fallback implementation

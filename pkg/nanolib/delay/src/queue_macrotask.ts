@@ -1,4 +1,3 @@
-import {platformInfo} from '@alwatr/platform-info';
 import {queueMicrotask} from './queue_microtask.js';
 
 /**
@@ -38,7 +37,7 @@ export const queueMacrotask: (callback: VoidFunction) => void = /* @__PURE__ */ 
   actually assert.
   */
 
-  if (!platformInfo.isBrowser || typeof MessageChannel === 'undefined') {
+  if (typeof window === 'undefined' || typeof MessageChannel === 'undefined') {
     return (callback: VoidFunction): void => {
       setTimeout(callback, 0);
     };

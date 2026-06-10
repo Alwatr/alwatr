@@ -20,9 +20,6 @@
     }
   },
   "sideEffects": false,
-  "dependencies": {
-    "@alwatr/global-this": "workspace:*"
-  },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
     "@alwatr/standard": "workspace:*",
