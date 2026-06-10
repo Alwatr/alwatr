@@ -128,9 +128,9 @@ export class FsmService<
 
     this.processing__ = true;
     try {
-      let next: TEvent | undefined;
-      while ((next = this.mailbox__.shift())) {
-        this.processTransition__(next);
+      // Do NOT cache length. New events may be added during processing, and they MUST be processed in the same order (FIFO).
+      for (let index = 0; index < this.mailbox__.length; index++) {
+        this.processTransition__(this.mailbox__[index]);
         if (this.destroyed__) break;
       }
     } finally {
