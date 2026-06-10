@@ -3,7 +3,15 @@ import {createChannelSignal} from '@alwatr/signal';
 import type {SubscribeResult} from '@alwatr/signal';
 import type {Awaitable, VoidFunc} from '@alwatr/type-helper';
 
-import type {Action, ActionDescriptor, ActionRecord, DispatchParam, ModifierHandler, PayloadResolver, OutboundAction} from './type.js';
+import type {
+  Action,
+  ActionDescriptor,
+  ActionRecord,
+  DispatchParam,
+  ModifierHandler,
+  PayloadResolver,
+  OutboundAction,
+} from './type.js';
 
 /**
  * Regex parser for the `on-<eventType>` attribute syntax.
@@ -182,7 +190,6 @@ export class ActionService {
     return outbound;
   }
 
-
   /**
    * Registers a custom modifier to enrich or filter actions before dispatch.
    *
@@ -278,14 +285,14 @@ export class ActionService {
    * @private
    */
   private parseDescriptor__(attributeValue: string): ActionDescriptor | null {
-    DEV_MODE && this.logger__.logMethodArgs?.('parseDescriptor_', {attributeValue});
+    DEV_MODE && this.logger__.logMethodArgs?.('parseDescriptor__', {attributeValue});
 
     const cached = this.descriptorCache__.get(attributeValue);
     if (cached !== undefined) return cached;
 
     const match = attributeValue.match(syntaxRegex);
     if (!match) {
-      this.logger__.accident('parseDescriptor_', 'invalid_syntax', {attributeValue});
+      this.logger__.accident('parseDescriptor__', 'invalid_syntax', {attributeValue});
       this.descriptorCache__.set(attributeValue, null);
       return null;
     }
@@ -306,7 +313,7 @@ export class ActionService {
    */
   private handleDelegatedEvent__(event: Event): void {
     const eventType = event.type;
-    DEV_MODE && this.logger__.logMethodArgs?.('handleDelegatedEvent_', {eventType});
+    DEV_MODE && this.logger__.logMethodArgs?.('handleDelegatedEvent__', {eventType});
 
     const target = event.target as Element | null;
     if (!target) return;
@@ -317,12 +324,12 @@ export class ActionService {
 
     const attributeValue = actionElement.getAttribute?.(actionAttrib)?.trim();
     if (!attributeValue) {
-      this.logger__.accident('handleDelegatedEvent_', 'empty_attribute', {eventType, actionElement});
+      this.logger__.accident('handleDelegatedEvent__', 'empty_attribute', {eventType, actionElement});
       return;
     }
 
     if (!(actionElement instanceof HTMLElement)) {
-      this.logger__.accident('handleDelegatedEvent_', 'target_not_html_element', {eventType, actionElement});
+      this.logger__.accident('handleDelegatedEvent__', 'target_not_html_element', {eventType, actionElement});
       return;
     }
 
@@ -347,7 +354,7 @@ export class ActionService {
       if (modifier === 'once') continue;
       const handler = this.modifierRegistry__.get(modifier);
       if (!handler) {
-        this.logger__.accident('handleDelegatedEvent_', 'unknown_modifier', {
+        this.logger__.accident('handleDelegatedEvent__', 'unknown_modifier', {
           eventType,
           modifier,
           attributeValue,
@@ -358,7 +365,7 @@ export class ActionService {
       try {
         if (handler(event, actionElement, action) === false) return;
       } catch (error) {
-        this.logger__.accident('handleDelegatedEvent_', 'modifier_execution_failed', {
+        this.logger__.accident('handleDelegatedEvent__', 'modifier_execution_failed', {
           modifier,
           error,
         });
@@ -372,7 +379,7 @@ export class ActionService {
         try {
           (action as {payload: unknown}).payload = resolver(event, actionElement);
         } catch (error) {
-          this.logger__.accident('handleDelegatedEvent_', 'payload_resolver_failed', {
+          this.logger__.accident('handleDelegatedEvent__', 'payload_resolver_failed', {
             resolver: descriptor.payload,
             error,
           });
@@ -433,5 +440,3 @@ export class ActionService {
  * ```
  */
 export const actionService = new ActionService();
-
-
