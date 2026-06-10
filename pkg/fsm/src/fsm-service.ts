@@ -28,12 +28,19 @@ export class FsmService<
 > {
   protected readonly logger_: AlwatrLogger;
 
-  /** The private event signal for sending events to the FSM. */
-  private readonly eventSignal__: EventSignal<TEvent>;
-
   /** The public, read-only state signal. Subscribe to react to state changes. */
   public readonly stateSignal: IReadonlySignal<MachineState<TState, TContext>>;
 
+  /**
+   * The FIFO event mailbox. Events are processed strictly in dispatch order.
+   */
+  private readonly mailbox__: TEvent[] = [];
+
+  /**
+   * RTC re-entrancy guard. While `true`, an active loop is draining the mailbox;
+   * re-entrant dispatches just enqueue and return.
+   */
+  private processing__ = false;
 
   /** Set once by `destroy()`. All dispatches after destruction are ignored (and logged). */
   private destroyed__ = false;
@@ -94,8 +101,25 @@ export class FsmService<
       this.logger_.incident?.('dispatch', 'dispatch_after_destroy', {event});
       return;
     }
+
     this.logger_.logMethodArgs?.('dispatch', {event});
-    this.eventSignal__.dispatch(event);
+    this.mailbox__.push(event);
+
+    // RTC guard: an active loop is already draining the mailbox; it will pick
+    // this event up after the current transition finishes.
+    if (this.processing__) return;
+
+    this.processing__ = true;
+    try {
+      let next: TEvent | undefined;
+      while ((next = this.mailbox__.shift())) {
+        this.processTransition__(next);
+        if (this.destroyed__) break;
+      }
+    } finally {
+      this.processing__ = false;
+      this.mailbox__.length = 0;
+    }
   };
 
   /**
