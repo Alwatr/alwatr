@@ -1,7 +1,7 @@
 import {createLogger} from '@alwatr/logger';
 import {createChannelSignal} from '@alwatr/signal';
 import type {SubscribeResult} from '@alwatr/signal';
-import type {Awaitable, VoidFunc} from '@alwatr/type-helper';
+import type {VoidFunc} from '@alwatr/type-helper';
 
 import type {
   Action,
