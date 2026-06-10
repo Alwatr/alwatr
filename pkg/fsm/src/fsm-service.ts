@@ -34,8 +34,13 @@ export class FsmService<
   /** The public, read-only state signal. Subscribe to react to state changes. */
   public readonly stateSignal: IReadonlySignal<MachineState<TState, TContext>>;
 
-  /** The set of cleanup functions for currently active state actors. */
-  private readonly activeActorCleanups__ = new Set<() => void>();
+
+  /**
+   * Cleanup callbacks for currently active state actors, in spawn order.
+   * Executed in REVERSE (LIFO) order on state exit — standard resource semantics
+   * (last acquired, first released).
+   */
+  private readonly activeActorCleanups__: (() => void)[] = [];
 
   private readonly stateSignal__:
     | StateSignal<MachineState<TState, TContext>>
@@ -326,18 +331,18 @@ export class FsmService<
   }
 
   /**
-   * Cleans up (destroys) all currently active state actors.
+   * Cleans up (destroys) all currently active state actors in REVERSE (LIFO) spawn order — standard resource-release semantics.
    */
   private cleanupActors__(): void {
-    this.logger_.logMethodArgs?.('cleanupActors__', {count: this.activeActorCleanups__.size});
-    for (const cleanup of this.activeActorCleanups__) {
+    this.logger_.logMethodArgs?.('cleanupActors__', {count: this.activeActorCleanups__.length});
+    for (let index = this.activeActorCleanups__.length - 1; index >= 0; index--) {
       try {
-        cleanup();
+        this.activeActorCleanups__[index]();
       } catch (error) {
-        this.logger_.error('cleanupActors__', 'cleanup_failed', error);
+        this.logger_.error('cleanupActors__', 'cleanup_failed', error, {index});
       }
     }
-    this.activeActorCleanups__.clear();
+    this.activeActorCleanups__.length = 0;
   }
 
   /**
