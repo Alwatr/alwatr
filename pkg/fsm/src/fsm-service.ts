@@ -114,18 +114,20 @@ export class FsmService<
    * @param event The event to process.
    */
   public readonly dispatch = (event: TEvent): void => {
+    this.logger_.logMethodArgs?.('dispatch', {event});
+    this.mailbox__.push(event);
+    this.processMailbox__();
+  };
+
+  private processMailbox__(): void {
+    // RTC guard: an active loop is already draining the mailbox; it will pick
+    // this event up after the current transition finishes.
+    if (this.processing__) return;
+    this.logger_.logMethod?.('processMailbox__');
     if (this.destroyed__) {
       this.logger_.incident?.('dispatch', 'dispatch_after_destroy', {event});
       return;
     }
-
-    this.logger_.logMethodArgs?.('dispatch', {event});
-    this.mailbox__.push(event);
-
-    // RTC guard: an active loop is already draining the mailbox; it will pick
-    // this event up after the current transition finishes.
-    if (this.processing__) return;
-
     this.processing__ = true;
     try {
       // Do NOT cache length. New events may be added during processing, and they MUST be processed in the same order (FIFO).
@@ -137,7 +139,7 @@ export class FsmService<
       this.processing__ = false;
       this.mailbox__.length = 0;
     }
-  };
+  }
 
   /**
    * The core FSM logic that processes a single event and transitions the machine to a new state.
@@ -354,7 +356,7 @@ export class FsmService<
     this.spawnActors__(initEvent, currentState.context, this.config_.states[currentState.name]?.actor);
     this.processing__ = false; // Allow processing of dispatched events after the initial setup is complete.
     if (this.mailbox__.length > 0) {
-      this.dispatch(this.mailbox__.pop()!); // Process the first enqueued event, if any, to kickstart the RTC loop.
+      this.processMailbox__(); // Process any events that were dispatched during the initial setup.
     }
   }
 
