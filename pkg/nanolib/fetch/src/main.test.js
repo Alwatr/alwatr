@@ -18,7 +18,7 @@ Object.defineProperty(globalThis, 'navigator', {
  * @param {unknown} data
  */
 function createMockResponse(data, options = {}) {
-// @ts-expect-error type mismatch for data
+  // @ts-expect-error type mismatch for data
   const {status = 200, statusText = 'OK', headers = {}} = options;
   return {
     ok: status >= 200 && status < 300,
@@ -66,7 +66,10 @@ describe('@alwatr/fetch', () => {
       });
 
       expect(error).toBeNull();
-      expect(mockFetch).toHaveBeenCalledWith('https://api.example.com/search?q=test%20query&page=2&active=true', expect.any(Object));
+      expect(mockFetch).toHaveBeenCalledWith(
+        'https://api.example.com/search?q=test%20query&page=2&active=true',
+        expect.any(Object),
+      );
     });
 
     it('should send JSON body with correct headers', async () => {
@@ -256,7 +259,9 @@ describe('@alwatr/fetch', () => {
     });
 
     it('should retry on network error', async () => {
-      mockFetch.mockRejectedValueOnce(new Error('Network error')).mockResolvedValueOnce(createMockResponse({success: true}));
+      mockFetch
+        .mockRejectedValueOnce(new Error('Network error'))
+        .mockResolvedValueOnce(createMockResponse({success: true}));
 
       const [response, error] = await fetch('https://api.example.com/flaky', {
         retry: 2,

@@ -33,7 +33,7 @@ describe('DerivedSignal', () => {
 
   it('should dynamically compute from source on get() when cold (no active subscribers)', () => {
     expect(derived.get()).toBe('value-10');
-    
+
     // Set new value on source. Since derived has no subscribers, it won't subscribe to source,
     // but get() should dynamically evaluate it.
     source.set(20);
@@ -43,10 +43,10 @@ describe('DerivedSignal', () => {
   it('should notify subscriber when source changes and derived is awake', async () => {
     const callback = jest.fn();
     derived.subscribe(callback, {receivePrevious: false});
-    
+
     source.set(30);
     await derived.untilNext();
-    
+
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith('value-30');
   });
@@ -54,21 +54,21 @@ describe('DerivedSignal', () => {
   it('should hibernate when all subscribers unsubscribe', async () => {
     const callback = jest.fn();
     const sub = derived.subscribe(callback, {receivePrevious: false});
-    
+
     // Awake state
     source.set(40);
     await derived.untilNext();
     expect(callback).toHaveBeenCalledTimes(1);
     expect(callback).toHaveBeenCalledWith('value-40');
-    
+
     // Hibernate state
     sub.unsubscribe();
-    
+
     // Change source value while hibernated
     source.set(50);
     await delay.by(10);
     expect(callback).toHaveBeenCalledTimes(1); // Should not have been called again
-    
+
     // Dynamic get should still return the fresh value
     expect(derived.get()).toBe('value-50');
   });
@@ -94,13 +94,12 @@ describe('createDerivedSignal creator', () => {
       source,
       projector: (v) => v * 2,
     });
-    
+
     expect(derived).toBeInstanceOf(DerivedSignal);
     expect(derived.name).toBe('derived-creator');
     expect(derived.get()).toBe(10);
-    
+
     derived.destroy();
     source.destroy();
   });
 });
-

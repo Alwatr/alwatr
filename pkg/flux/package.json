@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/flux",
   "version": "9.33.0",
-  "description": "UI and reactive library bundle for ECMAScript (JavaScript/TypeScript) projects \u2014 signals, actions, directives, and storage.",
+  "description": "UI and reactive library bundle for ECMAScript (JavaScript/TypeScript) projects — signals, actions, directives, and storage.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",

@@ -19,11 +19,11 @@ yarn add @alwatr/json2csv
 ## Usage
 
 ```typescript
-import { jsonToCsv } from '@alwatr/json2csv';
+import {jsonToCsv} from '@alwatr/json2csv';
 
 const data = [
-  { name: 'Ali', age: 30, city: 'Tehran' },
-  { name: 'John', age: 25, city: 'New York' }
+  {name: 'Ali', age: 30, city: 'Tehran'},
+  {name: 'John', age: 25, city: 'New York'},
 ];
 
 const csv = jsonToCsv(data);
@@ -41,9 +41,9 @@ You can customize the output using optional parameters:
 
 ```typescript
 const csv = jsonToCsv(
-  data,       // Data array
-  ';',        // Custom delimiter (default: ',')
-  false       // Include headers (default: true)
+  data, // Data array
+  ';', // Custom delimiter (default: ',')
+  false, // Include headers (default: true)
 );
 ```
 

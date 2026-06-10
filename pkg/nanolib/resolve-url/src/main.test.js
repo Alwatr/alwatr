@@ -19,7 +19,9 @@ describe('@alwatr/resolve-url - resolveUrl', () => {
   });
 
   it('should handle multiple slashes at the beginning and end of URL parts', () => {
-    expect(resolveUrl('http://example.com', '///path', 'to', 'resource///')).toBe('http://example.com/path/to/resource/');
+    expect(resolveUrl('http://example.com', '///path', 'to', 'resource///')).toBe(
+      'http://example.com/path/to/resource/',
+    );
   });
 
   it('should preserve the protocol (http)', () => {
@@ -80,7 +82,9 @@ describe('@alwatr/resolve-url - resolveUrl', () => {
   });
 
   it('should handle parts with special characters', () => {
-    expect(resolveUrl('http://example.com', 'path with spaces', 'another-part')).toBe('http://example.com/path with spaces/another-part');
+    expect(resolveUrl('http://example.com', 'path with spaces', 'another-part')).toBe(
+      'http://example.com/path with spaces/another-part',
+    );
   });
 
   it('should handle parts with encoded characters', () => {

@@ -37,9 +37,7 @@ describe('jsonToCsv', () => {
   });
 
   it('should handle nested objects', () => {
-    const nestedData = [
-      {id: 1, info: {name: 'Ali', active: true}},
-    ];
+    const nestedData = [{id: 1, info: {name: 'Ali', active: true}}];
     const csv = jsonToCsv(nestedData);
     // Nested objects are stringified and escaped
     expect(csv).toContain('{"name":"Ali","active":true}'.replace(/"/g, '""').replace(/^|$/g, '"'));
@@ -64,9 +62,9 @@ describe('jsonToCsv', () => {
   });
 
   it('should handle arrays in fields', () => {
-      const arrayData = [{ list: [1, 2] }];
-      const csv = jsonToCsv(arrayData);
-      expect(csv).toBe('list\n"[1,2]"'); // Arrays are stringified and then escaped
+    const arrayData = [{list: [1, 2]}];
+    const csv = jsonToCsv(arrayData);
+    expect(csv).toBe('list\n"[1,2]"'); // Arrays are stringified and then escaped
   });
 
   it('should return empty string for empty input', () => {

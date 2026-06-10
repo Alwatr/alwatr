@@ -3,20 +3,12 @@
   "version": "9.33.0",
   "npmClient": "bun",
   "useWorkspaces": true,
-  "workspaces": [
-    "pkg/*",
-    "pkg/nanolib/*",
-    "pkg/nanotron-old/*",
-    "pkg/nitrobase-old/*"
-  ],
+  "workspaces": ["pkg/*", "pkg/nanolib/*", "pkg/nanotron-old/*", "pkg/nitrobase-old/*"],
   "loglevel": "verbose",
   "command": {
     "version": {
       "conventionalCommits": true,
-      "ignoreChanges": [
-        "**/docs/**",
-        "**/*.test.js"
-      ],
+      "ignoreChanges": ["**/docs/**", "**/*.test.js"],
       "skipBumpOnlyReleases": true,
       "message": "release: %s",
       "forceGitTag": true,
@@ -32,9 +24,7 @@
       "changelogPreset": {
         "name": "conventionalcommits",
         "issueUrlFormat": "{{host}}/{{owner}}/{{repository}}/issues/{{id}}",
-        "issuePrefixes": [
-          "#"
-        ],
+        "issuePrefixes": ["#"],
         "commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commit/{{hash}}",
         "compareUrlFormat": "{{host}}/{{owner}}/{{repository}}/compare/{{previousTag}}...{{currentTag}}",
         "userUrlFormat": "{{host}}/{{user}}",

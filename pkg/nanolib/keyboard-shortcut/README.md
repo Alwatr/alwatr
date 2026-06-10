@@ -65,10 +65,10 @@ Extend the global `ActionRecord` interface via declaration merging in your codeb
 ```ts
 declare module '@alwatr/action' {
   interface ActionRecord {
-    'key_escape': void;
-    'key_ctrl_s': void;
-    'key_ctrl_space': void;
-    'key_ctrl_shift_u': void;
+    key_escape: void;
+    key_ctrl_s: void;
+    key_ctrl_space: void;
+    key_ctrl_shift_u: void;
   }
 }
 ```
