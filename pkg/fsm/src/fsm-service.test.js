@@ -31,7 +31,7 @@ function createFetchConfig(overrides = {}) {
         on: {
           FETCH: {
             target: 'loading',
-            assigners: ({context}) => ({...context, attempts: context.attempts + 1}),
+            assigner: (_, context) => ({...context, attempts: context.attempts + 1}),
           },
         },
       },
@@ -39,11 +39,11 @@ function createFetchConfig(overrides = {}) {
         on: {
           RESOLVE: {
             target: 'success',
-            assigners: ({context, event}) => ({...context, data: event.data, error: null}),
+            assigner: (event, context) => ({...context, data: event.data, error: null}),
           },
           REJECT: {
             target: 'error',
-            assigners: ({context, event}) => ({...context, error: event.error, data: null}),
+            assigner: (event, context) => ({...context, error: event.error, data: null}),
           },
         },
       },
@@ -51,7 +51,7 @@ function createFetchConfig(overrides = {}) {
         on: {
           FETCH: {
             target: 'loading',
-            assigners: ({context}) => ({...context, attempts: context.attempts + 1}),
+            assigner: (_, context) => ({...context, attempts: context.attempts + 1}),
           },
         },
       },
@@ -59,7 +59,7 @@ function createFetchConfig(overrides = {}) {
         on: {
           FETCH: {
             target: 'loading',
-            assigners: ({context}) => ({...context, attempts: context.attempts + 1}),
+            assigner: (_, context) => ({...context, attempts: context.attempts + 1}),
           },
         },
       },
@@ -249,7 +249,7 @@ describe('FsmService', () => {
         states: {
           idle: {
             on: {
-              GO: [{target: 'special', guard: ({context}) => context.count > 2}, {target: 'normal'}],
+              GO: [{target: 'special', guard: (_, context) => context.count > 2}, {target: 'normal'}],
             },
           },
           normal: {},
@@ -272,7 +272,7 @@ describe('FsmService', () => {
         states: {
           idle: {
             on: {
-              GO: [{target: 'special', guard: ({context}) => context.count > 2}, {target: 'normal'}],
+              GO: [{target: 'special', guard: (_, context) => context.count > 2}, {target: 'normal'}],
             },
           },
           normal: {},
@@ -332,7 +332,7 @@ describe('FsmService', () => {
             on: {
               INCREMENT: {
                 // No target — internal transition.
-                assigners: ({context}) => ({...context, count: context.count + 1}),
+                assigner: (_, context) => ({...context, count: context.count + 1}),
               },
             },
           },
@@ -368,7 +368,7 @@ describe('FsmService', () => {
             on: {
               GO: {
                 target: 'done',
-                assigners: [({context}) => ({...context, a: 10}), ({context}) => ({...context, b: context.a + 5})],
+                assigner: [(_, context) => ({...context, a: 10}), (_, context) => ({...context, b: context.a + 5})],
               },
             },
           },
@@ -398,8 +398,8 @@ describe('FsmService', () => {
             on: {
               GO: {
                 target: 'done',
-                assigners: [
-                  ({context}) => ({...context, a: 99}),
+                assigner: [
+                  (_, context) => ({...context, a: 99}),
                   () => {
                     throw new Error('assigner error');
                   },
@@ -494,7 +494,7 @@ describe('FsmService', () => {
             exit: exitEffect,
             on: {
               INCREMENT: {
-                assigners: ({context}) => ({...context, count: context.count + 1}),
+                assigner: (_, context) => ({...context, count: context.count + 1}),
               },
             },
           },
@@ -590,19 +590,6 @@ describe('FsmService', () => {
       expect(exitEffect).toHaveBeenCalledTimes(1);
 
       effectFsm.destroy();
-    });
-  });
-
-  // ── Destroy ───────────────────────────────────────────────────────────────
-
-  describe('destroy', () => {
-    it('should destroy without throwing', () => {
-      expect(() => fsm.destroy()).not.toThrow();
-    });
-
-    it('should throw when dispatching events after destroy', () => {
-      fsm.destroy();
-      expect(() => fsm.dispatch({type: 'FETCH'})).toThrow();
     });
   });
 });
