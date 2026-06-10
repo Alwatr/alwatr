@@ -184,48 +184,56 @@ export class FsmService<
   }
 
   /**
-   * Finds the first valid transition for the given event and context by evaluating guards.
+   * Finds the first valid transition for the given event by evaluating guards in declaration order. A guard-less transition acts as an unconditional fallback.
    *
    * @param event The triggering event.
-   * @param context The current machine context.
+   * @param currentState The current state of the machine.
    * @returns The first matching transition or `undefined` if none are found.
    */
   private findTransition__(
     event: TEvent,
-    context: Readonly<TContext>,
+    currentState: MachineState<TState, TContext>,
   ): Transition<TState, TEvent, TContext> | undefined {
     this.logger_.logMethod?.('findTransition__');
 
-    const currentStateName = this.stateSignal__.get().name;
-    const currentStateConfig = this.config_.states[currentStateName];
+    const currentStateConfig = this.config_.states[currentState.name];
     const transitions = currentStateConfig?.on?.[event.type as TEvent['type']] as
       | SingleOrArray<Transition<TState, TEvent, TContext>>
       | undefined;
 
     if (!transitions) return undefined;
 
-    const transitionsArray = Array.isArray(transitions) ? transitions : [transitions];
-
-    for (let index = 0; index < transitionsArray.length; index++) {
-      const transition = transitionsArray[index];
-      if (!transition.guard) return transition;
+    if (!Array.isArray(transitions)) {
+      if (!transitions.guard) return transitions; // Unconditional fallback branch.
       try {
-        const guardMet = transition.guard({event, context});
-        this.logger_.logStep?.('findTransition__', 'check_guard', {
-          state: currentStateName,
-          eventType: event.type,
-          transitionIndex: index,
-          guard: transition.guard.name || 'anonymous',
-          result: guardMet,
-        });
-        if (guardMet) return transition;
+        if (transitions.guard(event, currentState.context)) {
+          return transitions;
+        }
       } catch (error) {
         this.logger_.error('findTransition__', 'guard_failed', error, {
-          state: currentStateName,
+          state: currentState.name,
           eventType: event.type,
-          transitionIndex: index,
-          guard: transition.guard.name || 'anonymous',
         });
+      }
+      return undefined;
+    }
+
+    // else if transitions is an array
+
+    for (let index = 0; index < transitions.length; index++) {
+      const transition = transitions[index];
+      if (!transition.guard) return transition; // Unconditional fallback branch.
+      try {
+        if (transition.guard(event, currentState.context)) {
+          return transition;
+        }
+      } catch (error) {
+        this.logger_.error('findTransition__', 'guard_failed', error, {
+          state: currentState.name,
+          eventType: event.type,
+          index,
+        });
+        // Treated as guard === false: continue evaluating the next branch.
       }
     }
 
