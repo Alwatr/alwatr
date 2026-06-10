@@ -72,7 +72,7 @@ args+=(
   "--banner=/* ${banner} */" \
   "--outdir=${outdir}" \
   --env=disable \
-  --define __dev_mode__="${devMode}" \
+  --define DEV_MODE="${devMode}" \
   --define __package_name__="'${packageName}'" \
   --define __package_version__="'${packageVersion}'" \
 )
