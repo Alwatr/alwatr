@@ -75,7 +75,7 @@ bun run build:es       # bundle with nano-build
 bun run watch
 
 # Run all tests
-bun run test           # ALWATR_DEBUG=0 bun test
+bun run test           # bun test
 
 # Lint
 bun run lint           # tsc type check across all packages
