@@ -9,7 +9,7 @@ import {
   type IReadonlySignal,
 } from '@alwatr/signal';
 
-import type {StateMachineConfig, MachineState, MachineEvent, Transition, Effect, Assigner, Actor} from './type.js';
+import type {StateMachineConfig, MachineState, MachineEvent, Transition, Effect, Assigner, StateActor} from './type.js';
 
 /**
  * A generic, encapsulated service that creates, runs, and manages a finite state machine.
@@ -367,7 +367,7 @@ export class FsmService<
   private spawnActors__(
     event: TEvent,
     context: Readonly<TContext>,
-    actors?: SingleOrArray<Actor<TEvent, TContext>>,
+    actors?: SingleOrArray<StateActor<TEvent, TContext>>,
   ): void {
     if (!actors) {
       DEV_MODE && this.logger_.logMethod?.('spawnActors__.skipped');

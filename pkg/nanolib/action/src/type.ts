@@ -178,3 +178,13 @@ export interface ActionDescriptor {
   readonly actionId: string;
   readonly payload: string | undefined;
 }
+
+/**
+ * Helper type representing an action configuration that conforms to `ActionRecord` types.
+ */
+export type ActionConfig<K extends keyof ActionRecord = keyof ActionRecord> = {
+  readonly [P in K]: ActionRecord[P] extends void | undefined
+    ? {readonly type: P; readonly payload?: undefined}
+    : {readonly type: P; readonly payload: ActionRecord[P]};
+}[K];
+

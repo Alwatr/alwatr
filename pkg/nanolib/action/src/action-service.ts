@@ -1,9 +1,17 @@
 import {createLogger} from '@alwatr/logger';
 import {createChannelSignal} from '@alwatr/signal';
 import type {SubscribeResult} from '@alwatr/signal';
-import type {Awaitable, VoidFunc} from '@alwatr/type-helper';
+import type {VoidFunc} from '@alwatr/type-helper';
 
-import type {Action, ActionDescriptor, ActionRecord, DispatchParam, ModifierHandler, PayloadResolver} from './type.js';
+import type {
+  Action,
+  ActionDescriptor,
+  ActionRecord,
+  DispatchParam,
+  ModifierHandler,
+  PayloadResolver,
+  ActionConfig,
+} from './type.js';
 
 /**
  * Regex parser for the `on-<eventType>` attribute syntax.
@@ -28,46 +36,46 @@ export class ActionService {
    */
   static readonly DEFAULT_DELEGATED_EVENTS: readonly string[] = ['click', 'submit', 'input', 'change'];
 
-  protected readonly logger_ = createLogger('action-service');
+  private readonly logger__ = createLogger('action_service');
 
   /**
    * Internal ChannelSignal used for routing dispatched actions.
-   * @protected
+   * @private
    */
-  protected readonly internalChannel_ = createChannelSignal<Record<string, Action>>({name: 'action-service'});
+  private readonly internalChannel__ = createChannelSignal<Record<string, Action>>({name: 'action_service'});
 
   /**
    * Registry mapping custom modifiers to their handlers.
-   * @protected
+   * @private
    */
-  protected readonly modifierRegistry_ = new Map<string, ModifierHandler>();
+  private readonly modifierRegistry__ = new Map<string, ModifierHandler>();
 
   /**
    * Registry mapping custom payload resolvers to their functions.
-   * @protected
+   * @private
    */
-  protected readonly payloadRegistry_ = new Map<string, PayloadResolver>();
+  private readonly payloadRegistry__ = new Map<string, PayloadResolver>();
 
   /**
    * Cache of parsed action descriptors to prevent redundant regex evaluation.
-   * @protected
+   * @private
    */
-  protected readonly descriptorCache_ = new Map<string, ActionDescriptor | null>();
+  private readonly descriptorCache__ = new Map<string, ActionDescriptor | null>();
 
   /**
    * Tracked event types currently delegated to `document.body`.
-   * @protected
+   * @private
    */
-  protected readonly delegatedEventTypes_ = new Set<string>();
+  private readonly delegatedEventTypes__ = new Set<string>();
 
   /**
    * Bound delegation handler for add/removeEventListener.
    * @private
    */
-  private readonly handleDelegatedEventBound__ = this.handleDelegatedEvent_.bind(this);
+  private readonly handleDelegatedEventBound__ = this.handleDelegatedEvent__.bind(this);
 
   constructor() {
-    DEV_MODE && this.logger_.logMethod?.('constructor');
+    DEV_MODE && this.logger__.logMethod?.('constructor');
     this.registerDefaultModifiersAndResolvers__();
   }
 
@@ -92,19 +100,17 @@ export class ActionService {
    * });
    * ```
    */
-  on<K extends keyof ActionRecord>(type: K | K[], handler: (action: Action<K>) => Awaitable<void>): SubscribeResult {
-    DEV_MODE && this.logger_.logMethodArgs?.('on', {type});
+  on<K extends keyof ActionRecord>(type: K | K[], handler: (action: Action<K>) => void): SubscribeResult {
+    DEV_MODE && this.logger__.logMethodArgs?.('on', {type});
     if (Array.isArray(type)) {
       const typeList = type as K[];
       const unsubscribeList: VoidFunc[] = [];
       for (const type_ of typeList) {
-        unsubscribeList.push(
-          this.internalChannel_.on(type_, handler as (action: Action) => Awaitable<void>).unsubscribe,
-        );
+        unsubscribeList.push(this.internalChannel__.on(type_, handler as (action: Action) => void).unsubscribe);
       }
       return {
         unsubscribe: () => {
-          DEV_MODE && this.logger_.logMethod?.('unsubscribe');
+          DEV_MODE && this.logger__.logMethod?.('unsubscribe');
           for (const unsubscribe of unsubscribeList) {
             unsubscribe();
           }
@@ -112,7 +118,48 @@ export class ActionService {
         },
       };
     }
-    return this.internalChannel_.on(type, handler as (action: Action) => Awaitable<void>);
+    // else single type
+    return this.internalChannel__.on(type, handler as (action: Action) => void);
+  }
+
+  /**
+   * Subscribes to multiple actions at once using a dictionary map.
+   *
+   * @param listeners - A map of action types to their respective handlers.
+   * @returns A single SubscribeResult to unsubscribe all registered listeners.
+   *
+   * @example
+   * ```ts
+   * const sub = actionService.subscribeAll({
+   *   ui_open_drawer: (action) => { ... },
+   *   ui_close_drawer: () => { ... }
+   * });
+   *
+   * sub.unsubscribe();
+   * ```
+   */
+  subscribeAll(listeners: {
+    readonly [K in keyof ActionRecord]: (action: Action<K>) => void;
+  }): SubscribeResult {
+    DEV_MODE && this.logger__.logMethodArgs?.('subscribeAll', Object.keys(listeners));
+    const keys = Object.keys(listeners) as (keyof ActionRecord)[];
+    const unsubscribeList = new Array<VoidFunc>(keys.length);
+
+    for (let index = 0; index < keys.length; index++) {
+      const actionId = keys[index];
+      const handler = listeners[actionId];
+      unsubscribeList[index] = this.on(actionId, handler as (action: Action) => void).unsubscribe;
+    }
+
+    return {
+      unsubscribe: () => {
+        DEV_MODE && this.logger__.logMethod?.('unsubscribeAll');
+        for (let index = 0; index < unsubscribeList.length; index++) {
+          unsubscribeList[index]();
+        }
+        unsubscribeList.length = 0;
+      },
+    };
   }
 
   /**
@@ -131,8 +178,55 @@ export class ActionService {
    * ```
    */
   dispatch<K extends keyof ActionRecord>(action: DispatchParam<K>): void {
-    DEV_MODE && this.logger_.logMethodArgs?.('dispatch', action);
-    this.internalChannel_.dispatch(action.type, action as Action<K>);
+    DEV_MODE && this.logger__.logMethodArgs?.('dispatch', action);
+    this.internalChannel__.dispatch(action.type, action as Action<K>);
+  }
+
+  /**
+   * Creates a zero-argument function that dispatches the given action when called.
+   * Useful for decoupling action dispatches and using them directly as event handlers or FSM effects.
+   *
+   * @template K - A key of ActionRecord.
+   * @param action - The action object containing `type` and `payload` to dispatch.
+   * @returns A zero-argument function that dispatches the action.
+   *
+   * @example
+   * ```ts
+   * const startLoading = actionService.createDispatcher({
+   *   type: 'app_loading_start',
+   *   payload: {ownerId: 'my-service'},
+   * });
+   *
+   * // Later
+   * startLoading(); // dispatches 'app_loading_start'
+   * ```
+   */
+  createDispatcher<K extends keyof ActionRecord>(action: DispatchParam<K>): () => void {
+    DEV_MODE && this.logger__.logMethodArgs?.('createDispatcher', action);
+    return () => this.dispatch(action);
+  }
+
+  /**
+   * Utility for defining strongly-typed actions with clean DX.
+   * Validates that all defined action configurations conform to `ActionRecord` types.
+   *
+   * @template T - The type of the actions map.
+   * @param actions - The actions map.
+   * @returns The actions map.
+   *
+   * @example
+   * ```ts
+   * const actions = actionService.defineActions({
+   *   startLoading: {
+   *     type: 'app_loading_start',
+   *     payload: {ownerId: 'my-service'}
+   *   }
+   * });
+   * ```
+   */
+  defineActions<T extends Record<string, ActionConfig>>(actions: T): T {
+    DEV_MODE && this.logger__.logMethodArgs?.('defineActions', actions);
+    return actions;
   }
 
   /**
@@ -151,12 +245,12 @@ export class ActionService {
    * ```
    */
   registerModifier(name: string, handler: ModifierHandler): void {
-    DEV_MODE && this.logger_.logMethodArgs?.('registerModifier', {name});
-    if (this.modifierRegistry_.has(name)) {
-      this.logger_.accident('registerModifier', 'modifier_already_registered', {name});
+    DEV_MODE && this.logger__.logMethodArgs?.('registerModifier', {name});
+    if (this.modifierRegistry__.has(name)) {
+      this.logger__.accident('registerModifier', 'modifier_already_registered', {name});
       return;
     }
-    this.modifierRegistry_.set(name, handler);
+    this.modifierRegistry__.set(name, handler);
   }
 
   /**
@@ -173,12 +267,12 @@ export class ActionService {
    * ```
    */
   registerPayloadResolver(name: string, resolver: PayloadResolver): void {
-    DEV_MODE && this.logger_.logMethodArgs?.('registerPayloadResolver', {name});
-    if (this.payloadRegistry_.has(name)) {
-      this.logger_.accident('registerPayloadResolver', 'payload_resolver_already_registered', {name});
+    DEV_MODE && this.logger__.logMethodArgs?.('registerPayloadResolver', {name});
+    if (this.payloadRegistry__.has(name)) {
+      this.logger__.accident('registerPayloadResolver', 'payload_resolver_already_registered', {name});
       return;
     }
-    this.payloadRegistry_.set(name, resolver);
+    this.payloadRegistry__.set(name, resolver);
   }
 
   /**
@@ -192,15 +286,15 @@ export class ActionService {
    * ```
    */
   setupDelegation(eventTypes: readonly string[] = ActionService.DEFAULT_DELEGATED_EVENTS): void {
-    DEV_MODE && this.logger_.logMethodArgs?.('setupDelegation', {eventTypes});
+    DEV_MODE && this.logger__.logMethodArgs?.('setupDelegation', {eventTypes});
     if (typeof document === 'undefined' || !document.body) {
-      DEV_MODE && this.logger_.incident?.('setupDelegation', 'document_body_not_found');
+      DEV_MODE && this.logger__.incident?.('setupDelegation', 'document_body_not_found');
       return;
     }
 
     for (const eventType of eventTypes) {
-      if (this.delegatedEventTypes_.has(eventType)) continue;
-      this.delegatedEventTypes_.add(eventType);
+      if (this.delegatedEventTypes__.has(eventType)) continue;
+      this.delegatedEventTypes__.add(eventType);
       document.body.addEventListener(eventType, this.handleDelegatedEventBound__, {capture: true});
     }
   }
@@ -214,31 +308,31 @@ export class ActionService {
    * ```
    */
   teardownDelegation(): void {
-    DEV_MODE && this.logger_.logMethod?.('teardownDelegation');
+    DEV_MODE && this.logger__.logMethod?.('teardownDelegation');
     if (typeof document === 'undefined' || !document.body) {
       return;
     }
-    for (const eventType of this.delegatedEventTypes_) {
+    for (const eventType of this.delegatedEventTypes__) {
       document.body.removeEventListener(eventType, this.handleDelegatedEventBound__, {capture: true});
     }
-    this.delegatedEventTypes_.clear();
-    this.descriptorCache_.clear();
+    this.delegatedEventTypes__.clear();
+    this.descriptorCache__.clear();
   }
 
   /**
    * Parses attribute values into action descriptor, utilizing the internal cache.
-   * @protected
+   * @private
    */
-  protected parseDescriptor_(attributeValue: string): ActionDescriptor | null {
-    DEV_MODE && this.logger_.logMethodArgs?.('parseDescriptor_', {attributeValue});
+  private parseDescriptor__(attributeValue: string): ActionDescriptor | null {
+    DEV_MODE && this.logger__.logMethodArgs?.('parseDescriptor__', {attributeValue});
 
-    const cached = this.descriptorCache_.get(attributeValue);
+    const cached = this.descriptorCache__.get(attributeValue);
     if (cached !== undefined) return cached;
 
     const match = attributeValue.match(syntaxRegex);
     if (!match) {
-      this.logger_.accident('parseDescriptor_', 'invalid_syntax', {attributeValue});
-      this.descriptorCache_.set(attributeValue, null);
+      this.logger__.accident('parseDescriptor__', 'invalid_syntax', {attributeValue});
+      this.descriptorCache__.set(attributeValue, null);
       return null;
     }
 
@@ -248,17 +342,17 @@ export class ActionService {
     const modifiers = modifierString ? new Set(modifierString.split(',').filter(Boolean)) : new Set<string>();
 
     const descriptor: ActionDescriptor = {modifiers, actionId, payload};
-    this.descriptorCache_.set(attributeValue, descriptor);
+    this.descriptorCache__.set(attributeValue, descriptor);
     return descriptor;
   }
 
   /**
    * Global event delegation handler.
-   * @protected
+   * @private
    */
-  protected handleDelegatedEvent_(event: Event): void {
+  private handleDelegatedEvent__(event: Event): void {
     const eventType = event.type;
-    DEV_MODE && this.logger_.logMethodArgs?.('handleDelegatedEvent_', {eventType});
+    DEV_MODE && this.logger__.logMethodArgs?.('handleDelegatedEvent__', {eventType});
 
     const target = event.target as Element | null;
     if (!target) return;
@@ -269,19 +363,19 @@ export class ActionService {
 
     const attributeValue = actionElement.getAttribute?.(actionAttrib)?.trim();
     if (!attributeValue) {
-      this.logger_.accident('handleDelegatedEvent_', 'empty_attribute', {eventType, actionElement});
+      this.logger__.accident('handleDelegatedEvent__', 'empty_attribute', {eventType, actionElement});
       return;
     }
 
     if (!(actionElement instanceof HTMLElement)) {
-      this.logger_.accident('handleDelegatedEvent_', 'target_not_html_element', {eventType, actionElement});
+      this.logger__.accident('handleDelegatedEvent__', 'target_not_html_element', {eventType, actionElement});
       return;
     }
 
-    const descriptor = this.parseDescriptor_(attributeValue);
+    const descriptor = this.parseDescriptor__(attributeValue);
     if (!descriptor) return;
 
-    DEV_MODE && this.logger_.logMethodArgs?.('handleDelegatedEvent_.action', {eventType, descriptor});
+    DEV_MODE && this.logger__.logMethodArgs?.('handleDelegatedEvent__.action', {eventType, descriptor});
 
     if (descriptor.modifiers.has('once')) {
       actionElement.removeAttribute(actionAttrib);
@@ -297,9 +391,9 @@ export class ActionService {
 
     for (const modifier of descriptor.modifiers) {
       if (modifier === 'once') continue;
-      const handler = this.modifierRegistry_.get(modifier);
+      const handler = this.modifierRegistry__.get(modifier);
       if (!handler) {
-        this.logger_.accident('handleDelegatedEvent_', 'unknown_modifier', {
+        this.logger__.accident('handleDelegatedEvent__', 'unknown_modifier', {
           eventType,
           modifier,
           attributeValue,
@@ -310,7 +404,7 @@ export class ActionService {
       try {
         if (handler(event, actionElement, action) === false) return;
       } catch (error) {
-        this.logger_.accident('handleDelegatedEvent_', 'modifier_execution_failed', {
+        this.logger__.accident('handleDelegatedEvent__', 'modifier_execution_failed', {
           modifier,
           error,
         });
@@ -319,12 +413,12 @@ export class ActionService {
     }
 
     if (descriptor.payload) {
-      const resolver = this.payloadRegistry_.get(descriptor.payload);
+      const resolver = this.payloadRegistry__.get(descriptor.payload);
       if (resolver) {
         try {
           (action as {payload: unknown}).payload = resolver(event, actionElement);
         } catch (error) {
-          this.logger_.accident('handleDelegatedEvent_', 'payload_resolver_failed', {
+          this.logger__.accident('handleDelegatedEvent__', 'payload_resolver_failed', {
             resolver: descriptor.payload,
             error,
           });
@@ -335,7 +429,7 @@ export class ActionService {
       (action as {payload: unknown}).payload = undefined;
     }
 
-    this.internalChannel_.dispatch(action.type, action);
+    this.internalChannel__.dispatch(action.type, action);
   }
 
   /**
@@ -343,7 +437,7 @@ export class ActionService {
    * @private
    */
   private registerDefaultModifiersAndResolvers__(): void {
-    DEV_MODE && this.logger_.logMethod?.('registerDefaultModifiersAndResolvers__');
+    DEV_MODE && this.logger__.logMethod?.('registerDefaultModifiersAndResolvers__');
 
     // Built-in modifiers
     this.registerModifier('prevent', (event) => {
