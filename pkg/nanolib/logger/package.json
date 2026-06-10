@@ -15,6 +15,7 @@
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
+      "development": "./dist/dev/main.js",
       "import": "./dist/main.js",
       "default": "./dist/main.js"
     }
@@ -34,7 +35,9 @@
   "scripts": {
     "b": "bun run build",
     "build": "bun run build:ts && bun run build:es",
-    "build:es": "nano-build --preset=module src/main.ts",
+    "build:es": "bun run build:es:dev && bun run build:es:prod",
+    "build:es:dev": "nano-build --preset=module --outdir=dist/dev src/main.ts",
+    "build:es:prod": "NODE_ENV=production nano-build --preset=module --outdir=dist src/main.ts",
     "build:ts": "tsc --build",
     "cl": "bun run clean",
     "clean": "rm -rfv dist *.tsbuildinfo",
@@ -44,7 +47,7 @@
     "test": "ALWATR_DEBUG=0 bun test",
     "w": "bun run watch",
     "watch": "bun run watch:ts & bun run watch:es",
-    "watch:es": "bun run build:es --watch",
+    "watch:es": "bun run build:es:dev --watch",
     "watch:ts": "bun run build:ts --watch --preserveWatchOutput"
   },
   "files": [
