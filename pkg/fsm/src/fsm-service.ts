@@ -125,7 +125,7 @@ export class FsmService<
     if (this.processing__) return;
     DEV_MODE && this.logger_.logMethod?.('processMailbox__');
     if (this.destroyed__) {
-      DEV_MODE && this.logger_.incident?.('dispatch', 'dispatch_after_destroy', {event});
+      DEV_MODE && this.logger_.incident?.('dispatch', 'dispatch_after_destroy');
       return;
     }
     this.processing__ = true;
