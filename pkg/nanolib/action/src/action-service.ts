@@ -100,15 +100,13 @@ export class ActionService {
    * });
    * ```
    */
-  on<K extends keyof ActionRecord>(type: K | K[], handler: (action: Action<K>) => Awaitable<void>): SubscribeResult {
+  on<K extends keyof ActionRecord>(type: K | K[], handler: (action: Action<K>) => void): SubscribeResult {
     DEV_MODE && this.logger__.logMethodArgs?.('on', {type});
     if (Array.isArray(type)) {
       const typeList = type as K[];
       const unsubscribeList: VoidFunc[] = [];
       for (const type_ of typeList) {
-        unsubscribeList.push(
-          this.internalChannel__.on(type_, handler as (action: Action) => Awaitable<void>).unsubscribe,
-        );
+        unsubscribeList.push(this.internalChannel__.on(type_, handler as (action: Action) => void).unsubscribe);
       }
       return {
         unsubscribe: () => {
@@ -120,7 +118,48 @@ export class ActionService {
         },
       };
     }
-    return this.internalChannel__.on(type, handler as (action: Action) => Awaitable<void>);
+    // else single type
+    return this.internalChannel__.on(type, handler as (action: Action) => void);
+  }
+
+  /**
+   * Subscribes to multiple actions at once using a dictionary map.
+   *
+   * @param listeners - A map of action types to their respective handlers.
+   * @returns A single SubscribeResult to unsubscribe all registered listeners.
+   *
+   * @example
+   * ```ts
+   * const sub = actionService.subscribeAll({
+   *   ui_open_drawer: (action) => { ... },
+   *   ui_close_drawer: () => { ... }
+   * });
+   *
+   * sub.unsubscribe();
+   * ```
+   */
+  subscribeAll(listeners: {
+    readonly [K in keyof ActionRecord]?: (action: Action<K>) => Awaitable<void>;
+  }): SubscribeResult {
+    DEV_MODE && this.logger__.logMethodArgs?.('subscribeAll', Object.keys(listeners));
+    const keys = Object.keys(listeners) as (keyof ActionRecord)[];
+    const unsubscribeList = new Array<VoidFunc>(keys.length);
+
+    for (let index = 0; index < keys.length; index++) {
+      const actionId = keys[index];
+      const handler = listeners[actionId];
+      unsubscribeList[index] = this.on(actionId, handler as (action: Action) => Awaitable<void>).unsubscribe;
+    }
+
+    return {
+      unsubscribe: () => {
+        DEV_MODE && this.logger__.logMethod?.('unsubscribeAll');
+        for (let index = 0; index < unsubscribeList.length; index++) {
+          unsubscribeList[index]();
+        }
+        unsubscribeList.length = 0;
+      },
+    };
   }
 
   /**
