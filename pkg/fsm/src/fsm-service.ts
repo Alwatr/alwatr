@@ -87,6 +87,15 @@ export class FsmService<
     queueMicrotask(() => this.start_());
   }
 
+  /**
+   * Synchronous accessor for the current machine state.
+   * Prefer `stateSignal.subscribe()` for reactive consumers; use this getter for
+   * imperative checks inside controllers/services.
+   */
+  public get state(): MachineState<TState, TContext> {
+    return this.stateSignal__.get();
+  }
+
   }
 
   /**
