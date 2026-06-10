@@ -290,8 +290,9 @@ export class FsmService<
 
   /**
    * Applies all assigner functions to the context to produce a new, updated context.
-   * This process is atomic (all-or-nothing). If any assigner fails, the original
-   * context is returned, and all updates are discarded.
+   *
+   * This process is atomic (all-or-nothing): if any assigner throws, the original
+   * context is returned and all updates are discarded.
    *
    * @param event The event that triggered the transition.
    * @param context The current context.
@@ -304,33 +305,35 @@ export class FsmService<
     assigners?: SingleOrArray<Assigner<TEvent, TContext>>,
   ): TContext {
     if (!assigners) {
-      this.logger_.logMethodArgs?.('applyAssigners__//skipped', {count: 0});
+      this.logger_.logMethod?.('applyAssigners__.skipped');
       return context;
     }
 
-    const assignersArray = Array.isArray(assigners) ? assigners : [assigners];
+    this.logger_.logMethod?.('applyAssigners__');
 
-    this.logger_.logMethodArgs?.('applyAssigners__', {count: assignersArray.length});
+    if (!Array.isArray(assigners)) {
+      try {
+        return assigners(event, context) ?? context;
+      } catch (error) {
+        this.logger_.error('applyAssigners__', 'assigner_failed_atomic', error, {event, context});
+      }
+      return context;
+    }
+
+    // else if assigners is an array
 
     try {
       let accContext = context;
-      for (const assigner of assignersArray) {
-        const nextContext = assigner({event, context: accContext});
-        this.logger_.logMethodFull?.(
-          `event.${event.type}.action.${assigner.name || 'anonymous'}`,
-          {event, accContext},
-          nextContext,
-        );
-        if (nextContext !== undefined && nextContext !== null) {
+      for (let index = 0; index < assigners.length; index++) {
+        const assigner = assigners[index];
+        const nextContext = assigner(event, accContext);
+        if (nextContext) {
           accContext = nextContext;
         }
       }
       return accContext;
     } catch (error) {
-      this.logger_.error('applyAssigners__', 'assigner_failed_atomic', error, {
-        event,
-        context, // Log the original context for debugging.
-      });
+      this.logger_.error('applyAssigners__', 'assigner_failed_atomic', error, {event, context});
       // On ANY failure, discard all changes and return the original context.
       return context;
     }
