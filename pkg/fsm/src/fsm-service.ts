@@ -241,7 +241,7 @@ export class FsmService<
   }
 
   /**
-   * Sequentially executes a list of effects (side-effects).
+   * Sequentially executes a list of synchronous effects (side-effects).
    * Errors are caught and logged without stopping the FSM.
    *
    * @param event The event that triggered these effects.
@@ -254,32 +254,35 @@ export class FsmService<
     effects?: SingleOrArray<Effect<TEvent, TContext>>,
   ): void {
     if (!effects) {
-      this.logger_.logMethodArgs?.('executeEffects__//skipped', {count: 0});
+      this.logger_.logMethod?.('executeEffects__.skipped');
       return;
     }
-    const effectsArray = Array.isArray(effects) ? effects : [effects];
 
-    this.logger_.logMethodArgs?.('executeEffects__', {count: effectsArray.length});
+    this.logger_.logMethod?.('executeEffects__');
 
-    for (const effect of effectsArray) {
+    if (!Array.isArray(effects)) {
       try {
-        const result = effect({event, context});
-        if (result instanceof Promise) {
-          result.catch((error) => {
-            this.logger_.error('executeEffects__', 'effect_failed', error, {
-              effect: effect.name || 'anonymous',
-              state: this.stateSignal__.get().name,
-              event,
-              context,
-            });
-          });
-        }
+        effects(event, context);
       } catch (error) {
         this.logger_.error('executeEffects__', 'effect_failed', error, {
-          effect: effect.name || 'anonymous',
-          state: this.stateSignal__.get().name,
           event,
           context,
+        });
+      }
+      return;
+    }
+
+    // else if effects is an array
+
+    for (let index = 0; index < effects.length; index++) {
+      const effect = effects[index];
+      try {
+        effect(event, context);
+      } catch (error) {
+        this.logger_.error('executeEffects__', 'effect_failed', error, {
+          event,
+          context,
+          index,
         });
       }
     }
