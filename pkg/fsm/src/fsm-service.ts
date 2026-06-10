@@ -410,13 +410,19 @@ export class FsmService<
   }
 
   /**
-   * Destroys the service, cleaning up all internal signals and subscriptions
-   * to prevent memory leaks.
+   * Destroys the service, cleaning up actors, the mailbox, and owned signals to
+   * prevent memory leaks. Idempotent — safe to call multiple times.
+   *
+   * @param destroyState If `true` (default), also destroys the state signal, preventing any future subscriptions or updates. Set to `false` to preserve the last state value for late subscribers even after destruction.
    */
+  public destroy(destroyState = true): void {
     if (this.destroyed__) return;
     this.logger_.logMethod?.('destroy');
+    this.destroyed__ = true;
+    this.mailbox__.length = 0;
     this.cleanupActors__();
-    this.eventSignal__.destroy();
-    this.stateSignal__.destroy();
+    if (destroyState) {
+      this.stateSignal__.destroy();
+    }
   }
 }
