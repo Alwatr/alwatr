@@ -14,7 +14,7 @@ import {
 import {logger} from './logger.js';
 import type { JsonObject, DictionaryOpt } from '@alwatr/type-helper';
 
-__dev_mode__: logger.logFileModule?.('collection-reference');
+DEV_MODE && logger.logFileModule?.('collection-reference');
 
 /**
  * Represents a reference to a collection of the AlwatrNitrobase.

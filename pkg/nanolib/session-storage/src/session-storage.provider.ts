@@ -34,7 +34,7 @@ export class SessionStorageProvider<T> {
   constructor(config: SessionStorageProviderConfig<T>) {
     this.key__ = config.name;
     this.logger_ = createLogger(`session-storage-provider: ${this.key__}`);
-    this.logger_.logMethodArgs?.('constructor', config);
+    DEV_MODE && this.logger_.logMethodArgs?.('constructor', config);
 
     this.parse_ = config.parse ?? (JSON.parse as (value: string) => T);
     this.stringify_ = config.stringify ?? JSON.stringify;
@@ -97,13 +97,13 @@ export class SessionStorageProvider<T> {
     }
 
     if (!raw) {
-      this.logger_.logMethod?.('read//no_value');
+      DEV_MODE && this.logger_.logMethod?.('read//no_value');
       return null;
     }
 
     try {
       const parsed = this.parse_(raw);
-      this.logger_.logMethodFull?.('read//value', undefined, {parsed});
+      DEV_MODE && this.logger_.logMethodFull?.('read//value', undefined, {parsed});
       return parsed;
     } catch (err) {
       this.logger_.error('read', 'read_parse_error', {err});
@@ -123,7 +123,7 @@ export class SessionStorageProvider<T> {
    * ```
    */
   public write(value: T): void {
-    this.logger_.logMethodArgs?.('write', {value});
+    DEV_MODE && this.logger_.logMethodArgs?.('write', {value});
 
     let valueStr: string;
     try {
@@ -149,7 +149,7 @@ export class SessionStorageProvider<T> {
    * ```
    */
   public remove(): void {
-    this.logger_.logMethod?.('remove');
+    DEV_MODE && this.logger_.logMethod?.('remove');
     sessionStorage.removeItem(this.key__);
   }
 }

@@ -147,7 +147,7 @@ export abstract class Directive {
     this.index = generateIndexForDirective(attributeName);
     const identifier = `directive:${attributeName}/${this.index}`;
     this.logger_ = createLogger(identifier);
-    this.logger_.logMethodArgs?.('new', {attributeName, element});
+    DEV_MODE && this.logger_.logMethodArgs?.('new', {attributeName, element});
 
     this.attributeName = attributeName;
     this.element_ = element;
@@ -163,7 +163,7 @@ export abstract class Directive {
    * Initializes the directive's lifecycle by calling the `init_` method and setting up any necessary observers for lazy initialization and visibility tracking. This method is called after the directive instance is created and the initial attribute value is parsed.
    */
   private initializeLifecycle_(): void {
-    this.logger_.logMethod?.('initializeLifecycle_');
+    DEV_MODE && this.logger_.logMethod?.('initializeLifecycle_');
 
     if (this.isDestroyed()) return;
 
@@ -218,7 +218,7 @@ export abstract class Directive {
    */
   private triggerLazyInit__(): void {
     if (!this.lazyInit_) return;
-    this.logger_.logMethod?.('triggerLazyInit__');
+    DEV_MODE && this.logger_.logMethod?.('triggerLazyInit__');
 
     if (typeof IntersectionObserver !== 'undefined') {
       const observer = new IntersectionObserver((entries) => {
@@ -250,7 +250,7 @@ export abstract class Directive {
 
   private triggerVisibilityObserver__(): void {
     if (!this.onVisible_ && !this.onHidden_) return;
-    this.logger_.logMethod?.('triggerVisibilityObserver__');
+    DEV_MODE && this.logger_.logMethod?.('triggerVisibilityObserver__');
 
     if (typeof IntersectionObserver !== 'undefined') {
       const observer = new IntersectionObserver((entries) => {
@@ -304,7 +304,7 @@ export abstract class Directive {
    * ```
    */
   public dispatch(eventName: string, detail?: unknown): void {
-    this.logger_.logMethodArgs?.('dispatch', {eventName, detail});
+    DEV_MODE && this.logger_.logMethodArgs?.('dispatch', {eventName, detail});
     this.element_.dispatchEvent(new CustomEvent(eventName, {detail, bubbles: true}));
   }
 
@@ -323,7 +323,7 @@ export abstract class Directive {
    * ```
    */
   public addDestroyHook(task: (this: this) => void): void {
-    this.logger_.logMethod?.('addDestroyHook');
+    DEV_MODE && this.logger_.logMethod?.('addDestroyHook');
     this.destroyHookList__.push(task);
   }
 
@@ -335,7 +335,7 @@ export abstract class Directive {
    * such as removing event listeners.
    */
   public destroy(): void {
-    this.logger_.logMethod?.('destroy');
+    DEV_MODE && this.logger_.logMethod?.('destroy');
     if (this.isDestroyed()) return;
 
     // Execute all registered cleanup tasks
@@ -370,7 +370,7 @@ export abstract class Directive {
    * **Note:** This method does not automatically run; you must call it as needed to check for disconnected elements.
    */
   public autoDestroy(): boolean {
-    this.logger_.logMethod?.('autoDestroy');
+    DEV_MODE && this.logger_.logMethod?.('autoDestroy');
     if (this.element_?.isConnected === false) {
       void this.destroy();
       return true;
@@ -452,7 +452,7 @@ export abstract class Directive {
    * ```
    */
   public requestUpdate(): void {
-    this.logger_.logMethod?.('requestUpdate');
+    DEV_MODE && this.logger_.logMethod?.('requestUpdate');
     queueRender(this);
   }
 
@@ -461,7 +461,7 @@ export abstract class Directive {
    * This method is responsible for executing the update logic in a batched manner, ensuring that multiple calls to `requestUpdate()` within the same macrotask result in only one execution of `update_()` and `updated_()`.
    */
   public performUpdate_(): void {
-    this.logger_.logMethod?.('performUpdate_');
+    DEV_MODE && this.logger_.logMethod?.('performUpdate_');
     if (this.isDestroyed()) return;
     if (this.initializing__) {
       // reschedule for after initialization completes
@@ -470,7 +470,7 @@ export abstract class Directive {
     }
 
     if (this.shouldUpdate_?.() === false) {
-      this.logger_.incident?.('performUpdate_', 'update_aborted_by_should_update');
+      DEV_MODE && this.logger_.incident?.('performUpdate_', 'update_aborted_by_should_update');
       return;
     }
 

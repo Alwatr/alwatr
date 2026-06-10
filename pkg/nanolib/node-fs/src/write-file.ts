@@ -20,7 +20,7 @@ import {asyncQueue, logger} from './common.js';
  * ```
  */
 export function writeFileSync(path: string, content: Buffer | string): void {
-  logger.logMethodArgs?.('writeFileSync', '...' + path.slice(-32));
+  DEV_MODE && logger.logMethodArgs?.('writeFileSync', '...' + path.slice(-32));
   try {
     const pathExists = existsSync(path);
     if (!pathExists) {
@@ -35,8 +35,7 @@ export function writeFileSync(path: string, content: Buffer | string): void {
     }
     renameSync(path + '.tmp', path);
     logger.logOther?.('writeFileSync success', '...' + path.slice(-32));
-  }
-  catch (err) {
+  } catch (err) {
     logger.error('writeFileSync', 'write_file_failed', {path}, err);
     throw new Error('write_file_failed', {cause: (err as Error).cause});
   }
@@ -58,7 +57,7 @@ export function writeFileSync(path: string, content: Buffer | string): void {
  * ```
  */
 export function writeFile(path: string, content: Buffer | string): Promise<void> {
-  logger.logMethodArgs?.('writeFile', '...' + path.slice(-32));
+  DEV_MODE && logger.logMethodArgs?.('writeFile', '...' + path.slice(-32));
   return asyncQueue.push(path, async () => {
     try {
       logger.logOther?.('writeFile start', '...' + path.slice(-32));
@@ -75,8 +74,7 @@ export function writeFile(path: string, content: Buffer | string): Promise<void>
       }
       await rename(path + '.tmp', path);
       logger.logOther?.('writeFile success', '...' + path.slice(-32));
-    }
-    catch (err) {
+    } catch (err) {
       logger.error('writeFile', 'write_file_failed', {path}, err);
       throw new Error('write_file_failed', {cause: (err as Error).cause});
     }

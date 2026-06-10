@@ -101,7 +101,7 @@ export class ChannelSignal<TMap extends object> extends SignalBase<ChannelMessag
   constructor(config: ChannelSignalConfig) {
     super(config);
     this.logger_ = createLogger(`channel_signal:${this.name}`);
-    this.logger_.logMethod?.('constructor');
+    DEV_MODE && this.logger_.logMethod?.('constructor');
   }
 
   /**
@@ -133,7 +133,7 @@ export class ChannelSignal<TMap extends object> extends SignalBase<ChannelMessag
    */
   public dispatch<K extends keyof TMap>(...args: DispatchArgs<TMap, K>): void {
     const [name, payload] = args;
-    this.logger_.logMethodArgs?.('dispatch', {name, payload});
+    DEV_MODE && this.logger_.logMethodArgs?.('dispatch', {name, payload});
     this.checkDestroyed_();
     queueMicrotask(() => this.route__(name, payload));
   }
@@ -171,7 +171,7 @@ export class ChannelSignal<TMap extends object> extends SignalBase<ChannelMessag
     handler: ChannelHandler<TMap, K>,
     options?: Pick<SubscribeOptions, 'once'>,
   ): SubscribeResult {
-    this.logger_.logMethodArgs?.('on', {name});
+    DEV_MODE && this.logger_.logMethodArgs?.('on', {name});
     this.checkDestroyed_();
 
     // Retrieve or create the handler set for this message name.
@@ -218,7 +218,7 @@ export class ChannelSignal<TMap extends object> extends SignalBase<ChannelMessag
     callback: ListenerCallback<ChannelMessage<TMap>>,
     options?: SubscribeOptions,
   ): SubscribeResult {
-    this.logger_.logMethodArgs?.('subscribe', options);
+    DEV_MODE && this.logger_.logMethodArgs?.('subscribe', options);
     return super.subscribe(callback, options);
   }
 

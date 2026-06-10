@@ -19,7 +19,7 @@ import {logger} from './logger.js';
 import type { DictionaryReq, JsonObject, DictionaryOpt } from '@alwatr/type-helper';
 
 
-__dev_mode__: logger.logFileModule?.('alwatr-nitrobase');
+DEV_MODE && logger.logFileModule?.('alwatr-nitrobase');
 
 /**
  * AlwatrNitrobase configuration.

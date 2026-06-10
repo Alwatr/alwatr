@@ -43,7 +43,7 @@ export class BindAttribDirective extends Directive {
    * If yes, delegates the initialization to `lazyInit_`; otherwise, initializes immediately.
    */
   protected override init_(): void {
-    this.logger_.logMethod?.('init_');
+    DEV_MODE && this.logger_.logMethod?.('init_');
     if (this.lazyBinding_ === null) {
       this.bindingInit_();
     } else {
@@ -62,7 +62,7 @@ export class BindAttribDirective extends Directive {
    * and applies the initial attribute state.
    */
   protected bindingInit_(): void {
-    this.logger_.logMethod?.('bindingInit_');
+    DEV_MODE && this.logger_.logMethod?.('bindingInit_');
     for (const rawPair of this.attributeValue.split(';')) {
       const pair = rawPair.trim();
       if (pair === '') continue;
@@ -96,7 +96,7 @@ export class BindAttribDirective extends Directive {
    * @param value The value to apply.
    */
   protected applyAttribute_(attributeName: string, value: BindingValue): void {
-    this.logger_.logMethodArgs?.('applyAttribute_', {attributeName, value});
+    DEV_MODE && this.logger_.logMethodArgs?.('applyAttribute_', {attributeName, value});
     if (typeof value === 'boolean') {
       if (value) this.element_.setAttribute(attributeName, '');
       else this.element_.removeAttribute(attributeName);

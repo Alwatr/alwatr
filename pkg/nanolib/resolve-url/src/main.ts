@@ -14,14 +14,14 @@ export function resolveUrl(...parts: string[]): string {
   const suffix = lastPart.charAt(lastPart.length - 1) === '/' ? '/' : ''; // Add trailing slash if the last part has it
 
   const url = (
-    prefix +
-    parts
+    prefix
+    + parts
       .map((part) => part.replace(leadingSlashes, '').replace(trailingSlashes, '')) // Remove leading and trailing slashes
       .filter((part) => part) // Remove empty parts
       .join('/')
       // Replace multiple slashes with a single slash, except for protocol
-      .replace('://', '{{PROTOCOL_SLASH}}') +
-    suffix
+      .replace('://', '{{PROTOCOL_SLASH}}')
+    + suffix
   )
     .replace(multipleSlashes, '/')
     .replace('{{PROTOCOL_SLASH}}', '://');

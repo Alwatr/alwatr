@@ -72,7 +72,7 @@ class BindingService {
     source: IReadonlySignal<S>,
     projector: (value: S) => T,
   ): void {
-    this.logger_.logMethodArgs?.('createViewModel', {namespace});
+    DEV_MODE && this.logger_.logMethodArgs?.('createViewModel', {namespace});
 
     if (this.viewModels_.has(namespace)) {
       this.logger_.accident?.('createViewModel', 'duplicate_namespace_rejected', {namespace});
@@ -100,7 +100,7 @@ class BindingService {
    * ```
    */
   removeViewModel(namespace: string): void {
-    this.logger_.logMethodArgs?.('removeViewModel', {namespace});
+    DEV_MODE && this.logger_.logMethodArgs?.('removeViewModel', {namespace});
 
     const viewModel = this.viewModels_.get(namespace);
     if (viewModel) {

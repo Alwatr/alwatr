@@ -47,7 +47,7 @@ export class DerivedSignal<S, T> implements IReadonlySignal<T> {
   }
 
   untilNext(): Promise<T> {
-    this.logger_.logMethod?.('untilNext');
+    DEV_MODE && this.logger_.logMethod?.('untilNext');
     this.checkDestroyed__();
     return new Promise<T>((resolve) => {
       this.subscribe(
@@ -68,7 +68,7 @@ export class DerivedSignal<S, T> implements IReadonlySignal<T> {
    * @returns The current projected value.
    */
   public get(): T {
-    this.logger_.logMethod?.('get');
+    DEV_MODE && this.logger_.logMethod?.('get');
     this.checkDestroyed__();
     if (this.activeConsumerCount__ === 0) {
       return this.config_.projector(this.config_.source.get());
@@ -94,13 +94,13 @@ export class DerivedSignal<S, T> implements IReadonlySignal<T> {
    * @returns Unsubscribe handle object.
    */
   public subscribe(callback: ListenerCallback<T>, options?: SubscribeOptions): SubscribeResult {
-    this.logger_.logMethod?.('subscribe');
+    DEV_MODE && this.logger_.logMethod?.('subscribe');
     this.checkDestroyed__();
     this.activeConsumerCount__++;
 
     // Wake-up phase: if this is the first active consumer, dynamically clamp to the upstream core source
     if (this.activeConsumerCount__ === 1) {
-      this.logger_.logMethod?.('wakeUp_');
+      DEV_MODE && this.logger_.logMethod?.('wakeUp_');
       this.internalSignal_ = new StateSignal<T>({
         name: `derived-internal:${this.name}`,
         initialValue: this.config_.projector(this.config_.source.get()),
@@ -117,14 +117,14 @@ export class DerivedSignal<S, T> implements IReadonlySignal<T> {
 
     return {
       unsubscribe: () => {
-        this.logger_.logMethod?.('unsubscribe');
+        DEV_MODE && this.logger_.logMethod?.('unsubscribe');
 
         sub.unsubscribe();
         this.activeConsumerCount__--;
 
         // Hibernation phase: unlink tracking dependencies when view elements clear out to preserve processing cycles
         if (this.activeConsumerCount__ === 0 && this.sourceSubscription__) {
-          this.logger_.logMethod?.('sleepCleanup_');
+          DEV_MODE && this.logger_.logMethod?.('sleepCleanup_');
           this.sourceSubscription__.unsubscribe();
           this.sourceSubscription__ = undefined;
           this.internalSignal_?.destroy();
@@ -138,7 +138,7 @@ export class DerivedSignal<S, T> implements IReadonlySignal<T> {
    * Destroys the derived signal and unsubscribes from the source signal if currently awake.
    */
   public destroy(): void {
-    this.logger_.logMethod?.('destroy');
+    DEV_MODE && this.logger_.logMethod?.('destroy');
     if (this.isDestroyed) return;
 
     if (this.sourceSubscription__) {
@@ -158,7 +158,7 @@ export class DerivedSignal<S, T> implements IReadonlySignal<T> {
    * @throws {Error} If destroyed.
    */
   private checkDestroyed__(): void {
-    this.logger_.logMethod?.('checkDestroyed__');
+    DEV_MODE && this.logger_.logMethod?.('checkDestroyed__');
     if (this.isDestroyed) {
       throw new Error(`Cannot interact with a destroyed signal (id: ${this.name})`);
     }

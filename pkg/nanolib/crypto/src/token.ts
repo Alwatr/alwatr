@@ -96,8 +96,8 @@ export class AlwatrTokenGenerator {
    */
   protected _generate(data: string, epoch: number): string {
     return (
-      this.config.prefix +
-      createHmac(this.config.algorithm, data)
+      this.config.prefix
+      + createHmac(this.config.algorithm, data)
         .update(data + epoch)
         .digest(this.config.encoding)
     );

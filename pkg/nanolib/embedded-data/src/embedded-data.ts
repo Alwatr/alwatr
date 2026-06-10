@@ -64,7 +64,7 @@ export class EmbeddedDataCollector<T> {
     protected readonly attributeName_: string,
     protected readonly validator_?: (data: unknown) => data is T,
   ) {
-    this.logger_.logMethodArgs?.('constructor', {attributeName: attributeName_});
+    DEV_MODE && this.logger_.logMethodArgs?.('constructor', {attributeName: attributeName_});
   }
 
   /**
@@ -88,11 +88,11 @@ export class EmbeddedDataCollector<T> {
    * @returns The raw JSON string, or `null` if the element is missing or empty.
    */
   protected extractRawData_(): string | null {
-    this.logger_.logMethod?.('extractRawData_');
+    DEV_MODE && this.logger_.logMethod?.('extractRawData_');
 
     const element = this.getElement_();
     if (!element) {
-      this.logger_.incident?.('extractRawData_', 'element_not_found', {attributeName: this.attributeName_});
+      DEV_MODE && this.logger_.incident?.('extractRawData_', 'element_not_found', {attributeName: this.attributeName_});
       return null;
     }
 
@@ -129,7 +129,7 @@ export class EmbeddedDataCollector<T> {
    * ```
    */
   collect(): T | null {
-    this.logger_.logMethodArgs?.('collect', {attributeName: this.attributeName_});
+    DEV_MODE && this.logger_.logMethodArgs?.('collect', {attributeName: this.attributeName_});
 
     const rawData = this.extractRawData_();
     if (!rawData) return null;

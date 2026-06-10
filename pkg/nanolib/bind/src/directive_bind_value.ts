@@ -30,7 +30,7 @@ export class BindValueDirective extends BindTextDirective {
    * preventing unnecessary DOM writes that would reset the cursor position.
    */
   protected override update_(): void {
-    this.logger_.logMethod?.('update_');
+    DEV_MODE && this.logger_.logMethod?.('update_');
     const value = this.bindingValue_;
     const nextValue = value == null ? '' : String(value);
     const inputEl = this.element_ as HTMLInputElement;

@@ -114,7 +114,7 @@ export function bootstrapElement(name: string, constructor: DirectiveConstructor
  * @param this The directive instance to clean up.
  */
 export function cleanOnDestroy_(this: Directive) {
-  this.logger_.logMethod?.('cleanOnDestroy');
+  DEV_MODE && this.logger_.logMethod?.('cleanOnDestroy');
   directiveInstanceRegistry_.delete(this);
 
   const initializedDirectives = initializedDirectiveElements_.get(this.element_);

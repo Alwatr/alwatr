@@ -70,7 +70,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
     this.logger_ = createLogger(`computed_signal:${this.name}`);
     this.recalculate_ = this.recalculate_.bind(this);
 
-    this.logger_.logMethod?.('constructor');
+    DEV_MODE && this.logger_.logMethod?.('constructor');
 
     this.internalSignal_ = new StateSignal<T>({
       name: `compute_internal:${this.name}`,
@@ -80,7 +80,7 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
     // Subscribe to all dependencies to trigger recalculation on change.
     for (let i = 0; i < this.config_.deps.length; i++) {
       const signal = this.config_.deps[i];
-      this.logger_.logStep?.('constructor', 'subscribing_to_dependency', {signal: signal.name});
+      DEV_MODE && this.logger_.logStep?.('constructor', 'subscribing_to_dependency', {signal: signal.name});
       this.dependencySubscriptions__.push(signal.subscribe(this.recalculate_, {receivePrevious: false}));
     }
   }
@@ -137,9 +137,9 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
    * After `destroy()` is called, any attempt to access `.get()` or `.subscribe()` will throw an error.
    */
   public destroy(): void {
-    this.logger_.logMethod?.('destroy');
+    DEV_MODE && this.logger_.logMethod?.('destroy');
     if (this.isDestroyed) {
-      this.logger_.incident?.('destroy', 'already_destroyed');
+      DEV_MODE && this.logger_.incident?.('destroy', 'already_destroyed');
       return;
     }
 
@@ -160,11 +160,11 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
    * @protected
    */
   protected recalculate_(): void {
-    this.logger_.logMethod?.('recalculate_');
+    DEV_MODE && this.logger_.logMethod?.('recalculate_');
 
     if (this.isRecalculating__) {
       // If a recalculation is already scheduled, do nothing.
-      this.logger_.logStep?.('recalculate_', 'skipping_recalculation_already_scheduled');
+      DEV_MODE && this.logger_.logStep?.('recalculate_', 'skipping_recalculation_already_scheduled');
       return;
     }
 
@@ -172,12 +172,12 @@ export class ComputedSignal<T> implements IReadonlySignal<T> {
 
     queueMicrotask(() => {
       if (this.isDestroyed) {
-        this.logger_.incident?.('recalculate_', 'destroyed_during_delay');
+        DEV_MODE && this.logger_.incident?.('recalculate_', 'destroyed_during_delay');
         this.isRecalculating__ = false;
         return;
       }
 
-      this.logger_.logStep?.('recalculate_', 'recalculating_value');
+      DEV_MODE && this.logger_.logStep?.('recalculate_', 'recalculating_value');
       try {
         // Set the new value on the internal signal, which will notify our subscribers.
         this.internalSignal_.set(this.config_.get());

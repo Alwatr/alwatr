@@ -1,6 +1,5 @@
 import {createLogger} from '@alwatr/logger';
 
-
 const logger = createLogger(__package_name__);
 
 export const renderState = <R, T extends string>(
@@ -8,7 +7,7 @@ export const renderState = <R, T extends string>(
   renderRecord: Record<T | '_default', undefined | T | (() => R)>,
   thisArg: unknown = null,
 ): R | undefined => {
-  logger.logMethodArgs?.('renderState', {state, renderRecord});
+  DEV_MODE && logger.logMethodArgs?.('renderState', {state, renderRecord});
 
   let render = renderRecord[state];
 
@@ -41,8 +40,7 @@ export const renderState = <R, T extends string>(
 
   try {
     return render.call(thisArg);
-  }
-  catch (err) {
+  } catch (err) {
     logger.error('renderState', 'render_error', err);
     return;
   }

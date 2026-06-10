@@ -74,10 +74,10 @@ export abstract class SignalBase<T> {
    * @protected
    */
   protected removeObserver_(observer: Observer_<T>): void {
-    this.logger_.logMethod?.('removeObserver_');
+    DEV_MODE && this.logger_.logMethod?.('removeObserver_');
 
     if (this.isDestroyed__) {
-      this.logger_.incident?.('removeObserver_', 'remove_observer_on_destroyed_signal');
+      DEV_MODE && this.logger_.incident?.('removeObserver_', 'remove_observer_on_destroyed_signal');
       return;
     }
 
@@ -104,7 +104,7 @@ export abstract class SignalBase<T> {
    * @returns An object with an `unsubscribe` method to remove the subscription.
    */
   public subscribe(callback: ListenerCallback<T>, options?: SubscribeOptions): SubscribeResult {
-    this.logger_.logMethodArgs?.('subscribe.base', options);
+    DEV_MODE && this.logger_.logMethodArgs?.('subscribe.base', options);
     this.checkDestroyed_();
 
     const observer: Observer_<T> = {callback, options};
@@ -131,10 +131,10 @@ export abstract class SignalBase<T> {
    * @protected
    */
   protected notify_(value: T): void {
-    this.logger_.logMethodArgs?.('notify_', value);
+    DEV_MODE && this.logger_.logMethodArgs?.('notify_', value);
 
     if (this.isDestroyed__) {
-      this.logger_.incident?.('notify_', 'notify_on_destroyed_signal');
+      DEV_MODE && this.logger_.incident?.('notify_', 'notify_on_destroyed_signal');
       return;
     }
 
@@ -187,7 +187,7 @@ export abstract class SignalBase<T> {
    * @returns A Promise that resolves with the next value dispatched by the signal.
    */
   public untilNext(): Promise<T> {
-    this.logger_.logMethod?.('untilNext');
+    DEV_MODE && this.logger_.logMethod?.('untilNext');
     this.checkDestroyed_();
     return new Promise((resolve, reject) => {
       this.pendingRejects__ ??= new Set();
@@ -212,9 +212,9 @@ export abstract class SignalBase<T> {
    * invokes the optional `onDestroy` config hook, and breaks internal references to facilitate GC.
    */
   public destroy(): void {
-    this.logger_.logMethod?.('destroy');
+    DEV_MODE && this.logger_.logMethod?.('destroy');
     if (this.isDestroyed__) {
-      this.logger_.incident?.('destroy_', 'double_destroy_attempt');
+      DEV_MODE && this.logger_.incident?.('destroy_', 'double_destroy_attempt');
       return;
     }
     this.isDestroyed__ = true;

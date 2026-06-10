@@ -43,7 +43,7 @@ export function on<D extends Directive = Directive>(
     }
 
     context.addInitializer(function (this: D) {
-      this.logger_.logMethodArgs?.('@on-init', {eventType, selector, options});
+      DEV_MODE && this.logger_.logMethodArgs?.('@on-init', {eventType, selector, options});
       const targetElement = selector ? this.element_.querySelector(selector) : this.element_;
 
       if (selector && targetElement === null) {

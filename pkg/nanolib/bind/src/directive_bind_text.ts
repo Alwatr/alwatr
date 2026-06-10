@@ -36,7 +36,7 @@ export class BindTextDirective extends Directive {
    * If yes, delegates the initialization to `lazyInit_`; otherwise, initializes immediately.
    */
   protected override init_(): void {
-    this.logger_.logMethod?.('init_');
+    DEV_MODE && this.logger_.logMethod?.('init_');
     if (this.lazyBinding_ === null) {
       this.bindingInit_();
     } else {
@@ -56,7 +56,7 @@ export class BindTextDirective extends Directive {
    * retrieves the ViewModel signal, and subscribes to state changes.
    */
   protected bindingInit_(): void {
-    this.logger_.logMethod?.('bindingInit_');
+    DEV_MODE && this.logger_.logMethod?.('bindingInit_');
     const [namespace, prop] = this.attributeValue.trim().split('.');
     if (!namespace || !prop) {
       this.logger_.accident?.('bindingInit_', 'invalid_binding', {namespace, prop});
@@ -78,7 +78,7 @@ export class BindTextDirective extends Directive {
    * Nullish values render as an empty string.
    */
   protected override update_(): void {
-    this.logger_.logMethod?.('update_');
+    DEV_MODE && this.logger_.logMethod?.('update_');
     const value = this.bindingValue_;
     this.element_.textContent = value == null ? '' : String(value);
   }

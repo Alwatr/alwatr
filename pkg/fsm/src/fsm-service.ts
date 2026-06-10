@@ -60,7 +60,7 @@ export class FsmService<
     stateSignal?: StateSignal<MachineState<TState, TContext>> | PersistentStateSignal<MachineState<TState, TContext>>,
   ) {
     this.logger_ = createLogger(`fsm:${this.config_.name}`);
-    this.logger_.logMethodArgs?.('constructor', config_);
+    DEV_MODE && this.logger_.logMethodArgs?.('constructor', config_);
 
     const initialValue: MachineState<TState, TContext> = {
       name: config_.initial,
@@ -114,7 +114,7 @@ export class FsmService<
    * @param event The event to process.
    */
   public readonly dispatch = (event: TEvent): void => {
-    this.logger_.logMethodArgs?.('dispatch', {event});
+    DEV_MODE && this.logger_.logMethodArgs?.('dispatch', {event});
     this.mailbox__.push(event);
     this.processMailbox__();
   };
@@ -123,9 +123,9 @@ export class FsmService<
     // RTC guard: an active loop is already draining the mailbox; it will pick
     // this event up after the current transition finishes.
     if (this.processing__) return;
-    this.logger_.logMethod?.('processMailbox__');
+    DEV_MODE && this.logger_.logMethod?.('processMailbox__');
     if (this.destroyed__) {
-      this.logger_.incident?.('dispatch', 'dispatch_after_destroy', {event});
+      DEV_MODE && this.logger_.incident?.('dispatch', 'dispatch_after_destroy', {event});
       return;
     }
     this.processing__ = true;
@@ -149,15 +149,16 @@ export class FsmService<
    */
   private processTransition__(event: TEvent): void {
     const currentState = this.stateSignal__.get();
-    this.logger_.logMethodArgs?.('processTransition__', {state: currentState.name, event});
+    DEV_MODE && this.logger_.logMethodArgs?.('processTransition__', {state: currentState.name, event});
 
     const transition = this.findTransition__(event, currentState);
 
     if (!transition) {
-      this.logger_.incident?.('processTransition__', 'ignored_event', 'No valid transition found for event', {
-        state: currentState.name,
-        event,
-      });
+      DEV_MODE
+        && this.logger_.incident?.('processTransition__', 'ignored_event', 'No valid transition found for event', {
+          state: currentState.name,
+          event,
+        });
       return; // Event ignored, no transition occurs.
     }
 
@@ -198,7 +199,7 @@ export class FsmService<
     event: TEvent,
     currentState: MachineState<TState, TContext>,
   ): Transition<TState, TEvent, TContext> | undefined {
-    this.logger_.logMethod?.('findTransition__');
+    DEV_MODE && this.logger_.logMethod?.('findTransition__');
 
     const currentStateConfig = this.config_.states[currentState.name];
     const transitions = currentStateConfig?.on?.[event.type as TEvent['type']] as
@@ -258,11 +259,11 @@ export class FsmService<
     effects?: SingleOrArray<Effect<TEvent, TContext>>,
   ): void {
     if (!effects) {
-      this.logger_.logMethod?.('executeEffects__.skipped');
+      DEV_MODE && this.logger_.logMethod?.('executeEffects__.skipped');
       return;
     }
 
-    this.logger_.logMethod?.('executeEffects__');
+    DEV_MODE && this.logger_.logMethod?.('executeEffects__');
 
     if (!Array.isArray(effects)) {
       try {
@@ -309,11 +310,11 @@ export class FsmService<
     assigners?: SingleOrArray<Assigner<TEvent, TContext>>,
   ): TContext {
     if (!assigners) {
-      this.logger_.logMethod?.('applyAssigners__.skipped');
+      DEV_MODE && this.logger_.logMethod?.('applyAssigners__.skipped');
       return context;
     }
 
-    this.logger_.logMethod?.('applyAssigners__');
+    DEV_MODE && this.logger_.logMethod?.('applyAssigners__');
 
     if (!Array.isArray(assigners)) {
       try {
@@ -349,7 +350,7 @@ export class FsmService<
    */
   protected start_(): void {
     if (this.destroyed__) return;
-    this.logger_.logMethod?.('start_');
+    DEV_MODE && this.logger_.logMethod?.('start_');
     const currentState = this.stateSignal__.get();
     const initEvent = {type: '__init__'} as unknown as TEvent;
     this.executeEffects__(initEvent, currentState.context, this.config_.states[currentState.name]?.entry);
@@ -369,11 +370,11 @@ export class FsmService<
     actors?: SingleOrArray<Actor<TEvent, TContext>>,
   ): void {
     if (!actors) {
-      this.logger_.logMethod?.('spawnActors__.skipped');
+      DEV_MODE && this.logger_.logMethod?.('spawnActors__.skipped');
       return;
     }
 
-    this.logger_.logMethod?.('spawnActors__');
+    DEV_MODE && this.logger_.logMethod?.('spawnActors__');
 
     if (!Array.isArray(actors)) {
       try {
@@ -406,7 +407,7 @@ export class FsmService<
    * Cleans up (destroys) all currently active state actors in REVERSE (LIFO) spawn order — standard resource-release semantics.
    */
   private cleanupActors__(): void {
-    this.logger_.logMethodArgs?.('cleanupActors__', {count: this.activeActorCleanups__.length});
+    DEV_MODE && this.logger_.logMethodArgs?.('cleanupActors__', {count: this.activeActorCleanups__.length});
     for (let index = this.activeActorCleanups__.length - 1; index >= 0; index--) {
       try {
         this.activeActorCleanups__[index]();
@@ -425,7 +426,7 @@ export class FsmService<
    */
   public destroy(destroyState = true): void {
     if (this.destroyed__) return;
-    this.logger_.logMethod?.('destroy');
+    DEV_MODE && this.logger_.logMethod?.('destroy');
     this.destroyed__ = true;
     this.mailbox__.length = 0;
     this.cleanupActors__();

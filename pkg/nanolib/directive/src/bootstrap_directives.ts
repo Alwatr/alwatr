@@ -23,10 +23,15 @@ import {bootstrapNewDirective_, directiveRegistry_, logger} from './lib.js';
  * ```
  */
 export function bootstrapDirectives(rootElement?: ParentNode): void {
-  logger.logMethod?.('bootstrapDirectives');
+  DEV_MODE && logger.logMethod?.('bootstrapDirectives');
   if (typeof document === 'undefined') return;
   if (document.readyState === 'loading') {
-    logger.incident?.('bootstrapDirectives', 'dom_not_ready', 'Delaying directive initialization until DOM is ready');
+    DEV_MODE
+      && logger.incident?.(
+        'bootstrapDirectives',
+        'dom_not_ready',
+        'Delaying directive initialization until DOM is ready',
+      );
     document.addEventListener('DOMContentLoaded', () => bootstrapDirectives(rootElement), {once: true});
     return;
   }

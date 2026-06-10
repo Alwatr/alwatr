@@ -55,7 +55,7 @@ type FetchOptions__ = AlwatrFetchOptions_ & Omit<RequestInit, 'headers'> & {url:
  * @private
  */
 export function _processOptions(url: string, options: FetchOptions): FetchOptions__ {
-  logger_.logMethodArgs?.('_processOptions', {url, options});
+  DEV_MODE && logger_.logMethodArgs?.('_processOptions', {url, options});
 
   const options_: FetchOptions__ = {
     ...defaultFetchOptions,
@@ -91,12 +91,11 @@ export function _processOptions(url: string, options: FetchOptions): FetchOption
   // Set the 'Authorization' header for bearer tokens or Alwatr's authentication scheme.
   if (options_.bearerToken !== undefined) {
     options_.headers.authorization = `Bearer ${options_.bearerToken}`;
-  }
-  else if (options_.alwatrAuth !== undefined) {
+  } else if (options_.alwatrAuth !== undefined) {
     options_.headers.authorization = `Alwatr ${options_.alwatrAuth.userId}:${options_.alwatrAuth.userToken}`;
   }
 
-  logger_.logProperty?.('fetch.options', options_);
+  DEV_MODE && logger_.logProperty?.('fetch.options', options_);
 
   return options_;
 }
@@ -116,12 +115,13 @@ export async function handleCacheStrategy_(options: FetchOptions__): Promise<Res
   }
   // else
 
-  logger_.logMethod?.('handleCacheStrategy_');
+  DEV_MODE && logger_.logMethod?.('handleCacheStrategy_');
 
   if (!cacheSupported) {
-    logger_.incident?.('fetch', 'fetch_cache_strategy_unsupported', {
-      cacheSupported,
-    });
+    DEV_MODE
+      && logger_.incident?.('fetch', 'fetch_cache_strategy_unsupported', {
+        cacheSupported,
+      });
     // Fallback to network_only if Cache API is not available.
     options.cacheStrategy = 'network_only';
     return handleRemoveDuplicate_(options);
@@ -164,8 +164,7 @@ export async function handleCacheStrategy_(options: FetchOptions__): Promise<Res
           cacheStorage.put(request, networkResponse.clone());
         }
         return networkResponse;
-      }
-      catch (err) {
+      } catch (err) {
         const cachedResponse = await cacheStorage.match(request);
         if (cachedResponse != null) {
           return cachedResponse;
@@ -222,7 +221,7 @@ async function handleRemoveDuplicate_(options: FetchOptions__): Promise<Response
   }
   // else
 
-  logger_.logMethod?.('handleRemoveDuplicate_');
+  DEV_MODE && logger_.logMethod?.('handleRemoveDuplicate_');
 
   // Create a unique key for the request. Including the body is crucial to differentiate
   // between requests to the same URL but with different payloads (e.g., POST requests).
@@ -246,8 +245,7 @@ async function handleRemoveDuplicate_(options: FetchOptions__): Promise<Response
 
     // Return a clone of the response, so each caller can consume the body independently.
     return response.clone();
-  }
-  catch (err) {
+  } catch (err) {
     // If the request fails, remove it from storage to allow for retries.
     delete duplicateRequestStorage_[cacheKey];
     throw err;
@@ -269,7 +267,7 @@ async function handleRetryPattern_(options: FetchOptions__): Promise<Response> {
   }
   // else
 
-  logger_.logMethod?.('handleRetryPattern_');
+  DEV_MODE && logger_.logMethod?.('handleRetryPattern_');
   options.retry--;
 
   const externalAbortSignal = options.signal;
@@ -283,8 +281,7 @@ async function handleRetryPattern_(options: FetchOptions__): Promise<Response> {
     }
 
     return response;
-  }
-  catch (err) {
+  } catch (err) {
     logger_.accident('fetch', 'fetch_failed_retry', err);
 
     // Do not retry if the browser is offline.
@@ -317,7 +314,7 @@ function handleTimeout_(options: FetchOptions__): Promise<Response> {
     return globalThis_.fetch(options.url, options);
   }
 
-  logger_.logMethod?.('handleTimeout_');
+  DEV_MODE && logger_.logMethod?.('handleTimeout_');
 
   return new Promise((resolved, reject) => {
     const abortController = typeof AbortController === 'function' ? new AbortController() : null;

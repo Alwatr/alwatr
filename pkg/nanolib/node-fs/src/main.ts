@@ -4,9 +4,9 @@ export * from './read-json.js';
 export * from './write-json.js';
 export * from './make-file.js';
 
-import { resolve as resolve_ } from 'node:path';
-import { existsSync as existsSync_ } from 'node:fs';
-import { unlink as unlink_ } from 'node:fs/promises';
+import {resolve as resolve_} from 'node:path';
+import {existsSync as existsSync_} from 'node:fs';
+import {unlink as unlink_} from 'node:fs/promises';
 
 export const resolve = resolve_;
 export const existsSync = existsSync_;
