@@ -14,7 +14,7 @@ declare const DEV_MODE: boolean;
  * side-effect-free ternary — this is what lets the bundler tree-shake the dev-only
  * constants when they become unreferenced in production builds.
  */
-const isCli_ = typeof process === 'object';
+const isCli_ = typeof process !== 'undefined' && Boolean(process.versions?.node) && typeof window === 'undefined';
 
 // ─────────────────────────── Production core ────────────────────────────────
 // Everything in this section ships in EVERY build. Keep it tiny.
