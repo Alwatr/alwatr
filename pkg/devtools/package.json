@@ -23,6 +23,7 @@
     "./node": {
       "types": "./dist/node.d.ts",
       "development": "./dist/dev/node.js",
+      "import": "./dist/node.js",
       "default": "./dist/node.js"
     }
   },
