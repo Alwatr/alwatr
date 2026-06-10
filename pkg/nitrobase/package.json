@@ -22,6 +22,7 @@
     "./client": {
       "types": "./dist/client.d.ts",
       "development": "./dist/dev/client.js",
+      "import": "./dist/client.js",
       "default": "./dist/client.js"
     }
   },
