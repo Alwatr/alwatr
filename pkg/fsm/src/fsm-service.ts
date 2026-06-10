@@ -1,8 +1,7 @@
 import {createLogger, type AlwatrLogger} from '@alwatr/logger';
+import {queueMicrotask} from '@alwatr/delay';
 import type {SingleOrArray} from '@alwatr/type-helper';
 import {
-  createEventSignal,
-  EventSignal,
   createPersistentStateSignal,
   createStateSignal,
   type StateSignal,
@@ -107,6 +106,11 @@ export class FsmService<
   /**
    * Dispatches an event to the FSM mailbox.
    *
+   * Events are processed with Run-to-Completion semantics: if dispatched while a
+   * transition is in flight (re-entrant dispatch from a guard/effect/actor), the
+   * event is enqueued and processed deterministically right after the current
+   * transition completes — in the same call stack, in FIFO order, with no loss.
+   *
    * @param event The event to process.
    */
   public readonly dispatch = (event: TEvent): void => {
@@ -137,7 +141,7 @@ export class FsmService<
 
   /**
    * The core FSM logic that processes a single event and transitions the machine to a new state.
-   * This process is atomic and follows the Run-to-Completion (RTC) model.
+   * This step is atomic: exit effects -> assigners -> state commit -> entry effects -> actors.
    *
    * @param event The event to process.
    */
@@ -145,7 +149,7 @@ export class FsmService<
     const currentState = this.stateSignal__.get();
     this.logger_.logMethodArgs?.('processTransition__', {state: currentState.name, event});
 
-    const transition = this.findTransition__(event, currentState.context);
+    const transition = this.findTransition__(event, currentState);
 
     if (!transition) {
       this.logger_.incident?.('processTransition__', 'ignored_event', 'No valid transition found for event', {
@@ -158,28 +162,26 @@ export class FsmService<
     const targetStateName = transition.target ?? currentState.name;
     const isExternalTransition = transition.target !== undefined;
 
-    // 1. Execute exit effects and cleanup actors of the current state if it's an external transition.
+    // 1. External transition: run exit effects (with the OLD context, per SCXML semantics) and tear down the current state's actors.
     if (isExternalTransition) {
       this.executeEffects__(event, currentState.context, this.config_.states[currentState.name]?.exit);
       this.cleanupActors__();
     }
 
-    // 2. Apply assigners to compute the next context. This is a pure function.
-    const nextContext = this.applyAssigners__(event, currentState.context, transition.assigners);
+    // 2. Apply assigners to compute the next context (pure, atomic).
+    const nextContext = this.applyAssigners__(event, currentState.context, transition.assigner);
 
-    // 3. Create the final next state object.
+    // 3. Commit the new state, notifying all subscribers (async via signal layer).
     const nextState: MachineState<TState, TContext> = {
       name: targetStateName,
       context: nextContext,
     };
-
-    // 4. Set the new state, notifying all subscribers.
     this.stateSignal__.set(nextState);
 
-    // 5. Execute entry effects and spawn actors of the new state if it's an external transition.
+    // 4. External transition: run entry effects (with the NEW context) and spawn the target state's actors.
     if (isExternalTransition) {
       this.executeEffects__(event, nextState.context, this.config_.states[nextState.name]?.entry);
-      this.spawnActors__(event, nextState.context, this.config_.states[nextState.name]?.actors);
+      this.spawnActors__(event, nextState.context, this.config_.states[nextState.name]?.actor);
     }
   }
 
