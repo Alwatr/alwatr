@@ -141,7 +141,7 @@ describe('ActionService — Built-in Modifiers & Resolvers', () => {
 
   describe('prevent modifier', () => {
     it('should invoke event.preventDefault()', () => {
-      const handler = service['modifierRegistry_'].get('prevent');
+      const handler = service['modifierRegistry__'].get('prevent');
       const preventDefaultSpy = jest.fn();
       const mockEvent = {preventDefault: preventDefaultSpy};
       const element = document.createElement('button');
@@ -155,7 +155,7 @@ describe('ActionService — Built-in Modifiers & Resolvers', () => {
 
   describe('validate modifier', () => {
     it('should validate form and return true if valid', () => {
-      const handler = service['modifierRegistry_'].get('validate');
+      const handler = service['modifierRegistry__'].get('validate');
       const form = document.createElement('form');
       const input = document.createElement('input');
       input.required = true;
@@ -171,7 +171,7 @@ describe('ActionService — Built-in Modifiers & Resolvers', () => {
     });
 
     it('should return false if form is invalid', () => {
-      const handler = service['modifierRegistry_'].get('validate');
+      const handler = service['modifierRegistry__'].get('validate');
       const form = document.createElement('form');
       const input = document.createElement('input');
       input.required = true;
@@ -187,7 +187,7 @@ describe('ActionService — Built-in Modifiers & Resolvers', () => {
     });
 
     it('should return false if element is not in a form', () => {
-      const handler = service['modifierRegistry_'].get('validate');
+      const handler = service['modifierRegistry__'].get('validate');
       const button = document.createElement('button');
       document.body.appendChild(button);
 
@@ -201,7 +201,7 @@ describe('ActionService — Built-in Modifiers & Resolvers', () => {
 
   describe('$value resolver', () => {
     it('should resolve the value property from input', () => {
-      const resolver = service['payloadRegistry_'].get('$value');
+      const resolver = service['payloadRegistry__'].get('$value');
       const input = document.createElement('input');
       input.value = 'test-value';
 
@@ -209,7 +209,7 @@ describe('ActionService — Built-in Modifiers & Resolvers', () => {
     });
 
     it('should return null for elements without a value property', () => {
-      const resolver = service['payloadRegistry_'].get('$value');
+      const resolver = service['payloadRegistry__'].get('$value');
       const div = document.createElement('div');
 
       expect(resolver({}, div)).toBeNull();
@@ -218,7 +218,7 @@ describe('ActionService — Built-in Modifiers & Resolvers', () => {
 
   describe('$formdata resolver', () => {
     it('should resolve nearest form inputs as plain object', () => {
-      const resolver = service['payloadRegistry_'].get('$formdata');
+      const resolver = service['payloadRegistry__'].get('$formdata');
       const form = document.createElement('form');
 
       const nameInput = document.createElement('input');
@@ -242,7 +242,7 @@ describe('ActionService — Built-in Modifiers & Resolvers', () => {
 
   describe('$checked resolver', () => {
     it('should resolve checked property for checkboxes', () => {
-      const resolver = service['payloadRegistry_'].get('$checked');
+      const resolver = service['payloadRegistry__'].get('$checked');
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
       checkbox.checked = true;
@@ -333,7 +333,7 @@ describe('ActionService — Event Delegation & Attribute Parsing', () => {
   });
 
   it('should cache parsed descriptors and avoid re-parsing same strings', () => {
-    const spy = jest.spyOn(service, 'parseDescriptor_');
+    const spy = jest.spyOn(service, 'parseDescriptor__');
 
     const btn1 = document.createElement('button');
     btn1.setAttribute('on-click', 'ui_cached_test:payload; prevent');
@@ -347,7 +347,7 @@ describe('ActionService — Event Delegation & Attribute Parsing', () => {
 
     expect(spy).toHaveBeenCalledTimes(2);
     // Cache check
-    expect(service['descriptorCache_'].has('ui_cached_test:payload; prevent')).toBe(true);
+    expect(service['descriptorCache__'].has('ui_cached_test:payload; prevent')).toBe(true);
 
     spy.mockRestore();
   });
@@ -364,7 +364,7 @@ describe('ActionService — Event Delegation & Attribute Parsing', () => {
     await nextMacrotask();
 
     expect(callback).not.toHaveBeenCalled();
-    expect(service['descriptorCache_'].get('invalidSyntax!!!')).toBeNull();
+    expect(service['descriptorCache__'].get('invalidSyntax!!!')).toBeNull();
     sub.unsubscribe();
   });
 });
