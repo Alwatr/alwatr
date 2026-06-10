@@ -139,7 +139,7 @@ export class ActionService {
    * ```
    */
   subscribeAll(listeners: {
-    readonly [K in keyof ActionRecord]: (action: Action<K>) => void;
+    readonly [K in keyof ActionRecord]?: (action: Action<K>) => void;
   }): SubscribeResult {
     DEV_MODE && this.logger__.logMethodArgs?.('subscribeAll', Object.keys(listeners));
     const keys = Object.keys(listeners) as (keyof ActionRecord)[];
