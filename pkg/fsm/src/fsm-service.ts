@@ -39,7 +39,7 @@ export class FsmService<
    * RTC re-entrancy guard. While `true`, an active loop is draining the mailbox;
    * re-entrant dispatches just enqueue and return.
    */
-  private processing__ = false;
+  private processing__ = true;
 
   /** Set once by `destroy()`. All dispatches after destruction are ignored (and logged). */
   private destroyed__ = false;
@@ -352,6 +352,10 @@ export class FsmService<
     const initEvent = {type: '__init__'} as unknown as TEvent;
     this.executeEffects__(initEvent, currentState.context, this.config_.states[currentState.name]?.entry);
     this.spawnActors__(initEvent, currentState.context, this.config_.states[currentState.name]?.actor);
+    this.processing__ = false; // Allow processing of dispatched events after the initial setup is complete.
+    if (this.mailbox__.length > 0) {
+      this.dispatch(this.mailbox__.pop()!); // Process the first enqueued event, if any, to kickstart the RTC loop.
+    }
   }
 
   /**
