@@ -206,7 +206,6 @@
       "dependencies": {
         "@alwatr/global-this": "workspace:*",
         "@alwatr/parse-duration": "workspace:*",
-        "@alwatr/platform-info": "workspace:*",
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
@@ -434,10 +433,6 @@
     "pkg/nanolib/logger": {
       "name": "@alwatr/logger",
       "version": "9.33.0",
-      "dependencies": {
-        "@alwatr/global-this": "workspace:*",
-        "@alwatr/platform-info": "workspace:*",
-      },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
@@ -509,9 +504,6 @@
     "pkg/nanolib/random": {
       "name": "@alwatr/random",
       "version": "9.33.0",
-      "dependencies": {
-        "@alwatr/global-this": "workspace:*",
-      },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
