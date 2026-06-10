@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.34.0](https://github.com/Alwatr/alwatr/compare/v9.33.1...v9.34.0) (2026-06-10)
+
+### ✨ Features
+
+* add createFsmHelpers function for type-safe StateActor and Effect definitions ([0e58cfb](https://github.com/Alwatr/alwatr/commit/0e58cfb50dc7de89a5360393e8e16d0729c807ef))
+* enhance createFsmHelpers with assigners and guards for improved type safety ([e719961](https://github.com/Alwatr/alwatr/commit/e7199616d6d5723dfcf45b210607ffcfa88a2e08))
+* enhance createFsmHelpers with generic assigner and guard definitions for improved type safety ([483b427](https://github.com/Alwatr/alwatr/commit/483b42767368b4b6b80bbccb57689b38d8432009))
+
+### 🔨 Code Refactoring
+
+* rename Actor type to StateActor for clarity in state machine context ([51e2175](https://github.com/Alwatr/alwatr/commit/51e2175680d733b05ea13bf28c6ee2c7139904c2))
+* streamline guard functions in createFsmHelpers for improved readability ([b72910e](https://github.com/Alwatr/alwatr/commit/b72910effe1977240d5f7263175b24dc773e970f))
+
 ## [9.33.1](https://github.com/Alwatr/alwatr/compare/v9.33.0...v9.33.1) (2026-06-10)
 
 ### 🐛 Bug Fixes

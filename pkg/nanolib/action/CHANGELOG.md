@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.34.0](https://github.com/Alwatr/alwatr/compare/v9.33.1...v9.34.0) (2026-06-10)
+
+### ✨ Features
+
+* add OutboundAction type for improved action configuration validation ([a7f9e53](https://github.com/Alwatr/alwatr/commit/a7f9e53633c8488e689a4c034737198e1ef7b5f3))
+* add subscribeAll method to ActionService for batch action subscriptions ([91ebe81](https://github.com/Alwatr/alwatr/commit/91ebe81fd74b75253c61bf1f0558e3b04087d064))
+* rename OutboundAction to ActionConfig for improved clarity and consistency ([402cee2](https://github.com/Alwatr/alwatr/commit/402cee215fcef61518b418d8e44092729a5930c0))
+
+### 🐛 Bug Fixes
+
+* update subscribeAll method signature to require action listeners for all action types ([3ab5c59](https://github.com/Alwatr/alwatr/commit/3ab5c59003b26d59ccd8f3d1d9e2c90d4ed82b93))
+
+### 🔨 Code Refactoring
+
+* remove unused actionService import and clean up tests for instance independence ([40f8953](https://github.com/Alwatr/alwatr/commit/40f8953d17b167cd55d9e9ae1b9606e1061dbe41))
+* remove unused Awaitable type import from action-service ([344ae29](https://github.com/Alwatr/alwatr/commit/344ae29bd92daade66588f1ee9fc95879bbb9606))
+* standardize logger method names in ActionService for consistency ([602c8fe](https://github.com/Alwatr/alwatr/commit/602c8fe0ef8b65c117a6b7c9e83f46597f68e117))
+* standardize logger naming and update subscribeAll method signature for consistency ([15145b4](https://github.com/Alwatr/alwatr/commit/15145b4d8b391aa8e90bb4058506e18d096b3e77))
+
 ## [9.33.1](https://github.com/Alwatr/alwatr/compare/v9.33.0...v9.33.1) (2026-06-10)
 
 ### 🐛 Bug Fixes
