@@ -22,8 +22,8 @@ describe('FsmService — extra coverage', () => {
           idle: {
             on: {
               CHECK: [
-                {target: 'high', guard: ({context}) => context.value > 100},
-                {target: 'medium', guard: ({context}) => context.value > 5},
+                {target: 'high', guard: (_, context) => context.value > 100},
+                {target: 'medium', guard: (_, context) => context.value > 5},
                 {target: 'low'},
               ],
             },
@@ -50,8 +50,8 @@ describe('FsmService — extra coverage', () => {
           idle: {
             on: {
               CHECK: [
-                {target: 'high', guard: ({context}) => context.value > 100},
-                {target: 'medium', guard: ({context}) => context.value > 50},
+                {target: 'high', guard: (_, context) => context.value > 100},
+                {target: 'medium', guard: (_, context) => context.value > 50},
                 {target: 'low'}, // unconditional fallback
               ],
             },
@@ -134,7 +134,7 @@ describe('FsmService — extra coverage', () => {
             on: {
               NOOP: {
                 target: 'done',
-                assigners: () => {
+                assigner: () => {
                   // intentionally returns void
                 },
               },
@@ -165,7 +165,7 @@ describe('FsmService — extra coverage', () => {
           idle: {
             on: {
               ADD: {
-                assigners: ({context, event}) => ({...context, amount: event.value}),
+                assigner: (event, context) => ({...context, amount: event.value}),
               },
             },
           },
@@ -180,14 +180,12 @@ describe('FsmService — extra coverage', () => {
     });
   });
 
-
-
   // ── FSM Actors (Invoked Actors) ───────────────────────────────────────────
 
   describe('FSM Actors', () => {
     it('should spawn actors on startup and support dispatch', async () => {
       const actorCleanup = jest.fn();
-      const actorMock = jest.fn(({dispatch}) => {
+      const actorMock = jest.fn((_, dispatch) => {
         // Asynchronously dispatch back
         setTimeout(() => dispatch({type: 'RESOLVE'}), 10);
         return actorCleanup;
@@ -199,7 +197,7 @@ describe('FsmService — extra coverage', () => {
         context: {},
         states: {
           idle: {
-            actors: actorMock,
+            actor: actorMock,
             on: {
               RESOLVE: {target: 'success'},
             },
@@ -230,7 +228,7 @@ describe('FsmService — extra coverage', () => {
         context: {},
         states: {
           idle: {
-            actors: () => actorCleanup,
+            actor: () => actorCleanup,
           },
         },
       });
@@ -253,13 +251,13 @@ describe('FsmService — extra coverage', () => {
         context: {},
         states: {
           idle: {
-            actors: () => idleCleanup,
+            actor: () => idleCleanup,
             on: {
               GO: {target: 'active'},
             },
           },
           active: {
-            actors: activeActor,
+            actor: activeActor,
           },
         },
       });
@@ -289,7 +287,7 @@ describe('FsmService — extra coverage', () => {
         context: {},
         states: {
           active: {
-            actors: activeActor,
+            actor: activeActor,
             on: {
               SELF: {target: 'active'},
             },
@@ -313,4 +311,3 @@ describe('FsmService — extra coverage', () => {
     });
   });
 });
-
