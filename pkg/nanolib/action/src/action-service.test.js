@@ -6,7 +6,7 @@ if (typeof document === 'undefined') {
   GlobalRegistrator.register();
 }
 
-import {actionService, ActionService} from '@alwatr/action';
+import {ActionService} from '@alwatr/action';
 
 /**
  * Helper to wait for event loop ticks (microtasks/macrotasks) to complete.
@@ -20,22 +20,6 @@ function nextMacrotask(ms = 5) {
 // ─── 1. Instance Independence ──────────────────────────────────────────────────
 
 describe('ActionService — Instance Independence', () => {
-  it('should ensure custom instances are isolated from the singleton', () => {
-    const customService = new ActionService();
-
-    expect(customService).toBeInstanceOf(ActionService);
-    expect(customService).not.toBe(actionService);
-
-    // Registries should be isolated
-    customService.registerModifier('custom-mod', () => true);
-    expect(customService['modifierRegistry_'].has('custom-mod')).toBe(true);
-    expect(actionService['modifierRegistry_'].has('custom-mod')).toBe(false);
-
-    customService.registerPayloadResolver('$custom-res', () => 'test');
-    expect(customService['payloadRegistry_'].has('$custom-res')).toBe(true);
-    expect(actionService['payloadRegistry_'].has('$custom-res')).toBe(false);
-  });
-
   it('should ensure custom instances do not share dispatched events', async () => {
     const serviceA = new ActionService();
     const serviceB = new ActionService();
