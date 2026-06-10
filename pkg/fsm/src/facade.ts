@@ -118,16 +118,17 @@ export function createFsmHelpers<
     defineGuard: (guard: Guard<TEvent, TContext>): Guard<TEvent, TContext> => guard,
     defineGuards: <T extends Record<string, Guard<TEvent, TContext>>>(guards: T): T => guards,
 
-    not: (guard: Guard<TEvent, TContext>): Guard<TEvent, TContext> => {
-      return (event, context) => !guard(event, context);
-    },
-
-    and: (...guards: Guard<TEvent, TContext>[]): Guard<TEvent, TContext> => {
-      return (event, context) => guards.every((guard) => guard(event, context));
-    },
-
-    or: (...guards: Guard<TEvent, TContext>[]): Guard<TEvent, TContext> => {
-      return (event, context) => guards.some((guard) => guard(event, context));
-    },
+    not:
+      (guard: Guard<TEvent, TContext>): Guard<TEvent, TContext> =>
+      (event, context) =>
+        !guard(event, context),
+    and:
+      (...guards: Guard<TEvent, TContext>[]): Guard<TEvent, TContext> =>
+      (event, context) =>
+        guards.every((guard) => guard(event, context)),
+    or:
+      (...guards: Guard<TEvent, TContext>[]): Guard<TEvent, TContext> =>
+      (event, context) =>
+        guards.some((guard) => guard(event, context)),
   } as const;
 }
