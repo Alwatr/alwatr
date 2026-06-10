@@ -82,13 +82,11 @@ export class FsmService<
         }));
 
     this.stateSignal = this.stateSignal__.asReadonly();
-    this.eventSignal__ = createEventSignal<TEvent>({
-      name: `fsm-event-${this.config_.name}`,
-    });
-    this.eventSignal__.subscribe((event) => this.processTransition__(event), {receivePrevious: false});
 
-    // Execute initial state entry effects and actors.
-    this.start_();
+    // Execute initial/rehydrated state entry effects and spawn its actors.
+    queueMicrotask(() => this.start_());
+  }
+
   }
 
   /**
