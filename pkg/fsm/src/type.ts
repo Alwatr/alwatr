@@ -62,10 +62,10 @@ export type Effect<TEvent extends MachineEvent, TContext extends Record<string, 
  * @template TEvent The type of the event.
  * @returns `true` if the transition should be taken, `false` otherwise.
  */
-export type Guard<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (params: {
-  readonly event: Readonly<TEvent>;
-  readonly context: Readonly<TContext>;
-}) => boolean;
+export type Guard<TEvent extends MachineEvent, TContext extends Record<string, unknown>> = (
+  event: Readonly<TEvent>,
+  context: Readonly<TContext>,
+) => boolean;
 
 /**
  * Defines an actor (asynchronous lifecycle process) invoked on state entry.
