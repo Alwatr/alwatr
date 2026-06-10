@@ -35,6 +35,9 @@ export class FsmService<
   public readonly stateSignal: IReadonlySignal<MachineState<TState, TContext>>;
 
 
+  /** Set once by `destroy()`. All dispatches after destruction are ignored (and logged). */
+  private destroyed__ = false;
+
   /**
    * Cleanup callbacks for currently active state actors, in spawn order.
    * Executed in REVERSE (LIFO) order on state exit — standard resource semantics
@@ -87,6 +90,10 @@ export class FsmService<
    * @param event The event to process.
    */
   public readonly dispatch = (event: TEvent): void => {
+    if (this.destroyed__) {
+      this.logger_.incident?.('dispatch', 'dispatch_after_destroy', {event});
+      return;
+    }
     this.logger_.logMethodArgs?.('dispatch', {event});
     this.eventSignal__.dispatch(event);
   };
@@ -286,12 +293,12 @@ export class FsmService<
    * of the initial/current state.
    */
   protected start_(): void {
-    if (this.eventSignal__.isDestroyed) return;
+    if (this.destroyed__) return;
     this.logger_.logMethod?.('start_');
     const currentState = this.stateSignal__.get();
     const initEvent = {type: '__init__'} as unknown as TEvent;
     this.executeEffects__(initEvent, currentState.context, this.config_.states[currentState.name]?.entry);
-    this.spawnActors__(initEvent, currentState.context, this.config_.states[currentState.name]?.actors);
+    this.spawnActors__(initEvent, currentState.context, this.config_.states[currentState.name]?.actor);
   }
 
   /**
@@ -349,7 +356,7 @@ export class FsmService<
    * Destroys the service, cleaning up all internal signals and subscriptions
    * to prevent memory leaks.
    */
-  public destroy(): void {
+    if (this.destroyed__) return;
     this.logger_.logMethod?.('destroy');
     this.cleanupActors__();
     this.eventSignal__.destroy();
