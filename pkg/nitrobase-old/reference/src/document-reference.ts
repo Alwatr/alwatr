@@ -6,7 +6,7 @@ import {StoreFileType, StoreFileExtension, type StoreFileId, type DocumentContex
 import {logger} from './logger.js';
 import type { JsonObject, DictionaryOpt } from '@alwatr/type-helper';
 
-__dev_mode__: logger.logFileModule?.('document-reference');
+DEV_MODE && logger.logFileModule?.('document-reference');
 
 /**
  * Represents a reference to a document of the AlwatrNitrobase.

@@ -7,7 +7,7 @@ import {directiveInstanceRegistry_, logger} from './lib.js';
  * It checks each directive instance in the registry and calls its `autoDestroy` method.
  */
 export function autoDestructDirectives(): void {
-  logger.logMethod?.('autoDestructDirectives');
+  DEV_MODE && logger.logMethod?.('autoDestructDirectives');
   for (const directiveInstance of directiveInstanceRegistry_) {
     if (directiveInstance.autoDestroy()) {
       directiveInstanceRegistry_.delete(directiveInstance);

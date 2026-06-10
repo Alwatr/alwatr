@@ -50,7 +50,7 @@ export function readJson<T extends JsonValue>(path: string, sync: boolean): Awai
  * ```
  */
 export function readJson<T extends JsonValue>(path: string, sync = false): Awaitable<T> {
-  logger.logMethodArgs?.('readJson', {path: path.slice(-32), sync});
+  DEV_MODE && logger.logMethodArgs?.('readJson', {path: path.slice(-32), sync});
   if (sync === true) {
     return parseJson<T>(readFileSync(path));
   } else {

@@ -46,7 +46,7 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint src/ --ext .ts",
     "t": "bun run test",
-    "test": "ALWATR_DEBUG=0 bun test",
+    "test": "bun test",
     "w": "bun run watch",
     "watch": "bun run watch:ts & bun run watch:es",
     "watch:es": "bun run build:es:dev --watch",

@@ -178,7 +178,7 @@ describe('page-ready', () => {
       Object.defineProperty(globalThis, 'document', {
         value: undefined,
         writable: true,
-        configurable: true
+        configurable: true,
       });
 
       try {
@@ -187,7 +187,7 @@ describe('page-ready', () => {
         Object.defineProperty(globalThis, 'document', {
           value: origDocument,
           writable: true,
-          configurable: true
+          configurable: true,
         });
       }
     });

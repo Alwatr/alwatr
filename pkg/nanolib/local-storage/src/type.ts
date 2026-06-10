@@ -1,4 +1,3 @@
-
 /**
  * Configuration options for a local storage provider.
  */

@@ -33,8 +33,7 @@ export function nanoHash(str: string | number, prefix: string, repeat = 1): stri
   const result = prefix + (hash1 >>> 0).toString(36) + (hash2 >>> 0).toString(36);
   if (repeat === 1) {
     return result;
-  }
-  else {
+  } else {
     return nanoHash(result, prefix, repeat - 1);
   }
 }

@@ -15,7 +15,7 @@ import {logger} from './common.js';
  * ```
  */
 export async function makeEmptyFile(path: string): Promise<void> {
-  logger.logMethodArgs?.('makeEmptyFile', '...' + path.slice(-32));
+  DEV_MODE && logger.logMethodArgs?.('makeEmptyFile', '...' + path.slice(-32));
   try {
     const pathExists = existsSync(path);
     if (!pathExists) {
@@ -25,8 +25,7 @@ export async function makeEmptyFile(path: string): Promise<void> {
       }
     }
     await (await open(path, 'w')).close();
-  }
-  catch (err) {
+  } catch (err) {
     logger.error('makeEmptyFile', 'make_file_failed', {path}, err);
     throw new Error('make_file_failed', {cause: (err as Error).cause});
   }

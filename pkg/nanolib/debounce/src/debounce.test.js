@@ -1,5 +1,5 @@
-import { describe, beforeEach, afterEach, it, expect, jest } from 'bun:test';
-import { createDebouncer } from '@alwatr/debounce';
+import {describe, beforeEach, afterEach, it, expect, jest} from 'bun:test';
+import {createDebouncer} from '@alwatr/debounce';
 
 describe('Debouncer', () => {
   const fakeTimePassage = async (ms = 0) => {
@@ -61,7 +61,7 @@ describe('Debouncer', () => {
       await fakeTimePassage(310);
       expect(mockFunc).toHaveBeenCalled();
       expect(mockFunc).toHaveBeenCalledWith('test');
-    })
+    });
 
     it('should keep the this context for cancel', async () => {
       debouncer.trigger('test');
@@ -218,7 +218,7 @@ describe('Debouncer', () => {
     let context;
 
     beforeEach(() => {
-      context = { value: 'test' };
+      context = {value: 'test'};
       mockFunc = jest.fn(function () {
         this.value = 'changed';
       });

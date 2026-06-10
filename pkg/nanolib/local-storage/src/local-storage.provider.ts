@@ -31,7 +31,7 @@ export class LocalStorageProvider<T> {
 
   constructor(config: LocalStorageProviderConfig<T>) {
     this.logger_ = createLogger(`local-storage-provider: ${config.name}, v: ${config.schemaVersion}`);
-    this.logger_.logMethodArgs?.('constructor', {config});
+    DEV_MODE && this.logger_.logMethodArgs?.('constructor', {config});
     this.key__ = LocalStorageProvider.getKey(config);
     LocalStorageProvider.clearPreviousStorageVersions(config);
 
@@ -110,13 +110,13 @@ export class LocalStorageProvider<T> {
     }
 
     if (!value) {
-      this.logger_.logMethod?.('read//no_value');
+      DEV_MODE && this.logger_.logMethod?.('read//no_value');
       return null;
     }
 
     try {
       const parsedValue = this.parse_(value);
-      this.logger_.logMethodFull?.('read//value', undefined, {parsedValue});
+      DEV_MODE && this.logger_.logMethodFull?.('read//value', undefined, {parsedValue});
       return parsedValue;
     } catch (err) {
       this.logger_.error('read', 'read_parse_error', {err});
@@ -128,7 +128,7 @@ export class LocalStorageProvider<T> {
    * Serializes and writes a value to localStorage.
    */
   public write(value: T): void {
-    this.logger_.logMethodArgs?.('write', {value});
+    DEV_MODE && this.logger_.logMethodArgs?.('write', {value});
     let valueStr: string;
     try {
       valueStr = this.stringify_(value);

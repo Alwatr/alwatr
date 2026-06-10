@@ -46,7 +46,7 @@ export class EventSignal<T = void> extends SignalBase<T> implements IBaseSignal<
   constructor(config: SignalConfig) {
     super(config);
     this.logger_ = createLogger(`event_signal:${this.name}`);
-    this.logger_.logMethod?.('constructor');
+    DEV_MODE && this.logger_.logMethod?.('constructor');
   }
 
   /**
@@ -58,7 +58,7 @@ export class EventSignal<T = void> extends SignalBase<T> implements IBaseSignal<
    * @param payload The data payload to send with the event.
    */
   public dispatch(payload: T): void {
-    this.logger_.logMethodArgs?.('dispatch', {payload});
+    DEV_MODE && this.logger_.logMethodArgs?.('dispatch', {payload});
     this.checkDestroyed_();
     // Dispatch as a microtask to ensure consistent, non-blocking behavior.
     queueMicrotask(() => this.notify_(payload));

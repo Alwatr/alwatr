@@ -3,6 +3,6 @@
 // They are NOT runtime globals — never access via globalThis.
 // In unbundled contexts (tests, tsc), these resolve to their injected literal values.
 
-declare const __dev_mode__: boolean;
+declare const DEV_MODE: boolean;
 declare const __package_name__: string;
 declare const __package_version__: string;

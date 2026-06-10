@@ -11,7 +11,6 @@
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
-    
     "@alwatr/tsconfig-base": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
     "typescript": "^6.0.2"
@@ -38,7 +37,6 @@
   "license": "MPL-2.0",
   "main": "./dist/main.cjs",
   "module": "./dist/main.mjs",
-  
   "publishConfig": {
     "access": "public"
   },
@@ -57,7 +55,7 @@
     "clean": "rm -rfv dist *.tsbuildinfo",
     "d": "bun run build:es && bun run --enable-source-maps --trace-warnings",
     "t": "bun run test",
-    "test": "ALWATR_DEBUG=0 bun test",
+    "test": "bun test",
     "w": "bun run watch",
     "watch": "bun run watch:ts & bun run watch:es",
     "watch:es": "bun run build:es --watch",

@@ -1,4 +1,3 @@
-
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'OPTIONS' | 'HEAD' | 'CONNECT' | 'TRACE';
 
 /**
@@ -15,12 +14,12 @@ export type HttpResponseHeaders = {
   /**
    * Specifies the time in seconds the object has been in a proxy cache.
    */
-  age?: string;
+  'age'?: string;
 
   /**
    * Lists the set of HTTP methods supported by the resource identified by the Request-URI.
    */
-  allow?: string;
+  'allow'?: string;
 
   /**
    * Specifies caching directives for both requests and responses.
@@ -30,7 +29,7 @@ export type HttpResponseHeaders = {
   /**
    * Controls whether the network connection stays open after the current transaction.
    */
-  connection?: string;
+  'connection'?: string;
 
   /**
    * Suggests a filename for the downloaded resource or how the content should be displayed.
@@ -70,17 +69,17 @@ export type HttpResponseHeaders = {
   /**
    * Indicates the date and time at which the message was originated.
    */
-  date?: string;
+  'date'?: string;
 
   /**
    * Provides the current value of the entity tag for the requested variant.
    */
-  etag?: string;
+  'etag'?: string;
 
   /**
    * Gives the date/time after which the response is considered stale.
    */
-  expires?: string;
+  'expires'?: string;
 
   /**
    * Indicates the date and time at which the origin server believes the variant was last modified.
@@ -90,17 +89,17 @@ export type HttpResponseHeaders = {
   /**
    * Provides a list of URIs associated with the resource.
    */
-  link?: string;
+  'link'?: string;
 
   /**
    * Used in redirection, or when a new resource has been created.
    */
-  location?: string;
+  'location'?: string;
 
   /**
    * Used for backward compatibility with HTTP/1.0 caches.
    */
-  pragma?: string;
+  'pragma'?: string;
 
   /**
    * Requests authentication information from the client for a proxy server.
@@ -115,7 +114,7 @@ export type HttpResponseHeaders = {
   /**
    * Contains information about the software used by the origin server to handle the request.
    */
-  server?: string;
+  'server'?: string;
 
   /**
    * Used to send cookies from the server to the user agent.
@@ -130,7 +129,7 @@ export type HttpResponseHeaders = {
   /**
    * Allows the sender to include additional fields at the end of chunked messages.
    */
-  trailer?: string;
+  'trailer'?: string;
 
   /**
    * Specifies the form of encoding used to safely transfer the entity to the user.
@@ -141,17 +140,17 @@ export type HttpResponseHeaders = {
    * Determines how to match future request headers to decide whether a cached response
    * can be used rather than requesting a fresh one from the origin server.
    */
-  vary?: string;
+  'vary'?: string;
 
   /**
    * Lists all intermediate proxies the message has traversed
    */
-  via?: string;
+  'via'?: string;
 
   /**
    * Contains additional information about the status or transformation of a message that might not be reflected in the status code.
    */
-  warning?: string;
+  'warning'?: string;
 
   /**
    * Indicates the authentication scheme that should be used to access the requested entity.
@@ -170,7 +169,7 @@ export type HttpRequestHeaders = {
    *
    * Example: `accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*\/*;q=0.8'`
    */
-  accept?: string;
+  'accept'?: string;
 
   /**
    * Character sets that are acceptable.
@@ -198,7 +197,7 @@ export type HttpRequestHeaders = {
    *
    * Example: `authorization: 'Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ=='`
    */
-  authorization?: string;
+  'authorization'?: string;
 
   /**
    * Used to specify directives that MUST be obeyed by all caching mechanisms along the request/response chain.
@@ -254,21 +253,21 @@ export type HttpRequestHeaders = {
    *
    * Example: `cookie: 'sessionid=38afes7a8'`
    */
-  cookie?: string;
+  'cookie'?: string;
 
   /**
    * The date and time that the message was originated (in "HTTP-date" format as defined by RFC 7231).
    *
    * Example: `date: 'Sun, 06 Nov 1994 08:49:37 GMT'`
    */
-  date?: string;
+  'date'?: string;
 
   /**
    * The email address of the user making the request.
    *
    * Example: `from: 'user@example.com'`
    */
-  from?: string;
+  'from'?: string;
 
   /**
    * The domain name of the server (for virtual hosting), and the TCP port number on which the server is listening.
@@ -276,7 +275,7 @@ export type HttpRequestHeaders = {
    *
    * Example: `host: 'en.wikipedia.org:8080'`
    */
-  host?: string;
+  'host'?: string;
 
   /**
    * Only send the response if the entity has not been modified since a specific time.
@@ -318,7 +317,7 @@ export type HttpRequestHeaders = {
    *
    * Example: `pragma: 'no-cache'`
    */
-  pragma?: string;
+  'pragma'?: string;
 
   /**
    * Authorization credentials for connecting to a proxy.
@@ -332,7 +331,7 @@ export type HttpRequestHeaders = {
    *
    * Example: `range: 'bytes=500-999'`
    */
-  range?: string;
+  'range'?: string;
 
   /**
    * This is the address of the previous web page from which a link to the currently requested page was followed.
@@ -340,7 +339,7 @@ export type HttpRequestHeaders = {
    *
    * Example: `referer: 'https://en.wikipedia.org/wiki/Main_Page'`
    */
-  referer?: string;
+  'referer'?: string;
 
   /**
    * The user agent string of the user agent.
@@ -354,21 +353,21 @@ export type HttpRequestHeaders = {
    *
    * Example: `upgrade: 'h2c, HTTPS/1.3, IRC/6.9, RTA/x11, websocket'`
    */
-  upgrade?: string;
+  'upgrade'?: string;
 
   /**
    * Informs the server of proxies through which the request was sent.
    *
    * Example: `via: '1.0 fred, 1.1 example.com (Apache/1.1)'`
    */
-  via?: string;
+  'via'?: string;
 
   /**
    * A general warning about possible problems with the entity body.
    *
    * Example: `warning: '199 Miscellaneous warning'`
    */
-  warning?: string;
+  'warning'?: string;
 
   /**
    * Tells all caching mechanisms from server to client whether they may cache this object.
@@ -376,14 +375,14 @@ export type HttpRequestHeaders = {
    *
    * Example: `age: '12'`
    */
-  age?: string;
+  'age'?: string;
 
   /**
    * Appends " trailers " to the list of acceptable transfer encodings in the `TE` header.
    *
    * Example: `allow: 'GET, HEAD'`
    */
-  allow?: string;
+  'allow'?: string;
 
   /**
    *  What partial content range types this server supports via the `Range` header.
@@ -421,7 +420,7 @@ export type HttpRequestHeaders = {
    *
    * Example: `connection: 'keep-alive'`
    */
-  connection?: string;
+  'connection'?: string;
 
   /**
    *  The MIME type of the body of the request (used with POST and PUT requests)
@@ -481,7 +480,7 @@ export type HttpRequestHeaders = {
    *
    * Example: `dnt: '1'`
    */
-  dnt?: string;
+  'dnt'?: string;
 
   /**
    *  The `Expect` HTTP header indicates expectations that need to be fulfilled by the server in order to properly
@@ -489,14 +488,14 @@ export type HttpRequestHeaders = {
    *
    * Example: `downlink: '10'`
    */
-  downlink?: string;
+  'downlink'?: string;
 
   /**
    *  Specifies the effective connection type the user agent has to the network.
    *
    * Example: `ect: '4g'`
    */
-  ect?: string;
+  'ect'?: string;
 
   /**
    *  The `Early-Data` header indicates a request that includes an Early Data body
@@ -519,7 +518,7 @@ export type HttpRequestHeaders = {
    *
    * Example: `expect-ct: 'max-age=86400, report-uri="https://report-uri.example.com/report"'`
    */
-  forwarded?: string;
+  'forwarded'?: string;
 
   /**
    *  The `Keep-Alive` general header allows the sender to hint about how the connection may be used to
@@ -548,14 +547,14 @@ export type HttpRequestHeaders = {
    *
    * Example: `link: '</feed.xml>; rel="alternate"'`
    */
-  link?: string;
+  'link'?: string;
 
   /**
    *  Used with the Location response header to indicate the identifier of the payload body sent in the request
    *
    * Example: `location: '/new/document'`
    */
-  origin?: string;
+  'origin'?: string;
 
   /**
    *  The `Ping-From` header specifies a URI where a pong response may be sent.
@@ -587,7 +586,7 @@ export type HttpRequestHeaders = {
    *
    * Example: `purpose: 'prefetch'`
    */
-  purpose?: string;
+  'purpose'?: string;
 
   /**
    *  Used to indicate the part of a document to return.
@@ -736,7 +735,7 @@ export type HttpRequestHeaders = {
    *
    * Example: `server: 'Apache/2.4.1 (Unix)'`
    */
-  server?: string;
+  'server'?: string;
 
   /**
    * The `Service-Worker-Navigation-Preload` header is used to control the behavior of
@@ -753,7 +752,7 @@ export type HttpRequestHeaders = {
    *
    * Example: `sourcemap: '/path/to/file.js.map'`
    */
-  sourcemap?: string;
+  'sourcemap'?: string;
 
   /**
    * The `Strict-Transport-Security` (HSTS) response header informs browsers that a website
@@ -770,7 +769,7 @@ export type HttpRequestHeaders = {
    *
    * Example: `te: 'trailers, deflate'`
    */
-  te?: string;
+  'te'?: string;
 
   /**
    * The `Timing-Allow-Origin` response header specifies origins that are allowed to see values of attributes
@@ -786,7 +785,7 @@ export type HttpRequestHeaders = {
    *
    * Example: `trailer: 'Expires'`
    */
-  trailer?: string;
+  'trailer'?: string;
 
   /**
    * The `Transfer-Encoding` header field lists the transfer encodings applied to the message body

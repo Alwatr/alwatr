@@ -198,13 +198,13 @@ inference — TypeScript derives `T` from the return type of `initializer` autom
 
 ## Design Decisions
 
-| Decision                                             | Rationale                                                                                                                                                                                             |
-| ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `delete this.initializer__` instead of `= undefined` | Removes the property from the V8 hidden class, giving a stronger GC hint than a simple `undefined` assignment.                                                                                        |
-| `instance__` uses `undefined` as sentinel (not `null`) | Allows `T` to be `null` without ambiguity — `lazy(() => null).instance` correctly returns `null`.                                                                                                     |
-| No `reset()` method                                  | Lazy values are intended to be permanent singletons. A reset would reintroduce the initializer, complicating the GC story and the state machine. If you need resettable state, use `@alwatr/signal`.  |
-| No async support                                     | Async initialization belongs in `@alwatr/flatomise` (deferred promises) or `@alwatr/signal` (reactive state). Mixing `Promise` into `Lazy` would complicate the synchronous `.instance` getter contract. |
-| `sideEffects: false`                                 | The package has no module-level side effects, enabling full tree-shaking.                                                                                                                             |
+| Decision                                               | Rationale                                                                                                                                                                                                |
+| ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `delete this.initializer__` instead of `= undefined`   | Removes the property from the V8 hidden class, giving a stronger GC hint than a simple `undefined` assignment.                                                                                           |
+| `instance__` uses `undefined` as sentinel (not `null`) | Allows `T` to be `null` without ambiguity — `lazy(() => null).instance` correctly returns `null`.                                                                                                        |
+| No `reset()` method                                    | Lazy values are intended to be permanent singletons. A reset would reintroduce the initializer, complicating the GC story and the state machine. If you need resettable state, use `@alwatr/signal`.     |
+| No async support                                       | Async initialization belongs in `@alwatr/flatomise` (deferred promises) or `@alwatr/signal` (reactive state). Mixing `Promise` into `Lazy` would complicate the synchronous `.instance` getter contract. |
+| `sideEffects: false`                                   | The package has no module-level side effects, enabling full tree-shaking.                                                                                                                                |
 
 ---
 

@@ -51,8 +51,7 @@ export const parseDuration = (duration: Duration, toUnit?: DurationUnit): number
   // Convert input to milliseconds
   if (typeof duration === 'number') {
     ms = duration;
-  }
-  else {
+  } else {
     if (duration.length < 2) {
       throw new Error('invalid_format', {cause: {duration}});
     }

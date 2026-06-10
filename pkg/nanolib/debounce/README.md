@@ -100,13 +100,13 @@ A factory function that creates a new `Debouncer` instance. It's the recommended
 
 This is the configuration object passed to `createDebouncer` or the `Debouncer` constructor.
 
-| Property      | Type                    | Description                                                          | Default     |
-| :------------ | :---------------------- | :------------------------------------------------------------------- | :---------- |
-| `func`        | `F extends AnyFunction` | **(Required)** The function to be debounced.                         | -           |
-| `delay`       | `number`                | **(Required)** The debounce delay in milliseconds.                   | -           |
+| Property      | Type                    | Description                                                            | Default     |
+| :------------ | :---------------------- | :--------------------------------------------------------------------- | :---------- |
+| `func`        | `F extends AnyFunction` | **(Required)** The function to be debounced.                           | -           |
+| `delay`       | `number`                | **(Required)** The debounce delay in milliseconds.                     | -           |
 | `thisContext` | `ThisParameterType<F>`  | The `this` context for the `func`. Essential when using class methods. | `undefined` |
-| `leading`     | `boolean`               | If `true`, executes the function on the leading edge.                | `false`     |
-| `trailing`    | `boolean`               | If `true`, executes the function on the trailing edge.               | `true`      |
+| `leading`     | `boolean`               | If `true`, executes the function on the leading edge.                  | `false`     |
+| `trailing`    | `boolean`               | If `true`, executes the function on the trailing edge.                 | `true`      |
 
 ### `Debouncer` Instance
 
@@ -340,7 +340,7 @@ debouncer.trigger('علی');
 | :------------ | :---------------------- | :-------------------------------------------------------------------- | :---------- |
 | `func`        | `F extends AnyFunction` | **(الزامی)** تابعی که باید دیبانس شود.                                | -           |
 | `delay`       | `number`                | **(الزامی)** تأخیر دیبانس بر حسب میلی‌ثانیه.                          | -           |
-| `thisContext` | `ThisParameterType<F>`  | کانتکست `this` برای `func`. هنگام استفاده از متدهای کلاس ضروری است.     | `undefined` |
+| `thisContext` | `ThisParameterType<F>`  | کانتکست `this` برای `func`. هنگام استفاده از متدهای کلاس ضروری است.   | `undefined` |
 | `leading`     | `boolean`               | اگر `true` باشد، تابع در لبه بالارونده (leading edge) اجرا می‌شود.    | `false`     |
 | `trailing`    | `boolean`               | اگر `true` باشد، تابع در لبه پایین‌رونده (trailing edge) اجرا می‌شود. | `true`      |
 

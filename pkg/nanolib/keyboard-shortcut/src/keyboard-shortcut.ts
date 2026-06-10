@@ -61,7 +61,7 @@ export class KeyboardShortcutService {
   private hasRegistered__ = false;
 
   constructor() {
-    this.logger_.logMethod?.('constructor');
+    DEV_MODE && this.logger_.logMethod?.('constructor');
     this.handleKeyDown__ = this.handleKeyDown__.bind(this);
   }
 
@@ -75,10 +75,10 @@ export class KeyboardShortcutService {
    * ```
    */
   setup(): void {
-    this.logger_.logMethod?.('setup');
+    DEV_MODE && this.logger_.logMethod?.('setup');
     if (this.hasRegistered__) return;
     if (typeof document === 'undefined') {
-      this.logger_.incident?.('setup', 'document_not_found');
+      DEV_MODE && this.logger_.incident?.('setup', 'document_not_found');
       return;
     }
     this.hasRegistered__ = true;
@@ -94,7 +94,7 @@ export class KeyboardShortcutService {
    * ```
    */
   teardown(): void {
-    this.logger_.logMethod?.('teardown');
+    DEV_MODE && this.logger_.logMethod?.('teardown');
     if (!this.hasRegistered__) return;
     if (typeof document === 'undefined') return;
     this.hasRegistered__ = false;
@@ -116,7 +116,7 @@ export class KeyboardShortcutService {
 
     const combo = this.buildCombo__(event);
 
-    this.logger_.logMethodArgs?.('keyboard_handler', {combo});
+    DEV_MODE && this.logger_.logMethodArgs?.('keyboard_handler', {combo});
 
     actionService.dispatch({type: `key_${combo}`});
   }

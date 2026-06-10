@@ -99,7 +99,7 @@ export class SessionStateSignal<T> extends StateSignal<T> {
    */
   private readonly windowPageShowListener__ = (event: PageTransitionEvent): void => {
     if (event.persisted) {
-      this.logger_.logMethod?.('windowPageShowListener__//restored_from_bfcache');
+      DEV_MODE && this.logger_.logMethod?.('windowPageShowListener__//restored_from_bfcache');
       const value = this.storageProvider__.read();
       if (value !== null) {
         this.set(value);
@@ -129,7 +129,7 @@ export class SessionStateSignal<T> extends StateSignal<T> {
       onDestroy,
     });
 
-    this.logger_.logMethodArgs?.('constructor', config);
+    DEV_MODE && this.logger_.logMethodArgs?.('constructor', config);
 
     this.storageProvider__ = storageProvider;
 
@@ -157,7 +157,7 @@ export class SessionStateSignal<T> extends StateSignal<T> {
    * @private
    */
   private syncStorage__(newValue: T): void {
-    this.logger_.logMethodArgs?.('syncStorage__', newValue);
+    DEV_MODE && this.logger_.logMethodArgs?.('syncStorage__', newValue);
     this.storageProvider__.write(newValue);
   }
 
@@ -175,7 +175,7 @@ export class SessionStateSignal<T> extends StateSignal<T> {
    */
   public remove(): void {
     this.checkDestroyed_();
-    this.logger_.logMethod?.('remove');
+    DEV_MODE && this.logger_.logMethod?.('remove');
     this.storageProvider__.remove();
   }
 
@@ -192,7 +192,7 @@ export class SessionStateSignal<T> extends StateSignal<T> {
    * ```
    */
   public override destroy(): void {
-    this.logger_.logMethod?.('destroy');
+    DEV_MODE && this.logger_.logMethod?.('destroy');
     if (typeof globalThis.removeEventListener === 'function') {
       globalThis.removeEventListener('pagehide', this.windowPageHideListener__);
       globalThis.removeEventListener('pageshow', this.windowPageShowListener__);

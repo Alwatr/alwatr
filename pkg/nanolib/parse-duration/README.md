@@ -27,17 +27,17 @@ pnpm add @alwatr/parse-duration
 import {parseDuration} from '@alwatr/parse-duration';
 
 // Basic usage - parse to milliseconds
-parseDuration('10s');    // 10,000 (10 seconds in milliseconds)
-parseDuration('5m');     // 300,000 (5 minutes in milliseconds)
-parseDuration('2h');     // 7,200,000 (2 hours in milliseconds)
-parseDuration('1.5d');   // 129,600,000 (1.5 days in milliseconds)
+parseDuration('10s'); // 10,000 (10 seconds in milliseconds)
+parseDuration('5m'); // 300,000 (5 minutes in milliseconds)
+parseDuration('2h'); // 7,200,000 (2 hours in milliseconds)
+parseDuration('1.5d'); // 129,600,000 (1.5 days in milliseconds)
 
 // Accept milliseconds as input
-parseDuration(5000);     // 5,000 (pass through)
+parseDuration(5000); // 5,000 (pass through)
 
 // Convert to different units
-parseDuration('10d', 'h');  // 240 (10 days in hours)
-parseDuration('1h', 'm');   // 60 (1 hour in minutes)
+parseDuration('10d', 'h'); // 240 (10 days in hours)
+parseDuration('1h', 'm'); // 60 (1 hour in minutes)
 parseDuration('120s', 'm'); // 2 (120 seconds in minutes)
 parseDuration(3600000, 'h'); // 1 (3600000 milliseconds in hours)
 ```

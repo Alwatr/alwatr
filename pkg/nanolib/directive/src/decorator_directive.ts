@@ -20,7 +20,7 @@ import type {DirectiveConstructor} from './type.js';
  * ```
  */
 export function directive(name: string) {
-  logger.logMethodArgs?.('@directive', name);
+  DEV_MODE && logger.logMethodArgs?.('@directive', name);
 
   /**
    * The decorator function that receives the class constructor.

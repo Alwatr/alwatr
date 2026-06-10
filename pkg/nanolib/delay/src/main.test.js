@@ -129,11 +129,11 @@ describe('delay', () => {
     it('should process consecutive synchronous calls in FIFO order without dropping any', async () => {
       /** @type {number[]} */
       const executionOrder = [];
-      
+
       queueMacrotask(() => executionOrder.push(1));
       queueMacrotask(() => executionOrder.push(2));
       queueMacrotask(() => executionOrder.push(3));
-      
+
       expect(executionOrder).toEqual([]);
       await delay.nextMacrotask();
       // Since all three are scheduled, they should all execute before the next tick resolves

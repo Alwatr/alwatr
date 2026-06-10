@@ -58,7 +58,7 @@ export type * from './type.js';
  * ```
  */
 export async function fetch(url: string, options: FetchOptions = {}): Promise<FetchResponse> {
-  logger_.logMethodArgs?.('fetch', {url, options});
+  DEV_MODE && logger_.logMethodArgs?.('fetch', {url, options});
 
   const options_ = _processOptions(url, options);
 
@@ -152,7 +152,7 @@ export async function fetchJson<T extends JsonObject = JsonObject>(
   url: string,
   options: FetchJsonOptions = {},
 ): Promise<[T, null] | [null, FetchError]> {
-  logger_.logMethodArgs?.('fetchJson', {url, options});
+  DEV_MODE && logger_.logMethodArgs?.('fetchJson', {url, options});
 
   const [response, error] = await fetch(url, options);
 

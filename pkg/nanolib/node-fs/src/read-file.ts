@@ -16,12 +16,11 @@ import {asyncQueue, logger} from './common.js';
  * ```
  */
 export function readFileSync(path: string): string {
-  logger.logMethodArgs?.('readFileSync', '...' + path.slice(-32));
+  DEV_MODE && logger.logMethodArgs?.('readFileSync', '...' + path.slice(-32));
   // if (!existsSync(path)) throw new Error('file_not_found');
   try {
     return flatString(readFileSync_(path, {encoding: 'utf-8', flag: 'r'}));
-  }
-  catch (err) {
+  } catch (err) {
     logger.error('readFileSync', 'read_file_failed', {path}, err);
     throw new Error('read_file_failed', {cause: (err as Error).cause});
   }
@@ -40,13 +39,12 @@ export function readFileSync(path: string): string {
  * ```
  */
 export function readFile(path: string): Promise<string> {
-  logger.logMethodArgs?.('readFile', '...' + path.slice(-32));
+  DEV_MODE && logger.logMethodArgs?.('readFile', '...' + path.slice(-32));
   // if (!existsSync(path)) throw new Error('file_not_found');
   return asyncQueue.push(path, async () => {
     try {
       return flatString(await readFile_(path, {encoding: 'utf-8', flag: 'r'}));
-    }
-    catch (err) {
+    } catch (err) {
       logger.error('readFile', 'read_file_failed', {path}, err);
       throw new Error('read_file_failed', {cause: (err as Error).cause});
     }

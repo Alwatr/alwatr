@@ -40,7 +40,7 @@ export function lazyDirective<T extends Directive>(
       logger.accident('lazyDirective', 'duplicate_directive_registration', {name});
       return;
     }
-    logger.logMethodArgs?.('lazyDirective', name);
+    DEV_MODE && logger.logMethodArgs?.('lazyDirective', name);
     directiveRegistry_.set(name, constructor);
 
     if (autoBootstrap && typeof document !== 'undefined') {

@@ -29,8 +29,7 @@ export function getEnv(option: GetEnvOption): string {
 
   if (platformInfo.development === true) {
     value ??= option.developmentValue ?? option.defaultValue;
-  }
-  else {
+  } else {
     value ??= option.defaultValue;
   }
 

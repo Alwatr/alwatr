@@ -24,7 +24,7 @@ npm install @alwatr/djb2-hash
 The package exports a single function, `djb2Hash`.
 
 ```typescript
-import { djb2Hash } from '@alwatr/djb2-hash';
+import {djb2Hash} from '@alwatr/djb2-hash';
 
 // Generate a numeric hash from a string
 const myHash = djb2Hash('hello world');

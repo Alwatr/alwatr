@@ -79,7 +79,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
     });
     this.logger_ = createLogger(`state_signal:${this.name}`);
     this.value__ = config.initialValue;
-    this.logger_.logMethodArgs?.('constructor', {initialValue: this.value__});
+    DEV_MODE && this.logger_.logMethodArgs?.('constructor', {initialValue: this.value__});
   }
 
   /**
@@ -113,7 +113,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * mySignal.set({ ...mySignal.get(), property: 'new-value' });
    */
   public set(newValue: T): void {
-    this.logger_.logMethodArgs?.('set', {newValue});
+    DEV_MODE && this.logger_.logMethodArgs?.('set', {newValue});
 
     // For primitives (including null), do not notify if the value is the same.
     if (Object.is(this.value__, newValue) && (typeof newValue !== 'object' || newValue === null)) {
@@ -132,7 +132,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * Notification is queued as a microtask for batching.
    */
   public notifyChange(): void {
-    this.logger_.logMethod?.('notifyChange');
+    DEV_MODE && this.logger_.logMethod?.('notifyChange');
     this.checkDestroyed_();
 
     this.notifyVersion__++;
@@ -163,7 +163,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
   public update(updater: (previousValue: T) => T): void {
     this.checkDestroyed_();
     const newValue = updater(this.value__);
-    this.logger_.logMethodFull?.('update', this.value__, newValue);
+    DEV_MODE && this.logger_.logMethodFull?.('update', this.value__, newValue);
     this.set(newValue);
   }
 
@@ -178,7 +178,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
    * @returns An object with an `unsubscribe` method to remove the listener.
    */
   public override subscribe(callback: ListenerCallback<T>, options: SubscribeOptions = {}): SubscribeResult {
-    this.logger_.logMethodArgs?.('subscribe', options);
+    DEV_MODE && this.logger_.logMethodArgs?.('subscribe', options);
     this.checkDestroyed_();
 
     const result = super.subscribe(callback, options);
@@ -189,7 +189,7 @@ export class StateSignal<T> extends SignalBase<T> implements IReadonlySignal<T> 
     const subscribeVersion = this.notifyVersion__;
 
     queueMicrotask((): void => {
-      this.logger_.logStep?.('subscribe', 'immediate_callback');
+      DEV_MODE && this.logger_.logStep?.('subscribe', 'immediate_callback');
       if (this.notifyVersion__ !== subscribeVersion) return; // A notification occurred after subscribing, so skip the immediate callback.
       if (options.once) {
         result.unsubscribe();

@@ -42,8 +42,7 @@ function onExit_(signal: number | 'SIGINT' | 'SIGTERM') {
   for (const callback of callbacks) {
     try {
       callback();
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Error in exit hook callback:', error);
     }
   }

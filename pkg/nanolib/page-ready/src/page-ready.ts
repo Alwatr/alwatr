@@ -71,7 +71,7 @@ const pageReadyChannel_ = createChannelSignal<Record<string, void>>({name: 'page
  * ```
  */
 export function onPageReady<T extends string>(pageId: T, handler: () => Awaitable<void>): SubscribeResult {
-  logger.logMethodArgs?.('onPageReady', {pageId});
+  DEV_MODE && logger.logMethodArgs?.('onPageReady', {pageId});
   return pageReadyChannel_.on(pageId, handler);
 }
 
@@ -108,7 +108,7 @@ export function onPageReady<T extends string>(pageId: T, handler: () => Awaitabl
  * ```
  */
 export function subscribePageReady<T extends string>(handler: (pageId: T) => Awaitable<void>): SubscribeResult {
-  logger.logMethod?.('subscribePageReady');
+  DEV_MODE && logger.logMethod?.('subscribePageReady');
   return pageReadyChannel_.subscribe((message) => {
     handler(message.name as T);
   });
@@ -137,10 +137,10 @@ export function subscribePageReady<T extends string>(handler: (pageId: T) => Awa
  * ```
  */
 export function dispatchPageReady(): void {
-  logger.logMethod?.('dispatchPageReady');
+  DEV_MODE && logger.logMethod?.('dispatchPageReady');
 
   if (typeof document === 'undefined') {
-    logger.incident?.('dispatchPageReady', 'document_not_found');
+    DEV_MODE && logger.incident?.('dispatchPageReady', 'document_not_found');
     return;
   }
 

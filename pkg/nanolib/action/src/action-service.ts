@@ -67,7 +67,7 @@ export class ActionService {
   private readonly handleDelegatedEventBound__ = this.handleDelegatedEvent_.bind(this);
 
   constructor() {
-    this.logger_.logMethod?.('constructor');
+    DEV_MODE && this.logger_.logMethod?.('constructor');
     this.registerDefaultModifiersAndResolvers__();
   }
 
@@ -93,7 +93,7 @@ export class ActionService {
    * ```
    */
   on<K extends keyof ActionRecord>(type: K | K[], handler: (action: Action<K>) => Awaitable<void>): SubscribeResult {
-    this.logger_.logMethodArgs?.('on', {type});
+    DEV_MODE && this.logger_.logMethodArgs?.('on', {type});
     if (Array.isArray(type)) {
       const typeList = type as K[];
       const unsubscribeList: VoidFunc[] = [];
@@ -104,7 +104,7 @@ export class ActionService {
       }
       return {
         unsubscribe: () => {
-          this.logger_.logMethod?.('unsubscribe');
+          DEV_MODE && this.logger_.logMethod?.('unsubscribe');
           for (const unsubscribe of unsubscribeList) {
             unsubscribe();
           }
@@ -131,7 +131,7 @@ export class ActionService {
    * ```
    */
   dispatch<K extends keyof ActionRecord>(action: DispatchParam<K>): void {
-    this.logger_.logMethodArgs?.('dispatch', action);
+    DEV_MODE && this.logger_.logMethodArgs?.('dispatch', action);
     this.internalChannel_.dispatch(action.type, action as Action<K>);
   }
 
@@ -151,7 +151,7 @@ export class ActionService {
    * ```
    */
   registerModifier(name: string, handler: ModifierHandler): void {
-    this.logger_.logMethodArgs?.('registerModifier', {name});
+    DEV_MODE && this.logger_.logMethodArgs?.('registerModifier', {name});
     if (this.modifierRegistry_.has(name)) {
       this.logger_.accident('registerModifier', 'modifier_already_registered', {name});
       return;
@@ -173,7 +173,7 @@ export class ActionService {
    * ```
    */
   registerPayloadResolver(name: string, resolver: PayloadResolver): void {
-    this.logger_.logMethodArgs?.('registerPayloadResolver', {name});
+    DEV_MODE && this.logger_.logMethodArgs?.('registerPayloadResolver', {name});
     if (this.payloadRegistry_.has(name)) {
       this.logger_.accident('registerPayloadResolver', 'payload_resolver_already_registered', {name});
       return;
@@ -192,9 +192,9 @@ export class ActionService {
    * ```
    */
   setupDelegation(eventTypes: readonly string[] = ActionService.DEFAULT_DELEGATED_EVENTS): void {
-    this.logger_.logMethodArgs?.('setupDelegation', {eventTypes});
+    DEV_MODE && this.logger_.logMethodArgs?.('setupDelegation', {eventTypes});
     if (typeof document === 'undefined' || !document.body) {
-      this.logger_.incident?.('setupDelegation', 'document_body_not_found');
+      DEV_MODE && this.logger_.incident?.('setupDelegation', 'document_body_not_found');
       return;
     }
 
@@ -214,7 +214,7 @@ export class ActionService {
    * ```
    */
   teardownDelegation(): void {
-    this.logger_.logMethod?.('teardownDelegation');
+    DEV_MODE && this.logger_.logMethod?.('teardownDelegation');
     if (typeof document === 'undefined' || !document.body) {
       return;
     }
@@ -230,7 +230,7 @@ export class ActionService {
    * @protected
    */
   protected parseDescriptor_(attributeValue: string): ActionDescriptor | null {
-    this.logger_.logMethodArgs?.('parseDescriptor_', {attributeValue});
+    DEV_MODE && this.logger_.logMethodArgs?.('parseDescriptor_', {attributeValue});
 
     const cached = this.descriptorCache_.get(attributeValue);
     if (cached !== undefined) return cached;
@@ -258,7 +258,7 @@ export class ActionService {
    */
   protected handleDelegatedEvent_(event: Event): void {
     const eventType = event.type;
-    this.logger_.logMethodArgs?.('handleDelegatedEvent_', {eventType});
+    DEV_MODE && this.logger_.logMethodArgs?.('handleDelegatedEvent_', {eventType});
 
     const target = event.target as Element | null;
     if (!target) return;
@@ -281,7 +281,7 @@ export class ActionService {
     const descriptor = this.parseDescriptor_(attributeValue);
     if (!descriptor) return;
 
-    this.logger_.logMethodArgs?.('handleDelegatedEvent_.action', {eventType, descriptor});
+    DEV_MODE && this.logger_.logMethodArgs?.('handleDelegatedEvent_.action', {eventType, descriptor});
 
     if (descriptor.modifiers.has('once')) {
       actionElement.removeAttribute(actionAttrib);
@@ -343,7 +343,7 @@ export class ActionService {
    * @private
    */
   private registerDefaultModifiersAndResolvers__(): void {
-    this.logger_.logMethod?.('registerDefaultModifiersAndResolvers__');
+    DEV_MODE && this.logger_.logMethod?.('registerDefaultModifiersAndResolvers__');
 
     // Built-in modifiers
     this.registerModifier('prevent', (event) => {

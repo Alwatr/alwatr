@@ -52,7 +52,7 @@ export function writeJson<T extends JsonValue>(path: string, data: T, sync: bool
  * ```
  */
 export function writeJson<T extends JsonValue>(path: string, data: T, sync = false): Awaitable<void> {
-  logger.logMethodArgs?.('writeJson', '...' + path.slice(-32));
+  DEV_MODE && logger.logMethodArgs?.('writeJson', '...' + path.slice(-32));
   const content = flatString(jsonStringify(data));
   return sync === true ? writeFileSync(path, content) : writeFile(path, content);
 }

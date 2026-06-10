@@ -1,7 +1,7 @@
 {
   "name": "@alwatr/action",
   "version": "9.33.0",
-  "description": "Declarative DOM action-dispatch \u2014 bridge HTML attributes to typed signal handlers.",
+  "description": "Declarative DOM action-dispatch — bridge HTML attributes to typed signal handlers.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
@@ -44,7 +44,7 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint src/ --ext .ts",
     "t": "bun run test",
-    "test": "ALWATR_DEBUG=0 bun test",
+    "test": "bun test",
     "w": "bun run watch",
     "watch": "bun run watch:ts & bun run watch:es",
     "watch:es": "bun run build:es:dev --watch",
