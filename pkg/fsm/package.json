@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/fsm",
-  "version": "9.32.0",
+  "version": "9.33.0",
   "description": "A tiny, type-safe, declarative, and reactive finite state machine (FSM) library for modern TypeScript applications, built on top of Alwatr Signals.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
@@ -21,8 +21,8 @@
   },
   "sideEffects": false,
   "dependencies": {
-    "@alwatr/logger": "workspace:*",
     "@alwatr/delay": "workspace:*",
+    "@alwatr/logger": "workspace:*",
     "@alwatr/signal": "workspace:*"
   },
   "devDependencies": {

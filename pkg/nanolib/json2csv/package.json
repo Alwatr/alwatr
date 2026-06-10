@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/json2csv",
-  "version": "9.25.0",
+  "version": "9.33.0",
   "description": "A tiny, efficient, and cross-platform JSON to CSV converter.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

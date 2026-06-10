@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/nitrobase-types",
-  "version": "9.31.0",
+  "version": "9.33.0",
   "description": "Nitrobase is a blazingly fast, lightweight database built on JSON. It stores data entirely in memory for lightning-quick access, while also providing a JSON file backup for persistence. You can easily serve your data over the web using our high-performance accelerated Nginx server.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

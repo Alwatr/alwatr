@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/signal",
-  "version": "9.32.0",
+  "version": "9.33.0",
   "description": "Alwatr Signal is a powerful, lightweight, and modern reactive programming library. It is inspired by the best concepts from major reactive libraries but engineered to be faster and more efficient than all of them. It provides a robust and elegant way to manage application state through a system of signals, offering fine-grained reactivity, predictability, and excellent performance.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

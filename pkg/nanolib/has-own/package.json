@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/has-own",
-  "version": "9.25.0",
+  "version": "9.33.0",
   "description": "A side-effect-free polyfill/replacement for `Object.hasOwn` that supports all browsers.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

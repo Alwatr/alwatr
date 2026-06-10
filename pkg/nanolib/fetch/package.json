@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/fetch",
-  "version": "9.32.0",
+  "version": "9.33.0",
   "description": "`@alwatr/fetch` is an enhanced, lightweight, and dependency-free wrapper for the native `fetch` API. It provides modern features like caching strategies, request retries, timeouts, and intelligent duplicate request handling, all in a compact package.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

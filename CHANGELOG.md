@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.33.0](https://github.com/Alwatr/alwatr/compare/v9.32.0...v9.33.0) (2026-06-10)
+
+### ✨ Features
+
+* **fsm:** add convenience predicate for state matching ([6ea9fdb](https://github.com/Alwatr/alwatr/commit/6ea9fdb52cdbf4c8c53d71d775016b0ee2c989f2))
+* **fsm:** add synchronous accessor for current machine state ([0e85ac1](https://github.com/Alwatr/alwatr/commit/0e85ac18c1491d71272f962fc2ea3da328401835))
+
+### 🐛 Bug Fixes
+
+* **fsm:** update processing flag to true during initialization and handle first enqueued event ([d6fc124](https://github.com/Alwatr/alwatr/commit/d6fc1243ec76fdfb73bf24b86e2389e0fd7fa4fb))
+
+### 🔨 Code Refactoring
+
+* **fsm:** clarify effect execution logging and handle synchronous effects ([fd5147e](https://github.com/Alwatr/alwatr/commit/fd5147e2406d3b196b91ce91d4fb82304f095c0b))
+* **fsm:** enhance destroy method to clean up mailbox and improve idempotency ([04106b5](https://github.com/Alwatr/alwatr/commit/04106b50c501c5231a9832c83bffae914b16f50b))
+* **fsm:** enhance destruction handling to prevent dispatch after service destruction ([1c0535e](https://github.com/Alwatr/alwatr/commit/1c0535e29d8cbd1e0c2fd1d92d08d28ba69691fd))
+* **fsm:** enhance dispatch and processTransition methods for clarity and context handling ([90300f4](https://github.com/Alwatr/alwatr/commit/90300f4cf8cfbc9caeff6175cae8b57029b2f338))
+* **fsm:** enhance error handling and logging in applyAssigners method ([2927675](https://github.com/Alwatr/alwatr/commit/2927675557359e8738f872f80fd5b8c288bcaa35))
+* **fsm:** enhance event dispatching logic with a FIFO mailbox and re-entrancy guard ([a3cabd5](https://github.com/Alwatr/alwatr/commit/a3cabd568aab682456373df64e8d4fef2df43333))
+* **fsm:** enhance start and spawnActors methods for clarity and error handling ([54908ee](https://github.com/Alwatr/alwatr/commit/54908eefbcbf49990b3521301d69086438885dbe))
+* **fsm:** improve transition finding logic with guard evaluation and fallback handling ([3661764](https://github.com/Alwatr/alwatr/commit/3661764791e6469ec6cee5f4352826749da11350))
+* **fsm:** optimize initial state entry by using queueMicrotask for actor spawning ([27fd86f](https://github.com/Alwatr/alwatr/commit/27fd86f9479f15ff45a4e3fc886524d49cb3c8ed))
+* **fsm:** remove event parameter from Actors to prevent access actors to the event ([b5dd225](https://github.com/Alwatr/alwatr/commit/b5dd225cdec03d8f8032c028a41feb403f3418a5))
+* **fsm:** remove unused imports from facade.ts ([6a95433](https://github.com/Alwatr/alwatr/commit/6a95433866dd0949d473b90489775ff55a8cb4e0))
+* **fsm:** simplify FsmService constructor and state signal initialization ([2046413](https://github.com/Alwatr/alwatr/commit/204641314f4da4e724b58c0c4bb791f7e33dbfc2))
+* **fsm:** streamline event dispatching and mailbox processing for improved clarity and efficiency ([494cf26](https://github.com/Alwatr/alwatr/commit/494cf264aa2e20533e0b86ab83f4323001b5f163))
+* **fsm:** update activeActorCleanups__ to use array for cleanup callbacks and enhance cleanup logic ([176fafd](https://github.com/Alwatr/alwatr/commit/176fafd156c70aa915693f482bfe80c32d02242f))
+* **fsm:** update Assigner type definition for improved clarity ([fec878e](https://github.com/Alwatr/alwatr/commit/fec878ec07fefeb5d09f5c8d9250c81bfe0d6920))
+* **fsm:** update Effect type definition for consistency and clarity ([b72f7f6](https://github.com/Alwatr/alwatr/commit/b72f7f6fa6605119a1e408f7cfbf7d0b2b71c148))
+* **fsm:** update event processing to ensure FIFO order during mailbox handling ([43742b6](https://github.com/Alwatr/alwatr/commit/43742b69baa7848893847bee5e84c0644f0aead3))
+* **fsm:** update Guard type definition for improved parameter clarity ([fba4a9b](https://github.com/Alwatr/alwatr/commit/fba4a9bd7d6c0fb4782837033c1de447308b38ae))
+
+### 🔗 Dependencies update
+
+* **fsm:** add @alwatr/delay as a dependency for improved functionality ([0b58c3c](https://github.com/Alwatr/alwatr/commit/0b58c3c6b457ad0e77ee35160f7acb74d2c1afa3))
+* update package versions to use workspace references ([42201b3](https://github.com/Alwatr/alwatr/commit/42201b32cf0dddf0e26f1e0299bb36e2243424e1))
+* update prettier to version 3.8.4 ([89c5d1e](https://github.com/Alwatr/alwatr/commit/89c5d1e7559012b579da44193ffcdc68466db58e))
+
 ## [9.32.0](https://github.com/Alwatr/alwatr/compare/v9.31.0...v9.32.0) (2026-06-07)
 
 ### ✨ Features

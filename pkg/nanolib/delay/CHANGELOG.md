@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.33.0](https://github.com/Alwatr/alwatr/compare/v9.32.0...v9.33.0) (2026-06-10)
+
+### 🔗 Dependencies update
+
+* update package versions to use workspace references ([42201b3](https://github.com/Alwatr/alwatr/commit/42201b32cf0dddf0e26f1e0299bb36e2243424e1))
+
 ## [9.32.0](https://github.com/Alwatr/alwatr/compare/v9.31.0...v9.32.0) (2026-06-07)
 
 ### ✨ Features
