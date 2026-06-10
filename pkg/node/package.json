@@ -18,11 +18,6 @@
       "development": "./dist/dev/main.js",
       "import": "./dist/main.js",
       "default": "./dist/main.js"
-    },
-    "./node": {
-      "types": "./dist/node.d.ts",
-      "development": "./dist/dev/node.js",
-      "default": "./dist/node.js"
     }
   },
   "sideEffects": false,
