@@ -10,7 +10,7 @@ import type {
   DispatchParam,
   ModifierHandler,
   PayloadResolver,
-  OutboundAction,
+  ActionConfig,
 } from './type.js';
 
 /**
@@ -168,16 +168,16 @@ export class ActionService {
   }
 
   /**
-   * Utility for defining strongly-typed outbound actions with clean DX.
+   * Utility for defining strongly-typed actions with clean DX.
    * Validates that all defined action configurations conform to `ActionRecord` types.
    *
-   * @template T - The type of the outbound actions map.
-   * @param outbound - The outbound actions map.
-   * @returns The outbound actions map.
+   * @template T - The type of the actions map.
+   * @param actions - The actions map.
+   * @returns The actions map.
    *
    * @example
    * ```ts
-   * const outbound = actionService.defineOutbound({
+   * const actions = actionService.defineActions({
    *   startLoading: {
    *     type: 'app_loading_start',
    *     payload: {ownerId: 'my-service'}
@@ -185,9 +185,9 @@ export class ActionService {
    * });
    * ```
    */
-  defineOutbound<T extends Record<string, OutboundAction>>(outbound: T): T {
-    DEV_MODE && this.logger__.logMethodArgs?.('defineOutbound', outbound);
-    return outbound;
+  defineActions<T extends Record<string, ActionConfig>>(actions: T): T {
+    DEV_MODE && this.logger__.logMethodArgs?.('defineActions', actions);
+    return actions;
   }
 
   /**
