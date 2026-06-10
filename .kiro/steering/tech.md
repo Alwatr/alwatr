@@ -21,7 +21,7 @@ inclusion: always
   - `--preset=node-service` — bundled Node.js service
   - `--preset=bun-service` — bundled Bun service
 - **Build-time constants** injected by nano-build (not runtime globals):
-  - `__dev_mode__` — `boolean`, `true` unless `NODE_ENV=production`
+  - `DEV_MODE` — `boolean`, `true` unless `NODE_ENV=production`
   - `__package_name__` — `string`, from `package.json` `name` field
   - `__package_version__` — `string`, from `package.json` `version` field
 - **`tsc --build`** — type checking and `.d.ts` generation only (`emitDeclarationOnly: true`)
