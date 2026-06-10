@@ -340,8 +340,8 @@ export class FsmService<
   }
 
   /**
-   * Starts the FSM by executing the entry effects and spawning the actors
-   * of the initial/current state.
+   * Starts the FSM by executing the entry effects and spawning the actors of the
+   * initial (or rehydrated) state, using the synthetic `{type: '__init__'}` event.
    */
   protected start_(): void {
     if (this.destroyed__) return;
@@ -361,29 +361,35 @@ export class FsmService<
     actors?: SingleOrArray<Actor<TEvent, TContext>>,
   ): void {
     if (!actors) {
-      this.logger_.logMethodArgs?.('spawnActors__//skipped', {count: 0});
+      this.logger_.logMethod?.('spawnActors__.skipped');
       return;
     }
-    const actorsArray = Array.isArray(actors) ? actors : [actors];
 
-    this.logger_.logMethodArgs?.('spawnActors__', {count: actorsArray.length});
+    this.logger_.logMethod?.('spawnActors__');
 
-    for (const actor of actorsArray) {
+    if (!Array.isArray(actors)) {
       try {
-        const cleanup = actor({
-          context,
-          dispatch: this.dispatch,
-        });
+        const cleanup = actors(context, this.dispatch);
         if (typeof cleanup === 'function') {
-          this.activeActorCleanups__.add(cleanup);
+          this.activeActorCleanups__.push(cleanup);
         }
       } catch (error) {
-        this.logger_.error('spawnActors__', 'actor_failed', error, {
-          actor: actor.name || 'anonymous',
-          state: this.stateSignal__.get().name,
-          event,
-          context,
-        });
+        this.logger_.error('spawnActors__', 'actor_failed', error, {event, context});
+      }
+      return;
+    }
+
+    // else if actors is an array
+
+    for (let index = 0; index < actors.length; index++) {
+      const actor = actors[index];
+      try {
+        const cleanup = actor(context, this.dispatch);
+        if (typeof cleanup === 'function') {
+          this.activeActorCleanups__.push(cleanup);
+        }
+      } catch (error) {
+        this.logger_.error('spawnActors__', 'actor_failed', error, {event, context, index});
       }
     }
   }
