@@ -1,6 +1,6 @@
 import {FsmService} from './fsm-service.js';
 
-import type {MachineEvent, StateMachineConfig} from './type.js';
+import type {StateActor, Effect, MachineEvent, StateMachineConfig} from './type.js';
 
 /**
  * A simple and clean factory function for creating an `FsmService` instance.
@@ -68,4 +68,32 @@ export function createFsmService<
   TContext extends Record<string, unknown> = Record<string, never>,
 >(config: StateMachineConfig<TState, TEvent, TContext>): FsmService<TState, TEvent, TContext> {
   return new FsmService(config);
+}
+
+/**
+ * Creates a set of type-safe helpers for defining StateActors and Effects bound to specific TEvent and TContext.
+ * This avoids type casting (e.g. `as StateActor<TEvent, TContext>`) and provides contextual typing for function parameters.
+ *
+ * @template TEvent The union type of all events in the machine.
+ * @template TContext The type of the machine's context.
+ *
+ * @example
+ * ```ts
+ * const {defineStateActors, defineEffects} = createFsmHelpers<MyEvent, MyContext>();
+ *
+ * const actors = defineStateActors({
+ *   fetchData: (context, dispatch) => { ... } // context and dispatch are contextually typed!
+ * });
+ * ```
+ */
+export function createFsmHelpers<
+  TEvent extends MachineEvent,
+  TContext extends Record<string, unknown> = Record<string, never>,
+>() {
+  return {
+    defineStateActor: (actor: StateActor<TEvent, TContext>): StateActor<TEvent, TContext> => actor,
+    defineStateActors: <T extends Record<string, StateActor<TEvent, TContext>>>(actors: T): T => actors,
+    defineEffect: (effect: Effect<TEvent, TContext>): Effect<TEvent, TContext> => effect,
+    defineEffects: <T extends Record<string, Effect<TEvent, TContext>>>(effects: T): T => effects,
+  } as const;
 }
