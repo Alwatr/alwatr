@@ -1,6 +1,6 @@
 import {FsmService} from './fsm-service.js';
-
-import type {Assigner, Effect, Guard, MachineEvent, StateActor, StateMachineConfig} from './type.js';
+import type {SingleOrArray} from '@alwatr/type-helper';
+import type {Assigner, Effect, Guard, MachineEvent, StateActor, StateMachineConfig, Transition} from './type.js';
 
 /**
  * A simple and clean factory function for creating an `FsmService` instance.
@@ -117,6 +117,21 @@ export function createFsmHelpers<
 
     defineGuard: <E extends TEvent = TEvent>(guard: Guard<E, TContext>): Guard<E, TContext> => guard,
     defineGuards: <T extends Record<string, Guard<TEvent, TContext>>>(guards: T): T => guards,
+
+    defineTransition: <TState extends string = string, E extends TEvent = TEvent>(
+      transition: Transition<TState, E, TContext>,
+    ): Transition<TState, E, TContext> => transition,
+
+    defineTransitions: <
+      TState extends string = string,
+      T extends {
+        readonly [E in TEvent['type']]?: SingleOrArray<Transition<TState, Extract<TEvent, {type: E}>, TContext>>;
+      } = {
+        readonly [E in TEvent['type']]?: SingleOrArray<Transition<TState, Extract<TEvent, {type: E}>, TContext>>;
+      },
+    >(
+      transitions: T,
+    ): T => transitions,
 
     not:
       (guard: Guard<TEvent, TContext>): Guard<TEvent, TContext> =>
