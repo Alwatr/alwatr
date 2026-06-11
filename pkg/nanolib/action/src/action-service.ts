@@ -149,11 +149,11 @@ export class ActionService {
    * sub.unsubscribe();
    * ```
    */
-  subscribeAll(listeners: {
-    readonly [K in keyof ActionRecord]?: (action: Action<K>) => void;
+  subscribeAll<T extends keyof ActionRecord>(listeners: {
+    readonly [K in T]: (action: Action<K>) => void;
   }): SubscribeResult {
     DEV_MODE && this.logger__.logMethodArgs?.('subscribeAll', Object.keys(listeners));
-    const keys = Object.keys(listeners) as (keyof ActionRecord)[];
+    const keys = Object.keys(listeners) as T[];
     const unsubscribeList = new Array<VoidFunc>(keys.length);
 
     for (let index = 0; index < keys.length; index++) {

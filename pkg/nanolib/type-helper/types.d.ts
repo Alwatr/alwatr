@@ -285,7 +285,7 @@ export type DeepPartial<T> =
 // ─── JSON ─────────────────────────────────────────────────────────────────────
 
 /** A JSON-serialisable primitive value. */
-export type JsonPrimitive = string | number | boolean | null;
+export type JsonPrimitive = string | number | boolean | null | undefined;
 
 /**
  * Any JSON-serialisable value.
