@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.35.0](https://github.com/Alwatr/alwatr/compare/v9.34.0...v9.35.0) (2026-06-11)
+
+### ✨ Features
+
+* **bind:** add BindCssVarDirective for binding CSS custom properties to view model properties ([698b61c](https://github.com/Alwatr/alwatr/commit/698b61cd453fd966e47b44cda8adbfaad89bfde1))
+
+### 🔨 Code Refactoring
+
+* **bind-css-var:** validate CSS variable name format in binding initialization ([2579ee7](https://github.com/Alwatr/alwatr/commit/2579ee7c0757be953bb81d876429b25e8176d13f))
+* **bind:** update binding syntax from 'lazy-bind' to 'lazy_bind' for consistency ([cb59636](https://github.com/Alwatr/alwatr/commit/cb596369409750b4081812e4ebe164c23023322c))
+* conditionally log accidents in DEV_MODE for better debugging ([c225def](https://github.com/Alwatr/alwatr/commit/c225defd90630a89c58956efecf78df3b294f6ca))
+* **directives:** update syntax from 'bind-*' to 'bind_*' for consistency ([23d092e](https://github.com/Alwatr/alwatr/commit/23d092e8deeb6a2b7bb2645202b139283ded311f))
+
+### 🔗 Dependencies update
+
+* **bind:** add @happy-dom/global-registrator dependency for enhanced DOM testing ([7ecf6f2](https://github.com/Alwatr/alwatr/commit/7ecf6f290b6e52929429758b599831f4963092eb))
+
 ## [9.33.1](https://github.com/Alwatr/alwatr/compare/v9.33.0...v9.33.1) (2026-06-10)
 
 ### 🔨 Code Refactoring

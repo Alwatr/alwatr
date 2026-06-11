@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.35.0](https://github.com/Alwatr/alwatr/compare/v9.34.0...v9.35.0) (2026-06-11)
+
+### ✨ Features
+
+* **fsm:** add support for internal and external transitions with action effects ([d787d99](https://github.com/Alwatr/alwatr/commit/d787d99f2a1c8268b471ff09eb10c9dc35223913))
+
 ## [9.34.0](https://github.com/Alwatr/alwatr/compare/v9.33.1...v9.34.0) (2026-06-10)
 
 ### ✨ Features

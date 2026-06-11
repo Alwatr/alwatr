@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.35.0](https://github.com/Alwatr/alwatr/compare/v9.34.0...v9.35.0) (2026-06-11)
+
+### ✨ Features
+
+* **action-service:** add 'stop' modifier to prevent event propagation ([46fa52e](https://github.com/Alwatr/alwatr/commit/46fa52e86813986f30b14540871c3d42b9a0efb3))
+* **action-service:** add $dataset resolver to handle dataset properties ([01c1bc0](https://github.com/Alwatr/alwatr/commit/01c1bc0d8016a1739bad47ba4463a6d11ac56261))
+
+### 🐛 Bug Fixes
+
+* **action:** make action listeners optional in subscribeAll method ([79e28fd](https://github.com/Alwatr/alwatr/commit/79e28fde03ffddfd8ee1f6a3f5b3c25e199beb9a))
+
+### 🔨 Code Refactoring
+
+* **action-service:** simplify event delegation handling by removing bound handler ([12c7588](https://github.com/Alwatr/alwatr/commit/12c758858950301b1d339cf09350ab42798cb58f))
+* **action-service:** update event delegation from document.body to document for consistency ([9e32146](https://github.com/Alwatr/alwatr/commit/9e3214671495e8dba8da9482023784aa9356ce56))
+* **action:** comment out unused player event types in DEFAULT_DELEGATED_EVENTS ([285af26](https://github.com/Alwatr/alwatr/commit/285af265f8587a47bc8ace006935f103560b70b0))
+* **action:** expand DEFAULT_DELEGATED_EVENTS with detailed comments for clarity ([f4d5a2f](https://github.com/Alwatr/alwatr/commit/f4d5a2f14e82c2c1baaf7878aaedb1096e487a2d))
+* conditionally log accidents in DEV_MODE for better debugging ([c225def](https://github.com/Alwatr/alwatr/commit/c225defd90630a89c58956efecf78df3b294f6ca))
+
 ## [9.34.0](https://github.com/Alwatr/alwatr/compare/v9.33.1...v9.34.0) (2026-06-10)
 
 ### ✨ Features

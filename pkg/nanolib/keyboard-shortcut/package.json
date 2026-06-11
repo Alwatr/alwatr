@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/keyboard-shortcut",
-  "version": "9.34.0",
+  "version": "9.35.0",
   "description": "Global keyboard-to-action bridge for Alwatr Flux. Listens for keydown and dispatches Flux actions based on normalized key combos.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

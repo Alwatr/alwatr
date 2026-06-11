@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/nanotron",
-  "version": "9.33.1",
+  "version": "9.35.0",
   "description": "Nanotron: Your Lightweight, High-Performance Micro/Nano Service Framework. Nanotron is designed for building blazingly fast and efficient microservices and APIs. Its minimalist approach and focus on performance make it ideal for resource-constrained environments and scenarios where every millisecond counts.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
