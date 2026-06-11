@@ -9,7 +9,7 @@ import {
   type IReadonlySignal,
 } from '@alwatr/signal';
 
-import type {StateMachineConfig, MachineState, MachineEvent, Transition, Effect, Assigner, StateActor} from './type.js';
+import type {StateMachineSchema, MachineState, MachineEvent, Transition, Effect, Assigner, StateActor} from './type.js';
 
 /**
  * A generic, encapsulated service that creates, runs, and manages a finite state machine.
@@ -56,7 +56,7 @@ export class FsmService<
     | PersistentStateSignal<MachineState<TState, TContext>>;
 
   constructor(
-    protected readonly config_: StateMachineConfig<TState, TEvent, TContext>,
+    protected readonly config_: StateMachineSchema<TState, TEvent, TContext>,
     stateSignal?: StateSignal<MachineState<TState, TContext>> | PersistentStateSignal<MachineState<TState, TContext>>,
   ) {
     this.logger_ = createLogger(`fsm:${this.config_.name}`);
