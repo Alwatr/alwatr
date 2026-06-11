@@ -1,6 +1,6 @@
 import {FsmService} from './fsm-service.js';
 import type {SingleOrArray} from '@alwatr/type-helper';
-import type {Assigner, Effect, Guard, MachineEvent, StateActor, StateMachineConfig, Transition} from './type.js';
+import type {Assigner, Effect, Guard, MachineEvent, StateActor, StateMachineSchema, Transition} from './type.js';
 
 /**
  * A simple and clean factory function for creating an `FsmService` instance.
@@ -10,21 +10,21 @@ import type {Assigner, Effect, Guard, MachineEvent, StateActor, StateMachineConf
  * @template TEvent - The union type of all possible events.
  * @template TContext - The type of the machine's context.
  *
- * @param config - The machine's configuration object.
+ * @param schema - The machine's schema object.
  * @returns A new, ready-to-use instance of `FsmService`.
  *
  * @example
  * ```ts
  * import {createFsmService} from '@alwatr/fsm';
- * import type {StateMachineConfig} from '@alwatr/fsm';
+ * import type {StateMachineSchema} from '@alwatr/fsm';
  *
  * // 1. Define types
  * type LightContext = {brightness: number};
  * type LightState = 'on' | 'off';
  * type LightEvent = {type: 'TOGGLE'} | {type: 'SET_BRIGHTNESS'; level: number};
  *
- * // 2. Config the state machine
- * const lightMachineConfig: StateMachineConfig<LightState, LightEvent, LightContext> = {
+ * // 2. Schema of state machine
+ * const lightMachineSchema: StateMachineSchema<LightState, LightEvent, LightContext> = {
  *   name: 'light-switch',
  *   initial: 'off',
  *   context: {brightness: 0},
@@ -47,7 +47,7 @@ import type {Assigner, Effect, Guard, MachineEvent, StateActor, StateMachineConf
  * };
  *
  * // 3. Create the service
- * const lightService = createFsmService(lightMachineConfig);
+ * const lightService = createFsmService(lightMachineSchema);
  *
  * // 4. Use it in your application
  * lightService.stateSignal.subscribe((state) => {
@@ -66,8 +66,8 @@ export function createFsmService<
   TState extends string,
   TEvent extends MachineEvent,
   TContext extends Record<string, unknown> = Record<string, never>,
->(config: StateMachineConfig<TState, TEvent, TContext>): FsmService<TState, TEvent, TContext> {
-  return new FsmService(config);
+>(schema: StateMachineSchema<TState, TEvent, TContext>): FsmService<TState, TEvent, TContext> {
+  return new FsmService(schema);
 }
 
 /**
@@ -92,9 +92,9 @@ export function createFsmHelpers<
   TContext extends Record<string, unknown> = Record<string, never>,
 >() {
   return {
-    defineFsmConfig: (
-      config: StateMachineConfig<TState, TEvent, TContext>,
-    ): StateMachineConfig<TState, TEvent, TContext> => config,
+    defineFullSchema: (
+      schema: StateMachineSchema<TState, TEvent, TContext>,
+    ): StateMachineSchema<TState, TEvent, TContext> => schema,
 
     defineStateActor: (actor: StateActor<TEvent, TContext>): StateActor<TEvent, TContext> => actor,
     defineStateActors: <T extends Record<string, StateActor<TEvent, TContext>>>(actors: T): T => actors,
