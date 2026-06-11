@@ -183,14 +183,14 @@ export interface FsmPersistenceConfig {
 }
 
 /**
- * The declarative configuration object for creating a state machine.
+ * The declarative schema object for creating a state machine.
  * This object defines the entire behavior of the machine.
  *
  * ## Persistence requirement
  *
  * When `persistent` is enabled, EVERY state — including terminal states with no
  * transitions — MUST be declared in `states` (e.g. `success: {}`). The engine uses
- * the presence of a state's config entry to validate rehydrated state names from
+ * the presence of a state's schema entry to validate rehydrated state names from
  * storage; an undeclared state is treated as removed/renamed and the machine is
  * reset to `initial`.
  *
@@ -198,11 +198,14 @@ export interface FsmPersistenceConfig {
  * @template TEvent The union type of all possible events.
  * @template TContext The type of the machine's context.
  */
-export interface StateMachineConfig<
+export interface StateMachineSchema<
   TState extends string,
   TEvent extends MachineEvent,
   TContext extends Record<string, unknown>,
-> extends Pick<SignalConfig, 'name'> {
+> {
+  /** The unique name of the state machine. Used for debugging and persistence. */
+  name: string;
+
   /** The initial finite state value. */
   readonly initial: TState;
 
@@ -214,7 +217,7 @@ export interface StateMachineConfig<
 
   /** An object defining all possible states and their transitions. */
   readonly states: {
-    readonly [S in TState]?: {
+    readonly [S in TState]: {
       /** An object mapping event types to transitions for the current state. */
       readonly on?: {
         readonly [E in TEvent['type']]?: SingleOrArray<Transition<TState, Extract<TEvent, {type: E}>, TContext>>;
