@@ -113,18 +113,57 @@ export type StateActor<TEvent extends MachineEvent, TContext extends Record<stri
  * @template TEvent The type of the event.
  * @template TContext The type of the machine's context.
  */
-export interface Transition<
-  TState extends string,
-  TEvent extends MachineEvent,
-  TContext extends Record<string, unknown>,
-> {
-  /** The target state to transition to. If undefined, it's an internal transition. */
-  readonly target?: TState;
+export interface BaseTransition<TEvent extends MachineEvent, TContext extends Record<string, unknown>> {
   /** A guard function that must return true for the transition to occur. */
   readonly guard?: Guard<TEvent, TContext>;
   /** A single assigner or an ordered chain of assigners. Applied atomically. */
   readonly assigner?: SingleOrArray<Assigner<TEvent, TContext>>;
 }
+
+/**
+ * Defines an external transition that has a target state.
+ */
+export interface ExternalTransition<
+  TState extends string,
+  TEvent extends MachineEvent,
+  TContext extends Record<string, unknown>,
+> extends BaseTransition<TEvent, TContext> {
+  /** The target state to transition to. */
+  readonly target: TState;
+  /** Action effects are not allowed on external transitions. */
+  readonly action?: undefined;
+}
+
+/**
+ * Defines an internal transition that does not change the state (target is undefined)
+ * and can optionally execute an action effect.
+ */
+export interface InternalTransition<
+  TEvent extends MachineEvent,
+  TContext extends Record<string, unknown>,
+> extends BaseTransition<TEvent, TContext> {
+  /** The target state to transition to. For internal transitions, this is undefined. */
+  readonly target?: undefined;
+  /** Synchronous side-effects executed only for internal transitions. */
+  readonly action?: SingleOrArray<Effect<TEvent, TContext>>;
+}
+
+/**
+ * Defines a transition for a given state and event. It specifies the target state,
+ * assigners, and an optional guard.
+ *
+ * - With `target`: an **external** transition — exit effects run, actors are cleaned
+ *   up, then entry effects run and actors are re-spawned (even on self-transitions).
+ * - Without `target`: an **internal** transition — only assigners run; entry/exit
+ *   effects and actors are untouched, but optional `action` effects are executed.
+ *
+ * @template TState The type of the state.
+ * @template TEvent The type of the event.
+ * @template TContext The type of the machine's context.
+ */
+export type Transition<TState extends string, TEvent extends MachineEvent, TContext extends Record<string, unknown>> =
+  | ExternalTransition<TState, TEvent, TContext>
+  | InternalTransition<TEvent, TContext>;
 
 /**
  * Configuration options for persisting the FSM state in localStorage.
