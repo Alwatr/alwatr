@@ -34,7 +34,24 @@ export class ActionService {
   /**
    * Default DOM event types that cover the vast majority of interactive elements.
    */
-  static readonly DEFAULT_DELEGATED_EVENTS: readonly string[] = ['click', 'submit', 'input', 'change'];
+  static readonly DEFAULT_DELEGATED_EVENTS: readonly string[] = [
+    // mouse events
+    'click',
+    // form events
+    'submit',
+    'input',
+    'change',
+    // dialog events
+    'cancel',
+    // player events
+    'loadedmetadata',
+    'play',
+    'pause',
+    'timeupdate',
+    'ratechange',
+    'ended',
+    'error',
+  ];
 
   private readonly logger__ = createLogger('action_service');
 
