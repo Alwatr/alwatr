@@ -11,7 +11,7 @@ import type {BindingValue} from './type.js';
  * It subscribes to the projected computed signal of the namespace and surgically updates
  * the element's `textContent` whenever the property changes.
  *
- * Supports deferred viewport initialization if the `lazy-bind` attribute is present on the element.
+ * Supports deferred viewport initialization if the `lazy_bind` attribute is present on the element.
  *
  * @example
  * ```html
@@ -19,20 +19,20 @@ import type {BindingValue} from './type.js';
  * <h2 bind_text="user.fullName">Loading...</h2>
  *
  * <!-- Lazy binding (evaluated only when element enters the viewport) -->
- * <p bind_text="article.summary" lazy-bind>Loading summary...</p>
+ * <p bind_text="article.summary" lazy_bind>Loading summary...</p>
  * ```
  */
 export class BindTextDirective extends Directive {
   /**
    * Attribute flag used to defer binding initialization until the element enters the viewport.
-   * If `lazy-bind` attribute exists, this is non-null.
+   * If `lazy_bind` attribute exists, this is non-null.
    */
-  @attribute('lazy-bind')
+  @attribute('lazy_bind')
   protected accessor lazyBinding_!: null | string;
 
   /**
    * Initializes the directive.
-   * Checks if lazy binding is enabled via `lazy-bind`.
+   * Checks if lazy binding is enabled via `lazy_bind`.
    * If yes, delegates the initialization to `lazyInit_`; otherwise, initializes immediately.
    */
   protected override init_(): void {

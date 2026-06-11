@@ -63,8 +63,8 @@ class BindingService {
    * }));
    *
    * // HTML consumption:
-   * // <h2 bind-text="user.fullName"></h2>
-   * // <button bind-attrib="disabled=user.cartIsEmpty">Checkout</button>
+   * // <h2 bind_text="user.fullName"></h2>
+   * // <button bind_attrib="disabled=user.cartIsEmpty">Checkout</button>
    * ```
    */
   createViewModel<S, T extends Record<string, BindingValue>>(

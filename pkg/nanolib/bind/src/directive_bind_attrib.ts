@@ -15,7 +15,7 @@ import {service_binding, type BindingValue} from './main.js';
  * - Any other type: Coerced via `String(value)` and set as the attribute's value.
  *
  * Includes a redundant write guard (via `lastValues_`) that skips calls to the DOM if the property value hasn't changed.
- * Supports deferred viewport initialization if the `lazy-bind` attribute is present on the element.
+ * Supports deferred viewport initialization if the `lazy_bind` attribute is present on the element.
  *
  * @example
  * ```html
@@ -26,20 +26,20 @@ import {service_binding, type BindingValue} from './main.js';
  * <img bind_attrib="src=user.avatarUrl; alt=user.fullName" />
  *
  * <!-- Lazy attribute binding -->
- * <iframe bind_attrib="src=video.embedUrl" lazy-bind></iframe>
+ * <iframe bind_attrib="src=video.embedUrl" lazy_bind></iframe>
  * ```
  */
 export class BindAttribDirective extends Directive {
   /**
    * Attribute flag used to defer binding initialization until the element enters the viewport.
-   * If `lazy-bind` attribute exists, this is non-null.
+   * If `lazy_bind` attribute exists, this is non-null.
    */
-  @attribute('lazy-bind')
+  @attribute('lazy_bind')
   protected accessor lazyBinding_!: null | string;
 
   /**
    * Initializes the directive.
-   * Checks if lazy binding is enabled via `lazy-bind`.
+   * Checks if lazy binding is enabled via `lazy_bind`.
    * If yes, delegates the initialization to `lazyInit_`; otherwise, initializes immediately.
    */
   protected override init_(): void {
