@@ -6,7 +6,7 @@ import type {BindingValue} from './type.js';
 /**
  * A declarative DOM directive that binds an element's `textContent` to a view model property.
  *
- * Syntax: `bind-text="namespace.propertyName"`
+ * Syntax: `bind_text="namespace.propertyName"`
  *
  * It subscribes to the projected computed signal of the namespace and surgically updates
  * the element's `textContent` whenever the property changes.
@@ -16,10 +16,10 @@ import type {BindingValue} from './type.js';
  * @example
  * ```html
  * <!-- Immediate binding (default) -->
- * <h2 bind-text="user.fullName">Loading...</h2>
+ * <h2 bind_text="user.fullName">Loading...</h2>
  *
  * <!-- Lazy binding (evaluated only when element enters the viewport) -->
- * <p bind-text="article.summary" lazy-bind>Loading summary...</p>
+ * <p bind_text="article.summary" lazy-bind>Loading summary...</p>
  * ```
  */
 export class BindTextDirective extends Directive {
@@ -85,6 +85,6 @@ export class BindTextDirective extends Directive {
 }
 
 /**
- * Helper to register `BindTextDirective` lazily under the `bind-text` attribute.
+ * Helper to register `BindTextDirective` lazily under the `bind_text` attribute.
  */
-export const registerBindTextDirective = lazyDirective('bind-text', BindTextDirective);
+export const registerBindTextDirective = lazyDirective('bind_text', BindTextDirective);

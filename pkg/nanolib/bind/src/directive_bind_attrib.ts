@@ -5,7 +5,7 @@ import {service_binding, type BindingValue} from './main.js';
 /**
  * A declarative DOM directive that binds DOM element attributes to view model properties.
  *
- * Syntax: `bind-attrib="attributeName=namespace.propertyName; anotherAttribute=namespace.anotherProperty"`
+ * Syntax: `bind_attrib="attributeName=namespace.propertyName; anotherAttribute=namespace.anotherProperty"`
  *
  * Supports binding multiple attributes on the same element separated by semicolons (`;`).
  *
@@ -20,13 +20,13 @@ import {service_binding, type BindingValue} from './main.js';
  * @example
  * ```html
  * <!-- Binds presence of 'disabled' to cart emptiness and 'aria-busy' to loading state -->
- * <button bind-attrib="disabled=user.cartIsEmpty; aria-busy=ui.loading">Checkout</button>
+ * <button bind_attrib="disabled=user.cartIsEmpty; aria-busy=ui.loading">Checkout</button>
  *
  * <!-- Binds 'src' and 'alt' attributes -->
- * <img bind-attrib="src=user.avatarUrl; alt=user.fullName" />
+ * <img bind_attrib="src=user.avatarUrl; alt=user.fullName" />
  *
  * <!-- Lazy attribute binding -->
- * <iframe bind-attrib="src=video.embedUrl" lazy-bind></iframe>
+ * <iframe bind_attrib="src=video.embedUrl" lazy-bind></iframe>
  * ```
  */
 export class BindAttribDirective extends Directive {
@@ -111,6 +111,6 @@ export class BindAttribDirective extends Directive {
 }
 
 /**
- * Helper to register `BindAttribDirective` lazily under the `bind-attrib` attribute.
+ * Helper to register `BindAttribDirective` lazily under the `bind_attrib` attribute.
  */
-export const registerBindAttribDirective = lazyDirective('bind-attrib', BindAttribDirective);
+export const registerBindAttribDirective = lazyDirective('bind_attrib', BindAttribDirective);
