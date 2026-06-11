@@ -6,33 +6,33 @@ import type {BindingValue} from './type.js';
 /**
  * A declarative DOM directive that binds an element's `textContent` to a view model property.
  *
- * Syntax: `bind-text="namespace.propertyName"`
+ * Syntax: `bind_text="namespace.propertyName"`
  *
  * It subscribes to the projected computed signal of the namespace and surgically updates
  * the element's `textContent` whenever the property changes.
  *
- * Supports deferred viewport initialization if the `lazy-bind` attribute is present on the element.
+ * Supports deferred viewport initialization if the `lazy_bind` attribute is present on the element.
  *
  * @example
  * ```html
  * <!-- Immediate binding (default) -->
- * <h2 bind-text="user.fullName">Loading...</h2>
+ * <h2 bind_text="user.fullName">Loading...</h2>
  *
  * <!-- Lazy binding (evaluated only when element enters the viewport) -->
- * <p bind-text="article.summary" lazy-bind>Loading summary...</p>
+ * <p bind_text="article.summary" lazy_bind>Loading summary...</p>
  * ```
  */
 export class BindTextDirective extends Directive {
   /**
    * Attribute flag used to defer binding initialization until the element enters the viewport.
-   * If `lazy-bind` attribute exists, this is non-null.
+   * If `lazy_bind` attribute exists, this is non-null.
    */
-  @attribute('lazy-bind')
+  @attribute('lazy_bind')
   protected accessor lazyBinding_!: null | string;
 
   /**
    * Initializes the directive.
-   * Checks if lazy binding is enabled via `lazy-bind`.
+   * Checks if lazy binding is enabled via `lazy_bind`.
    * If yes, delegates the initialization to `lazyInit_`; otherwise, initializes immediately.
    */
   protected override init_(): void {
@@ -59,12 +59,12 @@ export class BindTextDirective extends Directive {
     DEV_MODE && this.logger_.logMethod?.('bindingInit_');
     const [namespace, prop] = this.attributeValue.trim().split('.');
     if (!namespace || !prop) {
-      this.logger_.accident?.('bindingInit_', 'invalid_binding', {namespace, prop});
+      DEV_MODE && this.logger_.accident('bindingInit_', 'invalid_binding', {namespace, prop});
       return;
     }
     const viewModel = service_binding.getViewModel(namespace);
     if (!viewModel) {
-      this.logger_.accident?.('bindingInit_', 'missing_view_model', {namespace});
+      DEV_MODE && this.logger_.accident('bindingInit_', 'missing_view_model', {namespace});
       return;
     }
 
@@ -85,6 +85,6 @@ export class BindTextDirective extends Directive {
 }
 
 /**
- * Helper to register `BindTextDirective` lazily under the `bind-text` attribute.
+ * Helper to register `BindTextDirective` lazily under the `bind_text` attribute.
  */
-export const registerBindTextDirective = lazyDirective('bind-text', BindTextDirective);
+export const registerBindTextDirective = lazyDirective('bind_text', BindTextDirective);

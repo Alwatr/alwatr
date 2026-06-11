@@ -34,7 +34,24 @@ export class ActionService {
   /**
    * Default DOM event types that cover the vast majority of interactive elements.
    */
-  static readonly DEFAULT_DELEGATED_EVENTS: readonly string[] = ['click', 'submit', 'input', 'change'];
+  static readonly DEFAULT_DELEGATED_EVENTS: readonly string[] = [
+    // mouse events
+    'click',
+    // form events
+    'submit',
+    'input',
+    'change',
+    // dialog events
+    'cancel',
+    // player events
+    // 'loadedmetadata',
+    // 'play',
+    // 'pause',
+    // 'timeupdate',
+    // 'ratechange',
+    // 'ended',
+    // 'error',
+  ];
 
   private readonly logger__ = createLogger('action_service');
 
@@ -63,16 +80,10 @@ export class ActionService {
   private readonly descriptorCache__ = new Map<string, ActionDescriptor | null>();
 
   /**
-   * Tracked event types currently delegated to `document.body`.
+   * Tracked event types currently delegated to `document`.
    * @private
    */
   private readonly delegatedEventTypes__ = new Set<string>();
-
-  /**
-   * Bound delegation handler for add/removeEventListener.
-   * @private
-   */
-  private readonly handleDelegatedEventBound__ = this.handleDelegatedEvent__.bind(this);
 
   constructor() {
     DEV_MODE && this.logger__.logMethod?.('constructor');
@@ -139,7 +150,7 @@ export class ActionService {
    * ```
    */
   subscribeAll(listeners: {
-    readonly [K in keyof ActionRecord]: (action: Action<K>) => void;
+    readonly [K in keyof ActionRecord]?: (action: Action<K>) => void;
   }): SubscribeResult {
     DEV_MODE && this.logger__.logMethodArgs?.('subscribeAll', Object.keys(listeners));
     const keys = Object.keys(listeners) as (keyof ActionRecord)[];
@@ -247,7 +258,7 @@ export class ActionService {
   registerModifier(name: string, handler: ModifierHandler): void {
     DEV_MODE && this.logger__.logMethodArgs?.('registerModifier', {name});
     if (this.modifierRegistry__.has(name)) {
-      this.logger__.accident('registerModifier', 'modifier_already_registered', {name});
+      DEV_MODE && this.logger__.accident('registerModifier', 'modifier_already_registered', {name});
       return;
     }
     this.modifierRegistry__.set(name, handler);
@@ -269,14 +280,14 @@ export class ActionService {
   registerPayloadResolver(name: string, resolver: PayloadResolver): void {
     DEV_MODE && this.logger__.logMethodArgs?.('registerPayloadResolver', {name});
     if (this.payloadRegistry__.has(name)) {
-      this.logger__.accident('registerPayloadResolver', 'payload_resolver_already_registered', {name});
+      DEV_MODE && this.logger__.accident('registerPayloadResolver', 'payload_resolver_already_registered', {name});
       return;
     }
     this.payloadRegistry__.set(name, resolver);
   }
 
   /**
-   * Registers global event delegation listeners on `document.body`.
+   * Registers global event delegation listeners on `document`.
    *
    * @param eventTypes - List of event types to delegate. Defaults to ActionService.DEFAULT_DELEGATED_EVENTS.
    *
@@ -287,15 +298,16 @@ export class ActionService {
    */
   setupDelegation(eventTypes: readonly string[] = ActionService.DEFAULT_DELEGATED_EVENTS): void {
     DEV_MODE && this.logger__.logMethodArgs?.('setupDelegation', {eventTypes});
-    if (typeof document === 'undefined' || !document.body) {
-      DEV_MODE && this.logger__.incident?.('setupDelegation', 'document_body_not_found');
+    if (typeof document === 'undefined') {
+      DEV_MODE && this.logger__.incident?.('setupDelegation', 'document_not_found');
       return;
     }
 
-    for (const eventType of eventTypes) {
+    for (let index = 0; index < eventTypes.length; index++) {
+      const eventType = eventTypes[index];
       if (this.delegatedEventTypes__.has(eventType)) continue;
       this.delegatedEventTypes__.add(eventType);
-      document.body.addEventListener(eventType, this.handleDelegatedEventBound__, {capture: true});
+      document.addEventListener(eventType, this.handleDelegatedEvent__, {capture: true});
     }
   }
 
@@ -309,11 +321,11 @@ export class ActionService {
    */
   teardownDelegation(): void {
     DEV_MODE && this.logger__.logMethod?.('teardownDelegation');
-    if (typeof document === 'undefined' || !document.body) {
+    if (typeof document === 'undefined') {
       return;
     }
     for (const eventType of this.delegatedEventTypes__) {
-      document.body.removeEventListener(eventType, this.handleDelegatedEventBound__, {capture: true});
+      document.removeEventListener(eventType, this.handleDelegatedEvent__, {capture: true});
     }
     this.delegatedEventTypes__.clear();
     this.descriptorCache__.clear();
@@ -331,7 +343,7 @@ export class ActionService {
 
     const match = attributeValue.match(syntaxRegex);
     if (!match) {
-      this.logger__.accident('parseDescriptor__', 'invalid_syntax', {attributeValue});
+      DEV_MODE && this.logger__.accident('parseDescriptor__', 'invalid_syntax', {attributeValue});
       this.descriptorCache__.set(attributeValue, null);
       return null;
     }
@@ -350,7 +362,7 @@ export class ActionService {
    * Global event delegation handler.
    * @private
    */
-  private handleDelegatedEvent__(event: Event): void {
+  private handleDelegatedEvent__ = (event: Event): void => {
     const eventType = event.type;
     DEV_MODE && this.logger__.logMethodArgs?.('handleDelegatedEvent__', {eventType});
 
@@ -363,12 +375,13 @@ export class ActionService {
 
     const attributeValue = actionElement.getAttribute?.(actionAttrib)?.trim();
     if (!attributeValue) {
-      this.logger__.accident('handleDelegatedEvent__', 'empty_attribute', {eventType, actionElement});
+      DEV_MODE && this.logger__.accident('handleDelegatedEvent__', 'empty_attribute', {eventType, actionElement});
       return;
     }
 
     if (!(actionElement instanceof HTMLElement)) {
-      this.logger__.accident('handleDelegatedEvent__', 'target_not_html_element', {eventType, actionElement});
+      DEV_MODE
+        && this.logger__.accident('handleDelegatedEvent__', 'target_not_html_element', {eventType, actionElement});
       return;
     }
 
@@ -393,21 +406,23 @@ export class ActionService {
       if (modifier === 'once') continue;
       const handler = this.modifierRegistry__.get(modifier);
       if (!handler) {
-        this.logger__.accident('handleDelegatedEvent__', 'unknown_modifier', {
-          eventType,
-          modifier,
-          attributeValue,
-          descriptor,
-        });
+        DEV_MODE
+          && this.logger__.accident('handleDelegatedEvent__', 'unknown_modifier', {
+            eventType,
+            modifier,
+            attributeValue,
+            descriptor,
+          });
         return;
       }
       try {
         if (handler(event, actionElement, action) === false) return;
       } catch (error) {
-        this.logger__.accident('handleDelegatedEvent__', 'modifier_execution_failed', {
-          modifier,
-          error,
-        });
+        DEV_MODE
+          && this.logger__.accident('handleDelegatedEvent__', 'modifier_execution_failed', {
+            modifier,
+            error,
+          });
         return;
       }
     }
@@ -418,10 +433,11 @@ export class ActionService {
         try {
           (action as {payload: unknown}).payload = resolver(event, actionElement);
         } catch (error) {
-          this.logger__.accident('handleDelegatedEvent__', 'payload_resolver_failed', {
-            resolver: descriptor.payload,
-            error,
-          });
+          DEV_MODE
+            && this.logger__.accident('handleDelegatedEvent__', 'payload_resolver_failed', {
+              resolver: descriptor.payload,
+              error,
+            });
           return;
         }
       }
@@ -430,7 +446,7 @@ export class ActionService {
     }
 
     this.internalChannel__.dispatch(action.type, action);
-  }
+  };
 
   /**
    * Registers default modifiers and resolvers.
@@ -451,6 +467,11 @@ export class ActionService {
       return form.checkValidity();
     });
 
+    this.registerModifier('stop', (event) => {
+      event.stopPropagation();
+      return true;
+    });
+
     // Built-in resolvers
     this.registerPayloadResolver('$value', (_event, element) => {
       return 'value' in element ? (element as {value: unknown}).value : null;
@@ -463,6 +484,10 @@ export class ActionService {
 
     this.registerPayloadResolver('$checked', (_event, element) => {
       return 'checked' in element ? (element as HTMLInputElement).checked : null;
+    });
+
+    this.registerPayloadResolver('$dataset', (_event, element) => {
+      return {...(element as HTMLElement).dataset};
     });
   }
 }

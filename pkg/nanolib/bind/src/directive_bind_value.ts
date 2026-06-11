@@ -5,7 +5,7 @@ import {BindTextDirective} from './directive_bind_text.js';
 /**
  * A declarative DOM directive for binding input, select, and textarea element values to a view model.
  *
- * Syntax: `bind-value="namespace.propertyName"`
+ * Syntax: `bind_value="namespace.propertyName"`
  *
  * Extends `BindTextDirective`. The crucial feature of `BindValueDirective` is its DOM write guard:
  * it compares the current element value with the incoming value and only writes to the DOM
@@ -16,7 +16,7 @@ import {BindTextDirective} from './directive_bind_text.js';
  * ```html
  * <input
  *   type="text"
- *   bind-value="user.firstName"
+ *   bind_value="user.firstName"
  *   on-input="ui_edit_name:$value"
  * />
  * ```
@@ -43,6 +43,6 @@ export class BindValueDirective extends BindTextDirective {
 }
 
 /**
- * Helper to register `BindValueDirective` lazily under the `bind-value` attribute.
+ * Helper to register `BindValueDirective` lazily under the `bind_value` attribute.
  */
-export const registerBindValueDirective = lazyDirective('bind-value', BindValueDirective);
+export const registerBindValueDirective = lazyDirective('bind_value', BindValueDirective);

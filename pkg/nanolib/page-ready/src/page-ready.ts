@@ -147,7 +147,7 @@ export function dispatchPageReady(): void {
   const pageId = document.querySelector('[page-id]')?.getAttribute('page-id')?.trim();
 
   if (pageId == null) {
-    logger.accident('dispatchPageReady', 'page_id_not_found');
+    DEV_MODE && logger.accident('dispatchPageReady', 'page_id_not_found');
     return;
   }
 

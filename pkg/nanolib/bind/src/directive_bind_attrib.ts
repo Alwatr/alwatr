@@ -5,7 +5,7 @@ import {service_binding, type BindingValue} from './main.js';
 /**
  * A declarative DOM directive that binds DOM element attributes to view model properties.
  *
- * Syntax: `bind-attrib="attributeName=namespace.propertyName; anotherAttribute=namespace.anotherProperty"`
+ * Syntax: `bind_attrib="attributeName=namespace.propertyName; anotherAttribute=namespace.anotherProperty"`
  *
  * Supports binding multiple attributes on the same element separated by semicolons (`;`).
  *
@@ -15,31 +15,31 @@ import {service_binding, type BindingValue} from './main.js';
  * - Any other type: Coerced via `String(value)` and set as the attribute's value.
  *
  * Includes a redundant write guard (via `lastValues_`) that skips calls to the DOM if the property value hasn't changed.
- * Supports deferred viewport initialization if the `lazy-bind` attribute is present on the element.
+ * Supports deferred viewport initialization if the `lazy_bind` attribute is present on the element.
  *
  * @example
  * ```html
  * <!-- Binds presence of 'disabled' to cart emptiness and 'aria-busy' to loading state -->
- * <button bind-attrib="disabled=user.cartIsEmpty; aria-busy=ui.loading">Checkout</button>
+ * <button bind_attrib="disabled=user.cartIsEmpty; aria-busy=ui.loading">Checkout</button>
  *
  * <!-- Binds 'src' and 'alt' attributes -->
- * <img bind-attrib="src=user.avatarUrl; alt=user.fullName" />
+ * <img bind_attrib="src=user.avatarUrl; alt=user.fullName" />
  *
  * <!-- Lazy attribute binding -->
- * <iframe bind-attrib="src=video.embedUrl" lazy-bind></iframe>
+ * <iframe bind_attrib="src=video.embedUrl" lazy_bind></iframe>
  * ```
  */
 export class BindAttribDirective extends Directive {
   /**
    * Attribute flag used to defer binding initialization until the element enters the viewport.
-   * If `lazy-bind` attribute exists, this is non-null.
+   * If `lazy_bind` attribute exists, this is non-null.
    */
-  @attribute('lazy-bind')
+  @attribute('lazy_bind')
   protected accessor lazyBinding_!: null | string;
 
   /**
    * Initializes the directive.
-   * Checks if lazy binding is enabled via `lazy-bind`.
+   * Checks if lazy binding is enabled via `lazy_bind`.
    * If yes, delegates the initialization to `lazyInit_`; otherwise, initializes immediately.
    */
   protected override init_(): void {
@@ -70,13 +70,13 @@ export class BindAttribDirective extends Directive {
       const [attributeName, viewKey_ = ''] = pair.split('=');
       const [namespace, prop] = viewKey_.split('.');
       if (!attributeName || !namespace || !prop) {
-        this.logger_.accident?.('bindingInit_', 'invalid_binding_pair', {pair});
+        DEV_MODE && this.logger_.accident('bindingInit_', 'invalid_binding_pair', {pair});
         continue;
       }
 
       const viewModel = service_binding.getViewModel(namespace);
       if (!viewModel) {
-        this.logger_.accident?.('bindingInit_', 'missing_view_model', {namespace});
+        DEV_MODE && this.logger_.accident('bindingInit_', 'missing_view_model', {namespace});
         continue;
       }
 
@@ -111,6 +111,6 @@ export class BindAttribDirective extends Directive {
 }
 
 /**
- * Helper to register `BindAttribDirective` lazily under the `bind-attrib` attribute.
+ * Helper to register `BindAttribDirective` lazily under the `bind_attrib` attribute.
  */
-export const registerBindAttribDirective = lazyDirective('bind-attrib', BindAttribDirective);
+export const registerBindAttribDirective = lazyDirective('bind_attrib', BindAttribDirective);

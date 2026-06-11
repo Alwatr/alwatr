@@ -186,6 +186,10 @@ export class FsmService<
       this.executeEffects__(event, nextState.context, this.config_.states[nextState.name]?.entry);
       this.spawnActors__(event, nextState.context, this.config_.states[nextState.name]?.actor);
     }
+
+    if (!isExternalTransition && transition.action) {
+      this.executeEffects__(event, nextContext, transition.action);
+    }
   }
 
   /**

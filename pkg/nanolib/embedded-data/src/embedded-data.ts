@@ -98,7 +98,7 @@ export class EmbeddedDataCollector<T> {
 
     const rawData = element.textContent;
     if (!rawData) {
-      this.logger_.accident('extractRawData_', 'element_empty', {attributeName: this.attributeName_});
+      DEV_MODE && this.logger_.accident('extractRawData_', 'element_empty', {attributeName: this.attributeName_});
       return null;
     }
 
@@ -144,10 +144,11 @@ export class EmbeddedDataCollector<T> {
 
     // Open/Closed Principle
     if (this.validator_ && !this.validator_(parsedData)) {
-      this.logger_.accident('collect', 'data_validation_failed', {
-        attributeName: this.attributeName_,
-        data: parsedData,
-      });
+      DEV_MODE
+        && this.logger_.accident('collect', 'data_validation_failed', {
+          attributeName: this.attributeName_,
+          data: parsedData,
+        });
       return null;
     }
 

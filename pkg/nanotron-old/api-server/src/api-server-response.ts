@@ -144,16 +144,17 @@ export class NanotronServerResponse {
 
     if (this.raw_.writableFinished && this.hasBeenSent_ === false) {
       // The response has already been sent by direct access to the server api.
-      this.logger_.accident('reply', 'server_response_writable_finished_directly');
+      DEV_MODE && this.logger_.accident('reply', 'server_response_writable_finished_directly');
       this.hasBeenSent_ = true;
     }
 
     if (this.hasBeenSent_) {
-      this.logger_.accident('reply', 'reply_already_sent', {
-        url: this.clientRequest.url.debugId,
-        replySent: this.hasBeenSent_,
-        writableFinished: this.raw_.writableFinished,
-      });
+      DEV_MODE
+        && this.logger_.accident('reply', 'reply_already_sent', {
+          url: this.clientRequest.url.debugId,
+          replySent: this.hasBeenSent_,
+          writableFinished: this.raw_.writableFinished,
+        });
       return;
     }
 

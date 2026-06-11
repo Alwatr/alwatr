@@ -353,6 +353,39 @@ describe('FsmService', () => {
 
       internalFsm.destroy();
     });
+
+    it('should execute action effect during internal transitions', async () => {
+      const actionEffect = jest.fn();
+      const internalFsm = createFsmService({
+        name: 'internal-action-test',
+        initial: 'active',
+        context: {count: 0},
+        states: {
+          active: {
+            on: {
+              INCREMENT: {
+                assigner: (_, context) => ({...context, count: context.count + 1}),
+                action: actionEffect,
+              },
+            },
+          },
+        },
+      });
+
+      internalFsm.dispatch({type: 'INCREMENT'});
+      await nextMacrotask();
+
+      const state = internalFsm.stateSignal.get();
+      expect(state.name).toBe('active');
+      expect(state.context.count).toBe(1);
+      expect(actionEffect).toHaveBeenCalledTimes(1);
+      expect(actionEffect).toHaveBeenCalledWith(
+        expect.objectContaining({type: 'INCREMENT'}),
+        expect.objectContaining({count: 1}),
+      );
+
+      internalFsm.destroy();
+    });
   });
 
   // ── Multiple Assigners ────────────────────────────────────────────────────

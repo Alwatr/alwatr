@@ -407,7 +407,7 @@ export abstract class Directive {
       element = this.element_.querySelector<HTMLElement>(element);
     }
     if (element == null) {
-      this.logger_.accident('on', 'target_not_found', {target: element});
+      DEV_MODE && this.logger_.accident('on', 'target_not_found', {target: element});
       return;
     }
 

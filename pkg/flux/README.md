@@ -388,7 +388,7 @@ import {service_binding, createStateSignal} from '@alwatr/flux';
 // 1. Create domain state signal
 const userSignal = createStateSignal({
   name: 'user',
-  initialValue: {firstName: 'Ali', lastName: 'Mihandoost', cart: []},
+  initialValue: {firstName: 'Ali', lastName: 'Mihandoost', cart: [], progress: '30%'},
 });
 
 // 2. Project domain state to flat view model representation
@@ -396,6 +396,7 @@ service_binding.createViewModel('user', userSignal, (u) => ({
   firstName: u.firstName,
   fullName: `${u.firstName} ${u.lastName}`,
   cartIsEmpty: u.cart.length === 0,
+  progress: u.progress,
 }));
 ```
 
@@ -403,22 +404,25 @@ In your HTML, bind properties using declarative attributes:
 
 ```html
 <!-- Text Content Binding -->
-<h2 bind-text="user.fullName">Loading...</h2>
+<h2 bind_text="user.fullName">Loading...</h2>
 
 <!-- Value Binding with active cursor position preservation guard -->
 <input
   type="text"
-  bind-value="user.firstName"
+  bind_value="user.firstName"
   on-input="ui_edit_name:$value"
 />
 
 <!-- Attribute Binding (boolean presence toggling / nullish removal) -->
-<button bind-attrib="disabled=user.cartIsEmpty">Checkout</button>
+<button bind_attrib="disabled=user.cartIsEmpty">Checkout</button>
+
+<!-- CSS Custom Property (Variable) Binding (nullish removal support) -->
+<div bind_css_var="--player-progress: user.progress"></div>
 
 <!-- Lazy Binding (evaluated only when element enters viewport) -->
 <div
-  bind-text="user.fullName"
-  lazy-bind
+  bind_text="user.fullName"
+  lazy_bind
 ></div>
 ```
 
@@ -426,7 +430,8 @@ In your HTML, bind properties using declarative attributes:
 
 - **Cursor Preservation**: Writing to input values directly in other frameworks often resets the cursor caret to the end of the text. `@alwatr/bind` compares values and only writes to the DOM if the value changed, preserving typing cursor position perfectly.
 - **Presence-Aware Attributes**: Binds attributes intelligently. A `boolean` value toggles attribute presence, a `nullish` value removes the attribute, and any other value sets the attribute as a string.
-- **Lazy Initialization**: Placing `lazy-bind` on elements defers signal subscription and DOM updates until the element physically intersects the viewport, optimizing rendering performance on large pages.
+- **CSS Variable Binding**: Dynamically sets custom style properties on elements, facilitating performance-oriented animations, progress bars, themes, and dynamic layout variables.
+- **Lazy Initialization**: Placing `lazy_bind` on elements defers signal subscription and DOM updates until the element physically intersects the viewport, optimizing rendering performance on large pages.
 
 ---
 
@@ -1157,13 +1162,13 @@ Destroys the ViewModel's computed signal and removes the namespace from the acti
 
 #### Directives HTML Syntax
 
-- **`bind-text="namespace.prop"`**
+- **`bind_text="namespace.prop"`**
   Updates the element's `textContent` to the property value. Maps nullish values (`null`/`undefined`) to `''`.
 
-- **`bind-value="namespace.prop"`**
+- **`bind_value="namespace.prop"`**
   Updates input element values safely. Skips DOM writing if the element's value is already equal to the bound value to prevent caret cursor jumping in active text inputs.
 
-- **`bind-attrib="attr1=namespace.prop1; attr2=namespace.prop2"`**
+- **`bind_attrib="attr1=namespace.prop1; attr2=namespace.prop2"`**
   Updates target DOM attributes.
   - A boolean value toggles the attribute's presence.
   - A nullish value (`null` or `undefined`) removes the attribute.

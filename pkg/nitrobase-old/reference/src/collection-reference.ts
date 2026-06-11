@@ -93,22 +93,22 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
     this.logger__.logMethod?.('validateContext__');
 
     if (this.context__.ok !== true) {
-      this.logger__.accident?.('validateContext__', 'store_not_ok');
+      DEV_MODE && this.logger__.accident('validateContext__', 'store_not_ok');
       throw new Error('store_not_ok', {cause: {context: this.context__}});
     }
 
     if (this.context__.meta === undefined) {
-      this.logger__.accident?.('validateContext__', 'store_meta_undefined');
+      DEV_MODE && this.logger__.accident('validateContext__', 'store_meta_undefined');
       throw new Error('store_meta_undefined', {cause: {context: this.context__}});
     }
 
     if (this.context__.meta.type !== StoreFileType.Collection) {
-      this.logger__.accident?.('validateContext__', 'collection_type_invalid', this.context__.meta);
+      DEV_MODE && this.logger__.accident('validateContext__', 'collection_type_invalid', this.context__.meta);
       throw new Error('collection_type_invalid', {cause: this.context__.meta});
     }
 
     if (this.context__.meta.fv !== CollectionReference.fileFormatVersion) {
-      this.logger__.incident?.('validateContext__', 'store_file_version_incompatible', {
+      DEV_MODE && this.logger__.incident?.('validateContext__', 'store_file_version_incompatible', {
         old: this.context__.meta.fv,
         new: CollectionReference.fileFormatVersion,
       });
@@ -125,7 +125,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
     this.logger__.logMethod?.('migrateContext__');
 
     if (this.context__.meta.fv > CollectionReference.fileFormatVersion) {
-      this.logger__.accident('migrateContext__', 'store_version_incompatible', this.context__.meta);
+      DEV_MODE && this.logger__.accident('migrateContext__', 'store_version_incompatible', this.context__.meta);
       throw new Error('store_version_incompatible', {cause: this.context__.meta});
     }
 
@@ -296,7 +296,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
   private item__(itemId: string | number): CollectionItem<TItem> {
     const item = this.context__.data[itemId];
     if (item === undefined) {
-      this.logger__.accident('item__', 'collection_item_not_found', {itemId});
+      DEV_MODE && this.logger__.accident('item__', 'collection_item_not_found', {itemId});
       throw new Error('collection_item_not_found', {cause: {itemId}});
     }
     return item;
@@ -367,7 +367,7 @@ export class CollectionReference<TItem extends JsonObject = JsonObject> {
   public addItem(itemId: string | number, data: TItem): void {
     this.logger__.logMethodArgs?.('addItem', {itemId, data});
     if (this.hasItem(itemId)) {
-      this.logger__.accident('addItem', 'collection_item_exist', {itemId});
+      DEV_MODE && this.logger__.accident('addItem', 'collection_item_exist', {itemId});
       throw new Error('collection_item_exist', {cause: {itemId}});
     }
 

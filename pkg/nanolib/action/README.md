@@ -239,6 +239,7 @@ on-<eventType>="actionId[:payload][; modifier1,modifier2,…]"
 | `:$value`    | `element.value` (for `<input>`, `<select>`, `<textarea>`)      |
 | `:$formdata` | `Object.fromEntries(new FormData(form))` from nearest `<form>` |
 | `:$checked`  | `(element as HTMLInputElement).checked` for checkboxes/radios  |
+| `:$dataset`  | `{...element.dataset}` containing all custom data attributes   |
 
 ---
 

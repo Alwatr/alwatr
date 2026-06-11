@@ -192,7 +192,7 @@ export class AlwatrNitrobase {
     let fileStoreRef: DocumentReference | CollectionReference;
     if (stat.type === StoreFileType.Document) {
       if (data === undefined) {
-        logger.accident('newStoreFile__', 'document_data_required', stat);
+        DEV_MODE && logger.accident('newStoreFile__', 'document_data_required', stat);
         throw new Error('document_data_required', {cause: stat});
       }
       fileStoreRef = DocumentReference.newRefFromData(stat, data, this.storeChanged_);
@@ -201,12 +201,12 @@ export class AlwatrNitrobase {
       fileStoreRef = CollectionReference.newRefFromData(stat, this.storeChanged_);
     }
     else {
-      logger.accident('newStoreFile__', 'store_file_type_not_supported', stat);
+      DEV_MODE && logger.accident('newStoreFile__', 'store_file_type_not_supported', stat);
       throw new Error('store_file_type_not_supported', {cause: stat});
     }
 
     if (this.rootDb__.hasItem(fileStoreRef.id)) {
-      logger.accident('newStoreFile__', 'store_file_already_defined', stat);
+      DEV_MODE && logger.accident('newStoreFile__', 'store_file_already_defined', stat);
       throw new Error('store_file_already_defined', {cause: stat});
     }
 
@@ -241,21 +241,21 @@ export class AlwatrNitrobase {
     if (Object.hasOwn(this.cacheReferences__, id)) {
       const ref = this.cacheReferences__[id];
       if (!(ref instanceof DocumentReference)) {
-        logger.accident('openDocument', 'document_wrong_type', id);
+        DEV_MODE && logger.accident('openDocument', 'document_wrong_type', id);
         throw new Error('document_wrong_type', {cause: id});
       }
       return this.cacheReferences__[id] as unknown as DocumentReference<TDoc>;
     }
 
     if (!this.rootDb__.hasItem(id)) {
-      logger.accident('openDocument', 'document_not_found', id);
+      DEV_MODE && logger.accident('openDocument', 'document_not_found', id);
       throw new Error('document_not_found', {cause: id});
     }
 
     const storeStat = this.rootDb__.getItemData(id);
 
     if (storeStat.type != StoreFileType.Document) {
-      logger.accident('openDocument', 'document_wrong_type', id);
+      DEV_MODE && logger.accident('openDocument', 'document_wrong_type', id);
       throw new Error('document_wrong_type', {cause: id});
     }
 
@@ -290,7 +290,7 @@ export class AlwatrNitrobase {
     if (Object.hasOwn(this.cacheReferences__, id)) {
       const ref = this.cacheReferences__[id];
       if (!(ref instanceof CollectionReference)) {
-        logger.accident('openCollection', 'collection_wrong_type', id);
+        DEV_MODE && logger.accident('openCollection', 'collection_wrong_type', id);
         throw new Error('collection_wrong_type', {cause: id});
       }
       return this.cacheReferences__[id] as unknown as CollectionReference<TItem>;
@@ -298,14 +298,14 @@ export class AlwatrNitrobase {
 
     // load and create new collection reference
     if (!this.rootDb__.hasItem(id)) {
-      logger.accident('openCollection', 'collection_not_found', id);
+      DEV_MODE && logger.accident('openCollection', 'collection_not_found', id);
       throw new Error('collection_not_found', {cause: id});
     }
 
     const storeStat = this.rootDb__.getItemData(id);
 
     if (storeStat.type != StoreFileType.Collection) {
-      logger.accident('openCollection', 'collection_wrong_type', id);
+      DEV_MODE && logger.accident('openCollection', 'collection_wrong_type', id);
       throw new Error('collection_not_found', {cause: id});
     }
 
@@ -355,7 +355,7 @@ export class AlwatrNitrobase {
     const id_ = getStoreId(storeId);
     logger.logMethodArgs?.('removeStore', id_);
     if (!this.rootDb__.hasItem(id_)) {
-      logger.accident('removeStore', 'document_not_found', id_);
+      DEV_MODE && logger.accident('removeStore', 'document_not_found', id_);
       throw new Error('document_not_found', {cause: id_});
     }
     const ref = this.cacheReferences__[id_];

@@ -33,7 +33,7 @@ export function directive(name: string) {
     }
 
     if (directiveRegistry_.has(name)) {
-      logger.accident('@directive', 'duplicate_directive_registration', {name});
+      DEV_MODE && logger.accident('@directive', 'duplicate_directive_registration', {name});
       return;
     }
 

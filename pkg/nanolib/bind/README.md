@@ -12,7 +12,7 @@ In traditional modern frameworks, updating state triggers virtual DOM reconcilia
 
 1. **Reactive Projections (ViewModels)**: Instead of binding raw, complex domain signals directly to the UI, you define flat **ViewModels** inside namespaces. These ViewModels project complex domain states into flat records of presentation-ready primitives (`string`, `number`, `boolean`, `null`, `undefined`).
 2. **Surgical DOM Updates**: Attributes on DOM elements act as binding anchors. The library hooks directly into the ViewModel's updates and modifies only the targeted text nodes or attributes—without re-running components or diffing trees.
-3. **Decoupled Binding**: Views declare _what_ to bind in HTML (`bind-text="user.fullName"`), and the JS controller defines _how_ that data gets derived. This keeps your HTML extremely readable and completely separates presentation from business logic.
+3. **Decoupled Binding**: Views declare _what_ to bind in HTML (`bind_text="user.fullName"`), and the JS controller defines _how_ that data gets derived. This keeps your HTML extremely readable and completely separates presentation from business logic.
 
 ---
 
@@ -20,12 +20,12 @@ In traditional modern frameworks, updating state triggers virtual DOM reconcilia
 
 - ⚡ **Zero Virtual DOM Overhead**: Updates map directly to `element.textContent`, `element.value`, or attributes.
 - 🎯 **Surgical Reactivity**: Only the DOM elements bound to the modified properties will re-render.
-- 🛡️ **Cursor Preservation Guard (`bind-value`)**: Binds input element values securely, checking for changes before writing to the DOM. This guards against the browser resetting the text cursor position while typing in an input field.
-- 💡 **Presence-Aware Attribute Binding (`bind-attrib`)**:
+- 🛡️ **Cursor Preservation Guard (`bind_value`)**: Binds input element values securely, checking for changes before writing to the DOM. This guards against the browser resetting the text cursor position while typing in an input field.
+- 💡 **Presence-Aware Attribute Binding (`bind_attrib`)**:
   - `boolean` values toggle the _presence_ of the attribute (perfect for `disabled`, `checked`, `hidden`).
   - `null`/`undefined` values _remove_ the attribute from the DOM.
   - Primitive values set the attribute value as a string.
-- 💤 **Lazy Viewport Evaluation (`lazy-bind`)**: Defer binding registration and signal subscription until the element physically enters the viewport (using `IntersectionObserver` via `@alwatr/directive`). This is ideal for off-screen cards, slow-loading inputs, or heavy dashboard elements.
+- 💤 **Lazy Viewport Evaluation (`lazy_bind`)**: Defer binding registration and signal subscription until the element physically enters the viewport (using `IntersectionObserver` via `@alwatr/directive`). This is ideal for off-screen cards, slow-loading inputs, or heavy dashboard elements.
 
 ---
 
@@ -38,7 +38,7 @@ Call `setupBindDirectives()` at your application's bootstrap phase to register t
 ```typescript
 import {setupBindDirectives} from '@alwatr/bind';
 
-// Register bind-text, bind-value, and bind-attrib directives
+// Register bind_text, bind_value, and bind_attrib directives
 setupBindDirectives();
 ```
 
@@ -90,22 +90,22 @@ Use the declarative attributes to bind elements to the ViewModel.
 
 ```html
 <!-- Binds textContent to 'user.fullName' -->
-<h2 bind-text="user.fullName">Loading user...</h2>
+<h2 bind_text="user.fullName">Loading user...</h2>
 
 <!-- Binds input value with cursor position preservation -->
 <input
   type="text"
-  bind-value="user.firstName"
+  bind_value="user.firstName"
   on-input="ui_edit_first_name:$value"
 />
 
 <!-- Binds 'disabled' attribute based on boolean state, and 'aria-busy' based on loading -->
-<button bind-attrib="disabled=user.cartIsEmpty; aria-busy=user.showLoading">Checkout</button>
+<button bind_attrib="disabled=user.cartIsEmpty; aria-busy=user.showLoading">Checkout</button>
 
 <!-- Lazy loading: updates only when scroll brings the card into viewport -->
 <div
-  bind-text="user.fullName"
-  lazy-bind
+  bind_text="user.fullName"
+  lazy_bind
 ></div>
 ```
 
@@ -141,11 +141,11 @@ Destroys the ViewModel computed signal, unsubscribing from the source signal, an
 
 ## 🧩 HTML Attribute Directives
 
-### `bind-text="namespace.property"`
+### `bind_text="namespace.property"`
 
 Sets the element's `textContent` to the string value of the ViewModel's property. Maps `null`/`undefined` to `''`.
 
-### `bind-value="namespace.property"`
+### `bind_value="namespace.property"`
 
 Sets the element's `value` attribute (for inputs, selects, textareas). Features a **DOM write guard**:
 
@@ -157,7 +157,7 @@ if (inputEl.value !== nextValue) {
 
 This ensures that user input typing feels smooth and the text cursor does not reset or jump to the end of the input field.
 
-### `bind-attrib="attr1=namespace.prop1; attr2=namespace.prop2"`
+### `bind_attrib="attr1=namespace.prop1; attr2=namespace.prop2"`
 
 Binds element attributes to ViewModel properties. Multiple attributes are semicolon-separated.
 
@@ -167,7 +167,7 @@ Binds element attributes to ViewModel properties. Multiple attributes are semico
 - **Nullish values (`null`/`undefined`)**: Removes the attribute entirely.
 - **Other values**: Sets the attribute value coerced as a string.
 
-### `lazy-bind`
+### `lazy_bind`
 
 When placed alongside any of the above binding attributes, the directive delays its ViewModel subscription and DOM update cycle until the element intersects with the viewport. This dramatically boosts initial boot time and reduces active subscriptions for long or heavy pages.
 

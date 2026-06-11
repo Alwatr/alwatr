@@ -83,17 +83,17 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
     this.logger__.logMethod?.('validateContext__');
 
     if (this.context__.ok !== true) {
-      this.logger__.accident?.('validateContext__', 'store_not_ok');
+      DEV_MODE && this.logger__.accident('validateContext__', 'store_not_ok');
       throw new Error('store_not_ok', {cause: {context: this.context__}});
     }
 
     if (this.context__.meta === undefined) {
-      this.logger__.accident?.('validateContext__', 'store_meta_undefined');
+      DEV_MODE && this.logger__.accident('validateContext__', 'store_meta_undefined');
       throw new Error('store_meta_undefined', {cause: {context: this.context__}});
     }
 
     if (this.context__.meta.type !== StoreFileType.Document) {
-      this.logger__.accident?.('validateContext__', 'document_type_invalid', this.context__.meta);
+      DEV_MODE && this.logger__.accident('validateContext__', 'document_type_invalid', this.context__.meta);
       throw new Error('document_type_invalid', {cause: this.context__.meta});
     }
 
@@ -115,7 +115,7 @@ export class DocumentReference<TDoc extends JsonObject = JsonObject> {
     this.logger__.logMethod?.('migrateContext__');
 
     if (this.context__.meta.fv > DocumentReference.fileFormatVersion) {
-      this.logger__.accident('migrateContext__', 'store_version_incompatible', this.context__.meta);
+      DEV_MODE && this.logger__.accident('migrateContext__', 'store_version_incompatible', this.context__.meta);
       throw new Error('store_version_incompatible', {cause: this.context__.meta});
     }
 
