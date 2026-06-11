@@ -75,7 +75,7 @@ export class BindCssVarDirective extends Directive {
       const viewKey_ = pair.substring(index + 1).trim();
       const [namespace, prop] = viewKey_.split('.');
 
-      if (!cssVarName || !namespace || !prop) {
+      if (!cssVarName || !namespace || !prop || !cssVarName.startsWith('--')) {
         DEV_MODE && this.logger_.accident('bindingInit_', 'invalid_binding_pair', {pair});
         continue;
       }
