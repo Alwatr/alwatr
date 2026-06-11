@@ -98,35 +98,39 @@ export function defineFsmConfig<
  * ```
  */
 export function createFsmHelpers<
+  TState extends string,
   TEvent extends MachineEvent,
   TContext extends Record<string, unknown> = Record<string, never>,
 >() {
   return {
-    defineFsmConfig: <TState extends string>(
+    defineFsmConfig: (
       config: StateMachineConfig<TState, TEvent, TContext>,
     ): StateMachineConfig<TState, TEvent, TContext> => config,
 
     defineStateActor: (actor: StateActor<TEvent, TContext>): StateActor<TEvent, TContext> => actor,
     defineStateActors: <T extends Record<string, StateActor<TEvent, TContext>>>(actors: T): T => actors,
 
-    defineEffect: (effect: Effect<TEvent, TContext>): Effect<TEvent, TContext> => effect,
+    defineEffect: <E extends TEvent['type']>(
+      effect: Effect<Extract<TEvent, {type: E}>, TContext>,
+    ): Effect<Extract<TEvent, {type: E}>, TContext> => effect,
     defineEffects: <T extends Record<string, Effect<TEvent, TContext>>>(effects: T): T => effects,
 
-    defineAssigner: <E extends TEvent = TEvent>(assigner: Assigner<E, TContext>): Assigner<E, TContext> => assigner,
+    defineAssigner: <E extends TEvent['type']>(
+      assigner: Assigner<Extract<TEvent, {type: E}>, TContext>,
+    ): Assigner<Extract<TEvent, {type: E}>, TContext> => assigner,
     defineAssigners: <T extends Record<string, Assigner<TEvent, TContext>>>(assigners: T): T => assigners,
 
-    defineGuard: <E extends TEvent = TEvent>(guard: Guard<E, TContext>): Guard<E, TContext> => guard,
+    defineGuard: <E extends TEvent['type']>(
+      guard: Guard<Extract<TEvent, {type: E}>, TContext>,
+    ): Guard<Extract<TEvent, {type: E}>, TContext> => guard,
     defineGuards: <T extends Record<string, Guard<TEvent, TContext>>>(guards: T): T => guards,
 
-    defineTransition: <TState extends string = string, E extends TEvent = TEvent>(
-      transition: Transition<TState, E, TContext>,
-    ): Transition<TState, E, TContext> => transition,
+    defineTransition: <E extends TEvent['type']>(
+      transition: Transition<TState, Extract<TEvent, {type: E}>, TContext>,
+    ): Transition<TState, Extract<TEvent, {type: E}>, TContext> => transition,
 
     defineTransitions: <
-      TState extends string = string,
       T extends {
-        readonly [E in TEvent['type']]?: SingleOrArray<Transition<TState, Extract<TEvent, {type: E}>, TContext>>;
-      } = {
         readonly [E in TEvent['type']]?: SingleOrArray<Transition<TState, Extract<TEvent, {type: E}>, TContext>>;
       },
     >(
