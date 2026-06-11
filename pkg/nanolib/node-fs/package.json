@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/node-fs",
-  "version": "9.33.1",
+  "version": "9.36.0",
   "description": "Enhanced file system operations in Node.js with asynchronous queue to prevent parallel writes.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

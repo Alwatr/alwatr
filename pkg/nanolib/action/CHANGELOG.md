@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.36.0](https://github.com/Alwatr/alwatr/compare/v9.35.0...v9.36.0) (2026-06-11)
+
+### 🐛 Bug Fixes
+
+* **action-service:** update type assertion for listener keys to improve type safety ([a41f4a7](https://github.com/Alwatr/alwatr/commit/a41f4a73594f8b9f5d1ffc2349536cf248f465a1))
+
+### 🔨 Code Refactoring
+
+* **action-service:** make subscribeAll generic for improved type safety ([5faab4e](https://github.com/Alwatr/alwatr/commit/5faab4e2241fe0174dc50a4086f761e6d0dc45fb))
+
 ## [9.35.0](https://github.com/Alwatr/alwatr/compare/v9.34.0...v9.35.0) (2026-06-11)
 
 ### ✨ Features

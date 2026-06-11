@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.36.0](https://github.com/Alwatr/alwatr/compare/v9.35.0...v9.36.0) (2026-06-11)
+
+### ✨ Features
+
+* **types:** extend JsonPrimitive type to include undefined for better JSON compatibility ([cb165b2](https://github.com/Alwatr/alwatr/commit/cb165b288506eb0398f36190d28eb2813546a1db))
+
 ## [9.33.1](https://github.com/Alwatr/alwatr/compare/v9.33.0...v9.33.1) (2026-06-10)
 
 **Note:** Version bump only for package @alwatr/type-helper

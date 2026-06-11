@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/global-this",
-  "version": "9.33.1",
+  "version": "9.36.0",
   "description": "Provides access to `globalThis`, ensuring cross-platform compatibility, including browsers (`window`), Node.js (`global`), and Web Workers (`self`).",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

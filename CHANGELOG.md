@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.36.0](https://github.com/Alwatr/alwatr/compare/v9.35.0...v9.36.0) (2026-06-11)
+
+### ✨ Features
+
+* **fsm:** add transition definition helpers for improved state management ([f57ca8d](https://github.com/Alwatr/alwatr/commit/f57ca8d7257d82eb9d1d7395be92dba219a51a03))
+* **fsm:** enhance createFsmHelpers with improved type safety for event handling ([3c8a4c6](https://github.com/Alwatr/alwatr/commit/3c8a4c6c0318bed39b1ec874063e44d002160d04))
+* **fsm:** update createFsmService and createFsmHelpers to use StateMachineSchema for improved clarity ([b731ec4](https://github.com/Alwatr/alwatr/commit/b731ec4aaa1e73f2bec11ccc56795df67be9f4d1))
+* **fsm:** update FsmService to use StateMachineSchema for configuration ([6a14c0c](https://github.com/Alwatr/alwatr/commit/6a14c0cd1de0e546e51179ce326720ce370fa5e8))
+* **fsm:** update StateMachineConfig to StateMachineSchema for improved clarity and accuracy in state machine definition ([02149f4](https://github.com/Alwatr/alwatr/commit/02149f4612839e1ce8d256fc042415d37cce8860))
+* **types:** extend JsonPrimitive type to include undefined for better JSON compatibility ([cb165b2](https://github.com/Alwatr/alwatr/commit/cb165b288506eb0398f36190d28eb2813546a1db))
+
+### 🐛 Bug Fixes
+
+* **action-service:** update type assertion for listener keys to improve type safety ([a41f4a7](https://github.com/Alwatr/alwatr/commit/a41f4a73594f8b9f5d1ffc2349536cf248f465a1))
+
+### 🔨 Code Refactoring
+
+* **action-service:** make subscribeAll generic for improved type safety ([5faab4e](https://github.com/Alwatr/alwatr/commit/5faab4e2241fe0174dc50a4086f761e6d0dc45fb))
+* **fsm:** remove unused defineFsmConfig function for cleaner code ([3b57547](https://github.com/Alwatr/alwatr/commit/3b5754737e0211ee64edb51d5fb46865d66443e9))
+* **type:** remove unused import of SignalConfig for cleaner code ([8b513ba](https://github.com/Alwatr/alwatr/commit/8b513ba104d12e04a632bb7a1ae2671e85ce935f))
+
 ## [9.35.0](https://github.com/Alwatr/alwatr/compare/v9.34.0...v9.35.0) (2026-06-11)
 
 ### ✨ Features
