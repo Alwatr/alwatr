@@ -85,12 +85,6 @@ export class ActionService {
    */
   private readonly delegatedEventTypes__ = new Set<string>();
 
-  /**
-   * Bound delegation handler for add/removeEventListener.
-   * @private
-   */
-  private readonly handleDelegatedEventBound__ = this.handleDelegatedEvent__.bind(this);
-
   constructor() {
     DEV_MODE && this.logger__.logMethod?.('constructor');
     this.registerDefaultModifiersAndResolvers__();
@@ -313,7 +307,7 @@ export class ActionService {
       const eventType = eventTypes[index];
       if (this.delegatedEventTypes__.has(eventType)) continue;
       this.delegatedEventTypes__.add(eventType);
-      document.addEventListener(eventType, this.handleDelegatedEventBound__, {capture: true});
+      document.addEventListener(eventType, this.handleDelegatedEvent__, {capture: true});
     }
   }
 
@@ -331,7 +325,7 @@ export class ActionService {
       return;
     }
     for (const eventType of this.delegatedEventTypes__) {
-      document.removeEventListener(eventType, this.handleDelegatedEventBound__, {capture: true});
+      document.removeEventListener(eventType, this.handleDelegatedEvent__, {capture: true});
     }
     this.delegatedEventTypes__.clear();
     this.descriptorCache__.clear();
@@ -368,7 +362,7 @@ export class ActionService {
    * Global event delegation handler.
    * @private
    */
-  private handleDelegatedEvent__(event: Event): void {
+  private handleDelegatedEvent__ = (event: Event): void => {
     const eventType = event.type;
     DEV_MODE && this.logger__.logMethodArgs?.('handleDelegatedEvent__', {eventType});
 
@@ -452,7 +446,7 @@ export class ActionService {
     }
 
     this.internalChannel__.dispatch(action.type, action);
-  }
+  };
 
   /**
    * Registers default modifiers and resolvers.
