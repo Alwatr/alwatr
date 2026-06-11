@@ -71,17 +71,6 @@ export function createFsmService<
 }
 
 /**
- * Utility for defining strongly-typed FSM configs with great DX.
- */
-export function defineFsmConfig<
-  TState extends string,
-  TEvent extends MachineEvent,
-  TContext extends Record<string, unknown> = Record<string, never>,
->(config: StateMachineConfig<TState, TEvent, TContext>): StateMachineConfig<TState, TEvent, TContext> {
-  return config;
-}
-
-/**
  * Creates a set of type-safe helpers for defining StateActors, Effects, Assigners, and Guards bound to specific TEvent and TContext.
  * This avoids type casting (e.g. `as StateActor<TEvent, TContext>`) and provides contextual typing for function parameters.
  *
