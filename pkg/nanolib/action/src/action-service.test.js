@@ -253,6 +253,17 @@ describe('ActionService — Built-in Modifiers & Resolvers', () => {
       expect(resolver({}, checkbox)).toBe(false);
     });
   });
+
+  describe('$dataset resolver', () => {
+    it('should resolve dataset properties as a plain object', () => {
+      const resolver = service['payloadRegistry__'].get('$dataset');
+      const element = document.createElement('div');
+      element.dataset.userId = '123';
+      element.dataset.role = 'admin';
+
+      expect(resolver({}, element)).toEqual({userId: '123', role: 'admin'});
+    });
+  });
 });
 
 // ─── 4. Event Delegation & Parsing ─────────────────────────────────────────────

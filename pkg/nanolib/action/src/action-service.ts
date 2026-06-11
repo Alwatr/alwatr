@@ -485,6 +485,10 @@ export class ActionService {
     this.registerPayloadResolver('$checked', (_event, element) => {
       return 'checked' in element ? (element as HTMLInputElement).checked : null;
     });
+
+    this.registerPayloadResolver('$dataset', (_event, element) => {
+      return {...(element as HTMLElement).dataset};
+    });
   }
 }
 
