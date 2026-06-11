@@ -199,7 +199,7 @@ export class NitrobaseUserManagement<TUser extends JsonObject> implements Nitrob
       ownerId: userId,
     };
     if (this.nitrobase_.hasStore(storeId)) {
-      this.logger_.accident?.('newUserInfoDocument_', 'store_already_exists', storeId);
+      DEV_MODE && this.logger_.accident('newUserInfoDocument_', 'store_already_exists', storeId);
       return;
     }
     this.nitrobase_.newDocument<TUser>(storeId, userInfo);

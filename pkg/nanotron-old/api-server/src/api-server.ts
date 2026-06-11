@@ -232,10 +232,11 @@ export class NanotronApiServer {
   }
 
   protected handleClientError_(err: NodeJS.ErrnoException, socket: Duplex): void {
-    this.logger_.accident('handleClientError_', 'http_server_client_error', {
-      errCode: err.code,
-      errMessage: err.message,
-    });
+    DEV_MODE
+      && this.logger_.accident('handleClientError_', 'http_server_client_error', {
+        errCode: err.code,
+        errMessage: err.message,
+      });
 
     const errorCode = err.code?.toLowerCase() ?? `error_${HttpStatusCodes.Error_Client_400_Bad_Request}`;
     const errorMessage = err.message ?? HttpStatusMessages[HttpStatusCodes.Error_Client_400_Bad_Request];
@@ -258,7 +259,7 @@ export class NanotronApiServer {
     this.logger_.logMethod?.('handleClientRequest_');
 
     if (nativeClientRequest.url === undefined) {
-      this.logger_.accident('handleClientRequest_', 'http_server_url_undefined');
+      DEV_MODE && this.logger_.accident('handleClientRequest_', 'http_server_url_undefined');
       return;
     }
 

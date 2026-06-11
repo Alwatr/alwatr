@@ -37,7 +37,7 @@ export function lazyDirective<T extends Directive>(
   // Return a closure — no registration happens here, only when the returned function is called.
   return function registerDirective(autoBootstrap: boolean, bootstrapRoot?: HTMLElement | Document): void {
     if (directiveRegistry_.has(name)) {
-      logger.accident('lazyDirective', 'duplicate_directive_registration', {name});
+      DEV_MODE && logger.accident('lazyDirective', 'duplicate_directive_registration', {name});
       return;
     }
     DEV_MODE && logger.logMethodArgs?.('lazyDirective', name);

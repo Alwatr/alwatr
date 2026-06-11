@@ -75,7 +75,7 @@ class BindingService {
     DEV_MODE && this.logger_.logMethodArgs?.('createViewModel', {namespace});
 
     if (this.viewModels_.has(namespace)) {
-      this.logger_.accident?.('createViewModel', 'duplicate_namespace_rejected', {namespace});
+      DEV_MODE && this.logger_.accident('createViewModel', 'duplicate_namespace_rejected', {namespace});
       return;
     }
 

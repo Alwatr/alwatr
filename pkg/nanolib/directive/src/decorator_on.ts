@@ -47,7 +47,7 @@ export function on<D extends Directive = Directive>(
       const targetElement = selector ? this.element_.querySelector(selector) : this.element_;
 
       if (selector && targetElement === null) {
-        this.logger_.accident('on', 'selector_not_found', {selector});
+        DEV_MODE && this.logger_.accident('on', 'selector_not_found', {selector});
         return;
       }
 

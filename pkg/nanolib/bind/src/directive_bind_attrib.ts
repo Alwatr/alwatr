@@ -70,13 +70,13 @@ export class BindAttribDirective extends Directive {
       const [attributeName, viewKey_ = ''] = pair.split('=');
       const [namespace, prop] = viewKey_.split('.');
       if (!attributeName || !namespace || !prop) {
-        this.logger_.accident?.('bindingInit_', 'invalid_binding_pair', {pair});
+        DEV_MODE && this.logger_.accident('bindingInit_', 'invalid_binding_pair', {pair});
         continue;
       }
 
       const viewModel = service_binding.getViewModel(namespace);
       if (!viewModel) {
-        this.logger_.accident?.('bindingInit_', 'missing_view_model', {namespace});
+        DEV_MODE && this.logger_.accident('bindingInit_', 'missing_view_model', {namespace});
         continue;
       }
 

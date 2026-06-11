@@ -264,7 +264,7 @@ export class ActionService {
   registerModifier(name: string, handler: ModifierHandler): void {
     DEV_MODE && this.logger__.logMethodArgs?.('registerModifier', {name});
     if (this.modifierRegistry__.has(name)) {
-      this.logger__.accident('registerModifier', 'modifier_already_registered', {name});
+      DEV_MODE && this.logger__.accident('registerModifier', 'modifier_already_registered', {name});
       return;
     }
     this.modifierRegistry__.set(name, handler);
@@ -286,7 +286,7 @@ export class ActionService {
   registerPayloadResolver(name: string, resolver: PayloadResolver): void {
     DEV_MODE && this.logger__.logMethodArgs?.('registerPayloadResolver', {name});
     if (this.payloadRegistry__.has(name)) {
-      this.logger__.accident('registerPayloadResolver', 'payload_resolver_already_registered', {name});
+      DEV_MODE && this.logger__.accident('registerPayloadResolver', 'payload_resolver_already_registered', {name});
       return;
     }
     this.payloadRegistry__.set(name, resolver);
@@ -309,7 +309,7 @@ export class ActionService {
       return;
     }
 
-    for (const eventType of eventTypes) {
+    for (const eventType of new Set(eventTypes)) {
       if (this.delegatedEventTypes__.has(eventType)) continue;
       this.delegatedEventTypes__.add(eventType);
       document.body.addEventListener(eventType, this.handleDelegatedEventBound__, {capture: true});
@@ -348,7 +348,7 @@ export class ActionService {
 
     const match = attributeValue.match(syntaxRegex);
     if (!match) {
-      this.logger__.accident('parseDescriptor__', 'invalid_syntax', {attributeValue});
+      DEV_MODE && this.logger__.accident('parseDescriptor__', 'invalid_syntax', {attributeValue});
       this.descriptorCache__.set(attributeValue, null);
       return null;
     }
@@ -380,12 +380,13 @@ export class ActionService {
 
     const attributeValue = actionElement.getAttribute?.(actionAttrib)?.trim();
     if (!attributeValue) {
-      this.logger__.accident('handleDelegatedEvent__', 'empty_attribute', {eventType, actionElement});
+      DEV_MODE && this.logger__.accident('handleDelegatedEvent__', 'empty_attribute', {eventType, actionElement});
       return;
     }
 
     if (!(actionElement instanceof HTMLElement)) {
-      this.logger__.accident('handleDelegatedEvent__', 'target_not_html_element', {eventType, actionElement});
+      DEV_MODE
+        && this.logger__.accident('handleDelegatedEvent__', 'target_not_html_element', {eventType, actionElement});
       return;
     }
 
@@ -410,21 +411,23 @@ export class ActionService {
       if (modifier === 'once') continue;
       const handler = this.modifierRegistry__.get(modifier);
       if (!handler) {
-        this.logger__.accident('handleDelegatedEvent__', 'unknown_modifier', {
-          eventType,
-          modifier,
-          attributeValue,
-          descriptor,
-        });
+        DEV_MODE
+          && this.logger__.accident('handleDelegatedEvent__', 'unknown_modifier', {
+            eventType,
+            modifier,
+            attributeValue,
+            descriptor,
+          });
         return;
       }
       try {
         if (handler(event, actionElement, action) === false) return;
       } catch (error) {
-        this.logger__.accident('handleDelegatedEvent__', 'modifier_execution_failed', {
-          modifier,
-          error,
-        });
+        DEV_MODE
+          && this.logger__.accident('handleDelegatedEvent__', 'modifier_execution_failed', {
+            modifier,
+            error,
+          });
         return;
       }
     }
@@ -435,10 +438,11 @@ export class ActionService {
         try {
           (action as {payload: unknown}).payload = resolver(event, actionElement);
         } catch (error) {
-          this.logger__.accident('handleDelegatedEvent__', 'payload_resolver_failed', {
-            resolver: descriptor.payload,
-            error,
-          });
+          DEV_MODE
+            && this.logger__.accident('handleDelegatedEvent__', 'payload_resolver_failed', {
+              resolver: descriptor.payload,
+              error,
+            });
           return;
         }
       }

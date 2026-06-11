@@ -241,7 +241,7 @@ export abstract class SignalBase<T> {
    */
   protected checkDestroyed_(): void {
     if (this.isDestroyed__) {
-      this.logger_.accident('checkDestroyed_', 'attempt_to_use_destroyed_signal');
+      DEV_MODE && this.logger_.accident('checkDestroyed_', 'attempt_to_use_destroyed_signal');
       throw new Error(`Cannot interact with a destroyed signal (id: ${this.name})`);
     }
   }

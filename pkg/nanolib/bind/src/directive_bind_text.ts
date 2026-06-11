@@ -59,12 +59,12 @@ export class BindTextDirective extends Directive {
     DEV_MODE && this.logger_.logMethod?.('bindingInit_');
     const [namespace, prop] = this.attributeValue.trim().split('.');
     if (!namespace || !prop) {
-      this.logger_.accident?.('bindingInit_', 'invalid_binding', {namespace, prop});
+      DEV_MODE && this.logger_.accident('bindingInit_', 'invalid_binding', {namespace, prop});
       return;
     }
     const viewModel = service_binding.getViewModel(namespace);
     if (!viewModel) {
-      this.logger_.accident?.('bindingInit_', 'missing_view_model', {namespace});
+      DEV_MODE && this.logger_.accident('bindingInit_', 'missing_view_model', {namespace});
       return;
     }
 
