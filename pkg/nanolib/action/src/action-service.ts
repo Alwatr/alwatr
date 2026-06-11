@@ -467,6 +467,11 @@ export class ActionService {
       return form.checkValidity();
     });
 
+    this.registerModifier('stop', (event) => {
+      event.stopPropagation();
+      return true;
+    });
+
     // Built-in resolvers
     this.registerPayloadResolver('$value', (_event, element) => {
       return 'value' in element ? (element as {value: unknown}).value : null;
