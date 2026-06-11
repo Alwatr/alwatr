@@ -44,13 +44,13 @@ export class ActionService {
     // dialog events
     'cancel',
     // player events
-    'loadedmetadata',
-    'play',
-    'pause',
-    'timeupdate',
-    'ratechange',
-    'ended',
-    'error',
+    // 'loadedmetadata',
+    // 'play',
+    // 'pause',
+    // 'timeupdate',
+    // 'ratechange',
+    // 'ended',
+    // 'error',
   ];
 
   private readonly logger__ = createLogger('action_service');
