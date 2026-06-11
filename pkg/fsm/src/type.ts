@@ -1,5 +1,4 @@
 import type {JsonValue, SingleOrArray} from '@alwatr/type-helper';
-import type {SignalConfig} from '@alwatr/signal';
 
 /**
  * Represents the state of a state machine, including its current finite state value
