@@ -80,7 +80,7 @@ export class ActionService {
   private readonly descriptorCache__ = new Map<string, ActionDescriptor | null>();
 
   /**
-   * Tracked event types currently delegated to `document.body`.
+   * Tracked event types currently delegated to `document`.
    * @private
    */
   private readonly delegatedEventTypes__ = new Set<string>();
@@ -293,7 +293,7 @@ export class ActionService {
   }
 
   /**
-   * Registers global event delegation listeners on `document.body`.
+   * Registers global event delegation listeners on `document`.
    *
    * @param eventTypes - List of event types to delegate. Defaults to ActionService.DEFAULT_DELEGATED_EVENTS.
    *
@@ -304,15 +304,16 @@ export class ActionService {
    */
   setupDelegation(eventTypes: readonly string[] = ActionService.DEFAULT_DELEGATED_EVENTS): void {
     DEV_MODE && this.logger__.logMethodArgs?.('setupDelegation', {eventTypes});
-    if (typeof document === 'undefined' || !document.body) {
-      DEV_MODE && this.logger__.incident?.('setupDelegation', 'document_body_not_found');
+    if (typeof document === 'undefined') {
+      DEV_MODE && this.logger__.incident?.('setupDelegation', 'document_not_found');
       return;
     }
 
-    for (const eventType of new Set(eventTypes)) {
+    for (let index = 0; index < eventTypes.length; index++) {
+      const eventType = eventTypes[index];
       if (this.delegatedEventTypes__.has(eventType)) continue;
       this.delegatedEventTypes__.add(eventType);
-      document.body.addEventListener(eventType, this.handleDelegatedEventBound__, {capture: true});
+      document.addEventListener(eventType, this.handleDelegatedEventBound__, {capture: true});
     }
   }
 
@@ -326,11 +327,11 @@ export class ActionService {
    */
   teardownDelegation(): void {
     DEV_MODE && this.logger__.logMethod?.('teardownDelegation');
-    if (typeof document === 'undefined' || !document.body) {
+    if (typeof document === 'undefined') {
       return;
     }
     for (const eventType of this.delegatedEventTypes__) {
-      document.body.removeEventListener(eventType, this.handleDelegatedEventBound__, {capture: true});
+      document.removeEventListener(eventType, this.handleDelegatedEventBound__, {capture: true});
     }
     this.delegatedEventTypes__.clear();
     this.descriptorCache__.clear();
