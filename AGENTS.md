@@ -73,9 +73,9 @@ Apply these principles to every implementation decision — in TypeScript, Nunju
 
 - Always declare `protected readonly logger_ = createLogger('component-name')` in services and directives.
 - Use log levels correctly:
-  - `this.logger_.logMethod?.('methodName')` or `logMethodArgs?.('methodName', {param})` on entry.
-  - `this.logger_.incident?.('methodName', 'reason', {meta})` for expected/recoverable issues.
-  - `this.logger_.accident('methodName', 'reason', {meta})` for unexpected, non-fatal errors (e.g., DOM element not found).
+  - `DEV_MODE && this.logger_.logMethod?.('methodName')` or `logMethodArgs?.('methodName', {param})` on entry.
+  - `DEV_MODE && this.logger_.incident?.('methodName', 'reason', {meta})` for expected/recoverable issues.
+  - `DEV_MODE && this.logger_.accident?.('methodName', 'reason', {meta})` for unexpected, non-fatal errors (e.g., DOM element not found).
   - `this.logger_.error('methodName', 'reason', {meta})` for fatal, unrecoverable errors.
 
 ### 3. Null Safety & Guards
