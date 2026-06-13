@@ -5,13 +5,14 @@ import {service_binding, type BindingValue} from './main.js';
 /**
  * A declarative DOM directive that binds DOM element attributes to view model properties.
  *
- * Syntax: `bind_attrib="attributeName=namespace.propertyName; anotherAttribute=namespace.anotherProperty"`
+ * Syntax: `bind_attrib="attributeName=[!]namespace.propertyName; anotherAttribute=[!]namespace.anotherProperty"`
  *
  * Supports binding multiple attributes on the same element separated by semicolons (`;`).
  *
  * Behavior:
  * - `boolean` value: Toggles the presence of the attribute (idiomatic for boolean attributes like `disabled`, `hidden`, `readonly`, `checked`).
  * - `null` / `undefined` value: Removes the attribute from the element.
+ * - Negation (`!`): Prefixing the property with `!` (e.g., `!namespace.prop`) will negate the value (coerced as boolean).
  * - Any other type: Coerced via `String(value)` and set as the attribute's value.
  *
  * Includes a redundant write guard (via `lastValues_`) that skips calls to the DOM if the property value hasn't changed.
@@ -21,6 +22,9 @@ import {service_binding, type BindingValue} from './main.js';
  * ```html
  * <!-- Binds presence of 'disabled' to cart emptiness and 'aria-busy' to loading state -->
  * <button bind_attrib="disabled=user.cartIsEmpty; aria-busy=ui.loading">Checkout</button>
+ *
+ * <!-- Binds 'hidden' to the negation of isPlaying -->
+ * <div bind_attrib="hidden=!player.isPlaying">Player is paused</div>
  *
  * <!-- Binds 'src' and 'alt' attributes -->
  * <img bind_attrib="src=user.avatarUrl; alt=user.fullName" />
@@ -67,9 +71,22 @@ export class BindAttribDirective extends Directive {
       const pair = rawPair.trim();
       if (pair === '') continue;
 
-      const [attributeName, viewKey_ = ''] = pair.split('=');
-      const [namespace, prop] = viewKey_.split('.');
-      if (!attributeName || !namespace || !prop) {
+      const [rawAttributeName = '', rawViewKey = ''] = pair.split('=');
+      const attributeName = rawAttributeName.trim();
+      const viewKey_ = rawViewKey.trim();
+
+      if (attributeName === '' || viewKey_ === '') {
+        DEV_MODE && this.logger_.accident('bindingInit_', 'invalid_binding_pair', {pair});
+        continue;
+      }
+
+      const isNot = viewKey_.startsWith('!');
+      const cleanViewKey = isNot ? viewKey_.slice(1).trim() : viewKey_;
+      const [rawNamespace = '', rawProp = ''] = cleanViewKey.split('.');
+      const namespace = rawNamespace.trim();
+      const prop = rawProp.trim();
+
+      if (namespace === '' || prop === '') {
         DEV_MODE && this.logger_.accident('bindingInit_', 'invalid_binding_pair', {pair});
         continue;
       }
@@ -81,7 +98,7 @@ export class BindAttribDirective extends Directive {
       }
 
       this.subscribe_(viewModel, (state) => {
-        const value = state[prop];
+        const value = isNot ? !state[prop] : state[prop];
         if (Object.is(this.lastValues_[attributeName], value)) return; // guard against redundant updates
         this.lastValues_[attributeName] = value;
         this.applyAttribute_(attributeName, value);

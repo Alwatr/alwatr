@@ -1,11 +1,8 @@
-// Define DEV_MODE globally so that TS source files can run directly in bun test
-globalThis.DEV_MODE = true;
-
 import {describe, it, expect, beforeEach, afterEach} from 'bun:test';
 import {GlobalRegistrator} from '@happy-dom/global-registrator';
 import {createStateSignal} from '@alwatr/signal';
 import {bootstrapDirectives} from '@alwatr/directive';
-import {service_binding, setupBindDirectives} from './main.js';
+import {service_binding, setupBindDirectives} from '@alwatr/bind';
 
 // Register DOM globals if not already done (guard against double-registration)
 if (typeof document === 'undefined') {
