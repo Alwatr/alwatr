@@ -11,6 +11,7 @@ import type {
   ModifierHandler,
   PayloadResolver,
   ActionConfig,
+  ActionSubscribeOptions,
 } from './type.js';
 
 /**
@@ -96,6 +97,7 @@ export class ActionService {
    * @template K - A key of ActionRecord.
    * @param type    - Action type or array of action types to subscribe to.
    * @param handler - Callback invoked with the full Action object.
+   * @param options - Subscription options (e.g., custom filter callback to skip/run handlers).
    * @returns SubscribeResult containing an `unsubscribe` method.
    *
    * @example
@@ -109,15 +111,37 @@ export class ActionService {
    * const sub2 = actionService.on(['ui_open_drawer', 'ui_close_drawer'], (action) => {
    *   console.log(action.type, action.payload);
    * });
+   *
+   * // Subscribe with a filter option
+   * const sub3 = actionService.on('ui_slider_change', (action) => {
+   *   console.log('Volume changed to', action.payload);
+   * }, {
+   *   filter: (action) => action.context === 'volume',
+   * });
    * ```
    */
-  on<K extends keyof ActionRecord>(type: K | K[], handler: (action: Action<K>) => void): SubscribeResult {
+  on<K extends keyof ActionRecord>(
+    type: K | K[],
+    handler: (action: Action<K>) => void,
+    options?: ActionSubscribeOptions<K>,
+  ): SubscribeResult {
     DEV_MODE && this.logger__.logMethodArgs?.('on', {type});
+
+    const filter = options?.filter;
+    const finalHandler =
+      filter ?
+        (action: Action<K>) => {
+          if (filter(action)) {
+            handler(action);
+          }
+        }
+      : handler;
+
     if (Array.isArray(type)) {
       const typeList = type as K[];
       const unsubscribeList: VoidFunc[] = [];
       for (const type_ of typeList) {
-        unsubscribeList.push(this.internalChannel__.on(type_, handler as (action: Action) => void).unsubscribe);
+        unsubscribeList.push(this.internalChannel__.on(type_, finalHandler).unsubscribe);
       }
       return {
         unsubscribe: () => {
@@ -130,13 +154,14 @@ export class ActionService {
       };
     }
     // else single type
-    return this.internalChannel__.on(type, handler as (action: Action) => void);
+    return this.internalChannel__.on(type, finalHandler);
   }
 
   /**
    * Subscribes to multiple actions at once using a dictionary map.
    *
    * @param listeners - A map of action types to their respective handlers.
+   * @param options - Standard subscription options.
    * @returns A single SubscribeResult to unsubscribe all registered listeners.
    *
    * @example
@@ -149,9 +174,12 @@ export class ActionService {
    * sub.unsubscribe();
    * ```
    */
-  subscribeAll<T extends keyof ActionRecord>(listeners: {
-    readonly [K in T]: (action: Action<K>) => void;
-  }): SubscribeResult {
+  subscribeAll<T extends keyof ActionRecord>(
+    listeners: {
+      readonly [K in T]: (action: Action<K>) => void;
+    },
+    options?: ActionSubscribeOptions<T>,
+  ): SubscribeResult {
     DEV_MODE && this.logger__.logMethodArgs?.('subscribeAll', Object.keys(listeners));
     const keys = Object.keys(listeners) as T[];
     const unsubscribeList = new Array<VoidFunc>(keys.length);
@@ -159,7 +187,7 @@ export class ActionService {
     for (let index = 0; index < keys.length; index++) {
       const actionId = keys[index];
       const handler = listeners[actionId];
-      unsubscribeList[index] = this.on(actionId, handler as (action: Action) => void).unsubscribe;
+      unsubscribeList[index] = this.on(actionId, handler, options).unsubscribe;
     }
 
     return {
