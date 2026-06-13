@@ -188,3 +188,15 @@ export type ActionConfig<K extends keyof ActionRecord = keyof ActionRecord> = {
     : {readonly type: P; readonly payload: ActionRecord[P]};
 }[K];
 
+/**
+ * Subscription options for action handlers.
+ */
+export interface SubscribeOptions<K extends keyof ActionRecord = keyof ActionRecord> {
+  /**
+   * Filter callback to conditionally process actions.
+   * Return `true` to invoke the handler; `false` to skip.
+   */
+  readonly filter?: (action: Action<K>) => boolean;
+}
+
+

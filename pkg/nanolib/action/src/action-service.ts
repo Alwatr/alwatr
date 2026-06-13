@@ -11,6 +11,7 @@ import type {
   ModifierHandler,
   PayloadResolver,
   ActionConfig,
+  SubscribeOptions,
 } from './type.js';
 
 /**
@@ -111,13 +112,28 @@ export class ActionService {
    * });
    * ```
    */
-  on<K extends keyof ActionRecord>(type: K | K[], handler: (action: Action<K>) => void): SubscribeResult {
+  on<K extends keyof ActionRecord>(
+    type: K | K[],
+    handler: (action: Action<K>) => void,
+    options?: SubscribeOptions<K>,
+  ): SubscribeResult {
     DEV_MODE && this.logger__.logMethodArgs?.('on', {type});
+
+    const filter = options?.filter;
+    const finalHandler =
+      filter ?
+        (action: Action<K>) => {
+          if (filter(action)) {
+            handler(action);
+          }
+        }
+      : handler;
+
     if (Array.isArray(type)) {
       const typeList = type as K[];
       const unsubscribeList: VoidFunc[] = [];
       for (const type_ of typeList) {
-        unsubscribeList.push(this.internalChannel__.on(type_, handler as (action: Action) => void).unsubscribe);
+        unsubscribeList.push(this.internalChannel__.on(type_, finalHandler as (action: Action) => void).unsubscribe);
       }
       return {
         unsubscribe: () => {
@@ -130,13 +146,14 @@ export class ActionService {
       };
     }
     // else single type
-    return this.internalChannel__.on(type, handler as (action: Action) => void);
+    return this.internalChannel__.on(type, finalHandler as (action: Action) => void);
   }
 
   /**
    * Subscribes to multiple actions at once using a dictionary map.
    *
    * @param listeners - A map of action types to their respective handlers.
+   * @param options - Standard subscription options.
    * @returns A single SubscribeResult to unsubscribe all registered listeners.
    *
    * @example
@@ -149,9 +166,12 @@ export class ActionService {
    * sub.unsubscribe();
    * ```
    */
-  subscribeAll<T extends keyof ActionRecord>(listeners: {
-    readonly [K in T]: (action: Action<K>) => void;
-  }): SubscribeResult {
+  subscribeAll<T extends keyof ActionRecord>(
+    listeners: {
+      readonly [K in T]: (action: Action<K>) => void;
+    },
+    options?: SubscribeOptions<T>,
+  ): SubscribeResult {
     DEV_MODE && this.logger__.logMethodArgs?.('subscribeAll', Object.keys(listeners));
     const keys = Object.keys(listeners) as T[];
     const unsubscribeList = new Array<VoidFunc>(keys.length);
@@ -159,7 +179,11 @@ export class ActionService {
     for (let index = 0; index < keys.length; index++) {
       const actionId = keys[index];
       const handler = listeners[actionId];
-      unsubscribeList[index] = this.on(actionId, handler as (action: Action) => void).unsubscribe;
+      unsubscribeList[index] = this.on(
+        actionId,
+        handler as (action: Action) => void,
+        options as SubscribeOptions<T>,
+      ).unsubscribe;
     }
 
     return {
