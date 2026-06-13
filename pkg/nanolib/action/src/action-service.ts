@@ -133,7 +133,7 @@ export class ActionService {
       const typeList = type as K[];
       const unsubscribeList: VoidFunc[] = [];
       for (const type_ of typeList) {
-        unsubscribeList.push(this.internalChannel__.on(type_, finalHandler as (action: Action) => void).unsubscribe);
+        unsubscribeList.push(this.internalChannel__.on(type_, finalHandler).unsubscribe);
       }
       return {
         unsubscribe: () => {
@@ -146,7 +146,7 @@ export class ActionService {
       };
     }
     // else single type
-    return this.internalChannel__.on(type, finalHandler as (action: Action) => void);
+    return this.internalChannel__.on(type, finalHandler);
   }
 
   /**
@@ -179,11 +179,7 @@ export class ActionService {
     for (let index = 0; index < keys.length; index++) {
       const actionId = keys[index];
       const handler = listeners[actionId];
-      unsubscribeList[index] = this.on(
-        actionId,
-        handler as (action: Action) => void,
-        options as SubscribeOptions<T>,
-      ).unsubscribe;
+      unsubscribeList[index] = this.on(actionId, handler, options).unsubscribe;
     }
 
     return {
