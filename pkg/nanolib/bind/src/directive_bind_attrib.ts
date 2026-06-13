@@ -68,7 +68,10 @@ export class BindAttribDirective extends Directive {
       if (pair === '') continue;
 
       const [attributeName, viewKey_ = ''] = pair.split('=');
-      const [namespace, prop] = viewKey_.split('.');
+      const isNot = viewKey_.startsWith('!');
+      const cleanViewKey = isNot ? viewKey_.slice(1) : viewKey_;
+      const [namespace, prop] = cleanViewKey.split('.');
+
       if (!attributeName || !namespace || !prop) {
         DEV_MODE && this.logger_.accident('bindingInit_', 'invalid_binding_pair', {pair});
         continue;
@@ -81,7 +84,10 @@ export class BindAttribDirective extends Directive {
       }
 
       this.subscribe_(viewModel, (state) => {
-        const value = state[prop];
+        let value = state[prop];
+        if (isNot) {
+          value = !value;
+        }
         if (Object.is(this.lastValues_[attributeName], value)) return; // guard against redundant updates
         this.lastValues_[attributeName] = value;
         this.applyAttribute_(attributeName, value);
