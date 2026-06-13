@@ -300,14 +300,15 @@ actionService.on('ui_submit_order', (action) => {
 
 The pre-instantiated factory service exported for standard usage.
 
-#### `actionService.on(type, handler)`
+#### `actionService.on(type, handler, options?)`
 
 Subscribes to a single action or an array of actions. O(1) routing via `ChannelSignal`.
 
 ```ts
 actionService.on<K extends keyof ActionRecord>(
   type: K | K[],
-  handler: (action: Action<K>) => Awaitable<void>
+  handler: (action: Action<K>) => Awaitable<void>,
+  options?: SubscribeOptions<K>
 ): SubscribeResult;
 
 // Usage:
@@ -316,6 +317,11 @@ actionService.on('ui_open_drawer', (action) => { ... });
 
 // Subscribe to multiple action types
 actionService.on(['ui_open_drawer', 'ui_close_drawer'], (action) => { ... });
+
+// Subscribe with a filter callback (e.g. only handle actions with a specific context)
+actionService.on('ui_slider_change', (action) => { ... }, {
+  filter: (action) => action.context === 'volume',
+});
 ```
 
 #### `actionService.dispatch(action)`
