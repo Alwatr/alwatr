@@ -308,7 +308,7 @@ Subscribes to a single action or an array of actions. O(1) routing via `ChannelS
 actionService.on<K extends keyof ActionRecord>(
   type: K | K[],
   handler: (action: Action<K>) => Awaitable<void>,
-  options?: SubscribeOptions<K>
+  options?: ActionSubscribeOptions<K>
 ): SubscribeResult;
 
 // Usage:

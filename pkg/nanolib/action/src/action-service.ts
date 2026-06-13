@@ -11,7 +11,7 @@ import type {
   ModifierHandler,
   PayloadResolver,
   ActionConfig,
-  SubscribeOptions,
+  ActionSubscribeOptions,
 } from './type.js';
 
 /**
@@ -123,7 +123,7 @@ export class ActionService {
   on<K extends keyof ActionRecord>(
     type: K | K[],
     handler: (action: Action<K>) => void,
-    options?: SubscribeOptions<K>,
+    options?: ActionSubscribeOptions<K>,
   ): SubscribeResult {
     DEV_MODE && this.logger__.logMethodArgs?.('on', {type});
 
@@ -178,7 +178,7 @@ export class ActionService {
     listeners: {
       readonly [K in T]: (action: Action<K>) => void;
     },
-    options?: SubscribeOptions<T>,
+    options?: ActionSubscribeOptions<T>,
   ): SubscribeResult {
     DEV_MODE && this.logger__.logMethodArgs?.('subscribeAll', Object.keys(listeners));
     const keys = Object.keys(listeners) as T[];

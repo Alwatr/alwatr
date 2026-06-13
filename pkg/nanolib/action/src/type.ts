@@ -191,7 +191,7 @@ export type ActionConfig<K extends keyof ActionRecord = keyof ActionRecord> = {
 /**
  * Subscription options for action handlers.
  */
-export interface SubscribeOptions<K extends keyof ActionRecord = keyof ActionRecord> {
+export interface ActionSubscribeOptions<K extends keyof ActionRecord = keyof ActionRecord> {
   /**
    * Filter callback to conditionally process actions.
    * Return `true` to invoke the handler; `false` to skip.
