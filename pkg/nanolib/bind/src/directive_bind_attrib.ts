@@ -98,10 +98,7 @@ export class BindAttribDirective extends Directive {
       }
 
       this.subscribe_(viewModel, (state) => {
-        let value = state[prop];
-        if (isNot) {
-          value = !value;
-        }
+        const value = isNot ? !state[prop] : state[prop];
         if (Object.is(this.lastValues_[attributeName], value)) return; // guard against redundant updates
         this.lastValues_[attributeName] = value;
         this.applyAttribute_(attributeName, value);
