@@ -23,6 +23,7 @@ In traditional modern frameworks, updating state triggers virtual DOM reconcilia
 - 🛡️ **Cursor Preservation Guard (`bind_value`)**: Binds input element values securely, checking for changes before writing to the DOM. This guards against the browser resetting the text cursor position while typing in an input field.
 - 💡 **Presence-Aware Attribute Binding (`bind_attrib`)**:
   - `boolean` values toggle the _presence_ of the attribute (perfect for `disabled`, `checked`, `hidden`).
+  - Negation prefix `!` (e.g. `!player.isPlaying`) negates the value.
   - `null`/`undefined` values _remove_ the attribute from the DOM.
   - Primitive values set the attribute value as a string.
 - 💤 **Lazy Viewport Evaluation (`lazy_bind`)**: Defer binding registration and signal subscription until the element physically enters the viewport (using `IntersectionObserver` via `@alwatr/directive`). This is ideal for off-screen cards, slow-loading inputs, or heavy dashboard elements.
@@ -157,13 +158,15 @@ if (inputEl.value !== nextValue) {
 
 This ensures that user input typing feels smooth and the text cursor does not reset or jump to the end of the input field.
 
-### `bind_attrib="attr1=namespace.prop1; attr2=namespace.prop2"`
+### `bind_attrib="attr1=[!]namespace.prop1; attr2=[!]namespace.prop2"`
 
 Binds element attributes to ViewModel properties. Multiple attributes are semicolon-separated.
 
 - **Boolean values**:
   - `true`: Sets the attribute with an empty string value (e.g., `disabled=""`).
   - `false`: Removes the attribute entirely from the element.
+- **Negation prefix (`!`)**:
+  - Prefixing the property with `!` (e.g., `hidden=!player.isPlaying`) negates the value (coerced as boolean) before applying.
 - **Nullish values (`null`/`undefined`)**: Removes the attribute entirely.
 - **Other values**: Sets the attribute value coerced as a string.
 
