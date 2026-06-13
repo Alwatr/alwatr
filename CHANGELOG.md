@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.37.0](https://github.com/Alwatr/alwatr/compare/v9.36.0...v9.37.0) (2026-06-13)
+
+### ✨ Features
+
+* **action:** add subscription options with custom filter support for action handlers ([8127273](https://github.com/Alwatr/alwatr/commit/81272735be430c64e7d62b89f5fa7774327ab0b6))
+* **action:** add subscription options with filter support for action handlers ([3b6fb11](https://github.com/Alwatr/alwatr/commit/3b6fb111660e4d1b11781f391812295aec907a01))
+* **action:** enhance actionService.on method to support options parameter for filtering ([6c6ec58](https://github.com/Alwatr/alwatr/commit/6c6ec58812512f6b9f96696e657e10ec55c14cac))
+* **action:** rename SubscribeOptions to ActionSubscribeOptions for clarity ([b092a7f](https://github.com/Alwatr/alwatr/commit/b092a7f1ff979bdd89f49fba57d51072567bc943))
+
+### 🐛 Bug Fixes
+
+* **action:** remove unnecessary type assertion in event handler registration ([6853dba](https://github.com/Alwatr/alwatr/commit/6853dbacdc8e448155ae6a3a9f9a2f159cdf12d5))
+* **logging:** add DEV_MODE checks to logging methods for better development control ([3043747](https://github.com/Alwatr/alwatr/commit/3043747afb95b455b02973b9e6c36fe82e096470))
+
+### 🧹 Miscellaneous Chores
+
+* Update AGENTS.md ([b4f7fd0](https://github.com/Alwatr/alwatr/commit/b4f7fd0f8733caab12033586d885de0b37939206))
+
+### 🔗 Dependencies update
+
+* update @happy-dom/global-registrator to version 20.10.3 across all packages ([822da2a](https://github.com/Alwatr/alwatr/commit/822da2ad620d190856b2ec0fe6649c3d3de2059a))
+
 ## [9.36.0](https://github.com/Alwatr/alwatr/compare/v9.35.0...v9.36.0) (2026-06-11)
 
 ### ✨ Features

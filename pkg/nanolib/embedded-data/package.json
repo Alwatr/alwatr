@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/embedded-data",
-  "version": "9.36.0",
+  "version": "9.37.0",
   "description": "Framework-agnostic utility to safely extract, parse, and validate embedded JSON data from <script type=\"application/json\"> DOM nodes. Designed for SSR-friendly state hydration in SPAs and MPAs.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
