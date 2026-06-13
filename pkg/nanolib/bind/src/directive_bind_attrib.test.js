@@ -67,4 +67,25 @@ describe('BindAttribDirective', () => {
     expect(el.getAttribute('data-volume')).toBe('50');
     expect(el.hasAttribute('disabled')).toBe(true);
   });
+
+  it('should tolerate whitespaces around equal signs and semicolons', async () => {
+    const el = document.createElement('div');
+    el.setAttribute('bind_attrib', '  hidden  =  !  player.isPlaying  ;   data-volume   =   player.volume  ; disabled = player.muted ');
+    document.body.appendChild(el);
+
+    bootstrapDirectives();
+    await waitForInit();
+
+    expect(el.hasAttribute('hidden')).toBe(false);
+    expect(el.getAttribute('data-volume')).toBe('80');
+    expect(el.hasAttribute('disabled')).toBe(false);
+
+    // Update state to isPlaying=false, muted=true
+    signal.set({isPlaying: false, volume: 55, muted: true});
+    await waitForInit();
+
+    expect(el.hasAttribute('hidden')).toBe(true);
+    expect(el.getAttribute('data-volume')).toBe('55');
+    expect(el.hasAttribute('disabled')).toBe(true);
+  });
 });

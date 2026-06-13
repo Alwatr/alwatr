@@ -71,12 +71,22 @@ export class BindAttribDirective extends Directive {
       const pair = rawPair.trim();
       if (pair === '') continue;
 
-      const [attributeName, viewKey_ = ''] = pair.split('=');
-      const isNot = viewKey_.startsWith('!');
-      const cleanViewKey = isNot ? viewKey_.slice(1) : viewKey_;
-      const [namespace, prop] = cleanViewKey.split('.');
+      const [rawAttributeName = '', rawViewKey = ''] = pair.split('=');
+      const attributeName = rawAttributeName.trim();
+      const viewKey_ = rawViewKey.trim();
 
-      if (!attributeName || !namespace || !prop) {
+      if (attributeName === '' || viewKey_ === '') {
+        DEV_MODE && this.logger_.accident('bindingInit_', 'invalid_binding_pair', {pair});
+        continue;
+      }
+
+      const isNot = viewKey_.startsWith('!');
+      const cleanViewKey = isNot ? viewKey_.slice(1).trim() : viewKey_;
+      const [rawNamespace = '', rawProp = ''] = cleanViewKey.split('.');
+      const namespace = rawNamespace.trim();
+      const prop = rawProp.trim();
+
+      if (namespace === '' || prop === '') {
         DEV_MODE && this.logger_.accident('bindingInit_', 'invalid_binding_pair', {pair});
         continue;
       }
