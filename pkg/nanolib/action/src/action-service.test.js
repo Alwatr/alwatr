@@ -434,15 +434,15 @@ describe('ActionService — Modifiers Pipeline & Context', () => {
     sub.unsubscribe();
   });
 
-  it('should resolve action-context from closest ancestor', async () => {
+  it('should resolve action_context from closest ancestor', async () => {
     const callback = jest.fn();
     const sub = service.on('ui_ctx_test', callback);
 
     const outer = document.createElement('div');
-    outer.setAttribute('action-context', 'outer-context');
+    outer.setAttribute('action_context', 'outer-context');
 
     const inner = document.createElement('div');
-    inner.setAttribute('action-context', 'inner-context');
+    inner.setAttribute('action_context', 'inner-context');
     outer.appendChild(inner);
 
     const btn = document.createElement('button');

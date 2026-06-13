@@ -84,12 +84,12 @@ export interface Action<K extends keyof ActionRecord = keyof ActionRecord> {
    * The DOM context in which the action was triggered.
    *
    * Extracted at delegation time from the nearest ancestor element that carries
-   * an `action-context` attribute. Useful for scoping the same action type to
+   * an `action_context` attribute. Useful for scoping the same action type to
    * different UI regions (e.g. two sliders on the same page both dispatching
    * `'slider:change'` but with different context values).
    *
    * `undefined` when the action is dispatched programmatically (no DOM involved)
-   * or when no `[action-context]` ancestor exists.
+   * or when no `[action_context]` ancestor exists.
    *
    * @example 'slider-123', 'product-list', 'checkout-form'
    */
@@ -183,9 +183,8 @@ export interface ActionDescriptor {
  * Helper type representing an action configuration that conforms to `ActionRecord` types.
  */
 export type ActionConfig<K extends keyof ActionRecord = keyof ActionRecord> = {
-  readonly [P in K]: ActionRecord[P] extends void | undefined
-    ? {readonly type: P; readonly payload?: undefined}
-    : {readonly type: P; readonly payload: ActionRecord[P]};
+  readonly [P in K]: ActionRecord[P] extends void | undefined ? {readonly type: P; readonly payload?: undefined}
+  : {readonly type: P; readonly payload: ActionRecord[P]};
 }[K];
 
 /**
@@ -198,5 +197,3 @@ export interface ActionSubscribeOptions<K extends keyof ActionRecord = keyof Act
    */
   readonly filter?: (action: Action<K>) => boolean;
 }
-
-

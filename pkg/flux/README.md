@@ -69,7 +69,7 @@ declare module '@alwatr/flux' {
 actionService.on('ui_add_to_cart', (action) => {
   // action.payload is typed as {productId: number; qty: number}
   cartService.add(action.payload.productId, action.payload.qty);
-  // action.context is the nearest [action-context] ancestor value (or undefined)
+  // action.context is the nearest [action_context] ancestor value (or undefined)
   console.log(action.context); // e.g. 'product-list'
 });
 
@@ -123,7 +123,7 @@ lastName.set('Smith'); // Only fullName and the effect re-run — nothing else
 
 ### 🧩 **Declarative HTML Syntax**
 
-Connect DOM events to typed actions without writing JavaScript. Wrap elements in `[action-context]` to scope the same action type to different UI regions:
+Connect DOM events to typed actions without writing JavaScript. Wrap elements in `[action_context]` to scope the same action type to different UI regions:
 
 ```html
 <!-- Simple action -->
@@ -158,13 +158,13 @@ Connect DOM events to typed actions without writing JavaScript. Wrap elements in
 <button on-click="ui_track_impression:hero_banner; once">Learn More</button>
 
 <!-- Context scoping — same action type, different regions -->
-<section action-context="volume">
+<section action_context="volume">
   <input
     type="range"
     on-input="ui_slider_change:$value"
   />
 </section>
-<section action-context="brightness">
+<section action_context="brightness">
   <input
     type="range"
     on-input="ui_slider_change:$value"
@@ -523,7 +523,7 @@ Flux implements a **strict layered architecture** where each layer has a single 
 │  (@alwatr/action — Global Event Delegation + AFSA)        │
 │                                                           │
 │  • Captures DOM events via document.body listener         │
-│  • Resolves [action-context] ancestor → action.context    │
+│  • Resolves [action_context] ancestor → action.context    │
 │  • Parses on-<event> attributes                           │
 │  • Runs modifiers (prevent, validate, once)               │
 │  • Modifiers may enrich action.meta                       │
@@ -638,7 +638,7 @@ interface Action<K extends keyof ActionRecord> {
   type: K;
 
   /**
-   * DOM context from the nearest [action-context] ancestor.
+   * DOM context from the nearest [action_context] ancestor.
    * undefined for programmatic dispatches or when no ancestor exists.
    * Example: 'product-list', 'checkout-form', 'volume-slider'
    */
@@ -662,7 +662,7 @@ This unified structure replaces the previous two-argument `(id, payload)` API. E
 actionService.on('ui_add_to_cart', (action) => {
   console.log(action.type); // 'ui_add_to_cart'
   console.log(action.payload); // {productId: 42, qty: 1} — fully typed
-  console.log(action.context); // 'product-list' — from [action-context] ancestor
+  console.log(action.context); // 'product-list' — from [action_context] ancestor
   console.log(action.meta); // {traceId: '…'} — set by modifiers, or undefined
 });
 ```
