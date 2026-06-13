@@ -97,6 +97,7 @@ export class ActionService {
    * @template K - A key of ActionRecord.
    * @param type    - Action type or array of action types to subscribe to.
    * @param handler - Callback invoked with the full Action object.
+   * @param options - Subscription options (e.g., custom filter callback to skip/run handlers).
    * @returns SubscribeResult containing an `unsubscribe` method.
    *
    * @example
@@ -109,6 +110,13 @@ export class ActionService {
    * // Subscribe to multiple action types
    * const sub2 = actionService.on(['ui_open_drawer', 'ui_close_drawer'], (action) => {
    *   console.log(action.type, action.payload);
+   * });
+   *
+   * // Subscribe with a filter option
+   * const sub3 = actionService.on('ui_slider_change', (action) => {
+   *   console.log('Volume changed to', action.payload);
+   * }, {
+   *   filter: (action) => action.context === 'volume',
    * });
    * ```
    */
