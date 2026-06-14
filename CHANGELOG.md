@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.38.0](https://github.com/Alwatr/alwatr/compare/v9.37.0...v9.38.0) (2026-06-14)
+
+### ✨ Features
+
+* **bind:** add support for negated attributes in BindAttribDirective ([7f49c89](https://github.com/Alwatr/alwatr/commit/7f49c89d845ca7dc02328cd07010fc1cf2309f34))
+* **bind:** enhance BindAttribDirective to tolerate whitespace in attribute bindings ([4ddbbc2](https://github.com/Alwatr/alwatr/commit/4ddbbc2ca1bef211f6afc14f48bb4b0d2b092ea2))
+
+### 🐛 Bug Fixes
+
+* **bind:** simplify value assignment logic in BindAttribDirective ([8c15176](https://github.com/Alwatr/alwatr/commit/8c15176bca3d2cb158150d8f918b29022915897d))
+* update attribute references from action-context to action_context for consistency ([840dae1](https://github.com/Alwatr/alwatr/commit/840dae16da2b542726c2b17fc2d49b3c7917dcfe))
+
+### 🔨 Code Refactoring
+
+* **bind:** update import path for setupBindDirectives and clean up test files ([c93a787](https://github.com/Alwatr/alwatr/commit/c93a7875004afe10dc27640e42884eccaa7675e7))
+
 ## [9.37.0](https://github.com/Alwatr/alwatr/compare/v9.36.0...v9.37.0) (2026-06-13)
 
 ### ✨ Features

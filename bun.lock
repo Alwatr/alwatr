@@ -61,7 +61,7 @@
     },
     "pkg/flux": {
       "name": "@alwatr/flux",
-      "version": "9.37.0",
+      "version": "9.38.0",
       "dependencies": {
         "@alwatr/action": "workspace:*",
         "@alwatr/bind": "workspace:*",
@@ -99,7 +99,7 @@
     },
     "pkg/nanolib/action": {
       "name": "@alwatr/action",
-      "version": "9.37.0",
+      "version": "9.38.0",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
         "@alwatr/signal": "workspace:*",
@@ -127,7 +127,7 @@
     },
     "pkg/nanolib/bind": {
       "name": "@alwatr/bind",
-      "version": "9.37.0",
+      "version": "9.38.0",
       "dependencies": {
         "@alwatr/directive": "workspace:*",
         "@alwatr/logger": "workspace:*",
@@ -396,7 +396,7 @@
     },
     "pkg/nanolib/keyboard-shortcut": {
       "name": "@alwatr/keyboard-shortcut",
-      "version": "9.37.0",
+      "version": "9.38.0",
       "dependencies": {
         "@alwatr/action": "workspace:*",
         "@alwatr/logger": "workspace:*",

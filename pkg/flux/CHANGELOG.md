@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.38.0](https://github.com/Alwatr/alwatr/compare/v9.37.0...v9.38.0) (2026-06-14)
+
+### 🐛 Bug Fixes
+
+* update attribute references from action-context to action_context for consistency ([840dae1](https://github.com/Alwatr/alwatr/commit/840dae16da2b542726c2b17fc2d49b3c7917dcfe))
+
 ## [9.37.0](https://github.com/Alwatr/alwatr/compare/v9.36.0...v9.37.0) (2026-06-13)
 
 **Note:** Version bump only for package @alwatr/flux
