@@ -73,7 +73,7 @@ Apply these principles to every implementation decision — in TypeScript, Nunju
 
 - Always declare `protected readonly logger_ = createLogger('component-name')` in services and directives.
 - Use log levels correctly:
-  - DEV_MODE && this.logger_.logMethod?.('methodName') or DEV_MODE && this.logger_.logMethodArgs?.('methodName', {param}) on entry.
+  - `DEV_MODE && this.logger_.logMethod?.('methodName')` or `DEV_MODE && this.logger_.logMethodArgs?.('methodName', {param})` on entry.
   - `DEV_MODE && this.logger_.incident?.('methodName', 'reason', {meta})` for expected/recoverable issues.
   - `DEV_MODE && this.logger_.accident?.('methodName', 'reason', {meta})` for unexpected, non-fatal errors (e.g., DOM element not found).
   - `this.logger_.error('methodName', 'reason', {meta})` for fatal, unrecoverable errors.
@@ -129,7 +129,7 @@ Use reactive signals instead of full-page updates or heavy VDOM reconciliation:
 
   Example: `<button on-click="ui_add_to_cart:42">Add</button>`
 
-- **Scoping Context:** Use `action-context="contextName"` on ancestors to pass context to action handlers.
+- **Scoping Context:** Use `action_context="contextName"` on ancestors to pass context to action handlers.
 - **Payload Resolvers:** Use built-in resolvers: `:$value` (input value), `:$formdata` (nearest form data object), `:$checked` (checkbox state).
 - **Modifiers:** Use modifiers like `prevent` (calls `preventDefault()`), `stop` (calls `stopPropagation()`), `validate` (validates nearest form), and `once` (dispatches once then removes attribute).
 

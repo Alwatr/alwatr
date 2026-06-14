@@ -422,7 +422,7 @@ export class ActionService {
       actionElement.removeAttribute(actionAttrib);
     }
 
-    const actionContext = actionElement.closest('[action-context]')?.getAttribute('action-context') ?? undefined;
+    const actionContext = actionElement.closest('[action_context]')?.getAttribute('action_context') ?? undefined;
 
     const action: Action = {
       type: descriptor.actionId as keyof ActionRecord,

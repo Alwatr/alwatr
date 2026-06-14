@@ -29,7 +29,7 @@ Every message on the bus is a full **`Action<K>`** object (Alwatr Flux Standard 
 
 ### Global Event Delegation
 
-A single capture-phase listener on `document.body` handles all `on-<eventType>` elements. When an event fires, the handler walks up from `event.target` using `closest('[on-click]')` (or the matching attribute), resolves the nearest `[action-context]` ancestor, parses the attribute value, runs modifiers, resolves the payload, and dispatches the full `Action` object.
+A single capture-phase listener on `document.body` handles all `on-<eventType>` elements. When an event fires, the handler walks up from `event.target` using `closest('[on-click]')` (or the matching attribute), resolves the nearest `[action_context]` ancestor, parses the attribute value, runs modifiers, resolves the payload, and dispatches the full `Action` object.
 
 ```
 User clicks a button
@@ -38,7 +38,7 @@ User clicks a button
 document.body capture listener  (1 listener per event type)
         │
         └─ closest('[on-click]') → finds element
-           closest('[action-context]') → resolves context (e.g. 'product-list')
+           closest('[action_context]') → resolves context (e.g. 'product-list')
            parse attribute → 'ui_add_to_cart:42'
            run modifiers   → none
            resolve payload → '42'
@@ -120,7 +120,7 @@ actionService.on(['ui_open_drawer', 'ui_close_drawer'], (action) => {
 
 actionService.on('ui_add_to_cart', (action) => {
   cartService.add(action.payload.productId, action.payload.qty); // fully typed
-  console.log(action.context); // e.g. 'product-list' — from nearest [action-context] ancestor
+  console.log(action.context); // e.g. 'product-list' — from nearest [action_context] ancestor
 });
 ```
 
@@ -156,20 +156,20 @@ actionService.on('ui_add_to_cart', (action) => {
 <button on-click="ui_welcome_dismissed; once">Got it</button>
 ```
 
-### 4. Context scoping with `action-context`
+### 4. Context scoping with `action_context`
 
-Wrap a group of elements in an `[action-context]` container to scope their actions. The delegation handler automatically resolves the nearest ancestor and attaches its value to `action.context`. This lets the same action type serve multiple independent UI regions without creating separate action names.
+Wrap a group of elements in an `[action_context]` container to scope their actions. The delegation handler automatically resolves the nearest ancestor and attaches its value to `action.context`. This lets the same action type serve multiple independent UI regions without creating separate action names.
 
 ```html
 <!-- Two sliders on the same page, both dispatching 'ui_slider_change' -->
-<section action-context="volume">
+<section action_context="volume">
   <input
     type="range"
     on-input="ui_slider_change:$value"
   />
 </section>
 
-<section action-context="brightness">
+<section action_context="brightness">
   <input
     type="range"
     on-input="ui_slider_change:$value"
@@ -184,7 +184,7 @@ actionService.on('ui_slider_change', (action) => {
 });
 ```
 
-Context is `undefined` when no `[action-context]` ancestor exists — programmatic dispatches also have no context by default.
+Context is `undefined` when no `[action_context]` ancestor exists — programmatic dispatches also have no context by default.
 
 ### 5. Programmatic dispatch
 
@@ -253,7 +253,7 @@ interface Action<K extends keyof ActionRecord> {
   type: K;
 
   /**
-   * DOM context from the nearest [action-context] ancestor.
+   * DOM context from the nearest [action_context] ancestor.
    * undefined for programmatic dispatches or when no ancestor exists.
    */
   context?: string;
@@ -405,7 +405,7 @@ For backwards compatibility with previous versions, the following wrapper functi
 ```
 ┌────────────────────────────────────────────────────────────┐
 │                           UI Layer                         │
-│  <section action-context="cart">                           │
+│  <section action_context="cart">                           │
 │    <button on-click="ui_add_to_cart:42">Add</button>       │
 │  </section>                                                │
 └─────────────────────────┬──────────────────────────────────┘
@@ -415,7 +415,7 @@ For backwards compatibility with previous versions, the following wrapper functi
 │                 Action Layer (@alwatr/action)              │
 │  document.body capture listener (1 per event type)         │
 │  → closest('[on-click]') → parse attribute                 │
-│  → closest('[action-context]') → context = 'cart'          │
+│  → closest('[action_context]') → context = 'cart'          │
 │  → run modifiers (may enrich action.meta)                  │
 │  → resolve payload → '42'                                  │
 │  → actionService.dispatch(Action)                   [O(1)] │
@@ -518,7 +518,7 @@ Follow these rules:
 `@alwatr/action` is the **Action Layer** of the [Alwatr Flux](https://github.com/Alwatr/alwatr/tree/next/pkg/flux) architecture — a complete Unidirectional Data Flow system for building scalable Progressive Web Applications.
 
 ```
-View (HTML on-<event> attributes + action-context)
+View (HTML on-<event> attributes + action_context)
   ↓
 Action Layer (@alwatr/action) — global delegation, O(1) routing, AFSA objects
   ↓

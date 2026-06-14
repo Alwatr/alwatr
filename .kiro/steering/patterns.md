@@ -417,7 +417,7 @@ Every action is a single unified object — not a loose `(id, payload)` pair:
 ```ts
 interface Action<K extends keyof ActionRecord> {
   type: K; // action identifier
-  context?: string; // from nearest [action-context] ancestor
+  context?: string; // from nearest [action_context] ancestor
   payload: ActionRecord[K]; // typed business data
   meta?: Record<string, unknown>; // cross-cutting data (trace IDs, timestamps…)
 }
@@ -426,8 +426,8 @@ interface Action<K extends keyof ActionRecord> {
 ### Unidirectional Data Flow
 
 ```
-UI (HTML attributes + [action-context] scoping)
-  │  <section action-context="product-list">
+UI (HTML attributes + [action_context] scoping)
+  │  <section action_context="product-list">
   │    <button on-click="ui_add_to_cart:42">Add</button>
   │  </section>
   ▼
@@ -555,7 +555,7 @@ on-<eventType>="actionId[:payload][; modifier1,modifier2,…]"
 </form>
 
 <!-- Context scoping — all actions inside carry context='product-list' -->
-<section action-context="product-list">
+<section action_context="product-list">
   <button on-click="ui_add_to_cart:42">Add to Cart</button>
 </section>
 ```
