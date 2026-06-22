@@ -155,7 +155,9 @@ export function createListDirective<T>(config: ListDirectiveConfig<T>): Register
       // The signal invokes the callback immediately with its current value, so the first render is
       // scheduled right after `init_()` — no separate priming step needed.
       this.subscribe_(source(), (items) => {
-        this.items_ = items ?? [];
+        // Defensive guard: a hydrated/serialized source (e.g. EmbeddedDataCollector JSON) could
+        // yield a non-array; fall back to an empty list so `length` and `repeat` never throw.
+        this.items_ = Array.isArray(items) ? items : [];
         this.requestUpdate(); // batched: collapses to a single render_() per macrotask
       });
     }
