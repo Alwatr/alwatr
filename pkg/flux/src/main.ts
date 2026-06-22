@@ -13,3 +13,4 @@ export * from '@alwatr/local-storage';
 export * from '@alwatr/session-storage';
 export * from '@alwatr/page-ready';
 export * from './lit-html.js';
+export * from './list-directive.js';
