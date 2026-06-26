@@ -80,7 +80,7 @@ args+=(
 if $debug; then
   echoColor 3 "Debug mode enabled: skipping minification and enabling linked sourcemaps.\n"
 else
-  args+=('--minify')
+  args+=('--production')
 fi
 
 hasPackages=false
