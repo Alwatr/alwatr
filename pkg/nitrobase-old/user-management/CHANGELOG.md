@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.38.1](https://github.com/Alwatr/alwatr/compare/v9.38.0...v9.38.1) (2026-06-28)
+
+**Note:** Version bump only for package @alwatr/nitrobase-user-management
+
 ## [9.37.0](https://github.com/Alwatr/alwatr/compare/v9.36.0...v9.37.0) (2026-06-13)
 
 **Note:** Version bump only for package @alwatr/nitrobase-user-management

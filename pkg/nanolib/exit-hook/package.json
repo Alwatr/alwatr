@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/exit-hook",
-  "version": "9.36.0",
+  "version": "9.38.1",
   "description": "A utility for registering exit handlers in Node.js.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

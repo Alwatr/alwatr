@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.38.1](https://github.com/Alwatr/alwatr/compare/v9.38.0...v9.38.1) (2026-06-28)
+
+### 🐛 Bug Fixes
+
+* **cli:** change minification flag to production mode in build args ([2f27aa8](https://github.com/Alwatr/alwatr/commit/2f27aa8a225e8b7ad4dbb4916b92bf32e0e64fe8))
+
 ## [9.33.1](https://github.com/Alwatr/alwatr/compare/v9.33.0...v9.33.1) (2026-06-10)
 
 ### 🐛 Bug Fixes

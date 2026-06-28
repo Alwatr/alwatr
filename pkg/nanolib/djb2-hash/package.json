@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/djb2-hash",
-  "version": "9.36.0",
+  "version": "9.38.1",
   "description": "A fast, non-cryptographic hash function based on DJB2.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

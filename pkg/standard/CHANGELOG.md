@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.38.1](https://github.com/Alwatr/alwatr/compare/v9.38.0...v9.38.1) (2026-06-28)
+
+### 🐛 Bug Fixes
+
+* **tsconfig:** set allowImportingTsExtensions to false ([00da7a0](https://github.com/Alwatr/alwatr/commit/00da7a0d317fc3e9e2dcdfd4f197a91421eb25b5))
+
 ## [9.33.0](https://github.com/Alwatr/alwatr/compare/v9.32.0...v9.33.0) (2026-06-10)
 
 ### 🔗 Dependencies update

@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/directive",
-  "version": "9.37.0",
+  "version": "9.38.1",
   "description": "Connect your TypeScript classes to the DOM, declaratively.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

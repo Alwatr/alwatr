@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.38.1](https://github.com/Alwatr/alwatr/compare/v9.38.0...v9.38.1) (2026-06-28)
+
+### 🐛 Bug Fixes
+
+* **cli:** change minification flag to production mode in build args ([2f27aa8](https://github.com/Alwatr/alwatr/commit/2f27aa8a225e8b7ad4dbb4916b92bf32e0e64fe8))
+* **tsconfig:** set allowImportingTsExtensions to false ([00da7a0](https://github.com/Alwatr/alwatr/commit/00da7a0d317fc3e9e2dcdfd4f197a91421eb25b5))
+
+### 🔗 Dependencies update
+
+* update @happy-dom/global-registrator to version ^20.10.6 across multiple packages ([d3ac891](https://github.com/Alwatr/alwatr/commit/d3ac891b06e4379fe227cfa68e34fd72e31d45be))
+
 ## [9.38.0](https://github.com/Alwatr/alwatr/compare/v9.37.0...v9.38.0) (2026-06-14)
 
 ### ✨ Features

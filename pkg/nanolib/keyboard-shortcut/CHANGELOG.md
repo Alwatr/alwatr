@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.38.1](https://github.com/Alwatr/alwatr/compare/v9.38.0...v9.38.1) (2026-06-28)
+
+### 🔗 Dependencies update
+
+* update @happy-dom/global-registrator to version ^20.10.6 across multiple packages ([d3ac891](https://github.com/Alwatr/alwatr/commit/d3ac891b06e4379fe227cfa68e34fd72e31d45be))
+
 ## [9.38.0](https://github.com/Alwatr/alwatr/compare/v9.37.0...v9.38.0) (2026-06-14)
 
 **Note:** Version bump only for package @alwatr/keyboard-shortcut
