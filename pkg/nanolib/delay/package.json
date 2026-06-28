@@ -30,7 +30,7 @@
     "@alwatr/standard": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
     "@happy-dom/global-registrator": "^20.10.6",
-    "@types/node": "^24.13.1",
+    "@types/node": "^24.13.2",
     "typescript": "^6.0.3"
   },
   "scripts": {
