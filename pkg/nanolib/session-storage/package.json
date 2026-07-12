@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/session-storage",
-  "version": "9.38.1",
+  "version": "9.38.2",
   "description": "A modern, simple, and robust solution for managing versioned JSON objects in the browser's `sessionStorage`. This package provides a clean, class-based API with a factory function to ensure your application's data persistence is safe, maintainable, and future-proof within a single tab.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

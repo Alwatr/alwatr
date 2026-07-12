@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/async-queue",
-  "version": "9.38.1",
+  "version": "9.38.2",
   "description": "A queue that executes async tasks in order like mutex and semaphore methodology for javascript and typescript.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

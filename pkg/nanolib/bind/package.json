@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/bind",
-  "version": "9.38.1",
+  "version": "9.38.2",
   "description": "A high-performance and lightweight binding utility for unidirectional data flow and reactive DOM/context interactions.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

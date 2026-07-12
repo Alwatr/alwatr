@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [9.38.2](https://github.com/Alwatr/alwatr/compare/v9.38.1...v9.38.2) (2026-07-12)
+
+### 🧹 Miscellaneous Chores
+
+* update TypeScript and related dependencies to version 7.0.2 across all packages; upgrade prettier to version 3.9.5 ([d84e7af](https://github.com/Alwatr/alwatr/commit/d84e7afd24b5b7660f14e1a03b868979e43dc880))
+
 ## [9.38.1](https://github.com/Alwatr/alwatr/compare/v9.38.0...v9.38.1) (2026-06-28)
 
 **Note:** Version bump only for package @alwatr/crypto

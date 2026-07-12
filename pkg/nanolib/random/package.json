@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/random",
-  "version": "9.38.1",
+  "version": "9.38.2",
   "description": "A lightweight utility library for generating random numbers, strings, UUIDs and more",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
