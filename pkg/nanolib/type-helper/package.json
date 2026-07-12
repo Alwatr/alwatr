@@ -21,7 +21,7 @@
   },
   "sideEffects": false,
   "devDependencies": {
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   },
   "scripts": {
     "b": "bun run build",

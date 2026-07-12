@@ -30,7 +30,7 @@
     "@alwatr/standard": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
     "@happy-dom/global-registrator": "^20.10.6",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   },
   "scripts": {
     "b": "bun run build",
