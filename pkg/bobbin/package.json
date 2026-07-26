@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/bobbin",
-  "version": "0.1.0",
+  "version": "10.0.0",
   "description": "A declarative, build-time data pipeline for fetching, validating, and caching external APIs into JSON files.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",

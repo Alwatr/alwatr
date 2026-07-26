@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/lazy",
-  "version": "9.38.2",
+  "version": "10.0.0",
   "description": "A generic, memory-efficient lazy evaluation wrapper. Defers execution of expensive initializers until the value is first accessed, then caches the result and frees the closure reference for GC.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

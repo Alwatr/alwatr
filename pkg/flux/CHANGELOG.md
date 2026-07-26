@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.0](https://github.com/Alwatr/alwatr/compare/v9.38.2...v10.0.0) (2026-07-26)
+
+### 🧹 Miscellaneous Chores
+
+* enhance package.json and .syncpackrc configurations with additional sorting and export options ([cc0df6a](https://github.com/Alwatr/alwatr/commit/cc0df6ae3f92f09587418e9eae781bb5e90f12fe))
+
 ## [9.38.2](https://github.com/Alwatr/alwatr/compare/v9.38.1...v9.38.2) (2026-07-12)
 
 ### 🧹 Miscellaneous Chores

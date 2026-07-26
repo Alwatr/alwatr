@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.0](https://github.com/Alwatr/alwatr/compare/v9.38.2...v10.0.0) (2026-07-26)
+
+### 🔗 Dependencies update
+
+* update @happy-dom/global-registrator to version 20.11.1 in multiple packages and upgrade prettier to version 3.9.6 ([fd85555](https://github.com/Alwatr/alwatr/commit/fd855554de36e3b99637ca4277f6f863558639b3))
+
 ## [9.38.2](https://github.com/Alwatr/alwatr/compare/v9.38.1...v9.38.2) (2026-07-12)
 
 ### 🧹 Miscellaneous Chores

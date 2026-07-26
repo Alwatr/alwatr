@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/is-number",
-  "version": "9.38.2",
+  "version": "10.0.0",
   "description": "A simple utility to Check the value is number or can convert to a number, for example string ' 123 ' can be converted to 123.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

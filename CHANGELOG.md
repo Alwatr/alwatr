@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.0](https://github.com/Alwatr/alwatr/compare/v9.38.2...v10.0.0) (2026-07-26)
+
+### ✨ Features
+
+* add CLI surface for @alwatr/weaver with help and argument parsing ([c66cbfc](https://github.com/Alwatr/alwatr/commit/c66cbfc564d56659048d33eb7468eb4d37269732))
+* add escapeHtml function for HTML escaping in @alwatr/loom ([d21df9e](https://github.com/Alwatr/alwatr/commit/d21df9eb25cd002b3cfc4a85e8af13ae7da9c147))
+* add initial package.json for @alwatr/bobbin with dependencies and scripts ([1414f64](https://github.com/Alwatr/alwatr/commit/1414f646ff532b4d3b7447e9140a55c599d0c99b))
+* add initial package.json for @alwatr/loom with configuration and scripts ([09f3909](https://github.com/Alwatr/alwatr/commit/09f3909d74cef5640c69707a7fed907c7e8c3a66))
+* add initial package.json for @alwatr/weaver with dependencies and scripts ([2a9b9a5](https://github.com/Alwatr/alwatr/commit/2a9b9a5db64353b2065d0c2f47ce9aa867667204))
+* add JSX dev runtime module for @alwatr/loom ([1f21f8a](https://github.com/Alwatr/alwatr/commit/1f21f8a926b2eaeae31a7410f057fdf7d3c4028e))
+* add JSX runtime module for @alwatr/loom ([b951229](https://github.com/Alwatr/alwatr/commit/b9512299943c07424f0eed92f3f0d3e42c95c024))
+* add loom integration with weave function and configuration interface ([e5f4ea1](https://github.com/Alwatr/alwatr/commit/e5f4ea1003dc0944e1e7659ce11270f7d87b374c))
+* add page contract and collection utility for @alwatr/loom ([3505dba](https://github.com/Alwatr/alwatr/commit/3505dba49462d96ee26f7479e8fa77af21e5fde8))
+* add public entry point for @alwatr/loom with core exports ([642a6de](https://github.com/Alwatr/alwatr/commit/642a6deb2c290d134d011909e5d1a9b2cd25ff67))
+* add public entry point for @alwatr/weaver with core exports ([39aa49e](https://github.com/Alwatr/alwatr/commit/39aa49ed9bca3b518c10f8b1682992ec3b841e6e))
+* add README for @alwatr/weaver with detailed usage and configuration instructions ([33170f4](https://github.com/Alwatr/alwatr/commit/33170f49f0d60b91ad5eafff6e50f09f83c02c32))
+* add README.md for @alwatr/bobbin with installation and usage instructions ([eba9301](https://github.com/Alwatr/alwatr/commit/eba9301d7008c6ab3d70269ddfa738627ca111f8))
+* add README.md for @alwatr/loom with usage instructions and API details ([768dd4e](https://github.com/Alwatr/alwatr/commit/768dd4e939dc31876d4a6c05715abcb276c738ae))
+* add tests for rendering and building pages in @alwatr/loom ([729e7d5](https://github.com/Alwatr/alwatr/commit/729e7d54d8909c4ff9dcbba3001f0096a944c1e6))
+* add tsconfig.json for @alwatr/bobbin with compiler options and include paths ([4b72443](https://github.com/Alwatr/alwatr/commit/4b7244321096e03caa27bd9a5641943d6ff8993b))
+* add type definitions for Weaver configuration and rendering output ([19aa9b5](https://github.com/Alwatr/alwatr/commit/19aa9b5b69f750bebf05199b5bd59b9fbed74cf9))
+* add TypeScript configuration file for @alwatr/loom ([9587825](https://github.com/Alwatr/alwatr/commit/958782571ca9d9b8f22a25c49fa596ba72d76e4f))
+* add TypeScript configuration for Weaver package ([4888682](https://github.com/Alwatr/alwatr/commit/488868276337b5bec425b4c80be1d6bce91281ff))
+* add unit tests for data building and schema validation in @alwatr/bobbin ([da73b5e](https://github.com/Alwatr/alwatr/commit/da73b5e31665fdddb1dbd402aa9dfcfa6fb10d35))
+* implement build functionality for @alwatr/loom to render pages to HTML ([d820a22](https://github.com/Alwatr/alwatr/commit/d820a229abe998769b074d9351c3de5694a58424))
+* implement JSX tree rendering to HTML in @alwatr/loom ([7bcc44c](https://github.com/Alwatr/alwatr/commit/7bcc44cf98bf4ccbf298236a5b4014ee897d0a8e))
+* implement live-reload client script for browser integration ([bcf1797](https://github.com/Alwatr/alwatr/commit/bcf1797312fe1ea388d05a045ecac5ebd10215d6))
+* implement main data pipeline functionality in @alwatr/bobbin ([c96e789](https://github.com/Alwatr/alwatr/commit/c96e789c0521bfb0730faf369e73432fe9561dc7))
+* implement Weaver build factory with bundling and live-reload capabilities ([241e698](https://github.com/Alwatr/alwatr/commit/241e6989475f776982be368898cb73ce006e8ce3))
+* update package.json for @alwatr/loom with repository details, improved exports, and updated scripts ([bf52bea](https://github.com/Alwatr/alwatr/commit/bf52bea0dc712fdaf21709e9a7397e5a3db4d15d))
+* update package.json for @alwatr/weaver with repository details, improved exports, and updated scripts ([5628369](https://github.com/Alwatr/alwatr/commit/56283691def5fb46dc23b7822b77cde4af193006))
+
+### 🧹 Miscellaneous Chores
+
+* enhance package.json and .syncpackrc configurations with additional sorting and export options ([cc0df6a](https://github.com/Alwatr/alwatr/commit/cc0df6ae3f92f09587418e9eae781bb5e90f12fe))
+* update package.json with repository details, scripts, and keywords ([852d565](https://github.com/Alwatr/alwatr/commit/852d565b8c33aed2cdf8e5a7515e77c7f5b77ba6))
+
+### 🔗 Dependencies update
+
+* bump actions/checkout ([cb9d6ff](https://github.com/Alwatr/alwatr/commit/cb9d6ffd3af3d8503d50119c0c904c79b9ff707a))
+* update @happy-dom/global-registrator to version 20.11.1 in multiple packages and upgrade prettier to version 3.9.6 ([fd85555](https://github.com/Alwatr/alwatr/commit/fd855554de36e3b99637ca4277f6f863558639b3))
+
 ## [9.38.2](https://github.com/Alwatr/alwatr/compare/v9.38.1...v9.38.2) (2026-07-12)
 
 ### 🧹 Miscellaneous Chores
