@@ -8,7 +8,7 @@
  */
 
 /** Marker for a `<>...</>` fragment — its children are concatenated with no wrapper tag. */
-export const Fragment = Symbol.for("alwatr.loom.fragment");
+export const Fragment = Symbol.for('alwatr.loom.fragment');
 
 /**
  * Pre-escaped HTML. The renderer passes its `value` through verbatim, so it is
@@ -38,7 +38,7 @@ export type ClassValue =
   | Record<string, boolean | null | undefined>;
 
 /** A component is just a function from props to a tree. Synchronous by design. */
-export type Component<P = Record<string, unknown>> = (props: P & { children?: Children }) => Child;
+export type Component<P = Record<string, unknown>> = (props: P & {children?: Children}) => Child;
 
 /** A node recorded by {@link jsx}: an element tag, a component, or a fragment. */
 export interface VNode {
@@ -47,8 +47,8 @@ export interface VNode {
 }
 
 /** Records a node. Called by the compiler for every JSX expression. */
-export function jsx(type: VNode["type"], props: Record<string, unknown> | null): VNode {
-  return { type, props: props ?? {} };
+export function jsx(type: VNode['type'], props: Record<string, unknown> | null): VNode {
+  return {type, props: props ?? {}};
 }
 
 /** Same as {@link jsx}; the compiler uses it for elements with static children. */

@@ -5,7 +5,7 @@
  * the JSX tree. Routing is driven entirely by the exported `permalink`, never by
  * the file name. A module may default-export a single page or an array of pages.
  */
-import type { Child } from "./jsx-runtime.js";
+import type {Child} from './jsx-runtime.js';
 
 export interface Page {
   /** Output route, e.g. `'/'`, `'/about/'`, or `'/feed.xml'`. */

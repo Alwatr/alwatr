@@ -11,8 +11,8 @@
  * `import`. This keeps network operations entirely out of the normal dev/site build.
  * Regenerate on demand, only when a source changes.
  */
-import { mkdir, writeFile } from "node:fs/promises";
-import { isAbsolute, join, relative, resolve } from "node:path";
+import {mkdir, writeFile} from 'node:fs/promises';
+import {isAbsolute, join, relative, resolve} from 'node:path';
 
 /**
  * A single external origin to fetch and cache at build time.
@@ -62,10 +62,10 @@ export const defineData = (config: Config): Config => config;
  * cache regenerated only when a source changes, so unrelated files are preserved.
  */
 export async function buildData(config: Config): Promise<BuildResult[]> {
-  console.log("\n🧶 bobbin: generating…\n");
+  console.log('\n🧶 bobbin: generating…\n');
   const outDir = config.outDir != null ? resolve(config.outDir) : null;
   if (outDir != null) {
-    await mkdir(outDir, { recursive: true });
+    await mkdir(outDir, {recursive: true});
   }
 
   const results: BuildResult[] = [];
@@ -75,7 +75,7 @@ export async function buildData(config: Config): Promise<BuildResult[]> {
     try {
       data = await source.load();
     } catch (error) {
-      throw new Error(`bobbin: data source "${source.name}" failed to load`, { cause: error });
+      throw new Error(`bobbin: data source "${source.name}" failed to load`, {cause: error});
     }
     if (source.schema != null && !source.schema(data)) {
       throw new Error(`bobbin: data source "${source.name}" failed schema validation`);
@@ -93,12 +93,12 @@ export async function buildData(config: Config): Promise<BuildResult[]> {
       resultItem.filePath = filePath;
     }
 
-    console.log(`       → ${source.name.padEnd(24)} ${resultItem.filePath ?? "in-memory"}`);
+    console.log(`       → ${source.name.padEnd(24)} ${resultItem.filePath ?? 'in-memory'}`);
 
     results.push(resultItem);
   }
 
-  console.log("\n✅ generate complete");
+  console.log('\n✅ generate complete');
   return results;
 }
 
@@ -109,7 +109,7 @@ export async function buildData(config: Config): Promise<BuildResult[]> {
 function nameToPath(outDir: string, name: string): string {
   const filePath = join(outDir, `${name}.json`);
   const rel = relative(outDir, filePath);
-  if (rel === "" || rel.startsWith("..") || isAbsolute(rel) || rel.includes("/") || rel.includes("\\")) {
+  if (rel === '' || rel.startsWith('..') || isAbsolute(rel) || rel.includes('/') || rel.includes('\\')) {
     throw new Error(`bobbin: data source name "${name}" resolves outside the output directory`);
   }
   return filePath;

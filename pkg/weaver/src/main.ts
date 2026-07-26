@@ -12,7 +12,7 @@
  */
 
 import './type.js';
-export {Weaver} from './weaver.js';
-export {version} from './cli.js';
-export {weave, type WeaveConfig} from './loom.js';
-export type {WeaverConfig, RenderResult} from './type.js';
+export * from './weaver.js';
+export * from './cli.js';
+export * from './loom.js';
+export type * from './type.js';
