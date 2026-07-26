@@ -26,5 +26,14 @@
     "publishConfig",
     "prettier",
     "keywords"
+  ],
+  "sortExports": [
+    "types",
+    "development",
+    "browser",
+    "node",
+    "import",
+    "require",
+    "default"
   ]
 }

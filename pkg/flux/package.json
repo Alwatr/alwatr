@@ -69,8 +69,8 @@
     "access": "public"
   },
   "keywords": [
-    "alwatr",
     "action",
+    "alwatr",
     "directive",
     "dom",
     "ECMAScript",

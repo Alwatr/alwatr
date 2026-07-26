@@ -66,13 +66,13 @@
     "esm",
     "javascript",
     "module",
+    "mpa",
     "nanolib",
     "page-id",
     "page-ready",
     "routing",
     "signal",
     "spa",
-    "mpa",
     "typescript"
   ]
 }

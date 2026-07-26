@@ -15,8 +15,8 @@
   "exports": {
     ".": {
       "types": "./dist/main.d.ts",
-      "import": "./dist/main.js",
       "development": "./dist/dev/main.js",
+      "import": "./dist/main.js",
       "default": "./dist/main.js"
     }
   },

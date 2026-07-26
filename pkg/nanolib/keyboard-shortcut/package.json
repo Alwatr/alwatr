@@ -61,16 +61,16 @@
     "access": "public"
   },
   "keywords": [
+    "action",
     "alwatr",
     "browser",
     "esm",
+    "flux",
     "javascript",
+    "keyboard",
     "module",
     "nanolib",
-    "keyboard",
     "shortcut",
-    "action",
-    "flux",
     "typescript"
   ]
 }
