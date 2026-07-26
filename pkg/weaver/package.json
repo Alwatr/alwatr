@@ -1,0 +1,55 @@
+{
+  "name": "@alwatr/weaver",
+  "version": "0.2.0",
+  "description": "A bun-native build tool and dev server that composes @alwatr/loom (TSX→HTML), Bun's bundler (client JS), and Tailwind CSS — with in-memory serve and native live-reload.",
+  "private": true,
+  "license": "MPL-2.0",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
+  "type": "module",
+  "homepage": "https://github.com/alimd/passage-app#readme",
+  "bugs": "https://github.com/alimd/passage-app/issues",
+  "exports": {
+    ".": {
+      "types": "./dist/main.d.ts",
+      "import": "./dist/main.js",
+      "default": "./dist/main.js"
+    }
+  },
+  "dependencies": {
+    "@alwatr/core": "9.38.2",
+    "@alwatr/loom": "workspace:*",
+    "bun-plugin-tailwind": "^0.1.2",
+    "tailwindcss": "^4.3.2"
+  },
+  "devDependencies": {
+    "@alwatr/nano-build": "9.38.1",
+    "@alwatr/standard": "9.38.2",
+    "@types/bun": "^1.3.14",
+    "typescript": "^7.0.2"
+  },
+  "scripts": {
+    "b": "bun run build",
+    "build": "bun run build:ts && bun run build:js",
+    "build:js": "nano-build --preset=bun-service --packages=external src/main.ts",
+    "build:ts": "tsc --build",
+    "cb": "bun run clean && bun run build",
+    "clean": "rm -rfv dist tsconfig.tsbuildinfo",
+    "l": "bun run lint",
+    "lint": "tsc --noEmit",
+    "t": "bun run test",
+    "test": "ALWATR_DEBUG=0 bun test"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "prettier": "@alwatr/standard/prettier",
+  "keywords": [
+    "bun",
+    "dev-server",
+    "live-reload",
+    "loom",
+    "ssg",
+    "tailwindcss"
+  ]
+}
