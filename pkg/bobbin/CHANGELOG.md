@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.1](https://github.com/Alwatr/alwatr/compare/v10.0.0...v10.0.1) (2026-07-26)
+
+* refactor test files to use consistent import formatting and update source paths ([c40c0a6](https://github.com/Alwatr/alwatr/commit/c40c0a6f5de5781c4feedb6db693442ccb452702))
+
+### 🐛 Bug Fixes
+
+* build issue in `@alwatr/bobbin`, `@alwatr/loom` and `@alwatr/weaver` ([140d754](https://github.com/Alwatr/alwatr/commit/140d754c97f76043126d3e59d9ac159ce2d3f4e1))
+
 ## [10.0.0](https://github.com/Alwatr/alwatr/compare/v9.38.2...v10.0.0) (2026-07-26)
 
 ### ✨ Features
