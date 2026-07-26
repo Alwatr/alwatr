@@ -1,16 +1,16 @@
 {
-  "name": "@alwatr/action",
-  "version": "9.38.2",
-  "description": "Declarative DOM action-dispatch — bridge HTML attributes to typed signal handlers.",
+  "name": "@alwatr/bobbin",
+  "version": "0.1.0",
+  "description": "A declarative, build-time data pipeline for fetching, validating, and caching external APIs into JSON files.",
   "license": "MPL-2.0",
-  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
+  "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",
   "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/Alwatr/alwatr",
-    "directory": "pkg/nanolib/action"
+    "directory": "pkg/bobbin"
   },
-  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/nanolib/action#readme",
+  "homepage": "https://github.com/Alwatr/alwatr/tree/next/pkg/bobbin#readme",
   "bugs": "https://github.com/Alwatr/alwatr/issues",
   "exports": {
     ".": {
@@ -21,23 +21,18 @@
     }
   },
   "sideEffects": false,
-  "dependencies": {
-    "@alwatr/logger": "workspace:*",
-    "@alwatr/signal": "workspace:*"
-  },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
     "@alwatr/standard": "workspace:*",
-    "@alwatr/type-helper": "workspace:*",
-    "@happy-dom/global-registrator": "^20.11.1",
+    "@types/bun": "^1.3.14",
     "typescript": "^7.0.2"
   },
   "scripts": {
     "b": "bun run build",
     "build": "bun run build:ts && bun run build:es",
     "build:es": "bun run build:es:dev && bun run build:es:prod",
-    "build:es:dev": "nano-build --preset=module-web --outdir=dist/dev src/main.ts",
-    "build:es:prod": "NODE_ENV=production nano-build --preset=module-web --outdir=dist src/main.ts",
+    "build:es:dev": "nano-build --preset=bun-service --packages=external --outdir=dist/dev src/main.ts",
+    "build:es:prod": "NODE_ENV=production nano-build --preset=bun-service --packages=external --outdir=dist src/main.ts",
     "build:ts": "tsc --build",
     "cl": "bun run clean",
     "clean": "rm -rfv dist *.tsbuildinfo",
@@ -61,26 +56,12 @@
     "access": "public"
   },
   "keywords": [
-    "action",
     "alwatr",
-    "browser-api",
-    "declarative-ui",
-    "decorator",
-    "directive",
-    "dom",
-    "esm",
-    "event",
-    "frontend",
-    "javascript",
-    "lightweight",
-    "module",
-    "nanolib",
-    "signal",
-    "spa",
-    "typescript",
-    "ui-library",
-    "unidirectional-data-flow",
-    "vanilla-js",
-    "web-development"
+    "build-time",
+    "bun",
+    "cache",
+    "data-pipeline",
+    "fetch",
+    "schema-validation"
   ]
 }

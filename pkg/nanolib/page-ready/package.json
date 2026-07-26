@@ -29,7 +29,7 @@
     "@alwatr/nano-build": "workspace:*",
     "@alwatr/standard": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
-    "@happy-dom/global-registrator": "^20.10.6",
+    "@happy-dom/global-registrator": "^20.11.1",
     "typescript": "^7.0.2"
   },
   "scripts": {
@@ -66,13 +66,13 @@
     "esm",
     "javascript",
     "module",
+    "mpa",
     "nanolib",
     "page-id",
     "page-ready",
     "routing",
     "signal",
     "spa",
-    "mpa",
     "typescript"
   ]
 }
