@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.2](https://github.com/Alwatr/alwatr/compare/v10.0.1...v10.0.2) (2026-07-28)
+
+### 🐛 Bug Fixes
+
+* add jsxDEV export for improved JSX development support ([c1cde7b](https://github.com/Alwatr/alwatr/commit/c1cde7b3a8399517cc4879c32a3f629da08c3959))
+
 ## [10.0.1](https://github.com/Alwatr/alwatr/compare/v10.0.0...v10.0.1) (2026-07-26)
 
 * add smoke tests for Weaver functionality and output verification ([ab38281](https://github.com/Alwatr/alwatr/commit/ab382817740a46083a1a813f860577d8032550c7))
