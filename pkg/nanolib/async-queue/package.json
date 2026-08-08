@@ -21,7 +21,8 @@
     }
   },
   "dependencies": {
-    "@alwatr/flatomise": "workspace:*"
+    "@alwatr/flatomise": "workspace:*",
+    "@alwatr/delay": "workspace:*"
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",

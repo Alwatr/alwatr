@@ -136,6 +136,7 @@
       "name": "@alwatr/async-queue",
       "version": "10.0.0",
       "dependencies": {
+        "@alwatr/delay": "workspace:*",
         "@alwatr/flatomise": "workspace:*",
       },
       "devDependencies": {

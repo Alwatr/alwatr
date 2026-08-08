@@ -1,5 +1,6 @@
-import type {DictionaryOpt} from '@alwatr/type-helper';
 import {newFlatomise} from '@alwatr/flatomise';
+import {queueMicrotask} from '@alwatr/delay';
+import type {DictionaryOpt} from '@alwatr/type-helper';
 
 /**
  * A queue that executes async tasks in order like mutex and semaphore methodology
@@ -44,13 +45,15 @@ export class AsyncQueue {
     const previousTaskPromise = this.queue__[taskId];
     this.queue__[taskId] = flatomise.promise;
 
-    try {
-      await previousTaskPromise;
-    } catch (_e) {
-      // ignore
+    if (previousTaskPromise !== undefined) {
+      try {
+        await previousTaskPromise;
+      } catch (_e) {
+        // ignore
+      }
     }
 
-    setTimeout(() => {
+    queueMicrotask(() => {
       task()
         .then(flatomise.resolve, flatomise.reject)
         .then(() => {
@@ -58,7 +61,7 @@ export class AsyncQueue {
             delete this.queue__[taskId];
           }
         });
-    }, 0);
+    });
 
     return flatomise.promise;
   }
