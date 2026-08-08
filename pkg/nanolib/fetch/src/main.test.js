@@ -113,6 +113,61 @@ describe('@alwatr/fetch', () => {
     });
   });
 
+  describe('Header isolation & security', () => {
+    it('should never leak bearer token into a subsequent request', async () => {
+      mockFetch
+        .mockResolvedValueOnce(createMockResponse({ok: true}))
+        .mockResolvedValueOnce(createMockResponse({ok: true}));
+
+      await fetch('https://api.example.com/first', {
+        bearerToken: 'SUPER-SECRET',
+      });
+
+      await fetch('https://api.example.com/second');
+
+      const firstCallArgs = mockFetch.mock.calls[0];
+      const secondCallArgs = mockFetch.mock.calls[1];
+
+      expect(firstCallArgs[1].headers.authorization).toBe('Bearer SUPER-SECRET');
+      expect(secondCallArgs[1].headers.authorization).toBeUndefined();
+    });
+
+    it('should not mutate caller-supplied headers object', async () => {
+      mockFetch.mockResolvedValueOnce(createMockResponse({ok: true}));
+
+      const callerHeaders = {'x-app-id': 'grand.market'};
+      await fetch('https://api.example.com/secure', {
+        headers: callerHeaders,
+        bearerToken: 'SECRET-TOKEN',
+        bodyJson: {test: 123},
+      });
+
+      expect(callerHeaders).toEqual({'x-app-id': 'grand.market'});
+      expect(callerHeaders.authorization).toBeUndefined();
+      expect(callerHeaders['content-type']).toBeUndefined();
+    });
+
+    it('should prevent header pollution across multiple requests with caller headers', async () => {
+      mockFetch
+        .mockResolvedValueOnce(createMockResponse({ok: true}))
+        .mockResolvedValueOnce(createMockResponse({ok: true}));
+
+      const callerHeaders = {'x-app-id': 'wesun'};
+
+      await fetch('https://api.example.com/authed', {
+        headers: callerHeaders,
+        bearerToken: 'PRIVATE-TOKEN',
+      });
+
+      await fetch('https://api.thirdparty.com/public', {
+        headers: callerHeaders,
+      });
+
+      const secondCallArgs = mockFetch.mock.calls[1];
+      expect(secondCallArgs[1].headers.authorization).toBeUndefined();
+    });
+  });
+
   describe('Error handling - HTTP errors', () => {
     it('should return [null, FetchError] for 404 error', async () => {
       const errorData = {error: 'Not Found'};
