@@ -60,6 +60,14 @@ export function _processOptions(url: string, options: FetchOptions): FetchOption
   const options_: FetchOptions__ = {
     ...defaultFetchOptions,
     ...options,
+    // Headers must be private per request: the object is mutated below
+    // (content-type, authorization), and both the module-level default and a
+    // caller-supplied object would otherwise accumulate headers across calls
+    // — leaking one request's credential onto every later one.
+    headers: {
+      ...defaultFetchOptions.headers,
+      ...options.headers,
+    },
     url,
   };
 
