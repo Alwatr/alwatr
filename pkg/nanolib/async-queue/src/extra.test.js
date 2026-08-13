@@ -2,11 +2,73 @@ import {describe, it, expect} from 'bun:test';
 import {AsyncQueue} from '@alwatr/async-queue';
 
 describe('AsyncQueue — extra coverage', () => {
-  // NOTE: Error handling tests are intentionally omitted because AsyncQueue uses
-  // Flatomise internally, which chains `.finally()` on the promise. When a task
-  // rejects, the `.finally()` chain also rejects as an unhandled rejection in
-  // bun:test — even when the caller has a `.catch()` handler. This is a known
-  // bun:test limitation with branched promise chains.
+  describe('error handling', () => {
+    it('should reject the returned promise when the task throws', async () => {
+      const queue = new AsyncQueue();
+      await expect(
+          queue.push('err', async () => {
+            throw new Error('task_failed');
+          }),
+      ).rejects.toThrow('task_failed');
+    });
+
+    it('should not emit an unhandledRejection when the caller catches a rejected task', async () => {
+      // Regression test: a rejected task used to produce an unhandledRejection
+      // even when the caller correctly attached a `.then(null, onRejected)`/`.catch()`
+      // handler to the promise returned by `push()`. The root cause lived in
+      // `@alwatr/flatomise`'s `newFlatomise()` (see its test suite), which AsyncQueue
+      // uses internally to represent each queued task.
+      const unhandledReasons = [];
+      const onUnhandledRejection = (reason) => unhandledReasons.push(reason);
+      process.on('unhandledRejection', onUnhandledRejection);
+
+      try {
+        const queue = new AsyncQueue();
+        const caught = queue
+            .push('err', async () => {
+              throw new Error('task_failed');
+            })
+            .then(null, (e) => e.message);
+
+        await expect(caught).resolves.toBe('task_failed');
+        // Give the event loop a few ticks for any lingering unhandledRejection to surface.
+        await new Promise((resolve) => setTimeout(resolve, 20));
+
+        expect(unhandledReasons).toEqual([]);
+      } finally {
+        process.off('unhandledRejection', onUnhandledRejection);
+      }
+    });
+
+    it('should continue processing subsequent tasks with the same ID after a rejection', async () => {
+      const queue = new AsyncQueue();
+      /** @type {string[]} */
+      const results = [];
+
+      await queue
+          .push('same', async () => {
+            throw new Error('first failed');
+          })
+          .catch(() => {});
+
+      await queue.push('same', async () => {
+        results.push('second');
+      });
+
+      expect(results).toEqual(['second']);
+    });
+
+    it('should not leave a rejected task marked as running', async () => {
+      const queue = new AsyncQueue();
+      await queue
+          .push('err', async () => {
+            throw new Error('task_failed');
+          })
+          .catch(() => {});
+
+      expect(queue.isRunning('err')).toBe(false);
+    });
+  });
 
   describe('concurrent different task IDs', () => {
     it('should run tasks with different IDs concurrently', async () => {
