@@ -27,7 +27,7 @@
     },
     "pkg/core": {
       "name": "@alwatr/core",
-      "version": "10.0.0",
+      "version": "10.0.3",
       "dependencies": {
         "@alwatr/async-queue": "workspace:*",
         "@alwatr/cyrb53": "workspace:*",
@@ -134,7 +134,7 @@
     },
     "pkg/nanolib/async-queue": {
       "name": "@alwatr/async-queue",
-      "version": "10.0.0",
+      "version": "10.0.3",
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/flatomise": "workspace:*",
@@ -305,7 +305,7 @@
     },
     "pkg/nanolib/fetch": {
       "name": "@alwatr/fetch",
-      "version": "10.0.0",
+      "version": "10.0.3",
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/global-this": "workspace:*",
@@ -470,7 +470,7 @@
     },
     "pkg/nanolib/node-fs": {
       "name": "@alwatr/node-fs",
-      "version": "10.0.0",
+      "version": "10.0.3",
       "dependencies": {
         "@alwatr/async-queue": "workspace:*",
         "@alwatr/flat-string": "workspace:*",
@@ -649,7 +649,7 @@
     },
     "pkg/nitrobase": {
       "name": "@alwatr/nitrobase",
-      "version": "10.0.0",
+      "version": "10.0.3",
       "dependencies": {
         "@alwatr/nitrobase-engine": "workspace:^",
         "@alwatr/nitrobase-helper": "workspace:^",
@@ -667,7 +667,7 @@
     },
     "pkg/nitrobase-old/engine": {
       "name": "@alwatr/nitrobase-engine",
-      "version": "10.0.0",
+      "version": "10.0.3",
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/exit-hook": "workspace:*",
@@ -740,7 +740,7 @@
     },
     "pkg/nitrobase-old/user-management": {
       "name": "@alwatr/nitrobase-user-management",
-      "version": "10.0.0",
+      "version": "10.0.3",
       "dependencies": {
         "@alwatr/logger": "workspace:*",
         "@alwatr/nitrobase-engine": "workspace:^",
@@ -759,7 +759,7 @@
     },
     "pkg/node": {
       "name": "@alwatr/node",
-      "version": "10.0.0",
+      "version": "10.0.3",
       "dependencies": {
         "@alwatr/crypto": "workspace:*",
         "@alwatr/env": "workspace:*",
@@ -795,7 +795,7 @@
     },
     "pkg/weaver": {
       "name": "@alwatr/weaver",
-      "version": "10.0.2",
+      "version": "10.0.3",
       "dependencies": {
         "@alwatr/core": "workspace:*",
         "@alwatr/loom": "workspace:*",

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.3](https://github.com/Alwatr/alwatr/compare/v10.0.2...v10.0.3) (2026-08-13)
+
+### 🐛 Bug Fixes
+
+* add @alwatr/delay dependency and use queueMicrotask for task execution ([0fdfd47](https://github.com/Alwatr/alwatr/commit/0fdfd47794d9d9e229fd076ca779e8fe61e0f79b))
+
 ## [10.0.0](https://github.com/Alwatr/alwatr/compare/v9.38.2...v10.0.0) (2026-07-26)
 
 **Note:** Version bump only for package @alwatr/async-queue

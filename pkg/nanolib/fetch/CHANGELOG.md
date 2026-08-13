@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.3](https://github.com/Alwatr/alwatr/compare/v10.0.2...v10.0.3) (2026-08-13)
+
+* **fetch:** add tests for header isolation and security to prevent token leakage ([582f155](https://github.com/Alwatr/alwatr/commit/582f15574247ad4bf718af17717760c911d5db77))
+
+### 🐛 Bug Fixes
+
+* **fetch:** ensure headers are private per request to prevent credential leakage ([84c58c6](https://github.com/Alwatr/alwatr/commit/84c58c6f858f3f066de15936f8bd62f02df9f4e5))
+
 ## [10.0.0](https://github.com/Alwatr/alwatr/compare/v9.38.2...v10.0.0) (2026-07-26)
 
 **Note:** Version bump only for package @alwatr/fetch
