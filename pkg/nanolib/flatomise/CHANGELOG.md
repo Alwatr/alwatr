@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.4](https://github.com/Alwatr/alwatr/compare/v10.0.3...v10.0.4) (2026-08-13)
+
+* **flatomise:** add rejection handling tests to prevent unhandledRejection ([6670363](https://github.com/Alwatr/alwatr/commit/6670363d7e661b3b1db44287d2eadc1e98c06daf))
+
+### 🐛 Bug Fixes
+
+* **flatomise:** ensure promise rejection is handled correctly without affecting settled state ([3e91eda](https://github.com/Alwatr/alwatr/commit/3e91edaa08c7d5e65d78dee50af97ff3919fa0e0))
+
 ## [10.0.0](https://github.com/Alwatr/alwatr/compare/v9.38.2...v10.0.0) (2026-07-26)
 
 **Note:** Version bump only for package @alwatr/flatomise

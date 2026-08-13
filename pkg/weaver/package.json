@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/weaver",
-  "version": "10.0.3",
+  "version": "10.0.4",
   "description": "A bun-native build tool and dev server that composes @alwatr/loom (TSX→HTML), Bun's bundler (client JS), and Tailwind CSS — with in-memory serve and native live-reload.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",

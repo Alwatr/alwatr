@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.4](https://github.com/Alwatr/alwatr/compare/v10.0.3...v10.0.4) (2026-08-13)
+
+* **async-queue:** add error handling tests for promise rejection scenarios ([75a6334](https://github.com/Alwatr/alwatr/commit/75a63341df959aa750e3e07fabe6dfb08051ba26))
+
 ## [10.0.3](https://github.com/Alwatr/alwatr/compare/v10.0.2...v10.0.3) (2026-08-13)
 
 ### 🐛 Bug Fixes

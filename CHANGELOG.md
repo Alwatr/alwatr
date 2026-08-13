@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.0.4](https://github.com/Alwatr/alwatr/compare/v10.0.3...v10.0.4) (2026-08-13)
+
+* **async-queue:** add error handling tests for promise rejection scenarios ([75a6334](https://github.com/Alwatr/alwatr/commit/75a63341df959aa750e3e07fabe6dfb08051ba26))
+* **flatomise:** add rejection handling tests to prevent unhandledRejection ([6670363](https://github.com/Alwatr/alwatr/commit/6670363d7e661b3b1db44287d2eadc1e98c06daf))
+
+### 🐛 Bug Fixes
+
+* **flatomise:** ensure promise rejection is handled correctly without affecting settled state ([3e91eda](https://github.com/Alwatr/alwatr/commit/3e91edaa08c7d5e65d78dee50af97ff3919fa0e0))
+
 ## [10.0.3](https://github.com/Alwatr/alwatr/compare/v10.0.2...v10.0.3) (2026-08-13)
 
 * **fetch:** add tests for header isolation and security to prevent token leakage ([582f155](https://github.com/Alwatr/alwatr/commit/582f15574247ad4bf718af17717760c911d5db77))
