@@ -47,8 +47,12 @@ export function newFlatomise<T>(): Flatomise<T> {
     flatomise.resolve = resolve;
     flatomise.reject = reject;
   });
-  flatomise.promise.finally(() => {
-    flatomise.settled = true;
-  });
+  flatomise.promise
+    .finally(() => {
+      flatomise.settled = true;
+    })
+    .catch(() => {
+      // ignore, the rejection is the caller's responsibility via `flatomise.promise` itself
+    });
   return flatomise as Flatomise<T>;
 }
