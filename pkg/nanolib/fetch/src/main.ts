@@ -10,7 +10,7 @@ import type {JsonObject} from '@alwatr/type-helper';
 import {_processOptions, handleCacheStrategy_, logger_, cacheSupported} from './core.js';
 import {FetchError} from './error.js';
 
-import type {FetchJsonOptions, FetchOptions, FetchResponse} from './type.js';
+import type {FetchJsonOptions, FetchJsonResponse, FetchOptions, FetchResponse} from './type.js';
 
 export {cacheSupported};
 export * from './error.js';
@@ -151,7 +151,7 @@ fetch.version = __package_version__;
 export async function fetchJson<T extends JsonObject = JsonObject>(
   url: string,
   options: FetchJsonOptions = {},
-): Promise<[T, null] | [null, FetchError]> {
+): Promise<FetchJsonResponse<T>> {
   DEV_MODE && logger_.logMethodArgs?.('fetchJson', {url, options});
 
   const [response, error] = await fetch(url, options);

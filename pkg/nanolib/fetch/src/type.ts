@@ -1,4 +1,4 @@
-import type {DictionaryOpt, DictionaryReq, JsonValue} from '@alwatr/type-helper';
+import type {DictionaryOpt, DictionaryReq, JsonObject, JsonValue} from '@alwatr/type-helper';
 import type {FetchError} from './error.js';
 import type {HttpMethod, HttpRequestHeaders} from '@alwatr/http-primer';
 import type {Duration} from '@alwatr/parse-duration';
@@ -132,7 +132,9 @@ export type FetchJsonOptions = FetchOptions & {requireJsonResponseWithOkTrue?: t
  * Represents the tuple returned by the fetch function.
  * On success, it's `[Response, null]`. On failure, it's `[null, FetchError]`.
  */
-export type FetchResponse = Promise<[Response, null] | [null, FetchError]>;
+export type FetchResponse = readonly [Response, null] | readonly [null, FetchError];
+
+export type FetchJsonResponse<T extends JsonObject> = readonly [T, null] | readonly [null, FetchError];
 
 /**
  * Defines the specific reason for a fetch failure.
