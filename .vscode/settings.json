@@ -19,7 +19,8 @@
   "files.associations": {
     "*.ajs": "json",
     "*.ajs.bk": "json",
-    "*.conf.template": "nginx"
+    "*.conf.template": "nginx",
+    "*.css": "tailwindcss"
   },
   "git.autoStash": true,
   "git.branchProtection": ["main", "next"],
@@ -49,16 +50,15 @@
     "cyrb53"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "github-actions.workflows.pinned.workflows": [".github/workflows/publish-npm.yml"],
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
   },
   "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "js/ts.experimental.useTsgo": true,
   "material-icon-theme.folders.associations": {
     "signal": "connection",
     "nitrobase": "aws",
     "nanotron": "server",
     "fsm": "ngrx-state"
-  },
-  "kiroAgent.configureMCP": "Disabled"
+  }
 }
