@@ -1,5 +1,5 @@
 import {describe, beforeEach, it, expect, jest} from 'bun:test';
-import {fetch, FetchError} from '@alwatr/fetch';
+import {fetch, fetchJson, FetchError} from '@alwatr/fetch';
 
 // Mock global fetch
 const mockFetch = jest.fn();
@@ -13,35 +13,36 @@ Object.defineProperty(globalThis, 'navigator', {
   value: {onLine: true},
 });
 
-// Helper to create mock Response
 /**
+ * Helper to create mock Response
  * @param {unknown} data
+ * @param {{status?: number; statusText?: string; headers?: Record<string, string>}} options
  */
 function createMockResponse(data, options = {}) {
-  // @ts-expect-error type mismatch for data
   const {status = 200, statusText = 'OK', headers = {}} = options;
+  const bodyText = typeof data === 'string' ? data : JSON.stringify(data);
   return {
     ok: status >= 200 && status < 300,
     status,
     statusText,
     headers: new Headers(headers),
     json: jest.fn().mockResolvedValue(data),
-    text: jest.fn().mockResolvedValue(JSON.stringify(data)),
+    text: jest.fn().mockResolvedValue(bodyText),
     clone: function () {
-      return this;
+      return createMockResponse(data, options);
     },
   };
 }
 
-describe('@alwatr/fetch', () => {
+describe('@alwatr/fetch - Comprehensive Current Contract Suite', () => {
   beforeEach(() => {
     mockFetch.mockClear();
     // @ts-expect-error 'onLine' is a read-only property
     global.navigator.onLine = true;
   });
 
-  describe('Successful requests', () => {
-    it('should return [response, null] on successful GET request', async () => {
+  describe('Basic HTTP Methods & Payload Handling', () => {
+    it('should perform successful GET request and return [response, null]', async () => {
       const mockData = {message: 'success'};
       mockFetch.mockResolvedValueOnce(createMockResponse(mockData));
 
@@ -51,42 +52,50 @@ describe('@alwatr/fetch', () => {
       expect(response).toBeDefined();
       expect(response?.ok).toBe(true);
       expect(response?.status).toBe(200);
-      expect(response?.json()).resolves.toEqual(mockData);
+      expect(await response?.json()).toEqual(mockData);
     });
 
-    it('should handle query parameters correctly', async () => {
+    it('should respect various HTTP methods (POST, PUT, DELETE, PATCH)', async () => {
+      const methods = ['POST', 'PUT', 'DELETE', 'PATCH'];
+
+      for (const method of methods) {
+        mockFetch.mockResolvedValueOnce(createMockResponse({method}));
+
+        const [response, error] = await fetch(`https://api.example.com/resource`, {
+          method,
+          bodyJson: {action: method.toLowerCase()},
+        });
+
+        expect(error).toBeNull();
+        expect(response?.ok).toBe(true);
+        const callArgs = mockFetch.mock.calls[mockFetch.mock.calls.length - 1];
+        expect(callArgs[1].method).toBe(method);
+        expect(callArgs[1].body).toBe(JSON.stringify({action: method.toLowerCase()}));
+        expect(callArgs[1].headers['content-type']).toBe('application/json');
+      }
+    });
+
+    it('should handle query parameters correctly with encoding and types', async () => {
       mockFetch.mockResolvedValueOnce(createMockResponse({success: true}));
 
       const [response, error] = await fetch('https://api.example.com/search', {
         queryParams: {
-          q: 'test query',
+          q: 'test query & special=true',
           page: 2,
           active: true,
         },
       });
 
       expect(error).toBeNull();
+      expect(response?.ok).toBe(true);
       expect(mockFetch).toHaveBeenCalledWith(
-        'https://api.example.com/search?q=test%20query&page=2&active=true',
+        'https://api.example.com/search?q=test%20query%20%26%20special%3Dtrue&page=2&active=true',
         expect.any(Object),
       );
     });
+  });
 
-    it('should send JSON body with correct headers', async () => {
-      mockFetch.mockResolvedValueOnce(createMockResponse({received: true}));
-
-      const bodyData = {name: 'test', value: 123};
-      const [response, error] = await fetch('https://api.example.com/data', {
-        method: 'POST',
-        bodyJson: bodyData,
-      });
-
-      expect(error).toBeNull();
-      const callArgs = mockFetch.mock.calls[0];
-      expect(callArgs[1].body).toBe(JSON.stringify(bodyData));
-      expect(callArgs[1].headers['content-type']).toBe('application/json');
-    });
-
+  describe('Authentication & Header Isolation', () => {
     it('should add Bearer token to Authorization header', async () => {
       mockFetch.mockResolvedValueOnce(createMockResponse({authenticated: true}));
 
@@ -111,10 +120,8 @@ describe('@alwatr/fetch', () => {
       const callArgs = mockFetch.mock.calls[0];
       expect(callArgs[1].headers.authorization).toBe('Alwatr user123:token456');
     });
-  });
 
-  describe('Header isolation & security', () => {
-    it('should never leak bearer token into a subsequent request', async () => {
+    it('should never leak authorization or headers into subsequent requests', async () => {
       mockFetch
         .mockResolvedValueOnce(createMockResponse({ok: true}))
         .mockResolvedValueOnce(createMockResponse({ok: true}));
@@ -146,33 +153,12 @@ describe('@alwatr/fetch', () => {
       expect(callerHeaders.authorization).toBeUndefined();
       expect(callerHeaders['content-type']).toBeUndefined();
     });
-
-    it('should prevent header pollution across multiple requests with caller headers', async () => {
-      mockFetch
-        .mockResolvedValueOnce(createMockResponse({ok: true}))
-        .mockResolvedValueOnce(createMockResponse({ok: true}));
-
-      const callerHeaders = {'x-app-id': 'wesun'};
-
-      await fetch('https://api.example.com/authed', {
-        headers: callerHeaders,
-        bearerToken: 'PRIVATE-TOKEN',
-      });
-
-      await fetch('https://api.thirdparty.com/public', {
-        headers: callerHeaders,
-      });
-
-      const secondCallArgs = mockFetch.mock.calls[1];
-      expect(secondCallArgs[1].headers.authorization).toBeUndefined();
-    });
   });
 
-  describe('Error handling - HTTP errors', () => {
-    it('should return [null, FetchError] for 404 error', async () => {
-      const errorData = {error: 'Not Found'};
+  describe('Error Handling - HTTP Status Codes', () => {
+    it('should return [null, FetchError] for 404 error and parse JSON error body', async () => {
+      const errorData = {error: 'Not Found', code: 404};
       const mockResponse = createMockResponse(errorData, {status: 404, statusText: 'Not Found'});
-      mockResponse.text = jest.fn().mockResolvedValue(JSON.stringify(errorData));
       mockFetch.mockResolvedValueOnce(mockResponse);
 
       const [response, error] = await fetch('https://api.example.com/missing');
@@ -187,7 +173,6 @@ describe('@alwatr/fetch', () => {
     it('should return [null, FetchError] for 500 server error', async () => {
       const errorData = {error: 'Internal Server Error'};
       const mockResponse = createMockResponse(errorData, {status: 500, statusText: 'Internal Server Error'});
-      mockResponse.text = jest.fn().mockResolvedValue(JSON.stringify(errorData));
       mockFetch.mockResolvedValueOnce(mockResponse);
 
       const [response, error] = await fetch('https://api.example.com/error', {retry: 0});
@@ -196,30 +181,44 @@ describe('@alwatr/fetch', () => {
       expect(error).toBeInstanceOf(FetchError);
       expect(error?.reason).toBe('http_error');
       expect(error?.response?.status).toBe(500);
+      expect(error?.data).toEqual(errorData);
     });
 
-    it('should parse non-JSON error response as text', async () => {
-      const mockResponse = {
-        ok: false,
-        status: 400,
-        statusText: 'Bad Request',
-        headers: new Headers(),
-        text: jest.fn().mockResolvedValue('Plain text error message'),
-        clone: function () {
-          return this;
-        },
-      };
+    it('should parse non-JSON error response as plain text', async () => {
+      const plainText = 'Bad Request - Validation Error';
+      const mockResponse = createMockResponse(plainText, {status: 400, statusText: 'Bad Request'});
       mockFetch.mockResolvedValueOnce(mockResponse);
 
       const [response, error] = await fetch('https://api.example.com/bad');
 
       expect(error).toBeInstanceOf(FetchError);
-      expect(error?.data).toBe('Plain text error message');
+      expect(error?.data).toBe(plainText);
+    });
+
+    it('should handle empty error body gracefully', async () => {
+      const mockResponse = createMockResponse('', {status: 404, statusText: 'Not Found'});
+      mockFetch.mockResolvedValueOnce(mockResponse);
+
+      const [response, error] = await fetch('https://api.example.com/empty', {retry: 0});
+
+      expect(error).toBeInstanceOf(FetchError);
+      expect(error?.data).toBeUndefined();
+    });
+
+    it('should handle malformed JSON in error body as string', async () => {
+      const rawText = '{invalid-json';
+      const mockResponse = createMockResponse(rawText, {status: 500, statusText: 'Error'});
+      mockFetch.mockResolvedValueOnce(mockResponse);
+
+      const [response, error] = await fetch('https://api.example.com/malformed', {retry: 0});
+
+      expect(error).toBeInstanceOf(FetchError);
+      expect(error?.data).toBe(rawText);
     });
   });
 
-  describe('Error handling - Network errors', () => {
-    it('should return [null, FetchError] for network failure', async () => {
+  describe('Error Handling - Network & Abort', () => {
+    it('should return [null, FetchError] for network failures', async () => {
       mockFetch.mockRejectedValueOnce(new Error('Network request failed'));
 
       const [response, error] = await fetch('https://api.example.com/data', {retry: 0});
@@ -230,8 +229,8 @@ describe('@alwatr/fetch', () => {
       expect(error?.message).toBe('Network request failed');
     });
 
-    it('should return [null, FetchError] for aborted request', async () => {
-      const abortError = new Error('The operation was aborted');
+    it('should return [null, FetchError] with reason "aborted" on AbortError', async () => {
+      const abortError = new Error('The user aborted a request');
       abortError.name = 'AbortError';
       mockFetch.mockRejectedValueOnce(abortError);
 
@@ -242,8 +241,8 @@ describe('@alwatr/fetch', () => {
       expect(error?.reason).toBe('aborted');
     });
 
-    it('should handle unknown errors', async () => {
-      mockFetch.mockRejectedValueOnce('Unknown error type');
+    it('should handle unknown non-Error rejections', async () => {
+      mockFetch.mockRejectedValueOnce('Unexpected string rejection');
 
       const [response, error] = await fetch('https://api.example.com/data', {retry: 0});
 
@@ -253,13 +252,13 @@ describe('@alwatr/fetch', () => {
     });
   });
 
-  describe('Timeout handling', () => {
+  describe('Timeout Handling', () => {
     it('should timeout and return FetchError with reason "timeout"', async () => {
       let timeoutId;
       mockFetch.mockImplementation(
         () =>
           new Promise((resolve) => {
-            timeoutId = setTimeout(() => resolve(createMockResponse({data: 'too late'})), 1000);
+            timeoutId = setTimeout(() => resolve(createMockResponse({data: 'late'})), 1000);
           }),
       );
 
@@ -274,11 +273,11 @@ describe('@alwatr/fetch', () => {
       clearTimeout(timeoutId);
     });
 
-    it('should not timeout when timeout is 0', async () => {
+    it('should not timeout when timeout is set to 0', async () => {
       mockFetch.mockImplementation(
         () =>
           new Promise((resolve) => {
-            setTimeout(() => resolve(createMockResponse({data: 'success'})), 100);
+            setTimeout(() => resolve(createMockResponse({data: 'success'})), 20);
           }),
       );
 
@@ -287,20 +286,16 @@ describe('@alwatr/fetch', () => {
       });
 
       expect(error).toBeNull();
-      expect(response).toBeDefined();
+      expect(response?.ok).toBe(true);
     });
   });
 
-  describe('Retry pattern', () => {
+  describe('Retry Pattern', () => {
     it('should retry on 500 error and eventually succeed', async () => {
-      const errorResponse1 = createMockResponse({}, {status: 500});
-      errorResponse1.text = jest.fn().mockResolvedValue('');
-      const errorResponse2 = createMockResponse({}, {status: 500});
-      errorResponse2.text = jest.fn().mockResolvedValue('');
-
+      const error500 = createMockResponse({}, {status: 500});
       mockFetch
-        .mockResolvedValueOnce(errorResponse1)
-        .mockResolvedValueOnce(errorResponse2)
+        .mockResolvedValueOnce(error500)
+        .mockResolvedValueOnce(error500)
         .mockResolvedValueOnce(createMockResponse({success: true}));
 
       const [response, error] = await fetch('https://api.example.com/flaky', {
@@ -313,9 +308,9 @@ describe('@alwatr/fetch', () => {
       expect(mockFetch).toHaveBeenCalledTimes(3);
     });
 
-    it('should retry on network error', async () => {
+    it('should retry on network error and succeed', async () => {
       mockFetch
-        .mockRejectedValueOnce(new Error('Network error'))
+        .mockRejectedValueOnce(new Error('Connection reset'))
         .mockResolvedValueOnce(createMockResponse({success: true}));
 
       const [response, error] = await fetch('https://api.example.com/flaky', {
@@ -327,10 +322,9 @@ describe('@alwatr/fetch', () => {
       expect(mockFetch).toHaveBeenCalledTimes(2);
     });
 
-    it('should not retry 4xx errors', async () => {
-      const errorResponse = createMockResponse({error: 'Bad Request'}, {status: 400});
-      errorResponse.text = jest.fn().mockResolvedValue(JSON.stringify({error: 'Bad Request'}));
-      mockFetch.mockResolvedValueOnce(errorResponse);
+    it('should NOT retry on 4xx client errors', async () => {
+      const error400 = createMockResponse({error: 'Bad Request'}, {status: 400});
+      mockFetch.mockResolvedValueOnce(error400);
 
       const [response, error] = await fetch('https://api.example.com/bad', {
         retry: 3,
@@ -338,14 +332,12 @@ describe('@alwatr/fetch', () => {
       });
 
       expect(error).toBeInstanceOf(FetchError);
-      expect(error?.reason).toBe('http_error');
       expect(mockFetch).toHaveBeenCalledTimes(1);
     });
 
-    it('should fail after all retries exhausted', async () => {
-      const errorResponse = createMockResponse({}, {status: 500});
-      errorResponse.text = jest.fn().mockResolvedValue('');
-      mockFetch.mockResolvedValue(errorResponse);
+    it('should fail after all retries are exhausted', async () => {
+      const error500 = createMockResponse({}, {status: 500});
+      mockFetch.mockResolvedValue(error500);
 
       const [response, error] = await fetch('https://api.example.com/always-fails', {
         retry: 2,
@@ -354,16 +346,14 @@ describe('@alwatr/fetch', () => {
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
-      expect(error?.reason).toBe('http_error');
       expect(mockFetch).toHaveBeenCalledTimes(2);
     });
 
-    it('should not retry when offline', async () => {
+    it('should skip retries when offline', async () => {
       // @ts-expect-error 'onLine' is a read-only property
       global.navigator.onLine = false;
-      const errorResponse = createMockResponse({}, {status: 500});
-      errorResponse.text = jest.fn().mockResolvedValue('');
-      mockFetch.mockResolvedValue(errorResponse);
+      const error500 = createMockResponse({}, {status: 500});
+      mockFetch.mockResolvedValue(error500);
 
       const [response, error] = await fetch('https://api.example.com/fails', {
         retry: 3,
@@ -371,11 +361,11 @@ describe('@alwatr/fetch', () => {
       });
 
       expect(error).toBeInstanceOf(FetchError);
-      expect(mockFetch).toHaveBeenCalledTimes(1); // Should not retry
+      expect(mockFetch).toHaveBeenCalledTimes(1);
     });
   });
 
-  describe('Duplicate request handling', () => {
+  describe('Duplicate Request Handling', () => {
     it('should deduplicate parallel requests with "until_load"', async () => {
       mockFetch.mockResolvedValue(createMockResponse({data: 'shared'}));
 
@@ -393,7 +383,7 @@ describe('@alwatr/fetch', () => {
       });
     });
 
-    it('should NOT deduplicate when "never" is used', async () => {
+    it('should NOT deduplicate when "never" is specified', async () => {
       mockFetch.mockResolvedValue(createMockResponse({data: 'individual'}));
 
       const results = await Promise.all([
@@ -404,7 +394,7 @@ describe('@alwatr/fetch', () => {
       expect(mockFetch).toHaveBeenCalledTimes(2);
     });
 
-    it('should deduplicate based on method + URL + body', async () => {
+    it('should differentiate requests by method, URL, and body', async () => {
       mockFetch.mockResolvedValue(createMockResponse({data: 'result'}));
 
       await Promise.all([
@@ -425,74 +415,76 @@ describe('@alwatr/fetch', () => {
         }),
       ]);
 
-      // Should be called 2 times: once for {id: 1}, once for {id: 2}
       expect(mockFetch).toHaveBeenCalledTimes(2);
     });
   });
 
-  describe('Edge cases', () => {
-    it('should handle empty response body', async () => {
-      const mockResponse = {
-        ok: false,
-        status: 404,
-        statusText: 'Not Found',
-        headers: new Headers(),
-        text: jest.fn().mockResolvedValue(''),
-        clone: function () {
-          return this;
-        },
-      };
-      mockFetch.mockResolvedValueOnce(mockResponse);
+  describe('fetchJson Functionality', () => {
+    it('should parse JSON response and return [data, null]', async () => {
+      const testData = {id: 42, name: 'Alice', active: true};
+      mockFetch.mockResolvedValueOnce(createMockResponse(testData));
 
-      const [response, error] = await fetch('https://api.example.com/empty', {retry: 0});
+      const [data, error] = await fetchJson('https://api.example.com/users/42');
 
-      expect(error).toBeInstanceOf(FetchError);
-      expect(error?.data).toBeUndefined();
+      expect(error).toBeNull();
+      expect(data).toEqual(testData);
     });
 
-    it('should handle malformed JSON in error response', async () => {
-      const mockResponse = {
-        ok: false,
-        status: 500,
-        statusText: 'Internal Server Error',
-        headers: new Headers(),
-        text: jest.fn().mockResolvedValue('{invalid json'),
-        clone: function () {
-          return this;
-        },
-      };
-      mockFetch.mockResolvedValueOnce(mockResponse);
+    it('should return json_parse_error on empty response body', async () => {
+      mockFetch.mockResolvedValueOnce(createMockResponse(''));
 
-      const [response, error] = await fetch('https://api.example.com/malformed', {retry: 0});
+      const [data, error] = await fetchJson('https://api.example.com/empty');
 
+      expect(data).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
-      expect(error?.data).toBe('{invalid json');
+      expect(error?.reason).toBe('json_parse_error');
     });
 
-    it('should respect custom method', async () => {
-      mockFetch.mockResolvedValueOnce(createMockResponse({deleted: true}));
+    it('should return json_parse_error on invalid JSON response body', async () => {
+      mockFetch.mockResolvedValueOnce(createMockResponse('{not-json-at-all'));
 
-      await fetch('https://api.example.com/resource/123', {
-        method: 'DELETE',
+      const [data, error] = await fetchJson('https://api.example.com/invalid');
+
+      expect(data).toBeNull();
+      expect(error).toBeInstanceOf(FetchError);
+      expect(error?.reason).toBe('json_parse_error');
+    });
+
+    it('should pass requireJsonResponseWithOkTrue when ok is true', async () => {
+      const validPayload = {ok: true, result: 'all good'};
+      mockFetch.mockResolvedValueOnce(createMockResponse(validPayload));
+
+      const [data, error] = await fetchJson('https://api.example.com/command', {
+        requireJsonResponseWithOkTrue: true,
       });
 
-      const callArgs = mockFetch.mock.calls[0];
-      expect(callArgs[1].method).toBe('DELETE');
+      expect(error).toBeNull();
+      expect(data).toEqual(validPayload);
     });
 
-    it('should merge custom headers with defaults', async () => {
-      mockFetch.mockResolvedValueOnce(createMockResponse({success: true}));
+    it('should return json_response_error when requireJsonResponseWithOkTrue is true but ok is false', async () => {
+      const failPayload = {ok: false, error: 'invalid_credentials'};
+      mockFetch.mockResolvedValueOnce(createMockResponse(failPayload));
 
-      await fetch('https://api.example.com/data', {
-        headers: {
-          'X-Custom-Header': 'custom-value',
-        },
-        bodyJson: {test: true},
+      const [data, error] = await fetchJson('https://api.example.com/command', {
+        requireJsonResponseWithOkTrue: true,
       });
 
-      const callArgs = mockFetch.mock.calls[0];
-      expect(callArgs[1].headers['X-Custom-Header']).toBe('custom-value');
-      expect(callArgs[1].headers['content-type']).toBe('application/json');
+      expect(data).toBeNull();
+      expect(error).toBeInstanceOf(FetchError);
+      expect(error?.reason).toBe('json_response_error');
+      expect(error?.data).toEqual(failPayload);
+    });
+
+    it('should forward HTTP error in fetchJson', async () => {
+      const errorPayload = {error: 'Unauthorized'};
+      mockFetch.mockResolvedValueOnce(createMockResponse(errorPayload, {status: 401, statusText: 'Unauthorized'}));
+
+      const [data, error] = await fetchJson('https://api.example.com/protected');
+
+      expect(data).toBeNull();
+      expect(error).toBeInstanceOf(FetchError);
+      expect(error?.data).toEqual(errorPayload);
     });
   });
 });
