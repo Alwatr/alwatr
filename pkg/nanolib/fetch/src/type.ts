@@ -156,3 +156,9 @@ export type FetchErrorReason =
   | 'json_parse_error'
   | 'json_response_error'
   | 'unknown_error';
+
+/**
+ * Internal-only fetch options type, which includes the URL and ensures all
+ * optional properties from AlwatrFetchOptions_ are present.
+ */
+export type FetchOptions__ = AlwatrFetchOptions_ & Omit<RequestInit, 'headers'> & {url: string};
