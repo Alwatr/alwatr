@@ -25,12 +25,12 @@
     "@alwatr/core": "workspace:*",
     "@alwatr/loom": "workspace:*",
     "bun-plugin-tailwind": "^0.1.2",
-    "tailwindcss": "^4.3.2"
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@alwatr/nano-build": "workspace:*",
     "@alwatr/standard": "workspace:*",
-    "@types/bun": "^1.3.14",
+    "@types/bun": "^1.4.0",
     "typescript": "^7.0.2"
   },
   "scripts": {
