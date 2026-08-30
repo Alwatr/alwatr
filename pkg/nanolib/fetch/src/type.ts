@@ -203,8 +203,11 @@ export type FetchErrorReason =
  * @internal
  */
 export interface InternalFetchOptions_
-  extends Omit<AlwatrFetchOptions_, 'headers' | 'method'>, Omit<RequestInit, 'headers' | 'method'> {
+  extends Omit<AlwatrFetchOptions_, 'headers' | 'method' | 'timeout' | 'retryDelay'>,
+    Omit<RequestInit, 'headers' | 'method'> {
   url: string;
   method: HttpMethod;
   headers: HttpRequestHeaders;
+  timeout: number;
+  retryDelay: number;
 }
