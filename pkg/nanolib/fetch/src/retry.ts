@@ -64,8 +64,6 @@ export async function handleRetryPattern_(options: InternalFetchOptions_): Promi
   DEV_MODE && logger_.logMethod?.('handleRetryPattern_');
   options.retry--;
 
-  const externalAbortSignal = options.signal;
-
   let response: Response;
   try {
     response = await handleTimeout_(options);
@@ -77,7 +75,7 @@ export async function handleRetryPattern_(options: InternalFetchOptions_): Promi
     DEV_MODE && logger_.accident('fetch', 'fetch_failed_retry', err);
 
     // Never retry if the request was intentionally aborted
-    if (externalAbortSignal?.aborted || (err instanceof FetchError && err.reason === 'aborted')) {
+    if (options.signal?.aborted || (err instanceof FetchError && err.reason === 'aborted')) {
       throw err;
     }
 
@@ -89,8 +87,6 @@ export async function handleRetryPattern_(options: InternalFetchOptions_): Promi
 
     await delay.by(options.retryDelay);
 
-    // Restore original signal for subsequent attempts
-    options.signal = externalAbortSignal;
     return handleRetryPattern_(options);
   }
 
@@ -106,6 +102,5 @@ export async function handleRetryPattern_(options: InternalFetchOptions_): Promi
 
   await delay.by(retryDelay);
 
-  options.signal = externalAbortSignal;
   return handleRetryPattern_(options);
 }

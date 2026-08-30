@@ -76,6 +76,7 @@ export function handleTimeout_(options: InternalFetchOptions_): Promise<Response
       })
       .finally(() => {
         clearTimeout(timeoutId);
+        options.signal = externalSignal;
         if (externalSignal != null && onExternalAbort !== undefined) {
           externalSignal.removeEventListener('abort', onExternalAbort);
         }
