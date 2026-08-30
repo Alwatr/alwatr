@@ -158,8 +158,7 @@ export function processOptions_(url: string, options: FetchOptions = {}): Intern
   // Cache API Preconditions: requires Cache API runtime support and cacheable HTTP method (GET/HEAD)
   if (
     options_.cacheStrategy !== 'network_only'
-    && typeof caches !== 'undefined'
-    && (options_.method === 'GET' || options_.method === 'HEAD')
+    && (typeof caches === 'undefined' || (options_.method !== 'GET' && options_.method !== 'HEAD'))
   ) {
     DEV_MODE
       && logger_.incident?.('processOptions_', 'fetch_cache_strategy_unsupported', {
