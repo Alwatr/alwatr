@@ -1,49 +1,42 @@
-import {FetchError} from './error.js';
+import {FetchError, httpStatusToErrorReason} from './error.js';
 import {handleCacheStrategy_} from './cache.js';
 import {_processOptions, logger_} from './options.js';
 
 import type {FetchJsonOptions, FetchJsonResponse, FetchOptions, FetchResponse} from './type.js';
-import type {JsonObject} from '@alwatr/type-helper';
 
 /**
  * An enhanced wrapper for the native `fetch` function.
  *
- * This function extends the standard `fetch` with additional features such as:
- * - **Timeout**: Aborts the request if it takes too long.
- * - **Retry Pattern**: Automatically retries the request on failure (e.g., server errors or network issues).
- * - **Duplicate Request Handling**: Prevents sending multiple identical requests in parallel.
- * - **Cache Strategies**: Provides various caching mechanisms using the browser's Cache API.
- * - **Simplified API**: Offers convenient options for adding query parameters, JSON bodies, and auth tokens.
+ * Provides:
+ * - **Deterministic Errors**: Semantic `FetchError` reasons (e.g. `unauthorized`, `forbidden`, `not_found`, `server_error`, `timeout`, `aborted`, `rate_limited`).
+ * - **Go-Style Tuple Return**: Never throws, returns `[response, null]` on success or `[null, FetchError]` on failure.
+ * - **Automatic Timeout**: Aborts the request if it exceeds `timeout` duration.
+ * - **Configurable Retry**: Automatically retries transient 5xx, 429, 408, or network errors with `retryDelay` and `Retry-After` support.
+ * - **Parallel Deduplication**: Collapses identical concurrent in-flight requests.
+ * - **Cache Strategies**: Integrates with Cache API (`cache_first`, `stale_while_revalidate`, etc.).
+ * - **Isolated Headers & Query Params**: Safely formats query parameters and authorization credentials without mutating caller objects.
  *
- * @see {@link FetchOptions} for a detailed list of available options.
- *
- * @param {string} url - The URL to fetch.
- * @param {FetchOptions} options - Optional configuration for the fetch request.
- * @returns {Promise<FetchResponse>} A promise that resolves to a tuple. On
- * success, it returns `[response, null]`. On failure, it returns `[null,
- * FetchError]`.
+ * @param url - The URL to fetch.
+ * @param options - Configuration options for the fetch request.
+ * @returns A promise resolving to `[Response, null]` on success, or `[null, FetchError]` on failure.
  *
  * @example
  * ```typescript
  * import {fetch} from '@alwatr/fetch';
  *
- * async function fetchProducts() {
- *   const [response, error] = await fetch('/api/products', {
- *     queryParams: { limit: 10 },
- *     timeout: 5_000,
- *   });
+ * const [response, error] = await fetch('/api/products', {
+ *   queryParams: { limit: 10 },
+ *   timeout: '5s',
+ * });
  *
- *   if (error) {
- *     console.error('Request failed:', error.reason);
- *     return;
+ * if (error) {
+ *   if (error.reason === 'not_found') {
+ *     console.warn('Product not found');
  *   }
- *
- *   // At this point, response is guaranteed to be valid and ok.
- *   const data = await response.json();
- *   console.log('Products:', data);
+ *   return;
  * }
  *
- * fetchProducts();
+ * const data = await response.json();
  * ```
  */
 export async function fetch(url: string, options: FetchOptions = {}): Promise<FetchResponse> {
@@ -52,11 +45,11 @@ export async function fetch(url: string, options: FetchOptions = {}): Promise<Fe
   const options_ = _processOptions(url, options);
 
   try {
-    // Start the fetch lifecycle, beginning with the cache strategy.
     const response = await handleCacheStrategy_(options_);
 
     if (!response.ok) {
-      throw new FetchError('http_error', `HTTP error! status: ${response.status} ${response.statusText}`, response);
+      const reason = httpStatusToErrorReason(response.status);
+      throw new FetchError(reason, `HTTP error! status: ${response.status} ${response.statusText}`, response);
     }
 
     return [response, null];
@@ -71,7 +64,6 @@ export async function fetch(url: string, options: FetchOptions = {}): Promise<Fe
 
         if (bodyText.trim().length > 0) {
           try {
-            // Try to parse as JSON
             error.data = JSON.parse(bodyText);
           } catch {
             error.data = bodyText;
@@ -94,48 +86,34 @@ export async function fetch(url: string, options: FetchOptions = {}): Promise<Fe
 }
 
 /**
- * An enhanced wrapper for the native `fetch` function that automatically parses JSON responses.
+ * An enhanced wrapper for `fetch` that automatically parses JSON responses.
  *
- * This function extends the standard `fetch` with the same features (timeout, retry, caching, etc.)
- * and automatically parses the response body as JSON. It returns a tuple with the parsed data or an error.
+ * Accepts unconstrained generic interfaces, DTOs, and arrays without requiring index signatures.
  *
- * @template T - The expected type of the JSON response data.
+ * @template T - The expected type of the JSON response payload.
  *
- * @param {string} url - The URL to fetch.
- * @param {FetchOptions} options - Optional configuration for the fetch request.
- * @returns {Promise<[T, null] | [null, FetchError]>} A promise that resolves to a tuple.
- * On success, it returns `[data, null]` where data is the parsed JSON.
- * On failure, it returns `[null, FetchError]`.
+ * @param url - The URL to fetch.
+ * @param options - Configuration options for the fetch request.
+ * @returns A promise resolving to `[data, null]` where data is typed as `T`, or `[null, FetchError]`.
  *
  * @example
  * ```typescript
  * import {fetchJson} from '@alwatr/fetch';
  *
- * interface Product {
- *   ok: true;
- *   id: number;
+ * interface User {
+ *   id: string;
  *   name: string;
- *   price: number;
  * }
  *
- * async function getProduct(id: number) {
- *   const [data, error] = await fetchJson<Product>(`/api/products/${id}`, {
- *     timeout: 5_000,
- *     cacheStrategy: 'cache_first',
- *     requireResponseJsonWithOkTrue: true,
- *   });
- *
- *   if (error) {
- *     console.error('Failed to fetch product:', error.reason);
- *     return;
- *   }
- *
- *   // data is now typed as Product and guaranteed to be valid
- *   console.log('Product name:', data.name);
+ * const [users, error] = await fetchJson<User[]>('/api/users');
+ * if (error) {
+ *   console.error('Failed to load users:', error.reason);
+ *   return;
  * }
+ * console.log('Users count:', users.length);
  * ```
  */
-export async function fetchJson<T extends JsonObject = JsonObject>(
+export async function fetchJson<T = unknown>(
   url: string,
   options: FetchJsonOptions = {},
 ): Promise<FetchJsonResponse<T>> {
@@ -161,7 +139,11 @@ export async function fetchJson<T extends JsonObject = JsonObject>(
 
   try {
     const data = JSON.parse(bodyText) as T;
-    if (options.requireJsonResponseWithOkTrue && data.ok !== true) {
+
+    if (
+      options.requireJsonResponseWithOkTrue
+      && (typeof data !== 'object' || data === null || (data as Record<string, unknown>).ok !== true)
+    ) {
       const parseError = new FetchError(
         'json_response_error',
         'Response JSON "ok" property is not true',
@@ -171,6 +153,7 @@ export async function fetchJson<T extends JsonObject = JsonObject>(
       logger_.error('fetchJson', parseError.reason, {error: parseError});
       return [null, parseError];
     }
+
     return [data, null];
   } catch (err) {
     const parseError = new FetchError(
