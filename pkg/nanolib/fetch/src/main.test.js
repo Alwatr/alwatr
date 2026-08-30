@@ -546,6 +546,34 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
       expect(error).toBeInstanceOf(FetchError);
       expect(mockFetch).toHaveBeenCalledTimes(1);
     });
+
+    it('should sanitize retry <= 0 to 1 attempt (no retries)', async () => {
+      const error500 = createMockResponse({}, {status: 500});
+      mockFetch.mockResolvedValue(error500);
+
+      const [response, error] = await fetch('https://api.example.com/single-attempt', {
+        retry: 0,
+        retryDelay: 10,
+      });
+
+      expect(response).toBeNull();
+      expect(error).toBeInstanceOf(FetchError);
+      expect(mockFetch).toHaveBeenCalledTimes(1);
+    });
+
+    it('should floor floating-point retry values (e.g. 2.9 to 2 attempts)', async () => {
+      const error500 = createMockResponse({}, {status: 500});
+      mockFetch.mockResolvedValue(error500);
+
+      const [response, error] = await fetch('https://api.example.com/fractional-retry', {
+        retry: 2.9,
+        retryDelay: 10,
+      });
+
+      expect(response).toBeNull();
+      expect(error).toBeInstanceOf(FetchError);
+      expect(mockFetch).toHaveBeenCalledTimes(2);
+    });
   });
 
   describe('Duplicate Request Handling & Multi-Tenant Security', () => {

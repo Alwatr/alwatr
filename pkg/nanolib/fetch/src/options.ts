@@ -147,6 +147,10 @@ export function processOptions_(url: string, options: FetchOptions = {}): Intern
     method: (options.method?.toUpperCase() as HttpMethod) ?? defaultFetchOptions.method,
     timeout: parseDuration(options.timeout ?? defaultFetchOptions.timeout),
     retryDelay: parseDuration(options.retryDelay ?? defaultFetchOptions.retryDelay),
+    retry:
+      typeof options.retry === 'number' && Number.isFinite(options.retry) ?
+        Math.max(1, Math.floor(options.retry))
+      : defaultFetchOptions.retry,
   };
 
   options_.window ??= null;
