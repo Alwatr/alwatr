@@ -79,7 +79,7 @@ export async function fetch(url: string, options: FetchOptions = {}): Promise<Fe
       error = new FetchError('unknown_error', String(err ?? 'unknown_error'));
     }
 
-    DEV_MODE && logger_.error('fetch', error.reason, {error});
+    DEV_MODE && logger_.accident('fetch', error.reason, {error});
     return [null, error];
   }
 }
@@ -132,7 +132,7 @@ export async function fetchJson<T = unknown>(
       response,
       bodyText,
     );
-    DEV_MODE && logger_.error('fetchJson', parseError.reason, {error: parseError});
+    DEV_MODE && logger_.accident('fetchJson', parseError.reason, {error: parseError});
     return [null, parseError];
   }
 
@@ -149,7 +149,7 @@ export async function fetchJson<T = unknown>(
         response,
         data,
       );
-      DEV_MODE && logger_.error('fetchJson', parseError.reason, {error: parseError});
+      DEV_MODE && logger_.accident('fetchJson', parseError.reason, {error: parseError});
       return [null, parseError];
     }
 
@@ -161,7 +161,7 @@ export async function fetchJson<T = unknown>(
       response,
       bodyText,
     );
-    DEV_MODE && logger_.error('fetchJson', parseError.reason, {error: parseError});
+    DEV_MODE && logger_.accident('fetchJson', parseError.reason, {error: parseError});
     return [null, parseError];
   }
 }
