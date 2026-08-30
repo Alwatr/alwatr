@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.1.0](https://github.com/Alwatr/alwatr/compare/v10.0.4...v10.1.0) (2026-08-30)
+
+### 🔗 Dependencies update
+
+* update devDependencies to latest versions ([2519980](https://github.com/Alwatr/alwatr/commit/2519980dfa403919fad438d6011926a9c97cbc36))
+
 ## [10.0.2](https://github.com/Alwatr/alwatr/compare/v10.0.1...v10.0.2) (2026-07-28)
 
 ### 🐛 Bug Fixes

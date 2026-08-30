@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/render-state",
-  "version": "10.0.0",
+  "version": "10.1.0",
   "description": "Clone deeply nested objects and arrays in JavaScript.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/logger",
-  "version": "10.0.0",
+  "version": "10.1.0",
   "description": "Fancy colorful console debugger with custom scope written in tiny TypeScript, ES module.",
   "license": "MPL-2.0",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

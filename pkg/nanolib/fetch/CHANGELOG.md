@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.1.0](https://github.com/Alwatr/alwatr/compare/v10.0.4...v10.1.0) (2026-08-30)
+
+* **fetch:** add comprehensive tests for cache strategies and integration with Cache API ([03ff7bf](https://github.com/Alwatr/alwatr/commit/03ff7bff8a84913d73b806ce4a4a87b3761375a2))
+* **fetch:** add test for respecting Retry-After header on 429 responses ([f7134aa](https://github.com/Alwatr/alwatr/commit/f7134aaee58802f62b4ce2038ebab8fb96af9a4f))
+* **fetch:** enhance fetch and fetchJson tests with additional scenarios and error handling ([1fff461](https://github.com/Alwatr/alwatr/commit/1fff4615bdbe637666fe9f797345728bdc212f75))
+* **fetch:** enhance fetchJson functionality and improve test coverage ([c9126e2](https://github.com/Alwatr/alwatr/commit/c9126e26e9c3da2c450a3449813d825759eda313))
+* **fetch:** enhance README to clarify features and improve error handling descriptions ([25a6f56](https://github.com/Alwatr/alwatr/commit/25a6f565c9bb96cad7e0e446372e9aef1190a53b))
+* **fetch:** update logging mechanism to conditionally log method arguments and errors in DEV_MODE ([8ef7609](https://github.com/Alwatr/alwatr/commit/8ef76093bccc02aa7f9ab4a03bca283d9aea5171))
+* **fetch:** update module documentation for clarity and detail ([614174c](https://github.com/Alwatr/alwatr/commit/614174c796dd87b7a981394323295c630b4a5717))
+
+### ✨ Features
+
+* **fetch:** enhance handleTimeout_ function to improve abort handling and timeout logic ([5296e82](https://github.com/Alwatr/alwatr/commit/5296e8201fe81e550e2a14122fd8d004e1cae1a7))
+* **fetch:** enhance httpStatusToErrorReason function to map additional HTTP status codes and improve error handling ([5aad2c5](https://github.com/Alwatr/alwatr/commit/5aad2c503f951a2bbe8f66ebf0dca4970ffc1f36))
+* **fetch:** enhance retry mechanism to support parsing Retry-After header and improve error handling ([771df58](https://github.com/Alwatr/alwatr/commit/771df5819ca2d6995b5c2792066817d7be4be14c))
+* **fetch:** enhance revalidation callback handling with delay and error logging ([6361ba9](https://github.com/Alwatr/alwatr/commit/6361ba92c4a5310453c8fc591940ac1e2abde8a1))
+
+### 🐛 Bug Fixes
+
+* **fetch:** enhance retry logic to sanitize and floor retry values in processOptions function ([ddd3f61](https://github.com/Alwatr/alwatr/commit/ddd3f61d11c1bd6ad118dd66dfcc2c54b4c638d6))
+
+### 🔨 Code Refactoring
+
+* **fetch:** enforce network_only cache strategy for non-GET/HEAD methods and update processOptions function ([fe4593a](https://github.com/Alwatr/alwatr/commit/fe4593a91caac2626da673f1626550e58b4c6223))
+* **fetch:** enhance FetchJsonResponse type and improve type imports ([1423b12](https://github.com/Alwatr/alwatr/commit/1423b126e1356ade2f60c6c79b36a0aed39aa6a7))
+* **fetch:** enhance method handling in _processOptions for consistency ([da172ae](https://github.com/Alwatr/alwatr/commit/da172ae1393942d244c2d1822f54976cb562fd45))
+* **fetch:** enhance processOptions function to normalize timeout and retryDelay, and improve cache strategy handling ([44ab556](https://github.com/Alwatr/alwatr/commit/44ab5566ee5dd727baa2327d96f11bed3c8a870d))
+* **fetch:** enhance test coverage and improve error handling in fetch and fetchJson functions ([4c954bf](https://github.com/Alwatr/alwatr/commit/4c954bf634a28b17450eb71940c823272c1ea0fa))
+* **fetch:** enhance type definitions and improve documentation for fetch options ([51fde9e](https://github.com/Alwatr/alwatr/commit/51fde9ef79b5ae195db7a037e38aebff0ca23ce0))
+* **fetch:** extend InternalFetchOptions_ to include timeout and retryDelay properties ([57bb387](https://github.com/Alwatr/alwatr/commit/57bb3875b208255d7fca18149a5e9f9000ad39fc))
+* **fetch:** improve cache strategy handling and error management in handleCacheStrategy function ([3f91d89](https://github.com/Alwatr/alwatr/commit/3f91d8981cbb28339f0e768fa1e8646e5ce51f2b))
+* **fetch:** improve error handling and enhance documentation for fetch and fetchJson functions ([c7bd5ad](https://github.com/Alwatr/alwatr/commit/c7bd5ad11ede3d8e62c09bd07f09bf40e5e917c0))
+* **fetch:** remove unused import for cacheSupported in main.test.js ([a450c98](https://github.com/Alwatr/alwatr/commit/a450c9860fcd51824d2ebe5ecddaf9c2e528fecb))
+* **fetch:** replace logger_.error with logger_.accident for improved error logging in DEV_MODE ([886a4b0](https://github.com/Alwatr/alwatr/commit/886a4b09292e3093c0ca2663e65ae2a4e0ff4458))
+* **fetch:** separate files to enhance code readability ([649d87a](https://github.com/Alwatr/alwatr/commit/649d87a8bbee99bc338edde1ffb4ddec555fba11))
+* **fetch:** streamline abort signal handling in retry and timeout functions ([c79b468](https://github.com/Alwatr/alwatr/commit/c79b4687e5b4ac13a3e5eccb8ec712f2ced7b558))
+* **fetch:** streamline fetch options processing and enhance header normalization ([74f4ff1](https://github.com/Alwatr/alwatr/commit/74f4ff13cd3f673e65f30f0ef4e4cb6261bcfdd4))
+* **fetch:** update cache strategy condition in processOptions_ for better handling of unsupported scenarios ([3c34f74](https://github.com/Alwatr/alwatr/commit/3c34f74e5a58293fc0a27ce351b4cb3aa6a2340a))
+* **fetch:** update deduplication logic to use Map for storage and improve cache key computation ([7fbb8fd](https://github.com/Alwatr/alwatr/commit/7fbb8fde2689dfada38a0830034d34e1d3e2b822))
+
+### 🔗 Dependencies update
+
+* **fetch:** remove "@alwatr/has-own" ([3a7b79f](https://github.com/Alwatr/alwatr/commit/3a7b79f485f71214b8b1174289a5b93d1443858f))
+
 ## [10.0.3](https://github.com/Alwatr/alwatr/compare/v10.0.2...v10.0.3) (2026-08-13)
 
 * **fetch:** add tests for header isolation and security to prevent token leakage ([582f155](https://github.com/Alwatr/alwatr/commit/582f15574247ad4bf718af17717760c911d5db77))
