@@ -1,64 +1,72 @@
 import {FetchError} from './error.js';
 import {handleRemoveDuplicate_} from './dedupe.js';
-import {cacheSupported, logger_} from './options.js';
-import type {FetchOptions__} from './type.js';
+import {logger_} from './options.js';
 
-export {cacheSupported};
+import type {InternalFetchOptions_} from './type.js';
 
 /**
- * Manages caching strategies for the fetch request.
- * If the strategy is `network_only`, it bypasses caching and proceeds to the next step.
- * Otherwise, it interacts with the browser's Cache API based on the selected strategy.
+ * Executes the caching lifecycle according to `cacheStrategy`.
  *
- * @param {FetchOptions__} options - The fully configured fetch options.
- * @returns {Promise<Response>} A promise resolving to a `Response` object, either from the cache or the network.
- * @private
+ * Interacts safely with Cache API:
+ * - Falls back to network when Cache API is unavailable or throws.
+ * - Guards against caching non-GET requests.
+ * - Clones responses before storing to keep response bodies consumable.
+ *
+ * @param options - Processed internal fetch options.
+ * @returns A promise resolving to a cached or freshly fetched `Response`.
+ * @internal
  */
-export async function handleCacheStrategy_(options: FetchOptions__): Promise<Response> {
+export async function handleCacheStrategy_(options: InternalFetchOptions_): Promise<Response> {
   if (options.cacheStrategy === 'network_only') {
     return handleRemoveDuplicate_(options);
   }
-  // else
 
   DEV_MODE && logger_.logMethod?.('handleCacheStrategy_');
 
-  if (!cacheSupported) {
-    DEV_MODE
-      && logger_.incident?.('fetch', 'fetch_cache_strategy_unsupported', {
-        cacheSupported,
-      });
-    // Fallback to network_only if Cache API is not available.
+  let cacheStorage: Cache;
+  try {
+    cacheStorage = await caches.open(options.cacheStorageName);
+  } catch (err) {
+    DEV_MODE && logger_.accident('handleCacheStrategy_', 'cache_open_failed', {err});
     options.cacheStrategy = 'network_only';
     return handleRemoveDuplicate_(options);
   }
-  // else
-
-  const cacheStorage = await caches.open(options.cacheStorageName);
 
   const request = new Request(options.url, options);
 
   switch (options.cacheStrategy) {
     case 'cache_first': {
-      const cachedResponse = await cacheStorage.match(request);
-      if (cachedResponse != null) {
-        return cachedResponse;
+      try {
+        const cachedResponse = await cacheStorage.match(request);
+        if (cachedResponse != null) {
+          return cachedResponse;
+        }
+      } catch (err) {
+        DEV_MODE && logger_.accident('handleCacheStrategy_', 'cache_match_failed', {err});
       }
-      // else
 
       const response = await handleRemoveDuplicate_(options);
       if (response.ok) {
-        cacheStorage.put(request, response.clone());
+        try {
+          await cacheStorage.put(request, response.clone());
+        } catch {
+          // ignore cache put failures
+        }
       }
       return response;
     }
 
     case 'cache_only': {
-      const cachedResponse = await cacheStorage.match(request);
+      let cachedResponse: Response | undefined;
+      try {
+        cachedResponse = await cacheStorage.match(request);
+      } catch (err) {
+        DEV_MODE && logger_.accident('handleCacheStrategy_', 'cache_only_match_failed', {err});
+      }
+
       if (cachedResponse == null) {
         throw new FetchError('cache_not_found', 'Resource not found in cache');
       }
-      // else
-
       return cachedResponse;
     }
 
@@ -66,16 +74,22 @@ export async function handleCacheStrategy_(options: FetchOptions__): Promise<Res
       try {
         const networkResponse = await handleRemoveDuplicate_(options);
         if (networkResponse.ok) {
-          cacheStorage.put(request, networkResponse.clone());
+          try {
+            await cacheStorage.put(request, networkResponse.clone());
+          } catch {
+            // ignore cache put failures
+          }
         }
         return networkResponse;
       } catch (err) {
-        const cachedResponse = await cacheStorage.match(request);
-        if (cachedResponse != null) {
-          return cachedResponse;
+        try {
+          const cachedResponse = await cacheStorage.match(request);
+          if (cachedResponse != null) {
+            return cachedResponse;
+          }
+        } catch {
+          // ignore cache match error and throw original error
         }
-        // else
-
         throw err;
       }
     }
@@ -83,16 +97,30 @@ export async function handleCacheStrategy_(options: FetchOptions__): Promise<Res
     case 'update_cache': {
       const networkResponse = await handleRemoveDuplicate_(options);
       if (networkResponse.ok) {
-        cacheStorage.put(request, networkResponse.clone());
+        try {
+          await cacheStorage.put(request, networkResponse.clone());
+        } catch {
+          // ignore cache put failures
+        }
       }
       return networkResponse;
     }
 
     case 'stale_while_revalidate': {
-      const cachedResponse = await cacheStorage.match(request);
-      const fetchedResponsePromise = handleRemoveDuplicate_(options).then((networkResponse) => {
+      let cachedResponse: Response | undefined;
+      try {
+        cachedResponse = await cacheStorage.match(request);
+      } catch {
+        // ignore cache match error
+      }
+
+      const fetchedResponsePromise = handleRemoveDuplicate_(options).then(async (networkResponse) => {
         if (networkResponse.ok) {
-          cacheStorage.put(request, networkResponse.clone());
+          try {
+            await cacheStorage.put(request, networkResponse.clone());
+          } catch {
+            // ignore cache put failures
+          }
           if (typeof options.revalidateCallback === 'function') {
             setTimeout(options.revalidateCallback, 0, networkResponse.clone());
           }
