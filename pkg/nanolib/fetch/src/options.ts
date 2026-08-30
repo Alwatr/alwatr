@@ -1,58 +1,68 @@
 import {MimeTypes} from '@alwatr/http-primer';
 import {createLogger} from '@alwatr/logger';
-import {hasOwn} from '@alwatr/has-own';
 import {getGlobalThis} from '@alwatr/global-this';
 
-import type {AlwatrFetchOptions_, FetchOptions, FetchOptions__, QueryParams} from './type.js';
+import type {AlwatrFetchOptions_, FetchOptions, InternalFetchOptions_, QueryParams} from './type.js';
 
 export const logger_ = createLogger('@alwatr/fetch');
 
 export const globalThis_ = getGlobalThis();
 
 /**
- * A boolean flag indicating whether the browser's Cache API is supported.
+ * Immutable default options for all fetch requests.
  */
-export const cacheSupported = /* #__PURE__ */ hasOwn(globalThis_, 'caches');
+export const defaultFetchOptions: Readonly<AlwatrFetchOptions_> = {
+  method: 'GET',
+  timeout: 8_000,
+  retry: 3,
+  retryDelay: 1_000,
+  removeDuplicate: 'never',
+  cacheStrategy: 'network_only',
+  cacheStorageName: 'fetch_cache',
+  // headers: {}, // --- IGNORED ---
+};
 
 /**
  * Normalizes any standard `HeadersInit` into a fresh, isolated lowercase string record.
  *
  * @param headers - User-provided headers (plain object, Headers instance, or entries array).
+ * @param baseHeaders - Optional base headers to merge with the user-provided headers.
  * @returns An isolated `Record<string, string>`.
  */
-export function normalizeHeaders_(headers?: HeadersInit): Record<string, string> {
-  const result: Record<string, string> = {};
-
+export function normalizeHeaders_(
+  headers?: HeadersInit,
+  baseHeaders: Record<string, string> = {},
+): Record<string, string> {
   if (headers == null) {
-    return result;
+    return baseHeaders;
   }
 
   if (typeof Headers !== 'undefined' && headers instanceof Headers) {
     headers.forEach((value, key) => {
-      result[key.toLowerCase()] = value;
+      baseHeaders[key.toLowerCase()] = value;
     });
-    return result;
+    return baseHeaders;
   }
 
   if (Array.isArray(headers)) {
     for (const [key, value] of headers) {
       if (typeof key === 'string' && typeof value === 'string') {
-        result[key.toLowerCase()] = value;
+        baseHeaders[key.toLowerCase()] = value;
       }
     }
-    return result;
+    return baseHeaders;
   }
 
   if (typeof headers === 'object') {
     for (const key of Object.keys(headers)) {
       const val = (headers as Record<string, unknown>)[key];
-      if (val !== undefined && val !== null) {
-        result[key.toLowerCase()] = String(val);
+      if (val != null) {
+        baseHeaders[key.toLowerCase()] = String(val);
       }
     }
   }
 
-  return result;
+  return baseHeaders;
 }
 
 /**
@@ -102,9 +112,9 @@ export function appendQueryParams_(url: string, queryParams?: QueryParams): stri
   }
 
   // Handle hash fragment if present in URL
-  const hashIndex = url.indexOf('#');
   let baseUrl = url;
   let hashPart = '';
+  const hashIndex = url.indexOf('#');
 
   if (hashIndex !== -1) {
     baseUrl = url.slice(0, hashIndex);
@@ -116,75 +126,42 @@ export function appendQueryParams_(url: string, queryParams?: QueryParams): stri
 }
 
 /**
- * Default options for all fetch requests. These can be overridden by passing
- * a custom `options` object to the `fetch` function.
- */
-const defaultFetchOptions: AlwatrFetchOptions_ = {
-  method: 'GET',
-  headers: {},
-  timeout: 8_000,
-  retry: 3,
-  retryDelay: 1_000,
-  removeDuplicate: 'never',
-  cacheStrategy: 'network_only',
-  cacheStorageName: 'fetch_cache',
-};
-
-/**
- * Processes and sanitizes the fetch options.
+ * Processes and sanitizes user-provided fetch options into a complete, isolated options object.
  *
- * @param {string} url - The URL to fetch.
- * @param {FetchOptions} options - The user-provided options.
- * @returns {FetchOptions__} The processed and complete fetch options.
- * @private
+ * @param url - The target URL.
+ * @param options - User-provided options.
+ * @returns Internal, complete, and isolated fetch options.
+ * @internal
  */
-export function _processOptions(url: string, options: FetchOptions): FetchOptions__ {
+export function _processOptions(url: string, options: FetchOptions = {}): InternalFetchOptions_ {
   DEV_MODE && logger_.logMethodArgs?.('_processOptions', {url, options});
 
-  const options_: FetchOptions__ = {
+  const processedUrl = appendQueryParams_(url, options.queryParams);
+
+  const options_: InternalFetchOptions_ = {
     ...defaultFetchOptions,
     ...options,
-    // Headers must be private per request: the object is mutated below
-    // (content-type, authorization), and both the module-level default and a
-    // caller-supplied object would otherwise accumulate headers across calls
-    // — leaking one request's credential onto every later one.
-    headers: {
-      ...defaultFetchOptions.headers,
-      ...options.headers,
-    },
-    url,
+    headers: normalizeHeaders_(options.headers),
+    url: processedUrl,
   };
 
   options_.window ??= null;
 
   if (options_.removeDuplicate === 'auto') {
-    options_.removeDuplicate = cacheSupported ? 'until_load' : 'always';
+    options_.removeDuplicate = typeof caches !== 'undefined' ? 'until_load' : 'always';
   }
 
-  // Append query parameters to the URL if they are provided and the URL doesn't already have them.
-  if (options_.url.lastIndexOf('?') === -1 && options_.queryParams != null) {
-    const queryParams = options_.queryParams;
-    // prettier-ignore
-    const queryArray = Object
-      .keys(queryParams)
-      .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(String(queryParams[key]))}`);
-
-    if (queryArray.length > 0) {
-      options_.url += '?' + queryArray.join('&');
-    }
-  }
-
-  // If `bodyJson` is provided, stringify it and set the appropriate 'Content-Type' header.
-  if (options_.bodyJson !== undefined) {
-    options_.body = JSON.stringify(options_.bodyJson);
+  // JSON Body serialization
+  if (options.bodyJson !== undefined) {
+    options_.body = JSON.stringify(options.bodyJson);
     options_.headers['content-type'] = MimeTypes.JSON;
   }
 
-  // Set the 'Authorization' header for bearer tokens or Alwatr's authentication scheme.
-  if (options_.bearerToken !== undefined) {
-    options_.headers.authorization = `Bearer ${options_.bearerToken}`;
-  } else if (options_.alwatrAuth !== undefined) {
-    options_.headers.authorization = `Alwatr ${options_.alwatrAuth.userId}:${options_.alwatrAuth.userToken}`;
+  // Authorization header configuration
+  if (options.bearerToken !== undefined) {
+    options_.headers.authorization = `Bearer ${options.bearerToken}`;
+  } else if (options.alwatrAuth !== undefined) {
+    options_.headers.authorization = `Alwatr ${options.alwatrAuth.userId}:${options.alwatrAuth.userToken}`;
   }
 
   DEV_MODE && logger_.logProperty?.('fetch.options', options_);
