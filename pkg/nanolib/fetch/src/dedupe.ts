@@ -1,59 +1,64 @@
 import {logger_} from './options.js';
 import {handleRetryPattern_} from './retry.js';
 
-import type {FetchOptions__} from './type.js';
+import type {InternalFetchOptions_} from './type.js';
 
 /**
- * A simple in-memory storage for tracking and managing duplicate in-flight requests.
- * The key is a unique identifier for the request (e.g., method + URL + body),
- * and the value is the promise of the ongoing fetch operation.
+ * Storage for tracking in-flight duplicate requests.
  */
-const duplicateRequestStorage_: Record<string, Promise<Response>> = {};
+const duplicateRequestStorage_: Map<string, Promise<Response>> = new Map();
 
 /**
- * Handles duplicate request elimination.
+ * Computes a secure cache key for request deduplication.
+ * Includes method, full URL, authorization header, and request body.
  *
- * It creates a unique key based on the request method, URL, and body. If a request with the
- * same key is already in flight, it returns the promise of the existing request instead of
- * creating a new one. This prevents redundant network calls for identical parallel requests.
- *
- * @param {FetchOptions__} options - The fully configured fetch options.
- * @returns {Promise<Response>} A promise resolving to a cloned `Response` object.
- * @private
+ * @param options - Processed internal fetch options.
+ * @returns Unique string identifier for the request intent.
  */
-export async function handleRemoveDuplicate_(options: FetchOptions__): Promise<Response> {
+export function computeDedupeKey_(options: InternalFetchOptions_): string {
+  const bodyString = typeof options.body === 'string' ? options.body : '';
+  const auth = options.headers['authorization'] ?? '';
+  return `${options.method} ${options.url} [auth:${auth}] [body:${bodyString}]`;
+}
+
+/**
+ * Handles duplicate parallel request coalescing.
+ *
+ * If an identical request is already in-flight, returns a cloned response of the existing
+ * promise to avoid redundant network round-trips.
+ *
+ * @param options - Processed internal fetch options.
+ * @returns A promise resolving to an independent cloned `Response`.
+ * @internal
+ */
+export async function handleRemoveDuplicate_(options: InternalFetchOptions_): Promise<Response> {
   if (options.removeDuplicate === 'never') {
     return handleRetryPattern_(options);
   }
-  // else
 
   DEV_MODE && logger_.logMethod?.('handleRemoveDuplicate_');
 
-  // Create a unique key for the request. Including the body is crucial to differentiate
-  // between requests to the same URL but with different payloads (e.g., POST requests).
-  const bodyString = typeof options.body === 'string' ? options.body : '';
-  const cacheKey = `${options.method} ${options.url} ${bodyString}`;
+  const cacheKey = computeDedupeKey_(options);
 
-  // If a request with the same key doesn't exist, create it and store its promise.
-  duplicateRequestStorage_[cacheKey] ??= handleRetryPattern_(options);
+  let requestAsync = duplicateRequestStorage_.get(cacheKey);
+  if (requestAsync == null) {
+    requestAsync = handleRetryPattern_(options);
+    duplicateRequestStorage_.set(cacheKey, requestAsync);
+  }
 
   try {
-    // Await the shared promise to get the response.
-    const response = await duplicateRequestStorage_[cacheKey];
+    const response = await requestAsync;
 
-    // Clean up the stored promise based on the removal strategy.
-    if (duplicateRequestStorage_[cacheKey] != null) {
-      if (response.ok !== true || options.removeDuplicate === 'until_load') {
-        // Remove after completion for 'until_load' or if the request failed.
-        delete duplicateRequestStorage_[cacheKey];
-      }
+    // Clean up stored promise for 'until_load' or failed responses
+    if (!response.ok || options.removeDuplicate === 'until_load') {
+      duplicateRequestStorage_.delete(cacheKey);
     }
 
-    // Return a clone of the response, so each caller can consume the body independently.
+    // Return a clone so every concurrent caller can independently consume the body
     return response.clone();
   } catch (err) {
-    // If the request fails, remove it from storage to allow for retries.
-    delete duplicateRequestStorage_[cacheKey];
+    // If request failed, remove from storage immediately
+    duplicateRequestStorage_.delete(cacheKey);
     throw err;
   }
 }
