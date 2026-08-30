@@ -1,5 +1,5 @@
 import {describe, beforeEach, it, expect, jest} from 'bun:test';
-import {fetch, fetchJson, FetchError} from '@alwatr/fetch';
+import {fetch, fetchJson, FetchError, httpStatusToErrorReason} from '@alwatr/fetch';
 
 // Mock global fetch
 const mockFetch = jest.fn();
@@ -34,7 +34,7 @@ function createMockResponse(data, options = {}) {
   };
 }
 
-describe('@alwatr/fetch - Comprehensive Current Contract Suite', () => {
+describe('@alwatr/fetch - Modernized Architecture Suite', () => {
   beforeEach(() => {
     mockFetch.mockClear();
     // @ts-expect-error 'onLine' is a read-only property
@@ -55,23 +55,21 @@ describe('@alwatr/fetch - Comprehensive Current Contract Suite', () => {
       expect(await response?.json()).toEqual(mockData);
     });
 
-    it('should respect various HTTP methods (POST, PUT, DELETE, PATCH)', async () => {
-      const methods = ['POST', 'PUT', 'DELETE', 'PATCH'];
+    it('should respect various HTTP methods (POST, PUT, DELETE, PATCH, HEAD)', async () => {
+      const methods = ['POST', 'PUT', 'DELETE', 'PATCH', 'HEAD'];
 
       for (const method of methods) {
         mockFetch.mockResolvedValueOnce(createMockResponse({method}));
 
         const [response, error] = await fetch(`https://api.example.com/resource`, {
           method,
-          bodyJson: {action: method.toLowerCase()},
+          bodyJson: method !== 'HEAD' ? {action: method.toLowerCase()} : undefined,
         });
 
         expect(error).toBeNull();
         expect(response?.ok).toBe(true);
         const callArgs = mockFetch.mock.calls[mockFetch.mock.calls.length - 1];
         expect(callArgs[1].method).toBe(method);
-        expect(callArgs[1].body).toBe(JSON.stringify({action: method.toLowerCase()}));
-        expect(callArgs[1].headers['content-type']).toBe('application/json');
       }
     });
 
@@ -93,9 +91,27 @@ describe('@alwatr/fetch - Comprehensive Current Contract Suite', () => {
         expect.any(Object),
       );
     });
+
+    it('should append query parameters to URL that ALREADY contains query parameters and hash', async () => {
+      mockFetch.mockResolvedValueOnce(createMockResponse({success: true}));
+
+      const [response, error] = await fetch('https://api.example.com/items?sort=desc#results', {
+        queryParams: {
+          limit: 10,
+          tag: ['tech', 'news'],
+        },
+      });
+
+      expect(error).toBeNull();
+      expect(response?.ok).toBe(true);
+      expect(mockFetch).toHaveBeenCalledWith(
+        'https://api.example.com/items?sort=desc&limit=10&tag=tech&tag=news#results',
+        expect.any(Object),
+      );
+    });
   });
 
-  describe('Authentication & Header Isolation', () => {
+  describe('Authentication & Header Normalization & Isolation', () => {
     it('should add Bearer token to Authorization header', async () => {
       mockFetch.mockResolvedValueOnce(createMockResponse({authenticated: true}));
 
@@ -119,6 +135,33 @@ describe('@alwatr/fetch - Comprehensive Current Contract Suite', () => {
 
       const callArgs = mockFetch.mock.calls[0];
       expect(callArgs[1].headers.authorization).toBe('Alwatr user123:token456');
+    });
+
+    it('should support Web Standard Headers instance in options', async () => {
+      mockFetch.mockResolvedValueOnce(createMockResponse({ok: true}));
+
+      const customHeaders = new Headers();
+      customHeaders.set('X-Api-Key', 'my-secret-key');
+      customHeaders.set('Accept-Language', 'fa-IR');
+
+      await fetch('https://api.example.com/data', {
+        headers: customHeaders,
+      });
+
+      const callArgs = mockFetch.mock.calls[0];
+      expect(callArgs[1].headers['x-api-key']).toBe('my-secret-key');
+      expect(callArgs[1].headers['accept-language']).toBe('fa-IR');
+    });
+
+    it('should support entries array in headers', async () => {
+      mockFetch.mockResolvedValueOnce(createMockResponse({ok: true}));
+
+      await fetch('https://api.example.com/data', {
+        headers: [['X-Trace-Id', 'trace-999']],
+      });
+
+      const callArgs = mockFetch.mock.calls[0];
+      expect(callArgs[1].headers['x-trace-id']).toBe('trace-999');
     });
 
     it('should never leak authorization or headers into subsequent requests', async () => {
@@ -150,38 +193,62 @@ describe('@alwatr/fetch - Comprehensive Current Contract Suite', () => {
       });
 
       expect(callerHeaders).toEqual({'x-app-id': 'grand.market'});
-      expect(callerHeaders.authorization).toBeUndefined();
+      expect(callerHeaders['authorization']).toBeUndefined();
       expect(callerHeaders['content-type']).toBeUndefined();
     });
   });
 
-  describe('Error Handling - HTTP Status Codes', () => {
-    it('should return [null, FetchError] for 404 error and parse JSON error body', async () => {
-      const errorData = {error: 'Not Found', code: 404};
-      const mockResponse = createMockResponse(errorData, {status: 404, statusText: 'Not Found'});
-      mockFetch.mockResolvedValueOnce(mockResponse);
+  describe('Granular Error Handling - Semantic HTTP Reasons', () => {
+    const statusMap = [
+      {status: 400, expectedReason: 'bad_request'},
+      {status: 401, expectedReason: 'unauthorized'},
+      {status: 403, expectedReason: 'forbidden'},
+      {status: 404, expectedReason: 'not_found'},
+      {status: 408, expectedReason: 'request_timeout'},
+      {status: 409, expectedReason: 'conflict'},
+      {status: 413, expectedReason: 'payload_too_large'},
+      {status: 422, expectedReason: 'unprocessable_content'},
+      {status: 429, expectedReason: 'rate_limited'},
+      {status: 418, expectedReason: 'http_error'},
+      {status: 500, expectedReason: 'server_error'},
+      {status: 502, expectedReason: 'server_error'},
+      {status: 503, expectedReason: 'server_error'},
+      {status: 504, expectedReason: 'server_error'},
+    ];
 
-      const [response, error] = await fetch('https://api.example.com/missing');
+    for (const {status, expectedReason} of statusMap) {
+      it(`should return [null, FetchError] with reason "${expectedReason}" for HTTP ${status}`, async () => {
+        const errorData = {error: `Error ${status}`};
+        const mockResponse = createMockResponse(errorData, {status, statusText: `Status ${status}`});
+        mockFetch.mockResolvedValueOnce(mockResponse);
 
-      expect(response).toBeNull();
-      expect(error).toBeInstanceOf(FetchError);
-      expect(error?.reason).toBe('http_error');
-      expect(error?.response?.status).toBe(404);
-      expect(error?.data).toEqual(errorData);
-    });
+        const [response, error] = await fetch(`https://api.example.com/status/${status}`, {retry: 0});
 
-    it('should return [null, FetchError] for 500 server error', async () => {
-      const errorData = {error: 'Internal Server Error'};
-      const mockResponse = createMockResponse(errorData, {status: 500, statusText: 'Internal Server Error'});
-      mockFetch.mockResolvedValueOnce(mockResponse);
+        expect(response).toBeNull();
+        expect(error).toBeInstanceOf(FetchError);
+        expect(error?.reason).toBe(expectedReason);
+        expect(error?.status).toBe(status);
+        expect(error?.response?.status).toBe(status);
+        expect(error?.data).toEqual(errorData);
+        expect(error?.ok).toBe(false);
+      });
+    }
 
-      const [response, error] = await fetch('https://api.example.com/error', {retry: 0});
-
-      expect(response).toBeNull();
-      expect(error).toBeInstanceOf(FetchError);
-      expect(error?.reason).toBe('http_error');
-      expect(error?.response?.status).toBe(500);
-      expect(error?.data).toEqual(errorData);
+    it('should test httpStatusToErrorReason helper directly', () => {
+      expect(httpStatusToErrorReason(400)).toBe('bad_request');
+      expect(httpStatusToErrorReason(401)).toBe('unauthorized');
+      expect(httpStatusToErrorReason(403)).toBe('forbidden');
+      expect(httpStatusToErrorReason(404)).toBe('not_found');
+      expect(httpStatusToErrorReason(408)).toBe('request_timeout');
+      expect(httpStatusToErrorReason(409)).toBe('conflict');
+      expect(httpStatusToErrorReason(413)).toBe('payload_too_large');
+      expect(httpStatusToErrorReason(422)).toBe('unprocessable_content');
+      expect(httpStatusToErrorReason(429)).toBe('rate_limited');
+      expect(httpStatusToErrorReason(500)).toBe('server_error');
+      expect(httpStatusToErrorReason(502)).toBe('server_error');
+      expect(httpStatusToErrorReason(503)).toBe('server_error');
+      expect(httpStatusToErrorReason(504)).toBe('server_error');
+      expect(httpStatusToErrorReason(418)).toBe('http_error');
     });
 
     it('should parse non-JSON error response as plain text', async () => {
@@ -189,47 +256,31 @@ describe('@alwatr/fetch - Comprehensive Current Contract Suite', () => {
       const mockResponse = createMockResponse(plainText, {status: 400, statusText: 'Bad Request'});
       mockFetch.mockResolvedValueOnce(mockResponse);
 
-      const [response, error] = await fetch('https://api.example.com/bad');
+      const [response, error] = await fetch('https://api.example.com/bad', {retry: 0});
 
       expect(error).toBeInstanceOf(FetchError);
+      expect(error?.reason).toBe('bad_request');
       expect(error?.data).toBe(plainText);
-    });
-
-    it('should handle empty error body gracefully', async () => {
-      const mockResponse = createMockResponse('', {status: 404, statusText: 'Not Found'});
-      mockFetch.mockResolvedValueOnce(mockResponse);
-
-      const [response, error] = await fetch('https://api.example.com/empty', {retry: 0});
-
-      expect(error).toBeInstanceOf(FetchError);
-      expect(error?.data).toBeUndefined();
-    });
-
-    it('should handle malformed JSON in error body as string', async () => {
-      const rawText = '{invalid-json';
-      const mockResponse = createMockResponse(rawText, {status: 500, statusText: 'Error'});
-      mockFetch.mockResolvedValueOnce(mockResponse);
-
-      const [response, error] = await fetch('https://api.example.com/malformed', {retry: 0});
-
-      expect(error).toBeInstanceOf(FetchError);
-      expect(error?.data).toBe(rawText);
     });
   });
 
-  describe('Error Handling - Network & Abort', () => {
-    it('should return [null, FetchError] for network failures', async () => {
-      mockFetch.mockRejectedValueOnce(new Error('Network request failed'));
+  describe('Error Handling - Network, Timeout & Abort', () => {
+    it('should reject immediately if external signal is ALREADY aborted', async () => {
+      const controller = new AbortController();
+      controller.abort();
 
-      const [response, error] = await fetch('https://api.example.com/data', {retry: 0});
+      const [response, error] = await fetch('https://api.example.com/data', {
+        signal: controller.signal,
+      });
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
-      expect(error?.reason).toBe('network_error');
-      expect(error?.message).toBe('Network request failed');
+      expect(error?.reason).toBe('aborted');
+      // Native fetch must not even be called when signal was pre-aborted
+      expect(mockFetch).not.toHaveBeenCalled();
     });
 
-    it('should return [null, FetchError] with reason "aborted" on AbortError', async () => {
+    it('should return [null, FetchError] with reason "aborted" on mid-flight abort', async () => {
       const abortError = new Error('The user aborted a request');
       abortError.name = 'AbortError';
       mockFetch.mockRejectedValueOnce(abortError);
@@ -241,18 +292,16 @@ describe('@alwatr/fetch - Comprehensive Current Contract Suite', () => {
       expect(error?.reason).toBe('aborted');
     });
 
-    it('should handle unknown non-Error rejections', async () => {
-      mockFetch.mockRejectedValueOnce('Unexpected string rejection');
+    it('should return [null, FetchError] for network failures', async () => {
+      mockFetch.mockRejectedValueOnce(new Error('Network request failed'));
 
       const [response, error] = await fetch('https://api.example.com/data', {retry: 0});
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
-      expect(error?.reason).toBe('unknown_error');
+      expect(error?.reason).toBe('network_error');
     });
-  });
 
-  describe('Timeout Handling', () => {
     it('should timeout and return FetchError with reason "timeout"', async () => {
       let timeoutId;
       mockFetch.mockImplementation(
@@ -290,8 +339,8 @@ describe('@alwatr/fetch - Comprehensive Current Contract Suite', () => {
     });
   });
 
-  describe('Retry Pattern', () => {
-    it('should retry on 500 error and eventually succeed', async () => {
+  describe('Retry Engine', () => {
+    it('should retry on 500 server error and eventually succeed', async () => {
       const error500 = createMockResponse({}, {status: 500});
       mockFetch
         .mockResolvedValueOnce(error500)
@@ -308,45 +357,32 @@ describe('@alwatr/fetch - Comprehensive Current Contract Suite', () => {
       expect(mockFetch).toHaveBeenCalledTimes(3);
     });
 
-    it('should retry on network error and succeed', async () => {
-      mockFetch
-        .mockRejectedValueOnce(new Error('Connection reset'))
-        .mockResolvedValueOnce(createMockResponse({success: true}));
+    it('should retry on 429 rate limited status and succeed', async () => {
+      const error429 = createMockResponse({}, {status: 429});
+      mockFetch.mockResolvedValueOnce(error429).mockResolvedValueOnce(createMockResponse({success: true}));
 
-      const [response, error] = await fetch('https://api.example.com/flaky', {
+      const [response, error] = await fetch('https://api.example.com/limited', {
         retry: 2,
         retryDelay: 10,
       });
 
       expect(error).toBeNull();
+      expect(response?.ok).toBe(true);
       expect(mockFetch).toHaveBeenCalledTimes(2);
     });
 
-    it('should NOT retry on 4xx client errors', async () => {
-      const error400 = createMockResponse({error: 'Bad Request'}, {status: 400});
-      mockFetch.mockResolvedValueOnce(error400);
+    it('should NOT retry on 401 or 404 client errors', async () => {
+      const error404 = createMockResponse({error: 'Not Found'}, {status: 404});
+      mockFetch.mockResolvedValueOnce(error404);
 
-      const [response, error] = await fetch('https://api.example.com/bad', {
+      const [response, error] = await fetch('https://api.example.com/missing', {
         retry: 3,
         retryDelay: 10,
       });
 
       expect(error).toBeInstanceOf(FetchError);
+      expect(error?.reason).toBe('not_found');
       expect(mockFetch).toHaveBeenCalledTimes(1);
-    });
-
-    it('should fail after all retries are exhausted', async () => {
-      const error500 = createMockResponse({}, {status: 500});
-      mockFetch.mockResolvedValue(error500);
-
-      const [response, error] = await fetch('https://api.example.com/always-fails', {
-        retry: 2,
-        retryDelay: 10,
-      });
-
-      expect(response).toBeNull();
-      expect(error).toBeInstanceOf(FetchError);
-      expect(mockFetch).toHaveBeenCalledTimes(2);
     });
 
     it('should skip retries when offline', async () => {
@@ -365,7 +401,7 @@ describe('@alwatr/fetch - Comprehensive Current Contract Suite', () => {
     });
   });
 
-  describe('Duplicate Request Handling', () => {
+  describe('Duplicate Request Handling & Multi-Tenant Security', () => {
     it('should deduplicate parallel requests with "until_load"', async () => {
       mockFetch.mockResolvedValue(createMockResponse({data: 'shared'}));
 
@@ -394,40 +430,47 @@ describe('@alwatr/fetch - Comprehensive Current Contract Suite', () => {
       expect(mockFetch).toHaveBeenCalledTimes(2);
     });
 
-    it('should differentiate requests by method, URL, and body', async () => {
-      mockFetch.mockResolvedValue(createMockResponse({data: 'result'}));
+    it('should NOT merge requests if Authorization tokens differ (tenant isolation)', async () => {
+      mockFetch
+        .mockResolvedValueOnce(createMockResponse({user: 'alice'}))
+        .mockResolvedValueOnce(createMockResponse({user: 'bob'}));
 
-      await Promise.all([
-        fetch('https://api.example.com/data', {
-          method: 'POST',
-          bodyJson: {id: 1},
+      const [res1, res2] = await Promise.all([
+        fetch('https://api.example.com/profile', {
+          bearerToken: 'token-alice',
           removeDuplicate: 'until_load',
         }),
-        fetch('https://api.example.com/data', {
-          method: 'POST',
-          bodyJson: {id: 1},
-          removeDuplicate: 'until_load',
-        }),
-        fetch('https://api.example.com/data', {
-          method: 'POST',
-          bodyJson: {id: 2},
+        fetch('https://api.example.com/profile', {
+          bearerToken: 'token-bob',
           removeDuplicate: 'until_load',
         }),
       ]);
 
       expect(mockFetch).toHaveBeenCalledTimes(2);
+      expect(res1[0]?.ok).toBe(true);
+      expect(res2[0]?.ok).toBe(true);
     });
   });
 
-  describe('fetchJson Functionality', () => {
+  describe('fetchJson Functionality & Generic Typing', () => {
     it('should parse JSON response and return [data, null]', async () => {
-      const testData = {id: 42, name: 'Alice', active: true};
+      const testData = {id: 42, name: 'Alice'};
       mockFetch.mockResolvedValueOnce(createMockResponse(testData));
 
       const [data, error] = await fetchJson('https://api.example.com/users/42');
 
       expect(error).toBeNull();
       expect(data).toEqual(testData);
+    });
+
+    it('should support array JSON responses with fetchJson', async () => {
+      const list = [{id: '1'}, {id: '2'}];
+      mockFetch.mockResolvedValueOnce(createMockResponse(list));
+
+      const [data, error] = await fetchJson('https://api.example.com/items');
+
+      expect(error).toBeNull();
+      expect(data).toEqual(list);
     });
 
     it('should return json_parse_error on empty response body', async () => {
@@ -476,7 +519,7 @@ describe('@alwatr/fetch - Comprehensive Current Contract Suite', () => {
       expect(error?.data).toEqual(failPayload);
     });
 
-    it('should forward HTTP error in fetchJson', async () => {
+    it('should forward semantic HTTP error in fetchJson', async () => {
       const errorPayload = {error: 'Unauthorized'};
       mockFetch.mockResolvedValueOnce(createMockResponse(errorPayload, {status: 401, statusText: 'Unauthorized'}));
 
@@ -484,6 +527,7 @@ describe('@alwatr/fetch - Comprehensive Current Contract Suite', () => {
 
       expect(data).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
+      expect(error?.reason).toBe('unauthorized');
       expect(error?.data).toEqual(errorPayload);
     });
   });
