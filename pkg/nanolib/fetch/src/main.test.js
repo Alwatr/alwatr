@@ -1,5 +1,5 @@
 import {describe, beforeEach, it, expect, jest} from 'bun:test';
-import {fetch, fetchJson, FetchError, httpStatusToErrorReason, cacheSupported} from '@alwatr/fetch';
+import {fetch, fetchJson, FetchError, httpStatusToErrorReason} from '@alwatr/fetch';
 
 // Mock global fetch
 const mockFetch = jest.fn();
