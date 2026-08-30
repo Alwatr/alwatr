@@ -71,7 +71,12 @@ export class AlwatrHashGenerator {
    * ```
    */
   public generate(data: BinaryLike): string {
-    return this.config.prefix + createHash(this.config.algorithm).update(data).digest(this.config.encoding);
+    return (
+      this.config.prefix
+      + createHash(this.config.algorithm)
+        .update(typeof data === 'string' || ArrayBuffer.isView(data) ? data : new Uint8Array(data))
+        .digest(this.config.encoding)
+    );
   }
 
   /**
@@ -80,7 +85,9 @@ export class AlwatrHashGenerator {
    * @returns The generated crc hash.
    */
   public generateCrc(data: BinaryLike): string {
-    const crc = createHash('sha1').update(data).digest(this.config.encoding);
+    const crc = createHash('sha1')
+      .update(typeof data === 'string' || ArrayBuffer.isView(data) ? data : new Uint8Array(data))
+      .digest(this.config.encoding);
     return this.config.crcLength == null || this.config.crcLength < 1 ? crc : crc.slice(0, this.config.crcLength);
   }
 
