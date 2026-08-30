@@ -1,5 +1,10 @@
-// Public entry point — re-exports everything from sibling implementation files.
-// No implementation logic lives here; this file is the sole package boundary.
+/**
+ * @module @alwatr/fetch
+ *
+ * An enhanced, lightweight, and dependency-free wrapper for the native `fetch`
+ * API. It provides modern features like caching strategies, request retries,
+ * timeouts, and duplicate request handling.
+ */
 
 export * from './error.js';
 export * from './fetch.js';
