@@ -574,6 +574,26 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
       expect(error).toBeInstanceOf(FetchError);
       expect(mockFetch).toHaveBeenCalledTimes(2);
     });
+
+    it('should respect Retry-After header on 429 rate limited response', async () => {
+      const error429 = createMockResponse({}, {
+        status: 429,
+        headers: {'retry-after': '0.01'},
+      });
+      mockFetch.mockResolvedValueOnce(error429).mockResolvedValueOnce(createMockResponse({success: true}));
+
+      const startTime = Date.now();
+      const [response, error] = await fetch('https://api.example.com/retry-after-test', {
+        retry: 2,
+        retryDelay: 500, // Should be overridden by Retry-After (10ms)
+      });
+      const elapsed = Date.now() - startTime;
+
+      expect(error).toBeNull();
+      expect(response?.ok).toBe(true);
+      expect(mockFetch).toHaveBeenCalledTimes(2);
+      expect(elapsed).toBeLessThan(400); // Confirms it used ~10ms from Retry-After, not 500ms
+    });
   });
 
   describe('Duplicate Request Handling & Multi-Tenant Security', () => {
