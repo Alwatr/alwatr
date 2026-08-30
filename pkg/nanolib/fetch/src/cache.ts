@@ -1,6 +1,7 @@
 import {FetchError} from './error.js';
 import {handleRemoveDuplicate_} from './dedupe.js';
 import {logger_} from './options.js';
+import {delay} from '@alwatr/delay';
 
 import type {InternalFetchOptions_} from './type.js';
 
@@ -122,7 +123,14 @@ export async function handleCacheStrategy_(options: InternalFetchOptions_): Prom
             // ignore cache put failures
           }
           if (typeof options.revalidateCallback === 'function') {
-            setTimeout(options.revalidateCallback, 0, networkResponse.clone());
+            const callback = options.revalidateCallback;
+            const revalidatePayload = networkResponse.clone();
+            await delay.nextMacrotask();
+            try {
+              await callback(revalidatePayload);
+            } catch (err) {
+              DEV_MODE && logger_.accident('handleCacheStrategy_', 'revalidate_callback_failed', {err});
+            }
           }
         }
         return networkResponse;
