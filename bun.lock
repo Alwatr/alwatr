@@ -309,7 +309,6 @@
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/global-this": "workspace:*",
-        "@alwatr/has-own": "workspace:*",
         "@alwatr/http-primer": "workspace:*",
         "@alwatr/logger": "workspace:*",
         "@alwatr/parse-duration": "workspace:*",
