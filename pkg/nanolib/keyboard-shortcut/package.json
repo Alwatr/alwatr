@@ -29,7 +29,7 @@
     "@alwatr/nano-build": "workspace:*",
     "@alwatr/standard": "workspace:*",
     "@alwatr/type-helper": "workspace:*",
-    "@happy-dom/global-registrator": "^20.11.6",
+    "@happy-dom/global-registrator": "^20.11.10",
     "typescript": "^7.0.2"
   },
   "scripts": {
