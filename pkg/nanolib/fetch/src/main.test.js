@@ -1,5 +1,5 @@
 import {describe, beforeEach, it, expect, jest} from 'bun:test';
-import {fetch, fetchJson, FetchError, httpStatusToErrorReason} from '@alwatr/fetch';
+import {fetch, fetchJson, FetchError, httpStatusToErrorReason, cacheSupported} from '@alwatr/fetch';
 
 // Mock global fetch
 const mockFetch = jest.fn();
@@ -34,7 +34,7 @@ function createMockResponse(data, options = {}) {
   };
 }
 
-describe('@alwatr/fetch - Modernized Architecture Suite', () => {
+describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
   beforeEach(() => {
     mockFetch.mockClear();
     // @ts-expect-error 'onLine' is a read-only property
@@ -71,6 +71,37 @@ describe('@alwatr/fetch - Modernized Architecture Suite', () => {
         const callArgs = mockFetch.mock.calls[mockFetch.mock.calls.length - 1];
         expect(callArgs[1].method).toBe(method);
       }
+    });
+
+    it('should respect custom method and send JSON body with correct headers', async () => {
+      mockFetch.mockResolvedValueOnce(createMockResponse({deleted: true}));
+
+      const [response, error] = await fetch('https://api.example.com/resource/123', {
+        method: 'DELETE',
+        bodyJson: {force: true},
+      });
+
+      expect(error).toBeNull();
+      expect(response?.ok).toBe(true);
+      const callArgs = mockFetch.mock.calls[0];
+      expect(callArgs[1].method).toBe('DELETE');
+      expect(callArgs[1].body).toBe(JSON.stringify({force: true}));
+      expect(callArgs[1].headers['content-type']).toBe('application/json');
+    });
+
+    it('should merge custom headers with default headers', async () => {
+      mockFetch.mockResolvedValueOnce(createMockResponse({success: true}));
+
+      await fetch('https://api.example.com/data', {
+        headers: {
+          'X-Custom-Header': 'custom-value',
+        },
+        bodyJson: {test: true},
+      });
+
+      const callArgs = mockFetch.mock.calls[0];
+      expect(callArgs[1].headers['x-custom-header']).toBe('custom-value');
+      expect(callArgs[1].headers['content-type']).toBe('application/json');
     });
 
     it('should handle query parameters correctly with encoding and types', async () => {
@@ -196,6 +227,27 @@ describe('@alwatr/fetch - Modernized Architecture Suite', () => {
       expect(callerHeaders['authorization']).toBeUndefined();
       expect(callerHeaders['content-type']).toBeUndefined();
     });
+
+    it('should prevent header pollution across multiple requests with reused caller headers', async () => {
+      mockFetch
+        .mockResolvedValueOnce(createMockResponse({ok: true}))
+        .mockResolvedValueOnce(createMockResponse({ok: true}));
+
+      const callerHeaders = {'x-app-id': 'wesun'};
+
+      await fetch('https://api.example.com/authed', {
+        headers: callerHeaders,
+        bearerToken: 'PRIVATE-TOKEN',
+      });
+
+      await fetch('https://api.thirdparty.com/public', {
+        headers: callerHeaders,
+      });
+
+      const secondCallArgs = mockFetch.mock.calls[1];
+      expect(secondCallArgs[1].headers.authorization).toBeUndefined();
+      expect(secondCallArgs[1].headers['x-app-id']).toBe('wesun');
+    });
   });
 
   describe('Granular Error Handling - Semantic HTTP Reasons', () => {
@@ -262,6 +314,48 @@ describe('@alwatr/fetch - Modernized Architecture Suite', () => {
       expect(error?.reason).toBe('bad_request');
       expect(error?.data).toBe(plainText);
     });
+
+    it('should handle empty error response body gracefully', async () => {
+      const mockResponse = {
+        ok: false,
+        status: 404,
+        statusText: 'Not Found',
+        headers: new Headers(),
+        text: jest.fn().mockResolvedValue(''),
+        clone: function () {
+          return this;
+        },
+      };
+      mockFetch.mockResolvedValueOnce(mockResponse);
+
+      const [response, error] = await fetch('https://api.example.com/empty', {retry: 0});
+
+      expect(response).toBeNull();
+      expect(error).toBeInstanceOf(FetchError);
+      expect(error?.reason).toBe('not_found');
+      expect(error?.data).toBeUndefined();
+    });
+
+    it('should handle malformed JSON in error response as raw string', async () => {
+      const mockResponse = {
+        ok: false,
+        status: 500,
+        statusText: 'Internal Server Error',
+        headers: new Headers(),
+        text: jest.fn().mockResolvedValue('{invalid json'),
+        clone: function () {
+          return this;
+        },
+      };
+      mockFetch.mockResolvedValueOnce(mockResponse);
+
+      const [response, error] = await fetch('https://api.example.com/malformed', {retry: 0});
+
+      expect(response).toBeNull();
+      expect(error).toBeInstanceOf(FetchError);
+      expect(error?.reason).toBe('server_error');
+      expect(error?.data).toBe('{invalid json');
+    });
   });
 
   describe('Error Handling - Network, Timeout & Abort', () => {
@@ -300,6 +394,17 @@ describe('@alwatr/fetch - Modernized Architecture Suite', () => {
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
       expect(error?.reason).toBe('network_error');
+      expect(error?.message).toBe('Network request failed');
+    });
+
+    it('should handle unknown non-Error string rejections', async () => {
+      mockFetch.mockRejectedValueOnce('Unexpected string rejection');
+
+      const [response, error] = await fetch('https://api.example.com/data', {retry: 0});
+
+      expect(response).toBeNull();
+      expect(error).toBeInstanceOf(FetchError);
+      expect(error?.reason).toBe('unknown_error');
     });
 
     it('should timeout and return FetchError with reason "timeout"', async () => {
@@ -357,6 +462,20 @@ describe('@alwatr/fetch - Modernized Architecture Suite', () => {
       expect(mockFetch).toHaveBeenCalledTimes(3);
     });
 
+    it('should retry on network error and eventually succeed', async () => {
+      mockFetch
+        .mockRejectedValueOnce(new Error('Network connection reset'))
+        .mockResolvedValueOnce(createMockResponse({success: true}));
+
+      const [response, error] = await fetch('https://api.example.com/flaky', {
+        retry: 2,
+        retryDelay: 10,
+      });
+
+      expect(error).toBeNull();
+      expect(mockFetch).toHaveBeenCalledTimes(2);
+    });
+
     it('should retry on 429 rate limited status and succeed', async () => {
       const error429 = createMockResponse({}, {status: 429});
       mockFetch.mockResolvedValueOnce(error429).mockResolvedValueOnce(createMockResponse({success: true}));
@@ -383,6 +502,21 @@ describe('@alwatr/fetch - Modernized Architecture Suite', () => {
       expect(error).toBeInstanceOf(FetchError);
       expect(error?.reason).toBe('not_found');
       expect(mockFetch).toHaveBeenCalledTimes(1);
+    });
+
+    it('should fail after all retries are exhausted', async () => {
+      const error500 = createMockResponse({}, {status: 500});
+      mockFetch.mockResolvedValue(error500);
+
+      const [response, error] = await fetch('https://api.example.com/always-fails', {
+        retry: 2,
+        retryDelay: 10,
+      });
+
+      expect(response).toBeNull();
+      expect(error).toBeInstanceOf(FetchError);
+      expect(error?.reason).toBe('server_error');
+      expect(mockFetch).toHaveBeenCalledTimes(2);
     });
 
     it('should skip retries when offline', async () => {
@@ -427,6 +561,31 @@ describe('@alwatr/fetch - Modernized Architecture Suite', () => {
         fetch('https://api.example.com/data', {removeDuplicate: 'never'}),
       ]);
 
+      expect(mockFetch).toHaveBeenCalledTimes(2);
+    });
+
+    it('should deduplicate based on method + URL + body', async () => {
+      mockFetch.mockResolvedValue(createMockResponse({data: 'result'}));
+
+      await Promise.all([
+        fetch('https://api.example.com/data', {
+          method: 'POST',
+          bodyJson: {id: 1},
+          removeDuplicate: 'until_load',
+        }),
+        fetch('https://api.example.com/data', {
+          method: 'POST',
+          bodyJson: {id: 1},
+          removeDuplicate: 'until_load',
+        }),
+        fetch('https://api.example.com/data', {
+          method: 'POST',
+          bodyJson: {id: 2},
+          removeDuplicate: 'until_load',
+        }),
+      ]);
+
+      // Should be called 2 times: once for {id: 1}, once for {id: 2}
       expect(mockFetch).toHaveBeenCalledTimes(2);
     });
 
@@ -532,3 +691,4 @@ describe('@alwatr/fetch - Modernized Architecture Suite', () => {
     });
   });
 });
+
