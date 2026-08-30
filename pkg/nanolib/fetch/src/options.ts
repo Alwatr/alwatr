@@ -1,4 +1,4 @@
-import {MimeTypes} from '@alwatr/http-primer';
+import {MimeTypes, type HttpMethod} from '@alwatr/http-primer';
 import {createLogger} from '@alwatr/logger';
 import {getGlobalThis} from '@alwatr/global-this';
 
@@ -143,6 +143,7 @@ export function _processOptions(url: string, options: FetchOptions = {}): Intern
     ...options,
     headers: normalizeHeaders_(options.headers),
     url: processedUrl,
+    method: (options.method?.toUpperCase() as HttpMethod) ?? defaultFetchOptions.method,
   };
 
   options_.window ??= null;
