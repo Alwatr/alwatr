@@ -1,13 +1,15 @@
-import type {DictionaryOpt, DictionaryReq, JsonObject, JsonValue} from '@alwatr/type-helper';
+import type {DictionaryOpt, JsonValue} from '@alwatr/type-helper';
 import type {FetchError} from './error.js';
 import type {HttpMethod, HttpRequestHeaders} from '@alwatr/http-primer';
 import type {Duration} from '@alwatr/parse-duration';
 
 /**
  * A dictionary of query parameters.
- * Keys are strings, and values can be strings, numbers, or booleans.
+ * Keys are strings, and values can be strings, numbers, booleans, or arrays of these primitives.
  */
-export type QueryParams = DictionaryOpt<string | number | boolean>;
+export type QueryParams = DictionaryOpt<
+  string | number | boolean | readonly (string | number | boolean)[] | (string | number | boolean)[]
+>;
 
 /**
  * Defines the caching strategy for a fetch request.
@@ -47,9 +49,9 @@ export interface AlwatrFetchOptions_ {
   method: HttpMethod;
 
   /**
-   * An object of request headers.
+   * Request headers. Supports plain object, Web Standard `Headers`, or entries array.
    */
-  headers: HttpRequestHeaders & DictionaryReq<string>;
+  headers?: HttpRequestHeaders | HeadersInit;
 
   /**
    * Request timeout duration. Can be a number (milliseconds) or a string (e.g., '5s').
@@ -60,33 +62,33 @@ export interface AlwatrFetchOptions_ {
 
   /**
    * Number of times to retry a failed request.
-   * Retries occur on network errors, timeouts, or 5xx server responses.
+   * Retries occur on network errors, timeouts, 408/429 status codes, or 5xx server responses.
    * @default 3
    */
   retry: number;
 
   /**
-   * Delay before each retry attempt. Can be a number (milliseconds) or a string (e.g., '2s').
+   * Delay before each retry attempt. Can be a number (milliseconds) or a string (e.g., '1s').
    * @default '1s'
    */
   retryDelay: Duration;
 
   /**
    * Strategy for handling duplicate parallel requests.
-   * Uniqueness is determined by method, URL, and request body.
+   * Uniqueness is determined by method, URL, query parameters, request body, and authorization context.
    * @default 'never'
    */
   removeDuplicate: CacheDuplicate;
 
   /**
    * The caching strategy to use for the request.
-   * Requires a browser environment with Cache API support.
+   * Requires a browser or environment with Cache API support.
    * @default 'network_only'
    */
   cacheStrategy: CacheStrategy;
 
   /**
-   * A callback function that is executed with the fresh response when using the 'stale_while_revalidate' cache strategy.
+   * A callback function executed with the fresh response when using 'stale_while_revalidate'.
    */
   revalidateCallback?: (response: Response) => void | Promise<void>;
 
@@ -97,7 +99,7 @@ export interface AlwatrFetchOptions_ {
   cacheStorageName: string;
 
   /**
-   * A JavaScript object to be sent as the request's JSON body.
+   * A JavaScript value to be serialized as the request's JSON body.
    * Automatically sets the 'Content-Type' header to 'application/json'.
    */
   bodyJson?: JsonValue;
@@ -126,39 +128,83 @@ export interface AlwatrFetchOptions_ {
  */
 export type FetchOptions = Partial<AlwatrFetchOptions_> & Omit<RequestInit, 'headers'>;
 
-export type FetchJsonOptions = FetchOptions & {requireJsonResponseWithOkTrue?: true};
+/**
+ * Options for `fetchJson`, extending `FetchOptions` with JSON-specific flags.
+ */
+export type FetchJsonOptions = FetchOptions & {
+  /**
+   * If `true`, requires the parsed JSON body to have an `ok: true` property.
+   * If `ok` is missing or not `true`, fails with `json_response_error`.
+   */
+  requireJsonResponseWithOkTrue?: true;
+};
 
 /**
- * Represents the tuple returned by the fetch function.
- * On success, it's `[Response, null]`. On failure, it's `[null, FetchError]`.
+ * Represents the tuple returned by the `fetch` function.
+ * On success: `[Response, null]`. On failure: `[null, FetchError]`.
  */
 export type FetchResponse = readonly [Response, null] | readonly [null, FetchError];
 
-export type FetchJsonResponse<T extends JsonObject> = readonly [T, null] | readonly [null, FetchError];
+/**
+ * Represents the tuple returned by `fetchJson`.
+ * On success: `[T, null]`. On failure: `[null, FetchError]`.
+ */
+export type FetchJsonResponse<T = unknown> = readonly [T, null] | readonly [null, FetchError];
 
 /**
  * Defines the specific reason for a fetch failure.
- * - `http_error`: An HTTP error status was received (e.g., 404, 500).
- * - `timeout`: The request was aborted due to a timeout.
- * - `cache_not_found`: The requested resource was not found in the cache_only strategy.
- * - `network_error`: A generic network-level error occurred.
- * - `aborted`: The request was aborted by a user-provided signal.
- * - `json_parse_error`: The response body could not be parsed as JSON.
- * - `json_response_error`: The response JSON "ok" property is not true.
- * - `unknown_error`: An unspecified error occurred.
+ *
+ * Semantic HTTP Client Errors (4xx):
+ * - `bad_request`: 400 Bad Request
+ * - `unauthorized`: 401 Unauthorized
+ * - `forbidden`: 403 Forbidden
+ * - `not_found`: 404 Not Found
+ * - `request_timeout`: 408 Request Timeout
+ * - `conflict`: 409 Conflict
+ * - `payload_too_large`: 413 Payload Too Large
+ * - `unprocessable_content`: 422 Unprocessable Entity / Content
+ * - `rate_limited`: 429 Too Many Requests
+ * - `http_error`: Other 4xx client errors
+ *
+ * Semantic HTTP Server Errors (5xx):
+ * - `server_error`: Any 5xx server-side error (500, 502, 503, 504, etc.)
+ *
+ * Network & Lifecycle Errors:
+ * - `timeout`: The request exceeded the configured timeout duration.
+ * - `aborted`: The request was cancelled by an AbortSignal.
+ * - `network_error`: A network-level failure occurred (DNS, connection reset, offline).
+ * - `cache_not_found`: Resource was not found when using `cache_only`.
+ * - `json_parse_error`: Response body could not be parsed as valid JSON.
+ * - `json_response_error`: Response JSON `ok` property was not true when `requireJsonResponseWithOkTrue` was set.
+ * - `unknown_error`: An unexpected or untyped error occurred.
  */
 export type FetchErrorReason =
+  | 'bad_request'
+  | 'unauthorized'
+  | 'forbidden'
+  | 'not_found'
+  | 'request_timeout'
+  | 'conflict'
+  | 'payload_too_large'
+  | 'unprocessable_content'
+  | 'rate_limited'
   | 'http_error'
-  | 'cache_not_found'
+  | 'server_error'
   | 'timeout'
-  | 'network_error'
   | 'aborted'
+  | 'network_error'
+  | 'cache_not_found'
   | 'json_parse_error'
   | 'json_response_error'
   | 'unknown_error';
 
 /**
- * Internal-only fetch options type, which includes the URL and ensures all
- * optional properties from AlwatrFetchOptions_ are present.
+ * Internal-only normalized fetch options type.
+ * @internal
  */
-export type FetchOptions__ = AlwatrFetchOptions_ & Omit<RequestInit, 'headers'> & {url: string};
+export interface InternalFetchOptions_
+  extends Omit<AlwatrFetchOptions_, 'headers' | 'method'>, Omit<RequestInit, 'headers' | 'method'> {
+  url: string;
+  method: HttpMethod;
+  headers: HttpRequestHeaders;
+}
