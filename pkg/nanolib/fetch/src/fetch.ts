@@ -1,6 +1,6 @@
 import {FetchError, httpStatusToErrorReason} from './error.js';
 import {handleCacheStrategy_} from './cache.js';
-import {_processOptions, logger_} from './options.js';
+import {processOptions_, logger_} from './options.js';
 
 import type {FetchJsonOptions, FetchJsonResponse, FetchOptions, FetchResponse} from './type.js';
 
@@ -40,9 +40,8 @@ import type {FetchJsonOptions, FetchJsonResponse, FetchOptions, FetchResponse} f
  * ```
  */
 export async function fetch(url: string, options: FetchOptions = {}): Promise<FetchResponse> {
-  DEV_MODE && logger_.logMethodArgs?.('fetch', {url, options});
-
-  const options_ = _processOptions(url, options);
+  const options_ = processOptions_(url, options);
+  DEV_MODE && logger_.logMethodArgs?.('fetch', options_);
 
   try {
     const response = await handleCacheStrategy_(options_);
@@ -80,7 +79,7 @@ export async function fetch(url: string, options: FetchOptions = {}): Promise<Fe
       error = new FetchError('unknown_error', String(err ?? 'unknown_error'));
     }
 
-    logger_.error('fetch', error.reason, {error});
+    DEV_MODE && logger_.error('fetch', error.reason, {error});
     return [null, error];
   }
 }
@@ -117,7 +116,7 @@ export async function fetchJson<T = unknown>(
   url: string,
   options: FetchJsonOptions = {},
 ): Promise<FetchJsonResponse<T>> {
-  DEV_MODE && logger_.logMethodArgs?.('fetchJson', {url, options});
+  DEV_MODE && logger_.logMethod?.('fetchJson');
 
   const [response, error] = await fetch(url, options);
 
@@ -133,7 +132,7 @@ export async function fetchJson<T = unknown>(
       response,
       bodyText,
     );
-    logger_.error('fetchJson', parseError.reason, {error: parseError});
+    DEV_MODE && logger_.error('fetchJson', parseError.reason, {error: parseError});
     return [null, parseError];
   }
 
@@ -150,7 +149,7 @@ export async function fetchJson<T = unknown>(
         response,
         data,
       );
-      logger_.error('fetchJson', parseError.reason, {error: parseError});
+      DEV_MODE && logger_.error('fetchJson', parseError.reason, {error: parseError});
       return [null, parseError];
     }
 
@@ -162,7 +161,7 @@ export async function fetchJson<T = unknown>(
       response,
       bodyText,
     );
-    logger_.error('fetchJson', parseError.reason, {error: parseError});
+    DEV_MODE && logger_.error('fetchJson', parseError.reason, {error: parseError});
     return [null, parseError];
   }
 }
