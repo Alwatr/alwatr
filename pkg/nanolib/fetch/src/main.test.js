@@ -1,4 +1,4 @@
-import {describe, beforeEach, it, expect, jest} from 'bun:test';
+import {describe, beforeEach, afterEach, it, expect, jest} from 'bun:test';
 import {fetch, fetchJson, FetchError, httpStatusToErrorReason} from '@alwatr/fetch';
 
 // Mock global fetch
@@ -751,5 +751,172 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
       expect(error?.data).toEqual(errorPayload);
     });
   });
+
+  describe('Cache Strategies & Cache API Integration', () => {
+    let mockCache;
+    let mockCacheStorage;
+
+    beforeEach(() => {
+      mockCache = {
+        match: jest.fn(),
+        put: jest.fn().mockResolvedValue(undefined),
+      };
+      mockCacheStorage = {
+        open: jest.fn().mockResolvedValue(mockCache),
+      };
+      // @ts-expect-error Mock global caches
+      globalThis.caches = mockCacheStorage;
+    });
+
+    afterEach(() => {
+      // @ts-expect-error Cleanup global caches
+      delete globalThis.caches;
+    });
+
+    it('should serve from cache and avoid network call with cache_first when cached', async () => {
+      const cachedData = {source: 'cache'};
+      const cachedResponse = createMockResponse(cachedData);
+      mockCache.match.mockResolvedValueOnce(cachedResponse);
+
+      const [response, error] = await fetch('https://api.example.com/item', {
+        cacheStrategy: 'cache_first',
+      });
+
+      expect(error).toBeNull();
+      expect(response).toBe(cachedResponse);
+      expect(mockCacheStorage.open).toHaveBeenCalledWith('fetch_cache');
+      expect(mockCache.match).toHaveBeenCalled();
+      expect(mockFetch).not.toHaveBeenCalled();
+    });
+
+    it('should fetch from network and populate cache with cache_first when cache misses', async () => {
+      const networkData = {source: 'network'};
+      const networkResponse = createMockResponse(networkData);
+      mockCache.match.mockResolvedValueOnce(undefined);
+      mockFetch.mockResolvedValueOnce(networkResponse);
+
+      const [response, error] = await fetch('https://api.example.com/item', {
+        cacheStrategy: 'cache_first',
+      });
+
+      expect(error).toBeNull();
+      expect(response?.ok).toBe(true);
+      expect(mockCache.match).toHaveBeenCalled();
+      expect(mockFetch).toHaveBeenCalledTimes(1);
+      expect(mockCache.put).toHaveBeenCalled();
+    });
+
+    it('should return cached response with cache_only when found', async () => {
+      const cachedData = {source: 'cache_only_found'};
+      const cachedResponse = createMockResponse(cachedData);
+      mockCache.match.mockResolvedValueOnce(cachedResponse);
+
+      const [response, error] = await fetch('https://api.example.com/offline-data', {
+        cacheStrategy: 'cache_only',
+      });
+
+      expect(error).toBeNull();
+      expect(response).toBe(cachedResponse);
+      expect(mockFetch).not.toHaveBeenCalled();
+    });
+
+    it('should return cache_not_found error with cache_only when missing in cache', async () => {
+      mockCache.match.mockResolvedValueOnce(undefined);
+
+      const [response, error] = await fetch('https://api.example.com/missing-offline', {
+        cacheStrategy: 'cache_only',
+      });
+
+      expect(response).toBeNull();
+      expect(error).toBeInstanceOf(FetchError);
+      expect(error?.reason).toBe('cache_not_found');
+      expect(mockFetch).not.toHaveBeenCalled();
+    });
+
+    it('should fetch from network and update cache with network_first when network succeeds', async () => {
+      const networkData = {source: 'fresh_network'};
+      const networkResponse = createMockResponse(networkData);
+      mockFetch.mockResolvedValueOnce(networkResponse);
+
+      const [response, error] = await fetch('https://api.example.com/latest', {
+        cacheStrategy: 'network_first',
+      });
+
+      expect(error).toBeNull();
+      expect(response?.ok).toBe(true);
+      expect(mockFetch).toHaveBeenCalledTimes(1);
+      expect(mockCache.put).toHaveBeenCalled();
+    });
+
+    it('should fallback to cache with network_first when network request fails', async () => {
+      const cachedData = {source: 'fallback_cache'};
+      const cachedResponse = createMockResponse(cachedData);
+      mockFetch.mockRejectedValueOnce(new Error('Network offline'));
+      mockCache.match.mockResolvedValueOnce(cachedResponse);
+
+      const [response, error] = await fetch('https://api.example.com/latest', {
+        cacheStrategy: 'network_first',
+        retry: 1,
+      });
+
+      expect(error).toBeNull();
+      expect(response).toBe(cachedResponse);
+    });
+
+    it('should update cache and return fresh response with update_cache', async () => {
+      const freshData = {updated: true};
+      const freshResponse = createMockResponse(freshData);
+      mockFetch.mockResolvedValueOnce(freshResponse);
+
+      const [response, error] = await fetch('https://api.example.com/sync', {
+        cacheStrategy: 'update_cache',
+      });
+
+      expect(error).toBeNull();
+      expect(response?.ok).toBe(true);
+      expect(mockFetch).toHaveBeenCalledTimes(1);
+      expect(mockCache.put).toHaveBeenCalled();
+    });
+
+    it('should serve cached data immediately and revalidate in background with stale_while_revalidate', async () => {
+      const cachedData = {version: 'v1_cached'};
+      const cachedResponse = createMockResponse(cachedData);
+      const freshData = {version: 'v2_fresh'};
+      const freshResponse = createMockResponse(freshData);
+
+      mockCache.match.mockResolvedValueOnce(cachedResponse);
+      mockFetch.mockResolvedValueOnce(freshResponse);
+
+      const revalidateCallback = jest.fn();
+
+      const [response, error] = await fetch('https://api.example.com/feed', {
+        cacheStrategy: 'stale_while_revalidate',
+        revalidateCallback,
+      });
+
+      expect(error).toBeNull();
+      expect(response).toBe(cachedResponse);
+      expect(mockFetch).toHaveBeenCalledTimes(1);
+
+      // Wait for revalidate microtask/timer to execute
+      await new Promise((resolve) => setTimeout(resolve, 50));
+      expect(revalidateCallback).toHaveBeenCalled();
+      expect(mockCache.put).toHaveBeenCalled();
+    });
+
+    it('should safely fallback to network if caches.open throws', async () => {
+      mockCacheStorage.open.mockRejectedValueOnce(new Error('Storage quota exceeded'));
+      mockFetch.mockResolvedValueOnce(createMockResponse({fallback: true}));
+
+      const [response, error] = await fetch('https://api.example.com/safe', {
+        cacheStrategy: 'cache_first',
+      });
+
+      expect(error).toBeNull();
+      expect(response?.ok).toBe(true);
+      expect(mockFetch).toHaveBeenCalledTimes(1);
+    });
+  });
 });
+
 
