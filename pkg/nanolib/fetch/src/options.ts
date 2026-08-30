@@ -1,6 +1,7 @@
 import {MimeTypes, type HttpMethod} from '@alwatr/http-primer';
 import {createLogger} from '@alwatr/logger';
 import {getGlobalThis} from '@alwatr/global-this';
+import {parseDuration} from '@alwatr/parse-duration';
 
 import type {AlwatrFetchOptions_, FetchOptions, InternalFetchOptions_, QueryParams} from './type.js';
 
@@ -126,7 +127,7 @@ export function appendQueryParams_(url: string, queryParams?: QueryParams): stri
 }
 
 /**
- * Processes and sanitizes user-provided fetch options into a complete, isolated options object.
+ * Processes, sanitizes, and normalizes user-provided fetch options into a complete, isolated options object.
  *
  * @param url - The target URL.
  * @param options - User-provided options.
@@ -144,14 +145,28 @@ export function processOptions_(url: string, options: FetchOptions = {}): Intern
     headers: normalizeHeaders_(options.headers),
     url: processedUrl,
     method: (options.method?.toUpperCase() as HttpMethod) ?? defaultFetchOptions.method,
+    timeout: parseDuration(options.timeout ?? defaultFetchOptions.timeout),
+    retryDelay: parseDuration(options.retryDelay ?? defaultFetchOptions.retryDelay),
   };
 
   options_.window ??= null;
 
-  if (options_.cacheStrategy !== 'network_only' && options_.method !== 'GET' && options_.method !== 'HEAD') {
+  // Cache API Preconditions: requires Cache API runtime support and cacheable HTTP method (GET/HEAD)
+  if (
+    options_.cacheStrategy !== 'network_only'
+    && typeof caches !== 'undefined'
+    && (options_.method === 'GET' || options_.method === 'HEAD')
+  ) {
+    DEV_MODE
+      && logger_.incident?.('processOptions_', 'fetch_cache_strategy_unsupported', {
+        method: options_.method,
+        cacheStrategy: options_.cacheStrategy,
+        hasCaches: typeof caches !== 'undefined',
+      });
     options_.cacheStrategy = 'network_only';
   }
 
+  // Deduplication auto selection
   if (options_.removeDuplicate === 'auto') {
     options_.removeDuplicate = typeof caches !== 'undefined' ? 'until_load' : 'always';
   }
