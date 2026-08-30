@@ -133,8 +133,8 @@ export function appendQueryParams_(url: string, queryParams?: QueryParams): stri
  * @returns Internal, complete, and isolated fetch options.
  * @internal
  */
-export function _processOptions(url: string, options: FetchOptions = {}): InternalFetchOptions_ {
-  DEV_MODE && logger_.logMethodArgs?.('_processOptions', {url, options});
+export function processOptions_(url: string, options: FetchOptions = {}): InternalFetchOptions_ {
+  DEV_MODE && logger_.logMethod?.('processOptions_');
 
   const processedUrl = appendQueryParams_(url, options.queryParams);
 
@@ -147,6 +147,10 @@ export function _processOptions(url: string, options: FetchOptions = {}): Intern
   };
 
   options_.window ??= null;
+
+  if (options_.cacheStrategy !== 'network_only' && options_.method !== 'GET' && options_.method !== 'HEAD') {
+    options_.cacheStrategy = 'network_only';
+  }
 
   if (options_.removeDuplicate === 'auto') {
     options_.removeDuplicate = typeof caches !== 'undefined' ? 'until_load' : 'always';
@@ -164,8 +168,6 @@ export function _processOptions(url: string, options: FetchOptions = {}): Intern
   } else if (options.alwatrAuth !== undefined) {
     options_.headers.authorization = `Alwatr ${options.alwatrAuth.userId}:${options.alwatrAuth.userToken}`;
   }
-
-  DEV_MODE && logger_.logProperty?.('fetch.options', options_);
 
   return options_;
 }

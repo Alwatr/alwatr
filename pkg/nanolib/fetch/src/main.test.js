@@ -140,6 +140,19 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
         expect.any(Object),
       );
     });
+
+    it('should force cacheStrategy to network_only when method is not GET or HEAD', async () => {
+      mockFetch.mockResolvedValueOnce(createMockResponse({created: true}));
+
+      const [response, error] = await fetch('https://api.example.com/items', {
+        method: 'POST',
+        cacheStrategy: 'cache_first',
+        bodyJson: {name: 'item1'},
+      });
+
+      expect(error).toBeNull();
+      expect(response?.ok).toBe(true);
+    });
   });
 
   describe('Authentication & Header Normalization & Isolation', () => {
