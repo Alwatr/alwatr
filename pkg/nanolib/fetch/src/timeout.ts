@@ -1,49 +1,84 @@
-import {parseDuration} from '@alwatr/parse-duration';
+import {getGlobalThis} from '@alwatr/global-this';
 import {FetchError} from './error.js';
-import {globalThis_, logger_} from './options.js';
+import {logger_} from './options.js';
 
-import type {FetchOptions__} from './type.js';
+import type {InternalFetchOptions_} from './type.js';
+
+const globalThis_ = getGlobalThis();
 
 /**
- * Wraps the native fetch call with a timeout mechanism.
+ * Executes a native `fetch` wrapped with an `AbortController` timeout.
  *
- * It uses an `AbortController` to abort the request if it does not complete
- * within the specified `timeout` duration. It also respects external abort signals.
+ * Checks for pre-aborted external signals, respects external cancellation,
+ * and guarantees listener and timer cleanup on completion.
  *
- * @param {FetchOptions__} options - The fully configured fetch options.
- * @returns {Promise<Response>} A promise that resolves with the `Response` or rejects on timeout.
- * @private
+ * @param options - Processed internal fetch options.
+ * @returns A promise resolving to the native `Response` or rejecting with `FetchError`.
+ * @internal
  */
-export function handleTimeout_(options: FetchOptions__): Promise<Response> {
+export function handleTimeout_(options: InternalFetchOptions_): Promise<Response> {
+  const externalSignal = options.signal;
+
+  // Immediate abort check: If signal is already aborted, reject immediately without network overhead
+  if (externalSignal?.aborted) {
+    DEV_MODE && logger_.incident?.('handleTimeout_', 'already_aborted', {reason: externalSignal.reason});
+    return Promise.reject(new FetchError('aborted', 'The operation was aborted'));
+  }
+
+  // If timeout is disabled (0), invoke native fetch directly with external signal
   if (options.timeout === 0) {
-    // If timeout is disabled, call fetch directly.
-    return globalThis_.fetch(options.url, options);
+    return globalThis_.fetch(options.url, options as RequestInit);
   }
 
   DEV_MODE && logger_.logMethod?.('handleTimeout_');
 
-  return new Promise((resolved, reject) => {
+  return new Promise((resolve, reject) => {
     const abortController = typeof AbortController === 'function' ? new AbortController() : null;
-    const externalAbortSignal = options.signal;
-    options.signal = abortController?.signal;
 
-    // If an external AbortSignal is provided, listen to it and propagate the abort.
-    if (abortController !== null && externalAbortSignal != null) {
-      externalAbortSignal.addEventListener('abort', () => abortController.abort(), {once: true});
+    let onExternalAbort: (() => void) | undefined;
+
+    if (abortController !== null) {
+      options.signal = abortController.signal;
+
+      if (externalSignal != null) {
+        onExternalAbort = () => {
+          abortController.abort(externalSignal.reason);
+        };
+        externalSignal.addEventListener('abort', onExternalAbort, {once: true});
+      }
     }
 
+    let timeoutFired = false;
+
     const timeoutId = setTimeout(() => {
-      reject(new FetchError('timeout', 'fetch_timeout'));
+      timeoutFired = true;
       abortController?.abort('fetch_timeout');
-    }, parseDuration(options.timeout!));
+      reject(new FetchError('timeout', 'fetch_timeout'));
+    }, options.timeout);
 
     globalThis_
-      .fetch(options.url, options)
-      .then((response) => resolved(response))
-      .catch((reason) => reject(reason))
+      .fetch(options.url, options as RequestInit)
+      .then((response) => {
+        if (!timeoutFired) {
+          resolve(response);
+        }
+      })
+      .catch((err: unknown) => {
+        if (timeoutFired) {
+          return;
+        }
+
+        if (externalSignal?.aborted || (err instanceof Error && err.name === 'AbortError')) {
+          reject(new FetchError('aborted', 'The operation was aborted'));
+        } else {
+          reject(err);
+        }
+      })
       .finally(() => {
-        // Clean up the timeout to prevent it from firing after the request has completed.
         clearTimeout(timeoutId);
+        if (externalSignal != null && onExternalAbort !== undefined) {
+          externalSignal.removeEventListener('abort', onExternalAbort);
+        }
       });
   });
 }
