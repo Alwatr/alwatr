@@ -63,7 +63,7 @@ export function jsonToCsv(
         cellValue = replacer(header, cellValue);
       }
 
-      if (cellValue === null || cellValue === undefined) {
+      if (cellValue == null) {
         // skip empty value
       } else if (typeof cellValue === 'object') {
         rowStr += escapeCsvValue(JSON.stringify(cellValue, replacer), delimiterRegex, doubleQuoteRegex);
