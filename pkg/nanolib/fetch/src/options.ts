@@ -77,13 +77,13 @@ export function serializeQueryParams_(queryParams: QueryParams): string {
 
   for (const key of Object.keys(queryParams)) {
     const value = queryParams[key];
-    if (value === undefined || value === null) {
+    if (value == null) {
       continue;
     }
 
     if (Array.isArray(value)) {
       for (const item of value) {
-        if (item !== undefined && item !== null) {
+        if (item != null) {
           parts.push(`${encodeURIComponent(key)}=${encodeURIComponent(String(item))}`);
         }
       }
@@ -175,15 +175,15 @@ export function processOptions_(url: string, options: FetchOptions = {}): Intern
   }
 
   // JSON Body serialization
-  if (options.bodyJson !== undefined) {
+  if (options.bodyJson != null) {
     options_.body = JSON.stringify(options.bodyJson);
     options_.headers['content-type'] = MimeTypes.JSON;
   }
 
   // Authorization header configuration
-  if (options.bearerToken !== undefined) {
+  if (options.bearerToken != null) {
     options_.headers.authorization = `Bearer ${options.bearerToken}`;
-  } else if (options.alwatrAuth !== undefined) {
+  } else if (options.alwatrAuth != null) {
     options_.headers.authorization = `Alwatr ${options.alwatrAuth.userId}:${options.alwatrAuth.userToken}`;
   }
 

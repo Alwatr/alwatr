@@ -58,7 +58,7 @@ export async function fetch(url: string, options: FetchOptions = {}): Promise<Fe
     if (err instanceof FetchError) {
       error = err;
 
-      if (error.response !== undefined && error.data === undefined) {
+      if (error.response != null && error.data == null) {
         const bodyText = await error.response.text().catch(() => '');
 
         if (bodyText.trim().length > 0) {

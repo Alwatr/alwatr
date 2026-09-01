@@ -112,7 +112,7 @@ export interface AlwatrFetchOptions_ {
   /**
    * A bearer token to be added to the 'Authorization' header.
    */
-  bearerToken?: string;
+  bearerToken?: string | null;
 
   /**
    * Alwatr-specific authentication credentials.
@@ -120,7 +120,7 @@ export interface AlwatrFetchOptions_ {
   alwatrAuth?: {
     userId: string;
     userToken: string;
-  };
+  } | null;
 }
 
 /**
@@ -203,7 +203,8 @@ export type FetchErrorReason =
  * @internal
  */
 export interface InternalFetchOptions_
-  extends Omit<AlwatrFetchOptions_, 'headers' | 'method' | 'timeout' | 'retryDelay'>,
+  extends
+    Omit<AlwatrFetchOptions_, 'headers' | 'method' | 'timeout' | 'retryDelay'>,
     Omit<RequestInit, 'headers' | 'method'> {
   url: string;
   method: HttpMethod;
