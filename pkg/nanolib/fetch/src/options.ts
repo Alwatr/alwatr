@@ -3,25 +3,11 @@ import {createLogger} from '@alwatr/logger';
 import {getGlobalThis} from '@alwatr/global-this';
 import {parseDuration} from '@alwatr/parse-duration';
 
-import type {AlwatrFetchOptions_, FetchOptions, InternalFetchOptions_, QueryParams} from './type.js';
+import type {FetchOptions, InternalFetchOptions_, QueryParams} from './type.js';
 
 export const logger_ = createLogger('@alwatr/fetch');
 
 export const globalThis_ = getGlobalThis();
-
-/**
- * Immutable default options for all fetch requests.
- */
-export const defaultFetchOptions: Readonly<AlwatrFetchOptions_> = {
-  method: 'GET',
-  timeout: 8_000,
-  retry: 3,
-  retryDelay: 1_000,
-  removeDuplicate: 'never',
-  cacheStrategy: 'network_only',
-  cacheStorageName: 'fetch_cache',
-  // headers: {}, // --- IGNORED ---
-};
 
 /**
  * Normalizes any standard `HeadersInit` into a fresh, isolated lowercase string record.
@@ -137,23 +123,40 @@ export function appendQueryParams_(url: string, queryParams?: QueryParams): stri
 export function processOptions_(url: string, options: FetchOptions = {}): InternalFetchOptions_ {
   DEV_MODE && logger_.logMethod?.('processOptions_');
 
-  const processedUrl = appendQueryParams_(url, options.queryParams);
-
   const options_: InternalFetchOptions_ = {
-    ...defaultFetchOptions,
-    ...options,
-    headers: normalizeHeaders_(options.headers),
-    url: processedUrl,
-    method: (options.method?.toUpperCase() as HttpMethod) ?? defaultFetchOptions.method,
-    timeout: parseDuration(options.timeout ?? defaultFetchOptions.timeout),
-    retryDelay: parseDuration(options.retryDelay ?? defaultFetchOptions.retryDelay),
-    retry:
-      typeof options.retry === 'number' && Number.isFinite(options.retry) ?
-        Math.max(1, Math.floor(options.retry))
-      : defaultFetchOptions.retry,
-  };
+    // URL
+    url: appendQueryParams_(url, options.queryParams),
 
-  options_.window ??= null;
+    // AlwatrFetchOptions_
+    method: (options.method?.toUpperCase() as HttpMethod) ?? 'GET',
+    headers: normalizeHeaders_(options.headers),
+    timeout: parseDuration(options.timeout ?? 8_000),
+    retryDelay: parseDuration(options.retryDelay ?? 1_000),
+    retry:
+      typeof options.retry === 'number' && Number.isFinite(options.retry) ? Math.max(1, Math.floor(options.retry)) : 3,
+    removeDuplicate: options.removeDuplicate ?? 'never',
+    cacheStrategy: options.cacheStrategy ?? 'network_only',
+    cacheStorageName: options.cacheStorageName ?? 'fetch_cache',
+    revalidateCallback: options.revalidateCallback,
+    bodyJson: options.bodyJson,
+    queryParams: options.queryParams,
+    bearerToken: options.bearerToken,
+    alwatrAuth: options.alwatrAuth,
+
+    // RequestInit Standard Options
+    body: options.body,
+    cache: options.cache,
+    credentials: options.credentials,
+    integrity: options.integrity,
+    keepalive: options.keepalive,
+    mode: options.mode,
+    priority: options.priority,
+    redirect: options.redirect,
+    referrer: options.referrer,
+    referrerPolicy: options.referrerPolicy,
+    signal: options.signal,
+    window: options.window ?? null,
+  };
 
   // Cache API Preconditions: requires Cache API runtime support and cacheable HTTP method (GET/HEAD)
   if (
