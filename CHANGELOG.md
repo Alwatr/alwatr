@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.1.2](https://github.com/Alwatr/alwatr/compare/v10.1.1...v10.1.2) (2026-09-01)
+
+### 🐛 Bug Fixes
+
+* **fetch:** remove default fetch options and refactor processOptions_ function ([2b5a45c](https://github.com/Alwatr/alwatr/commit/2b5a45c8583793ce437fab0f988c49a5b725d4fa))
+
 ## [10.1.1](https://github.com/Alwatr/alwatr/compare/v10.1.0...v10.1.1) (2026-09-01)
 
 ### 🐛 Bug Fixes

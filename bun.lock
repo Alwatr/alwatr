@@ -27,7 +27,7 @@
     },
     "pkg/core": {
       "name": "@alwatr/core",
-      "version": "10.1.1",
+      "version": "10.1.2",
       "dependencies": {
         "@alwatr/async-queue": "workspace:*",
         "@alwatr/cyrb53": "workspace:*",
@@ -305,7 +305,7 @@
     },
     "pkg/nanolib/fetch": {
       "name": "@alwatr/fetch",
-      "version": "10.1.1",
+      "version": "10.1.2",
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/global-this": "workspace:*",
@@ -794,7 +794,7 @@
     },
     "pkg/weaver": {
       "name": "@alwatr/weaver",
-      "version": "10.1.1",
+      "version": "10.1.2",
       "dependencies": {
         "@alwatr/core": "workspace:*",
         "@alwatr/loom": "workspace:*",
