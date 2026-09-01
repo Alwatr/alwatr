@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.1.1](https://github.com/Alwatr/alwatr/compare/v10.1.0...v10.1.1) (2026-09-01)
+
+### 🐛 Bug Fixes
+
+* **json2csv:** simplify null and undefined checks for cell values ([1b4a8d1](https://github.com/Alwatr/alwatr/commit/1b4a8d18360b342e2db24f219cf65fdbf0d61903))
+
 ## [10.0.0](https://github.com/Alwatr/alwatr/compare/v9.38.2...v10.0.0) (2026-07-26)
 
 **Note:** Version bump only for package @alwatr/json2csv

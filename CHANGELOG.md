@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.1.1](https://github.com/Alwatr/alwatr/compare/v10.1.0...v10.1.1) (2026-09-01)
+
+### 🐛 Bug Fixes
+
+* **fetch:** improve null checks for error handling and options serialization ([f9dddee](https://github.com/Alwatr/alwatr/commit/f9dddee9083ef612be1717930f26c1b029bcc417))
+* **json2csv:** simplify null and undefined checks for cell values ([1b4a8d1](https://github.com/Alwatr/alwatr/commit/1b4a8d18360b342e2db24f219cf65fdbf0d61903))
+
+### 🔗 Dependencies update
+
+* update tailwindcss requirement ([bffea1a](https://github.com/Alwatr/alwatr/commit/bffea1a74ec6a9f1feb81c028bd2d9ec15c2f2fc))
+
 ## [10.1.0](https://github.com/Alwatr/alwatr/compare/v10.0.4...v10.1.0) (2026-08-30)
 
 * **fetch:** add comprehensive tests for cache strategies and integration with Cache API ([03ff7bf](https://github.com/Alwatr/alwatr/commit/03ff7bff8a84913d73b806ce4a4a87b3761375a2))

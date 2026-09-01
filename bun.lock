@@ -27,7 +27,7 @@
     },
     "pkg/core": {
       "name": "@alwatr/core",
-      "version": "10.1.0",
+      "version": "10.1.1",
       "dependencies": {
         "@alwatr/async-queue": "workspace:*",
         "@alwatr/cyrb53": "workspace:*",
@@ -305,7 +305,7 @@
     },
     "pkg/nanolib/fetch": {
       "name": "@alwatr/fetch",
-      "version": "10.1.0",
+      "version": "10.1.1",
       "dependencies": {
         "@alwatr/delay": "workspace:*",
         "@alwatr/global-this": "workspace:*",
@@ -406,7 +406,7 @@
     },
     "pkg/nanolib/json2csv": {
       "name": "@alwatr/json2csv",
-      "version": "10.0.0",
+      "version": "10.1.1",
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
         "@alwatr/standard": "workspace:*",
@@ -794,12 +794,12 @@
     },
     "pkg/weaver": {
       "name": "@alwatr/weaver",
-      "version": "10.1.0",
+      "version": "10.1.1",
       "dependencies": {
         "@alwatr/core": "workspace:*",
         "@alwatr/loom": "workspace:*",
         "bun-plugin-tailwind": "^0.1.2",
-        "tailwindcss": "^4.3.2",
+        "tailwindcss": "^4.3.3",
       },
       "devDependencies": {
         "@alwatr/nano-build": "workspace:*",
