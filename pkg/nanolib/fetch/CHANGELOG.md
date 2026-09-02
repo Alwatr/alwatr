@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.1.3](https://github.com/Alwatr/alwatr/compare/v10.1.2...v10.1.3) (2026-09-02)
+
+### 🔨 Code Refactoring
+
+* **fetch:** standardize FetchErrorReason taxonomy and update documentation ([e9a847b](https://github.com/Alwatr/alwatr/commit/e9a847b9df5aab2e48f1fa963acf816b9f7f5e63))
+
 ## [10.1.2](https://github.com/Alwatr/alwatr/compare/v10.1.1...v10.1.2) (2026-09-01)
 
 ### 🐛 Bug Fixes
