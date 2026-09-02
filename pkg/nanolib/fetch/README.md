@@ -11,7 +11,7 @@ It is designed to be a production-ready replacement for standard `fetch` to inst
 ## Key Features
 
 - **Go-Style Error Handling**: Returns a tuple `[Response, null]` (or `[T, null]` for `fetchJson`) on success or `[null, FetchError]` on failure—never throws exceptions.
-- **Granular Semantic Error Reasons**: Maps HTTP status codes directly to semantic error reasons (e.g. `unauthorized`, `forbidden`, `not_found`, `rate_limited`, `server_error`).
+- **Categorized Error Reasons**: Structured, high-level error classification (`http_client_error`, `http_server_error`, `network_error`, `request_timeout`, `request_aborted`, `cache_miss`, `json_parse_error`, `json_response_not_ok`) paired with exact numeric `error.status`.
 - **`fetchJson<T>` Helper**: Directly parses JSON payloads with unconstrained generic typing (`T`), optional `ok: true` verification (`requireJsonResponseWithOkTrue`), and detailed parsing error feedback.
 - **Smart Retry Pattern**: Automatically retries failed requests on transient server errors (5xx), `429 Too Many Requests`, `408 Request Timeout`, or network failures, automatically respecting `Retry-After` headers.
 - **Header Isolation & Security**: Guarantees zero header pollution across requests, protects caller-supplied header objects from mutation, and isolates multi-tenant request deduplication by authorization token.
@@ -54,7 +54,7 @@ async function fetchProducts() {
   });
 
   if (error) {
-    if (error.reason === 'not_found') {
+    if (error.reason === 'http_client_error' && error.status === 404) {
       console.warn('Products category not found');
     } else {
       console.error('Failed to fetch products:', error.message, error.reason);
@@ -90,9 +90,9 @@ async function loadProfile(userId: string) {
   });
 
   if (error) {
-    if (error.reason === 'unauthorized') {
+    if (error.reason === 'http_client_error' && error.status === 401) {
       console.error('Session expired, please log in again.');
-    } else if (error.reason === 'server_error') {
+    } else if (error.reason === 'http_server_error') {
       console.error('Server error, please try again later.');
     }
     return;
@@ -118,34 +118,27 @@ async function loadProfile(userId: string) {
 
 | Property | Type | Description |
 | :--- | :--- | :--- |
-| `reason` | `FetchErrorReason` | Granular semantic error reason identifier. |
+| `reason` | `FetchErrorReason` | Categorized error reason identifier. |
 | `response` | `Response \| undefined` | The underlying HTTP `Response` object (if available). |
-| `status` | `number \| undefined` | Getter returning `response.status` (e.g. `401`, `404`, `500`). |
+| `status` | `number \| undefined` | Getter returning `response.status` (e.g. `400`, `401`, `404`, `500`). |
 | `data` | `unknown` | Auto-parsed error payload (JSON or plain text) from the server. |
-| `ok` | `boolean` | Always `false` on `FetchError`. |
+| `ok` | `false` | Always `false` on `FetchError`. |
 
-### Semantic `FetchErrorReason` Values
+### `FetchErrorReason` Taxonomy
 
 | Reason | HTTP / Trigger | Description |
 | :--- | :--- | :--- |
-| `'bad_request'` | HTTP 400 | Bad request / validation error. |
-| `'unauthorized'` | HTTP 401 | Authentication required or token invalid. |
-| `'forbidden'` | HTTP 403 | Insufficient permissions / access denied. |
-| `'not_found'` | HTTP 404 | Endpoint or resource not found. |
-| `'request_timeout'` | HTTP 408 | Server-side request timeout. |
-| `'conflict'` | HTTP 409 | Resource state conflict (e.g. duplicate key). |
-| `'payload_too_large'` | HTTP 413 | Request payload exceeds server limit. |
-| `'unprocessable_content'`| HTTP 422 | Unprocessable entity / domain validation failure. |
-| `'rate_limited'` | HTTP 429 | Too many requests; rate limit exceeded. |
-| `'http_error'` | HTTP 4xx | Other 4xx client status codes. |
-| `'server_error'` | HTTP 5xx | Any 5xx server failure (500, 502, 503, 504). |
-| `'timeout'` | Client Timeout | Request exceeded the configured `timeout` duration. |
-| `'aborted'` | AbortSignal | Request was cancelled by external or pre-aborted `AbortSignal`. |
+| `'http_client_error'` | HTTP 4xx | Any 4xx client status (400, 401, 403, 404, 409, 429, etc.). Check `error.status` for specific status. |
+| `'http_server_error'` | HTTP 5xx | Any 5xx server failure (500, 502, 503, 504, etc.). |
+| `'http_not_modified_304'` | HTTP 304 | Resource has not changed since previous request. |
+| `'http_opaque_response'` | HTTP 0 | Response was masked with status 0 (e.g., `no-cors` or manual redirect). |
 | `'network_error'` | Network | Transport failure (DNS failure, connection reset, offline). |
-| `'cache_not_found'` | Cache API | Resource missing when using `cacheStrategy: 'cache_only'`. |
-| `'json_parse_error'` | JSON Parsing | Response body is empty or invalid JSON (in `fetchJson`). |
-| `'json_response_error'`| `requireJsonResponseWithOkTrue` | Response JSON `ok` property was not `true`. |
-| `'unknown_error'` | Exception | Untyped or unexpected exception. |
+| `'request_timeout'` | Client Timeout | Request exceeded the configured `timeout` duration. |
+| `'request_aborted'` | AbortSignal | Request was explicitly cancelled by an `AbortSignal`. |
+| `'cache_miss'` | Cache API | Resource not found in local cache when using `cacheStrategy: 'cache_only'`. |
+| `'json_parse_error'` | JSON Parsing | Response body could not be parsed as JSON, or response body is empty. |
+| `'json_response_not_ok'` | Validation | Response JSON `ok` property was not `true` when `requireJsonResponseWithOkTrue` was set. |
+| `'request_unknown_error'` | Exception | Untyped or unexpected exception. |
 
 ---
 

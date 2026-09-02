@@ -265,20 +265,20 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
 
   describe('Granular Error Handling - Semantic HTTP Reasons', () => {
     const statusMap = [
-      {status: 400, expectedReason: 'bad_request'},
-      {status: 401, expectedReason: 'unauthorized'},
-      {status: 403, expectedReason: 'forbidden'},
-      {status: 404, expectedReason: 'not_found'},
-      {status: 408, expectedReason: 'request_timeout'},
-      {status: 409, expectedReason: 'conflict'},
-      {status: 413, expectedReason: 'payload_too_large'},
-      {status: 422, expectedReason: 'unprocessable_content'},
-      {status: 429, expectedReason: 'rate_limited'},
-      {status: 418, expectedReason: 'http_error'},
-      {status: 500, expectedReason: 'server_error'},
-      {status: 502, expectedReason: 'server_error'},
-      {status: 503, expectedReason: 'server_error'},
-      {status: 504, expectedReason: 'server_error'},
+      {status: 400, expectedReason: 'http_client_error'},
+      {status: 401, expectedReason: 'http_client_error'},
+      {status: 403, expectedReason: 'http_client_error'},
+      {status: 404, expectedReason: 'http_client_error'},
+      {status: 408, expectedReason: 'http_client_error'},
+      {status: 409, expectedReason: 'http_client_error'},
+      {status: 413, expectedReason: 'http_client_error'},
+      {status: 422, expectedReason: 'http_client_error'},
+      {status: 429, expectedReason: 'http_client_error'},
+      {status: 418, expectedReason: 'http_client_error'},
+      {status: 500, expectedReason: 'http_server_error'},
+      {status: 502, expectedReason: 'http_server_error'},
+      {status: 503, expectedReason: 'http_server_error'},
+      {status: 504, expectedReason: 'http_server_error'},
     ];
 
     for (const {status, expectedReason} of statusMap) {
@@ -300,20 +300,23 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
     }
 
     it('should test httpStatusToErrorReason helper directly', () => {
-      expect(httpStatusToErrorReason(400)).toBe('bad_request');
-      expect(httpStatusToErrorReason(401)).toBe('unauthorized');
-      expect(httpStatusToErrorReason(403)).toBe('forbidden');
-      expect(httpStatusToErrorReason(404)).toBe('not_found');
-      expect(httpStatusToErrorReason(408)).toBe('request_timeout');
-      expect(httpStatusToErrorReason(409)).toBe('conflict');
-      expect(httpStatusToErrorReason(413)).toBe('payload_too_large');
-      expect(httpStatusToErrorReason(422)).toBe('unprocessable_content');
-      expect(httpStatusToErrorReason(429)).toBe('rate_limited');
-      expect(httpStatusToErrorReason(500)).toBe('server_error');
-      expect(httpStatusToErrorReason(502)).toBe('server_error');
-      expect(httpStatusToErrorReason(503)).toBe('server_error');
-      expect(httpStatusToErrorReason(504)).toBe('server_error');
-      expect(httpStatusToErrorReason(418)).toBe('http_error');
+      expect(httpStatusToErrorReason(400)).toBe('http_client_error');
+      expect(httpStatusToErrorReason(401)).toBe('http_client_error');
+      expect(httpStatusToErrorReason(403)).toBe('http_client_error');
+      expect(httpStatusToErrorReason(404)).toBe('http_client_error');
+      expect(httpStatusToErrorReason(408)).toBe('http_client_error');
+      expect(httpStatusToErrorReason(409)).toBe('http_client_error');
+      expect(httpStatusToErrorReason(413)).toBe('http_client_error');
+      expect(httpStatusToErrorReason(422)).toBe('http_client_error');
+      expect(httpStatusToErrorReason(429)).toBe('http_client_error');
+      expect(httpStatusToErrorReason(418)).toBe('http_client_error');
+      expect(httpStatusToErrorReason(500)).toBe('http_server_error');
+      expect(httpStatusToErrorReason(502)).toBe('http_server_error');
+      expect(httpStatusToErrorReason(503)).toBe('http_server_error');
+      expect(httpStatusToErrorReason(504)).toBe('http_server_error');
+      expect(httpStatusToErrorReason(304)).toBe('http_not_modified_304');
+      expect(httpStatusToErrorReason(0)).toBe('http_opaque_response');
+      expect(httpStatusToErrorReason(200)).toBe('request_unknown_error');
     });
 
     it('should parse non-JSON error response as plain text', async () => {
@@ -324,7 +327,8 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
       const [response, error] = await fetch('https://api.example.com/bad', {retry: 0});
 
       expect(error).toBeInstanceOf(FetchError);
-      expect(error?.reason).toBe('bad_request');
+      expect(error?.reason).toBe('http_client_error');
+      expect(error?.status).toBe(400);
       expect(error?.data).toBe(plainText);
     });
 
@@ -345,7 +349,8 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
-      expect(error?.reason).toBe('not_found');
+      expect(error?.reason).toBe('http_client_error');
+      expect(error?.status).toBe(404);
       expect(error?.data).toBeUndefined();
     });
 
@@ -366,7 +371,7 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
-      expect(error?.reason).toBe('server_error');
+      expect(error?.reason).toBe('http_server_error');
       expect(error?.data).toBe('{invalid json');
     });
   });
@@ -382,12 +387,12 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
-      expect(error?.reason).toBe('aborted');
+      expect(error?.reason).toBe('request_aborted');
       // Native fetch must not even be called when signal was pre-aborted
       expect(mockFetch).not.toHaveBeenCalled();
     });
 
-    it('should return [null, FetchError] with reason "aborted" on mid-flight abort', async () => {
+    it('should return [null, FetchError] with reason "request_aborted" on mid-flight abort', async () => {
       const abortError = new Error('The user aborted a request');
       abortError.name = 'AbortError';
       mockFetch.mockRejectedValueOnce(abortError);
@@ -396,7 +401,7 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
-      expect(error?.reason).toBe('aborted');
+      expect(error?.reason).toBe('request_aborted');
     });
 
     it('should return [null, FetchError] for network failures', async () => {
@@ -417,10 +422,10 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
-      expect(error?.reason).toBe('unknown_error');
+      expect(error?.reason).toBe('request_unknown_error');
     });
 
-    it('should timeout and return FetchError with reason "timeout"', async () => {
+    it('should timeout and return FetchError with reason "request_timeout"', async () => {
       let timeoutId;
       mockFetch.mockImplementation(
         () =>
@@ -436,7 +441,7 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
-      expect(error?.reason).toBe('timeout');
+      expect(error?.reason).toBe('request_timeout');
       clearTimeout(timeoutId);
     });
 
@@ -513,7 +518,8 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
       });
 
       expect(error).toBeInstanceOf(FetchError);
-      expect(error?.reason).toBe('not_found');
+      expect(error?.reason).toBe('http_client_error');
+      expect(error?.status).toBe(404);
       expect(mockFetch).toHaveBeenCalledTimes(1);
     });
 
@@ -528,7 +534,7 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
-      expect(error?.reason).toBe('server_error');
+      expect(error?.reason).toBe('http_server_error');
       expect(mockFetch).toHaveBeenCalledTimes(2);
     });
 
@@ -576,10 +582,13 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
     });
 
     it('should respect Retry-After header on 429 rate limited response', async () => {
-      const error429 = createMockResponse({}, {
-        status: 429,
-        headers: {'retry-after': '0.01'},
-      });
+      const error429 = createMockResponse(
+        {},
+        {
+          status: 429,
+          headers: {'retry-after': '0.01'},
+        },
+      );
       mockFetch.mockResolvedValueOnce(error429).mockResolvedValueOnce(createMockResponse({success: true}));
 
       const startTime = Date.now();
@@ -725,7 +734,7 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
       expect(data).toEqual(validPayload);
     });
 
-    it('should return json_response_error when requireJsonResponseWithOkTrue is true but ok is false', async () => {
+    it('should return json_response_not_ok when requireJsonResponseWithOkTrue is true but ok is false', async () => {
       const failPayload = {ok: false, error: 'invalid_credentials'};
       mockFetch.mockResolvedValueOnce(createMockResponse(failPayload));
 
@@ -735,7 +744,7 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
 
       expect(data).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
-      expect(error?.reason).toBe('json_response_error');
+      expect(error?.reason).toBe('json_response_not_ok');
       expect(error?.data).toEqual(failPayload);
     });
 
@@ -747,7 +756,8 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
 
       expect(data).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
-      expect(error?.reason).toBe('unauthorized');
+      expect(error?.reason).toBe('http_client_error');
+      expect(error?.status).toBe(401);
       expect(error?.data).toEqual(errorPayload);
     });
   });
@@ -820,7 +830,7 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
       expect(mockFetch).not.toHaveBeenCalled();
     });
 
-    it('should return cache_not_found error with cache_only when missing in cache', async () => {
+    it('should return cache_miss error with cache_only when missing in cache', async () => {
       mockCache.match.mockResolvedValueOnce(undefined);
 
       const [response, error] = await fetch('https://api.example.com/missing-offline', {
@@ -829,7 +839,7 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
 
       expect(response).toBeNull();
       expect(error).toBeInstanceOf(FetchError);
-      expect(error?.reason).toBe('cache_not_found');
+      expect(error?.reason).toBe('cache_miss');
       expect(mockFetch).not.toHaveBeenCalled();
     });
 
@@ -918,5 +928,3 @@ describe('@alwatr/fetch - Comprehensive Modern Suite', () => {
     });
   });
 });
-
-

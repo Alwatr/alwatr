@@ -75,7 +75,7 @@ export async function handleRetryPattern_(options: InternalFetchOptions_): Promi
     DEV_MODE && logger_.accident('fetch', 'fetch_failed_retry', err);
 
     // Never retry if the request was intentionally aborted
-    if (options.signal?.aborted || (err instanceof FetchError && err.reason === 'aborted')) {
+    if (options.signal?.aborted || (err instanceof FetchError && err.reason === 'request_aborted')) {
       throw err;
     }
 

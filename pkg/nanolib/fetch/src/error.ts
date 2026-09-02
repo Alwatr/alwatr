@@ -6,40 +6,21 @@ import type {FetchErrorReason} from './type.js';
  *
  * @param status - The HTTP response status code.
  * @returns The mapped `FetchErrorReason`.
- *
- * @example
- * ```typescript
- * httpStatusToErrorReason(401); // 'unauthorized'
- * httpStatusToErrorReason(404); // 'not_found'
- * httpStatusToErrorReason(500); // 'server_error'
- * ```
  */
 export function httpStatusToErrorReason(status: number): FetchErrorReason {
-  switch (status) {
-    case HttpStatusCodes.Error_Client_400_Bad_Request:
-      return 'bad_request';
-    case HttpStatusCodes.Error_Client_401_Unauthorized:
-      return 'unauthorized';
-    case HttpStatusCodes.Error_Client_403_Forbidden:
-      return 'forbidden';
-    case HttpStatusCodes.Error_Client_404_Not_Found:
-      return 'not_found';
-    case HttpStatusCodes.Error_Client_408_Request_Timeout:
-      return 'request_timeout';
-    case HttpStatusCodes.Error_Client_409_Conflict:
-      return 'conflict';
-    case HttpStatusCodes.Error_Client_413_Payload_Too_Large:
-      return 'payload_too_large';
-    case HttpStatusCodes.Error_Client_422_Unprocessable_Entity:
-      return 'unprocessable_content';
-    case HttpStatusCodes.Error_Client_429_Too_Many_Requests:
-      return 'rate_limited';
-    default:
-      if (status >= 500 && status < 600) {
-        return 'server_error';
-      }
-      return 'http_error';
+  if (status >= 400 && status < 500) {
+    return 'http_client_error';
   }
+  if (status >= 500 && status < 600) {
+    return 'http_server_error';
+  }
+  if (status === HttpStatusCodes.Redirect_304_Not_Modified) {
+    return 'http_not_modified_304';
+  }
+  if (status === 0) {
+    return 'http_opaque_response';
+  }
+  return 'request_unknown_error';
 }
 
 /**
@@ -53,9 +34,9 @@ export function httpStatusToErrorReason(status: number): FetchErrorReason {
  * ```typescript
  * const [response, error] = await fetch('/api/endpoint');
  * if (error) {
- *   if (error.reason === 'unauthorized') {
+ *   if (error.reason === 'http_client_error' && error.status === 401) {
  *     redirectToLogin();
- *   } else if (error.reason === 'server_error') {
+ *   } else if (error.reason === 'http_server_error') {
  *     showToast('Server unavailable, please try again later');
  *   }
  * }

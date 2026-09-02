@@ -134,7 +134,7 @@ export type FetchOptions = Partial<AlwatrFetchOptions_> & Omit<RequestInit, 'hea
 export type FetchJsonOptions = FetchOptions & {
   /**
    * If `true`, requires the parsed JSON body to have an `ok: true` property.
-   * If `ok` is missing or not `true`, fails with `json_response_error`.
+   * If `ok` is missing or not `true`, fails with `json_response_not_ok`.
    */
   requireJsonResponseWithOkTrue?: true;
 };
@@ -154,50 +154,30 @@ export type FetchJsonResponse<T = unknown> = readonly [T, null] | readonly [null
 /**
  * Defines the specific reason for a fetch failure.
  *
- * Semantic HTTP Client Errors (4xx):
- * - `bad_request`: 400 Bad Request
- * - `unauthorized`: 401 Unauthorized
- * - `forbidden`: 403 Forbidden
- * - `not_found`: 404 Not Found
- * - `request_timeout`: 408 Request Timeout
- * - `conflict`: 409 Conflict
- * - `payload_too_large`: 413 Payload Too Large
- * - `unprocessable_content`: 422 Unprocessable Entity / Content
- * - `rate_limited`: 429 Too Many Requests
- * - `http_error`: Other 4xx client errors
- *
- * Semantic HTTP Server Errors (5xx):
- * - `server_error`: Any 5xx server-side error (500, 502, 503, 504, etc.)
- *
- * Network & Lifecycle Errors:
- * - `timeout`: The request exceeded the configured timeout duration.
- * - `aborted`: The request was cancelled by an AbortSignal.
- * - `network_error`: A network-level failure occurred (DNS, connection reset, offline).
- * - `cache_not_found`: Resource was not found when using `cache_only`.
+ * - `http_client_error`: Any 4xx HTTP client errors (400, 401, 403, 404, etc.).
+ * - `http_server_error`: Any 5xx HTTP server-side errors (500, 502, 503, 504, etc.).
+ * - `http_not_modified_304`: Resource has not changed since the last request (HTTP 304).
+ * - `http_opaque_response`: Response was masked with status 0 (e.g., 'no-cors' or manual redirect).
+ * - `network_error`: Network-level failure occurred (DNS failure, connection reset, offline).
+ * - `request_timeout`: Request exceeded the configured timeout duration.
+ * - `request_aborted`: Request was explicitly cancelled by an AbortSignal.
+ * - `cache_miss`: Resource was not found in the local cache when using `cache_only`.
  * - `json_parse_error`: Response body could not be parsed as valid JSON.
- * - `json_response_error`: Response JSON `ok` property was not true when `requireJsonResponseWithOkTrue` was set.
- * - `unknown_error`: An unexpected or untyped error occurred.
+ * - `json_response_not_ok`: JSON body was parsed, but the payload failed validation (e.g. `ok !== true`).
+ * - `request_unknown_error`: An unexpected or untyped error occurred.
  */
 export type FetchErrorReason =
-  | 'bad_request'
-  | 'unauthorized'
-  | 'forbidden'
-  | 'not_found'
+  | 'http_client_error'
+  | 'http_server_error'
   | 'request_timeout'
-  | 'conflict'
-  | 'payload_too_large'
-  | 'unprocessable_content'
-  | 'rate_limited'
-  | 'http_error'
-  | 'server_error'
-  | 'timeout'
-  | 'aborted'
+  | 'request_aborted'
   | 'network_error'
-  | 'cache_not_found'
+  | 'cache_miss'
   | 'json_parse_error'
-  | 'json_response_error'
-  | 'unknown_error';
-
+  | 'json_response_not_ok'
+  | 'request_unknown_error'
+  | 'http_not_modified_304'
+  | 'http_opaque_response';
 /**
  * Internal-only normalized fetch options type.
  * @internal

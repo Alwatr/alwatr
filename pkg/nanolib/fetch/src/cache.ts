@@ -66,7 +66,7 @@ export async function handleCacheStrategy_(options: InternalFetchOptions_): Prom
       }
 
       if (cachedResponse == null) {
-        throw new FetchError('cache_not_found', 'Resource not found in cache');
+        throw new FetchError('cache_miss', 'Resource not found in cache');
       }
       return cachedResponse;
     }

@@ -8,7 +8,7 @@ import type {FetchJsonOptions, FetchJsonResponse, FetchOptions, FetchResponse} f
  * An enhanced wrapper for the native `fetch` function.
  *
  * Provides:
- * - **Deterministic Errors**: Semantic `FetchError` reasons (e.g. `unauthorized`, `forbidden`, `not_found`, `server_error`, `timeout`, `aborted`, `rate_limited`).
+ * - **Deterministic Errors**: Semantic `FetchError` reasons (e.g. `http_client_error`, `http_server_error`, `request_timeout`, `request_aborted`, `network_error`).
  * - **Go-Style Tuple Return**: Never throws, returns `[response, null]` on success or `[null, FetchError]` on failure.
  * - **Automatic Timeout**: Aborts the request if it exceeds `timeout` duration.
  * - **Configurable Retry**: Automatically retries transient 5xx, 429, 408, or network errors with `retryDelay` and `Retry-After` support.
@@ -30,7 +30,7 @@ import type {FetchJsonOptions, FetchJsonResponse, FetchOptions, FetchResponse} f
  * });
  *
  * if (error) {
- *   if (error.reason === 'not_found') {
+ *   if (error.reason === 'http_client_error' && error.status === 404) {
  *     console.warn('Product not found');
  *   }
  *   return;
@@ -71,12 +71,12 @@ export async function fetch(url: string, options: FetchOptions = {}): Promise<Fe
       }
     } else if (err instanceof Error) {
       if (err.name === 'AbortError') {
-        error = new FetchError('aborted', err.message);
+        error = new FetchError('request_aborted', err.message);
       } else {
         error = new FetchError('network_error', err.message);
       }
     } else {
-      error = new FetchError('unknown_error', String(err ?? 'unknown_error'));
+      error = new FetchError('request_unknown_error', String(err ?? 'request_unknown_error'));
     }
 
     DEV_MODE && logger_.accident('fetch', error.reason, {error});
@@ -144,7 +144,7 @@ export async function fetchJson<T = unknown>(
       && (typeof data !== 'object' || data === null || (data as Record<string, unknown>).ok !== true)
     ) {
       const parseError = new FetchError(
-        'json_response_error',
+        'json_response_not_ok',
         'Response JSON "ok" property is not true',
         response,
         data,

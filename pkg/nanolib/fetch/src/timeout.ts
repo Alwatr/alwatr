@@ -22,7 +22,7 @@ export function handleTimeout_(options: InternalFetchOptions_): Promise<Response
   // Immediate abort check: If signal is already aborted, reject immediately without network overhead
   if (externalSignal?.aborted) {
     DEV_MODE && logger_.incident?.('handleTimeout_', 'already_aborted', {reason: externalSignal.reason});
-    return Promise.reject(new FetchError('aborted', 'The operation was aborted'));
+    return Promise.reject(new FetchError('request_aborted', 'The operation was aborted'));
   }
 
   // If timeout is disabled (0), invoke native fetch directly with external signal
@@ -52,8 +52,8 @@ export function handleTimeout_(options: InternalFetchOptions_): Promise<Response
 
     const timeoutId = setTimeout(() => {
       timeoutFired = true;
-      abortController?.abort('fetch_timeout');
-      reject(new FetchError('timeout', 'fetch_timeout'));
+      abortController?.abort('request_timeout');
+      reject(new FetchError('request_timeout', 'request_timeout'));
     }, options.timeout);
 
     globalThis_
@@ -69,7 +69,7 @@ export function handleTimeout_(options: InternalFetchOptions_): Promise<Response
         }
 
         if (externalSignal?.aborted || (err instanceof Error && err.name === 'AbortError')) {
-          reject(new FetchError('aborted', 'The operation was aborted'));
+          reject(new FetchError('request_aborted', 'The operation was aborted'));
         } else {
           reject(err);
         }
