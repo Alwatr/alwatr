@@ -60,5 +60,22 @@
     "nitrobase": "aws",
     "nanotron": "server",
     "fsm": "ngrx-state"
-  }
+  },
+  "github.copilot.chat.commitMessageGeneration.instructions": [
+    {
+      "text": "Always format commit messages following Conventional Commits: `<type>(<scope>): <short summary>`."
+    },
+    {
+      "text": "The scope is strictly MANDATORY (never omit it). The scope must be the current package name being modified (e.g. `signal`, `nanolib`, `core`), inferred from the package directory or package.json. If changes affect root or general configuration, use the relevant concept."
+    },
+    {
+      "text": "The type must be exactly one of: feat (new feature), fix (bug fix), refactor (code change that neither fixes a bug nor adds a feature), perf (performance improvement), docs (documentation only), lint (formatting, white-space, missing semi-colons, lint rules without logic changes), chore (other changes that don't modify src, e.g. tooling, deps), merge (merge branches, solve conflict), release (release new version)."
+    },
+    {
+      "text": "The short summary must be in imperative present tense (e.g. 'add' not 'added' or 'adds'), all lowercase (do not capitalize the first letter), and must not end with a period."
+    },
+    {
+      "text": "If changes introduce a breaking change, include a blank line after the summary followed by `BREAKING CHANGE: <description>`."
+    }
+  ]
 }
