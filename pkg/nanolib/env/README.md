@@ -24,9 +24,9 @@ console.log(env); // Output: 'development-value' in development mode, 'default-v
 
 ## API
 
-### `getEnv(option: GetEnvValueOption): string`
+### `getEnv(option: GetEnvOption): string`
 
-Retrieves the value of an environment variable.
+Retrieves the value of an environment variable as a string.
 
 **Parameters:**
 
@@ -43,12 +43,38 @@ The value of the environment variable.
 
 An error if the environment variable is not set and no default value is provided.
 
+### `getNumberEnv(option: GetNumberEnvOption): number`
+
+Retrieves the numeric value of an environment variable. Validates that the resolved string or fallback value can be converted to a finite number using `@alwatr/is-number`.
+
+**Parameters:**
+
+- `option`: An object with the following properties:
+  - `name`: The name of the environment variable.
+  - `defaultValue`: The default value (`number` or `string`) to use if the environment variable is not set.
+  - `developmentValue`: The value (`number` or `string`) to use in a development environment.
+
+**Returns:**
+
+The parsed numeric value of the environment variable.
+
+**Throws:**
+
+- An error if the environment variable is not set and no default value is provided.
+- An error if the resolved value cannot be converted to a finite number.
+
 ## Examples
 
-**Basic usage:**
+**Basic string usage:**
 
 ```typescript
 const dbUrl = getEnv({name: 'DATABASE_URL', defaultValue: 'mongodb://localhost:27017'});
+```
+
+**Numeric environment variable:**
+
+```typescript
+const port = getNumberEnv({name: 'PORT', defaultValue: 8080});
 ```
 
 **Development value:**
@@ -59,12 +85,19 @@ const apiUrl = getEnv({
   defaultValue: 'https://api.example.com',
   developmentValue: 'http://localhost:3000',
 });
+
+const devPort = getNumberEnv({
+  name: 'PORT',
+  defaultValue: 80,
+  developmentValue: 8080,
+});
 ```
 
 **Required environment variable:**
 
 ```typescript
 const apiKey = getEnv({name: 'API_KEY'}); // Throws an error if API_KEY is not set
+const maxRetries = getNumberEnv({name: 'MAX_RETRIES'}); // Throws if unset or not a valid number
 ```
 
 ## Sponsors
