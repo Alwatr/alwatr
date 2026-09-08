@@ -62,11 +62,15 @@ export function createFilteredSignal<T>(
     },
   });
 
-  const subscription = sourceSignal.subscribe((newValue) => {
-    if (predicate(newValue)) {
-      internalSignal.set(newValue);
-    }
-  });
+  const subscription = sourceSignal.subscribe(
+    (newValue) => {
+      if (internalSignal.isDestroyed) return;
+      if (predicate(newValue)) {
+        internalSignal.set(newValue);
+      }
+    },
+    {receivePrevious: false},
+  );
 
   return internalSignal;
 }
