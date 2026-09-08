@@ -43,7 +43,7 @@
     "rl": "bun run release",
     "rlt": "bun run version --dry-run",
     "t": "bun run test",
-    "test": "bun test",
+    "test": "ALWATR_DEBUG=0 bun test",
     "version": "lerna version",
     "w": "bun run watch",
     "watch": "lerna run --parallel watch"
