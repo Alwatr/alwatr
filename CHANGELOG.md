@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.2.0](https://github.com/Alwatr/alwatr/compare/v10.1.3...v10.2.0) (2026-09-08)
+
+* **env:** update README with getEnv and getNumberEnv details ([cd95f09](https://github.com/Alwatr/alwatr/commit/cd95f099417528265a7864375643e52812a554fa))
+* **random:** import testing utilities from bun:test ([7a76b1c](https://github.com/Alwatr/alwatr/commit/7a76b1ca5a83228c27fb21e4c6bfe3d51acfde5a))
+
+### ✨ Features
+
+* **env:** add getNumberEnv function for retrieving numeric environment variables ([e437837](https://github.com/Alwatr/alwatr/commit/e437837bdebc6938146c44f86d73c569eee6c5ca))
+* **nanolib:** add tests for getEnv and getNumberEnv functions ([8a4c78c](https://github.com/Alwatr/alwatr/commit/8a4c78cee5ebb8daad5252a8fe6e288fce083e8b))
+
+### 🐛 Bug Fixes
+
+* **signal:** prevent setting value on destroyed internal signal ([f9f11d8](https://github.com/Alwatr/alwatr/commit/f9f11d8764824aa63abc1bc51813f5ddfa468aee))
+
+### 🧹 Miscellaneous Chores
+
+* **env:** add @alwatr/is-number dependency ([7cca5dc](https://github.com/Alwatr/alwatr/commit/7cca5dcd2f55507ae924614489dc4e3ad5d6cab1))
+* **package:** set ALWATR_DEBUG=0 for test scripts in all packages ([7d07edd](https://github.com/Alwatr/alwatr/commit/7d07edd0e164bb750fb243250707a6710cab8d22))
+* set github.copilot.chat.commitMessageGeneration.instructions ([4d76cf6](https://github.com/Alwatr/alwatr/commit/4d76cf6c7f4fb8984654302f92893dc652b9ff40))
+* update dependencies for bun-types and @types/node ([0153570](https://github.com/Alwatr/alwatr/commit/01535704f856916c1c9b0d3ca867d720617d66da))
+
+### 🔗 Dependencies update
+
+* **nanolib:** update @types/node and @types/bun dependencies to latest versions ([0865d03](https://github.com/Alwatr/alwatr/commit/0865d0384138c2ef5533eab8aedd8f2aecfc6a7a))
+* update all recursive deps ([20e5ead](https://github.com/Alwatr/alwatr/commit/20e5eadd1cdfba3aa2ee3c0f9267bd66cd7bc6f1))
+
 ## [10.1.3](https://github.com/Alwatr/alwatr/compare/v10.1.2...v10.1.3) (2026-09-02)
 
 ### 🔨 Code Refactoring

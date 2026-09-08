@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.2.0](https://github.com/Alwatr/alwatr/compare/v10.1.3...v10.2.0) (2026-09-08)
+
+### 🐛 Bug Fixes
+
+* **signal:** prevent setting value on destroyed internal signal ([f9f11d8](https://github.com/Alwatr/alwatr/commit/f9f11d8764824aa63abc1bc51813f5ddfa468aee))
+
+### 🧹 Miscellaneous Chores
+
+* **package:** set ALWATR_DEBUG=0 for test scripts in all packages ([7d07edd](https://github.com/Alwatr/alwatr/commit/7d07edd0e164bb750fb243250707a6710cab8d22))
+
 ## [10.1.0](https://github.com/Alwatr/alwatr/compare/v10.0.4...v10.1.0) (2026-08-30)
 
 **Note:** Version bump only for package @alwatr/signal

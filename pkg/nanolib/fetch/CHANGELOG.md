@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.2.0](https://github.com/Alwatr/alwatr/compare/v10.1.3...v10.2.0) (2026-09-08)
+
+### 🧹 Miscellaneous Chores
+
+* **package:** set ALWATR_DEBUG=0 for test scripts in all packages ([7d07edd](https://github.com/Alwatr/alwatr/commit/7d07edd0e164bb750fb243250707a6710cab8d22))
+
 ## [10.1.3](https://github.com/Alwatr/alwatr/compare/v10.1.2...v10.1.3) (2026-09-02)
 
 ### 🔨 Code Refactoring

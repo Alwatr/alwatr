@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.2.0](https://github.com/Alwatr/alwatr/compare/v10.1.3...v10.2.0) (2026-09-08)
+
+### 🧹 Miscellaneous Chores
+
+* **package:** set ALWATR_DEBUG=0 for test scripts in all packages ([7d07edd](https://github.com/Alwatr/alwatr/commit/7d07edd0e164bb750fb243250707a6710cab8d22))
+* update dependencies for bun-types and @types/node ([0153570](https://github.com/Alwatr/alwatr/commit/01535704f856916c1c9b0d3ca867d720617d66da))
+
+### 🔗 Dependencies update
+
+* **nanolib:** update @types/node and @types/bun dependencies to latest versions ([0865d03](https://github.com/Alwatr/alwatr/commit/0865d0384138c2ef5533eab8aedd8f2aecfc6a7a))
+
 ## [10.1.0](https://github.com/Alwatr/alwatr/compare/v10.0.4...v10.1.0) (2026-08-30)
 
 ### 🐛 Bug Fixes
