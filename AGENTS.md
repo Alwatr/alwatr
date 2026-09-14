@@ -38,7 +38,7 @@ Before starting any task, read the steering documents in `.kiro/steering/`:
 ### 3. Output & Formatting Rules
 
 - **Language:** ALL generated code, documentation, inline comments, markdown files, and commit messages MUST be written in fluent, clear English.
-- **Chat responses:** All explanations, summaries, and conversational replies to the developer MUST be written in **Persian (Farsi)**.
+- **Chat responses:** All explanations, summaries, and conversational replies to the developer MUST be written in **Persian (Farsi)**. Do NOT translate software engineering, architectural, or industry-standard terms and jargon into Persian (keep them in English/original form within the Persian text).
 - **Tone:** Assume a high level of senior technical expertise. Provide direct solutions and architectural insights. Do not over-explain basic programming concepts.
 - **Completeness:** Output fully functional code blocks. Avoid skipping critical logic with generic placeholders unless explicitly instructed to draft a high-level structure.
 
