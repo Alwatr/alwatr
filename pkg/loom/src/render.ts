@@ -64,33 +64,14 @@ function serializeAttributes(props: Record<string, unknown>): string {
     if (name === 'children' || name === 'key' || name === 'ref') continue;
 
     const value = props[name];
-    if (value == null || value === false) continue;
 
     // Arbitrary / non-standard attribute maps passed via `_`.
-    if (name === '_' && value != null && typeof value === 'object') {
+    if (name === '_' && value != null && typeof value === 'object' && !Array.isArray(value)) {
       out += serializeAttributeMap(value as Record<string, unknown>);
       continue;
     }
 
-    // Boolean attribute: `disabled`, `scrim-overlay`, ...
-    if (value === true) {
-      out += ` ${name}`;
-      continue;
-    }
-
-    if (name === 'class') {
-      const className = classToString(value as ClassValue);
-      if (className !== '') out += ` class="${escapeHtml(className)}"`;
-      continue;
-    }
-
-    if (name === 'style' && typeof value === 'object') {
-      out += ` style="${escapeHtml(styleToString(value as Record<string, unknown>))}"`;
-      continue;
-    }
-
-    // Attribute names are passed through verbatim (kebab-case, data-*, aria-*, custom).
-    out += ` ${name}="${escapeHtml(String(value))}"`;
+    out += serializeSingleAttribute(name, value);
   }
   return out;
 }
@@ -100,29 +81,29 @@ function serializeAttributeMap(map: Record<string, unknown>): string {
   let out = '';
   for (const attrName in map) {
     if (!Object.hasOwn(map, attrName)) continue;
-
-    const val = map[attrName];
-    if (val == null || val === false) continue;
-
-    if (val === true) {
-      out += ` ${attrName}`;
-      continue;
-    }
-
-    if (attrName === 'class') {
-      const className = classToString(val as ClassValue);
-      if (className !== '') out += ` class="${escapeHtml(className)}"`;
-      continue;
-    }
-
-    if (attrName === 'style' && typeof val === 'object') {
-      out += ` style="${escapeHtml(styleToString(val as Record<string, unknown>))}"`;
-      continue;
-    }
-
-    out += ` ${attrName}="${escapeHtml(String(val))}"`;
+    out += serializeSingleAttribute(attrName, map[attrName]);
   }
   return out;
+}
+
+/** Serialize a single HTML attribute name-value pair (leading space included). */
+function serializeSingleAttribute(name: string, value: unknown): string {
+  if (value == null || value === false) return '';
+
+  // Boolean attribute: `disabled`, `scrim-overlay`, `x-cloak`, ...
+  if (value === true) return ` ${name}`;
+
+  if (name === 'class') {
+    const className = classToString(value as ClassValue);
+    return className !== '' ? ` class="${escapeHtml(className)}"` : '';
+  }
+
+  if (name === 'style' && typeof value === 'object') {
+    return ` style="${escapeHtml(styleToString(value as Record<string, unknown>))}"`;
+  }
+
+  // Attribute names are passed through verbatim (kebab-case, data-*, aria-*, Alpine directives).
+  return ` ${name}="${escapeHtml(String(value))}"`;
 }
 
 /** Resolve a `class` value (string | list | `{name: enabled}` map) to a class string. */
