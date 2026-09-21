@@ -21,6 +21,45 @@ describe('render', () => {
     );
   });
 
+  test('serializes non-standard attributes via _ object map', () => {
+    expect(
+      render(
+        jsx('button', {
+          _: {
+            '@click.once': 'open = true',
+            ':class': '{ hidden: !open }',
+            'x-cloak': true,
+            'x-ignore': false,
+            'x-init': null,
+            'x-ref': undefined,
+          },
+          children: 'Expand',
+        }),
+      ),
+    ).toBe('<button @click.once="open = true" :class="{ hidden: !open }" x-cloak>Expand</button>');
+  });
+
+  test('handle _ with arrays and string', () => {
+    expect(render(jsx('button', {_: ['@click.once=open', 'x-cloak'], children: 'Click'}))).toBe(
+      '<button _="@click.once=open,x-cloak">Click</button>',
+    );
+    expect(render(jsx('button', {_: 'string', children: 'Click'}))).toBe('<button _="string">Click</button>');
+  });
+
+  test('escapes values and handles class/style in _ attribute map', () => {
+    expect(
+      render(
+        jsx('span', {
+          _: {
+            'data-tooltip': 'A & "B"',
+            'class': ['btn', {active: true, disabled: false}],
+            'style': {color: 'blue'},
+          },
+        }),
+      ),
+    ).toBe('<span data-tooltip="A &amp; &quot;B&quot;" class="btn active" style="color:blue;"></span>');
+  });
+
   test('resolves class from string, array, and object', () => {
     expect(render(jsx('i', {class: 'a'}))).toBe('<i class="a"></i>');
     expect(render(jsx('i', {class: ['a', false, 'b']}))).toBe('<i class="a b"></i>');

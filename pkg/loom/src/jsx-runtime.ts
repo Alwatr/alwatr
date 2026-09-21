@@ -55,6 +55,12 @@ export function jsx(type: VNode['type'], props: Record<string, unknown> | null):
 export const jsxs = jsx;
 
 /**
+ * Map of arbitrary or non-standard HTML attributes (e.g. Alpine.js directives `@click.once`, `:class`).
+ * Passed to `<tag _={{...}} />`.
+ */
+export type RawAttributesMap = Record<string, unknown>;
+
+/**
  * The JSX type contract. Intentionally permissive: any tag and any attribute is
  * allowed so custom elements and attributes (e.g. `on-click`, `scrim-overlay`)
  * work without fighting the type checker, while common props stay typed.
@@ -71,6 +77,7 @@ export namespace JSX {
     id?: string;
     style?: string | Record<string, string | number>;
     children?: Children;
+    _?: RawAttributesMap | string;
     [attribute: string]: unknown;
   }
 

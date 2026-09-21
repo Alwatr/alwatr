@@ -35,11 +35,11 @@ thunk is pure — defining a page renders nothing and writes nothing.
 
 ```tsx
 // src/page/about.tsx
-import { definePage } from "@alwatr/loom";
-import { Document } from "../layout/document.tsx";
+import {definePage} from '@alwatr/loom';
+import {Document} from '../layout/document.tsx';
 
 export const aboutPage = definePage({
-  permalink: "/about/",
+  permalink: '/about/',
   render: () => (
     <Document title="About">
       <h1>About</h1>
@@ -52,8 +52,8 @@ export const aboutPage = definePage({
 
 ```tsx
 // src/page/posts.tsx
-import { collection } from "@alwatr/loom";
-import { posts } from "../data/posts.js";
+import {collection} from '@alwatr/loom';
+import {posts} from '../data/posts.js';
 
 export const postPages = collection(posts, (post) => ({
   permalink: `/post/${post.slug}/`,
@@ -67,6 +67,24 @@ There is no magic. A **layout** is a component that takes `children`. A **partia
 is a component you `import`. **Data** is a typed module you `import`. **Filters** are
 plain functions.
 
+### Non-standard attributes (Alpine.js & custom directives)
+
+JSX attribute names cannot natively start with `@`, `:`, or contain dots `.`.
+Loom provides the `_` prop accepting an object map of non-standard attributes:
+
+```tsx
+<button
+  _={{
+    '@click.once': 'open = true',
+    ':class': '{ hidden: !open }',
+    'x-cloak': true, // boolean attribute
+    'x-ignore': false, // omitted
+  }}
+>
+  Expand
+</button>
+```
+
 ## Registry & build
 
 Routing is an **explicit registry**, not file-system discovery: you import every
@@ -75,15 +93,15 @@ route set is a plain array your editor and bundler can see.
 
 ```ts
 // src/site.ts — declarations only, zero side-effects
-import { defineSite } from "@alwatr/loom";
-import { homePage } from "./page/index.tsx";
-import { aboutPage } from "./page/about.tsx";
-import { postPages } from "./page/posts.tsx";
+import {defineSite} from '@alwatr/loom';
+import {homePage} from './page/index.tsx';
+import {aboutPage} from './page/about.tsx';
+import {postPages} from './page/posts.tsx';
 
 export const site = defineSite({
   // outDir is optional: if omitted, no files are written to disk
-  outDir: "dist",
-  publicDir: "public", // copied verbatim
+  outDir: 'dist',
+  publicDir: 'public', // copied verbatim
   pages: [homePage, aboutPage, ...postPages],
   // transform: (html) => minify(html),   // optional post-processing hook
 });
@@ -91,9 +109,8 @@ export const site = defineSite({
 
 ```ts
 // build.ts — the only file that touches the disk. Run: `bun run build.ts`
-import { build } from "@alwatr/loom";
-import { site } from "./src/site.js";
-
+import {build} from '@alwatr/loom';
+import {site} from './src/site.js';
 const results = await build(site);
 ```
 
