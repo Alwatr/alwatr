@@ -23,7 +23,7 @@
   },
   "sideEffects": false,
   "devDependencies": {
-    "prettier": "^3.9.6"
+    "prettier": "^3.9.8"
   },
   "files": [
     "prettier.config.js",
