@@ -66,11 +66,9 @@ function serializeAttributes(props: Record<string, unknown>): string {
     const value = props[name];
     if (value == null || value === false) continue;
 
-    // Arbitrary / non-standard attribute maps passed via `_` or `attrs`.
-    if (name === '_') {
-      if (value != null && typeof value === 'object') {
-        out += serializeAttributeMap(value as Record<string, unknown>);
-      }
+    // Arbitrary / non-standard attribute maps passed via `_`.
+    if (name === '_' && value != null && typeof value === 'object') {
+      out += serializeAttributeMap(value as Record<string, unknown>);
       continue;
     }
 
@@ -97,7 +95,7 @@ function serializeAttributes(props: Record<string, unknown>): string {
   return out;
 }
 
-/** Serialize an arbitrary key-value attribute map (used by `_` and `attrs` props). */
+/** Serialize an arbitrary key-value attribute map (used by `_`). */
 function serializeAttributeMap(map: Record<string, unknown>): string {
   let out = '';
   for (const attrName in map) {

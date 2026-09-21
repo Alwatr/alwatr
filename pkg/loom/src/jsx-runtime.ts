@@ -77,7 +77,7 @@ export namespace JSX {
     id?: string;
     style?: string | Record<string, string | number>;
     children?: Children;
-    _?: RawAttributesMap;
+    _?: RawAttributesMap | string;
     [attribute: string]: unknown;
   }
 
