@@ -67,6 +67,25 @@ There is no magic. A **layout** is a component that takes `children`. A **partia
 is a component you `import`. **Data** is a typed module you `import`. **Filters** are
 plain functions.
 
+### Non-standard attributes (Alpine.js & custom directives)
+
+JSX attribute names cannot natively start with `@`, `:`, or contain dots `.`.
+Loom provides the `_` prop accepting an object map of non-standard attributes:
+
+```tsx
+<button
+  _={{
+    '@click.once': 'open = true',
+    ':class': '{ hidden: !open }',
+    'x-cloak': true, // boolean attribute
+    'x-ignore': false, // omitted
+  }}
+>
+  Expand
+</button>
+```
+
+
 ## Registry & build
 
 Routing is an **explicit registry**, not file-system discovery: you import every
