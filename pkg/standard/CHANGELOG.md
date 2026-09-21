@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.3.0](https://github.com/Alwatr/alwatr/compare/v10.2.0...v10.3.0) (2026-09-21)
+
+### 🔗 Dependencies update
+
+* update @types/node to version 26.6.2 across packages ([62a0873](https://github.com/Alwatr/alwatr/commit/62a087371a13ec421673aa634825f5a121c4c123))
+
 ## [10.0.0](https://github.com/Alwatr/alwatr/compare/v9.38.2...v10.0.0) (2026-07-26)
 
 ### 🔗 Dependencies update

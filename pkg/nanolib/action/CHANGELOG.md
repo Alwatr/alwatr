@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.3.0](https://github.com/Alwatr/alwatr/compare/v10.2.0...v10.3.0) (2026-09-21)
+
+### 🔗 Dependencies update
+
+* update @happy-dom/global-registrator and @types/node dependencies ([1a1c9fb](https://github.com/Alwatr/alwatr/commit/1a1c9fb98f2ec4e77f114c14f2bfe4dfbb11cae6))
+
 ## [10.2.0](https://github.com/Alwatr/alwatr/compare/v10.1.3...v10.2.0) (2026-09-08)
 
 ### 🧹 Miscellaneous Chores

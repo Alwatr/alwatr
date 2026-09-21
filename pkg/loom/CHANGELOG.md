@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.3.0](https://github.com/Alwatr/alwatr/compare/v10.2.0...v10.3.0) (2026-09-21)
+
+* **loom:** add section on non-standard attributes and custom directives ([11263c8](https://github.com/Alwatr/alwatr/commit/11263c8fe7698aa5250e9b9ed88a197a36a89ba4))
+* **loom:** add test for ignoring arrays and primitives in _ attribute map ([3f72dfd](https://github.com/Alwatr/alwatr/commit/3f72dfd02389bfdefc425a6a5f5db350a5989e17))
+* **loom:** add tests for serializing non-standard attributes and handling class/style in _ attribute map ([9f32623](https://github.com/Alwatr/alwatr/commit/9f326233fb1fd7861f23c6d3118d432d93b9f909))
+* **loom:** format code style in README.md for consistency ([14e1432](https://github.com/Alwatr/alwatr/commit/14e143207aa77ed99050c2a5024f7b6d7aff74b6))
+* **loom:** handle arrays and strings in _ attribute map ([43afd16](https://github.com/Alwatr/alwatr/commit/43afd169381b228c9e647842c654966b40ca5899))
+
+### ✨ Features
+
+* **render:** add support for arbitrary non-standard HTML attributes ([88529f5](https://github.com/Alwatr/alwatr/commit/88529f559aeca63414892d1ecee85e0715ac4c41))
+* **render:** allow string values for arbitrary attribute map in `_` ([d709b8c](https://github.com/Alwatr/alwatr/commit/d709b8c5f914278a11f96001cd47cce2ffafd3de))
+
+### 🔨 Code Refactoring
+
+* **render:** simplify attribute serialization logic ([358d0a1](https://github.com/Alwatr/alwatr/commit/358d0a1026846b5c6eed5d1e62dc011244573666))
+
 ## [10.2.0](https://github.com/Alwatr/alwatr/compare/v10.1.3...v10.2.0) (2026-09-08)
 
 ### 🧹 Miscellaneous Chores
