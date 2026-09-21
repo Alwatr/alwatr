@@ -39,11 +39,11 @@ describe('render', () => {
     ).toBe('<button @click.once="open = true" :class="{ hidden: !open }" x-cloak>Expand</button>');
   });
 
-  test('ignores arrays and primitives passed to _', () => {
-    expect(render(jsx('button', {_: ['@click.once=open', 'x-cloak'], children: 'Click'}))).toBe('<button>Click</button>');
-    expect(render(jsx('button', {_: 'invalid' as unknown as Record<string, unknown>, children: 'Click'}))).toBe(
-      '<button>Click</button>',
+  test('handle _ with arrays and string', () => {
+    expect(render(jsx('button', {_: ['@click.once=open', 'x-cloak'], children: 'Click'}))).toBe(
+      '<button _="@click.once=open,x-cloak">Click</button>',
     );
+    expect(render(jsx('button', {_: 'string', children: 'Click'}))).toBe('<button _="string">Click</button>');
   });
 
   test('escapes values and handles class/style in _ attribute map', () => {
