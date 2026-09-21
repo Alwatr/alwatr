@@ -66,6 +66,14 @@ function serializeAttributes(props: Record<string, unknown>): string {
     const value = props[name];
     if (value == null || value === false) continue;
 
+    // Arbitrary / non-standard attribute maps passed via `_` or `attrs`.
+    if (name === '_') {
+      if (value != null && typeof value === 'object') {
+        out += serializeAttributeMap(value as Record<string, unknown>);
+      }
+      continue;
+    }
+
     // Boolean attribute: `disabled`, `scrim-overlay`, ...
     if (value === true) {
       out += ` ${name}`;
@@ -85,6 +93,36 @@ function serializeAttributes(props: Record<string, unknown>): string {
 
     // Attribute names are passed through verbatim (kebab-case, data-*, aria-*, custom).
     out += ` ${name}="${escapeHtml(String(value))}"`;
+  }
+  return out;
+}
+
+/** Serialize an arbitrary key-value attribute map (used by `_` and `attrs` props). */
+function serializeAttributeMap(map: Record<string, unknown>): string {
+  let out = '';
+  for (const attrName in map) {
+    if (!Object.hasOwn(map, attrName)) continue;
+
+    const val = map[attrName];
+    if (val == null || val === false) continue;
+
+    if (val === true) {
+      out += ` ${attrName}`;
+      continue;
+    }
+
+    if (attrName === 'class') {
+      const className = classToString(val as ClassValue);
+      if (className !== '') out += ` class="${escapeHtml(className)}"`;
+      continue;
+    }
+
+    if (attrName === 'style' && typeof val === 'object') {
+      out += ` style="${escapeHtml(styleToString(val as Record<string, unknown>))}"`;
+      continue;
+    }
+
+    out += ` ${attrName}="${escapeHtml(String(val))}"`;
   }
   return out;
 }
