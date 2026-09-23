@@ -176,6 +176,19 @@ When placed alongside any of the above binding attributes, the directive delays 
 
 ---
 
+## 📐 Scope & Boundaries (Dynamic Lists)
+
+`@alwatr/bind` performs **surgical, flat-primitive** updates on _elements that already exist_ in the DOM. It deliberately does **not** create, remove, or reorder element subtrees, and it has **no keyed reconciliation** — so it is not the tool for rendering a list whose number of rows changes at runtime.
+
+Pick the right tool by how the list changes:
+
+- **Row set is fixed; only per-row fields or visibility change** → stay in `@alwatr/bind`. Bind each row's nodes with `bind_text` / `bind_attrib` and filter with `?hidden` (no reconciliation at all — the cheapest path).
+- **Cardinality changes at runtime (add / remove / reorder)** → use [`createListDirective`](https://github.com/Alwatr/alwatr/tree/next/pkg/flux#dynamic-list-directive-createlistdirective) from `@alwatr/flux`. It wraps `lit-html`'s keyed `repeat` in a zero-boilerplate factory, so you configure a `source` signal, a `key`, and a `row` template instead of hand-writing a directive per list.
+
+This keeps `@alwatr/bind` minimal and focused: reaching for a `bind_repeat` here would mean reimplementing a reconciliation engine that `lit-html` already provides.
+
+---
+
 ## 📄 License
 
 Licensed under the **MPL-2.0** License.
