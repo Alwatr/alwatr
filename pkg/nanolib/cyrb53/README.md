@@ -70,7 +70,7 @@ Contributions are welcome\! Please feel free to open an issue or submit a pull r
 
 ## License
 
-This project is licensed under the **MPL-2.0**.
+This project is licensed under the **MIT**.
 
 ---
 

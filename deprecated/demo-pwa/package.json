@@ -1,5 +1,6 @@
 {
   "name": "@alwatr/ui-demo-pwa",
+  "license": "MIT",
   "version": "0.0.0",
   "description": "Alwatr Progressive Web Application Demo.",
   "type": "module",

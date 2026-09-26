@@ -1595,7 +1595,7 @@ We welcome contributions! Please see our [Contributing Guide](https://github.com
 
 ## 📄 License
 
-[MPL-2.0](https://github.com/Alwatr/alwatr/blob/next/LICENSE) © [S. Ali Mihandoost](https://ali.mihandoost.com)
+[MIT](https://github.com/Alwatr/alwatr/blob/next/LICENSE) © [S. Ali Mihandoost](https://ali.mihandoost.com)
 
 ---
 

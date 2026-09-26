@@ -111,4 +111,4 @@ Contributions are welcome! Please read our [contribution guidelines](https://git
 
 ## License
 
-MPL-2.0
+MIT

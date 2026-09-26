@@ -36,7 +36,7 @@
     "utils",
     "yarn"
   ],
-  "license": "MPL-2.0",
+  "license": "MIT",
   
   "nano-build": {
     "platform": "node",

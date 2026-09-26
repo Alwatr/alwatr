@@ -220,4 +220,4 @@ inference — TypeScript derives `T` from the return type of `initializer` autom
 
 ## License
 
-[MPL-2.0](https://mozilla.org/MPL/2.0/) © [Alwatr](https://github.com/Alwatr)
+[MIT](./LICENSE) © [Alwatr](https://github.com/Alwatr)

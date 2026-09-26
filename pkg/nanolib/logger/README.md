@@ -203,7 +203,7 @@ Contributions are welcome\! Please read our [contribution guidelines](https://gi
 
 ## License
 
-This project is licensed under the [MPL-2.0 License](https://www.google.com/search?q=LICENSE).
+This project is licensed under the [MIT License](./LICENSE).
 
 ---
 
@@ -416,6 +416,6 @@ DEBUG=1 node index.js
 
 ## مجوز (License)
 
-این پروژه تحت مجوز [MPL-2.0 License](https://www.google.com/search?q=LICENSE) منتشر شده است.
+این پروژه تحت مجوز [MIT License](./LICENSE) منتشر شده است.
 
 </div>

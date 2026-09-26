@@ -73,4 +73,4 @@ console.log("Data successfully fetched and written to disk!");
 
 ## License
 
-MPL-2.0
+MIT

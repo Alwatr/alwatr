@@ -337,4 +337,4 @@ Contributions are welcome! Please read our [contribution guidelines](https://git
 
 ## License
 
-Licensed under MPL-2.0. See [LICENSE](LICENSE) for details.
+Licensed under MIT. See [LICENSE](LICENSE) for details.

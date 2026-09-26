@@ -335,4 +335,4 @@ const user = userCollector.collect();
 
 ## License
 
-[MPL-2.0](https://mozilla.org/MPL/2.0/) © [Alwatr](https://github.com/Alwatr)
+[MIT](./LICENSE) © [Alwatr](https://github.com/Alwatr)

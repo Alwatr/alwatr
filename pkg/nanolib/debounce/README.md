@@ -227,7 +227,7 @@ Contributions are welcome\! Please feel free to open an issue or submit a pull r
 
 ## License
 
-This project is licensed under the **MPL-2.0**.
+This project is licensed under the **MIT**.
 
 ---
 
@@ -463,6 +463,6 @@ service.queueRequest({name: 'user2'}); // فقط آخرین درخواست ار�
 
 ## مجوز
 
-این پروژه تحت مجوز **MPL-2.0** منتشر شده است.
+این پروژه تحت مجوز **MIT** منتشر شده است.
 
 \</div\>

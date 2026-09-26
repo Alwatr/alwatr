@@ -178,4 +178,4 @@ When placed alongside any of the above binding attributes, the directive delays 
 
 ## 📄 License
 
-Licensed under the **MPL-2.0** License.
+Licensed under the **MIT** License.

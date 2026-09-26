@@ -62,4 +62,4 @@ Converts a JSON array of objects to a CSV string.
 
 ## License
 
-MPL-2.0
+MIT

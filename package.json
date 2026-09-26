@@ -2,7 +2,7 @@
   "name": "alwatr-devkit-monorepo",
   "description": "The Alwatr Developer Kit is a comprehensive ecosystem designed to facilitate your development process. It comprises a diverse range of tools and libraries, empowering you to construct robust applications with enhanced efficiency.",
   "private": true,
-  "license": "MPL-2.0",
+  "license": "MIT",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",
   "type": "module",
   "workspaces": [
