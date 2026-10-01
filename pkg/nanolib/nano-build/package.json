@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/nano-build",
-  "version": "10.0.0",
+  "version": "10.4.0",
   "description": "Lightweight, zero-config Bun-based build CLI for JavaScript, TypeScript, and ECMAScript libraries. Minimal dependencies, fast builds, and sensible presets for multiple project types.",
   "license": "MIT",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/hash-string",
-  "version": "10.3.0",
+  "version": "10.4.0",
   "description": "A simple utility to generate a hash string.",
   "license": "MIT",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

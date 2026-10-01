@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/directive",
-  "version": "10.3.0",
+  "version": "10.4.0",
   "description": "Connect your TypeScript classes to the DOM, declaratively.",
   "license": "MIT",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

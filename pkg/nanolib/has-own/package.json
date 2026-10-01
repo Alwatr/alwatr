@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/has-own",
-  "version": "10.3.0",
+  "version": "10.4.0",
   "description": "A side-effect-free polyfill/replacement for `Object.hasOwn` that supports all browsers.",
   "license": "MIT",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

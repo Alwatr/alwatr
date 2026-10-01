@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/loom",
-  "version": "10.3.0",
+  "version": "10.4.0",
   "description": "A tiny, zero-dependency static site generator core that renders TSX templates to HTML strings — no React, no virtual DOM.",
   "license": "MIT",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com>",

@@ -1,6 +1,6 @@
 {
   "name": "@alwatr/type-helper",
-  "version": "10.2.0",
+  "version": "10.4.0",
   "description": "Collection of useful typescript type helpers.",
   "license": "MIT",
   "author": "S. Ali Mihandoost <ali.mihandoost@gmail.com> (https://ali.mihandoost.com)",

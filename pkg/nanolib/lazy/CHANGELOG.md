@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.4.0](https://github.com/Alwatr/alwatr/compare/v10.3.0...v10.4.0) (2026-10-01)
+
+### 🧹 Miscellaneous Chores
+
+* change license to MIT ([18672e6](https://github.com/Alwatr/alwatr/commit/18672e6b3cbd148546157d04a8999fc3717d72ed))
+
 ## [10.3.0](https://github.com/Alwatr/alwatr/compare/v10.2.0...v10.3.0) (2026-09-21)
 
 **Note:** Version bump only for package @alwatr/lazy

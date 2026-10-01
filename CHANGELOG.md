@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [10.4.0](https://github.com/Alwatr/alwatr/compare/v10.3.0...v10.4.0) (2026-10-01)
+
+### ✨ Features
+
+* **weaver:** add font asset plugin to handle CSS bundler font inlining issue ([41f7778](https://github.com/Alwatr/alwatr/commit/41f7778fc5513449cb578a329d4a955617271475))
+
+### 🧹 Miscellaneous Chores
+
+* change license to MIT ([18672e6](https://github.com/Alwatr/alwatr/commit/18672e6b3cbd148546157d04a8999fc3717d72ed))
+* deprecate old nitrobase packages ([ec67583](https://github.com/Alwatr/alwatr/commit/ec675834f8f42f254f96cd2534cef359771e0da1))
+
+### 🔗 Dependencies update
+
+* **nanolib:** update @types/node to version 26.6.3 across packages ([f6dbabf](https://github.com/Alwatr/alwatr/commit/f6dbabf5c98122b8039c5a36e5751e317faa15f1))
+* **package.json:** update [@lerna-lite](https://github.com/lerna-lite) dependencies to version 5.6.2 ([66af893](https://github.com/Alwatr/alwatr/commit/66af8931b2d1f857bc716ea17aaa42120639db9b))
+* update all packages ([895e269](https://github.com/Alwatr/alwatr/commit/895e269fa95eca155edd89098dc53b4a714f823b))
+
 ## [10.3.0](https://github.com/Alwatr/alwatr/compare/v10.2.0...v10.3.0) (2026-09-21)
 
 * **agents:** clarify chat response language rules and terminology usage ([6640ddc](https://github.com/Alwatr/alwatr/commit/6640ddccc91902b1ba29a3bbe3d6fdb9d6d8dcd2))
