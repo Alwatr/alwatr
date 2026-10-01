@@ -16,11 +16,11 @@ import {watch} from 'node:fs';
 import {access, cp, mkdir, rm} from 'node:fs/promises';
 import {networkInterfaces} from 'node:os';
 import type {NetworkInterfaceInfo} from 'node:os';
-import {dirname, extname, isAbsolute, join, relative, resolve} from 'node:path';
+import {basename, dirname, extname, isAbsolute, join, relative, resolve} from 'node:path';
 
 import {createLogger, platformInfo} from '@alwatr/core';
 import tailwindPlugin from 'bun-plugin-tailwind';
-import type {BuildArtifact, Server, ServerWebSocket} from 'bun';
+import type {BuildArtifact, BunPlugin, Server, ServerWebSocket} from 'bun';
 
 import {helpText, parseArgs, version} from './cli.js';
 import {injectReloadScript, reloadPath, reloadTopic} from './reload-client.js';
@@ -237,11 +237,43 @@ export class Weaver {
     this.logger_.logMethod?.('buildStyles');
     const startTime = performance.now();
 
+    // ────────────────────────────────────────────────────────────────────────
+    // WORKAROUND: Bun CSS bundler font inlining bug (#24599)
+    // Bun's native CSS bundler hardcodes auto-inlining (Base64 data URLs) for
+    // any assets referenced in CSS smaller than 128KB. It ignores loader settings
+    // (e.g. loader: { '.woff2': 'file' }) when bundling CSS.
+    //
+    // See: https://github.com/oven-sh/bun/issues/24599
+    //
+    // To prevent variable fonts and sub-128KB font files from inflating app.css
+    // into massive base64 payloads, we intercept font references via an onResolve
+    // plugin, mark them external with a relative path ('./<fileName>'), and
+    // manually register them as styleArtifacts_ to be served in memory (serve)
+    // and emitted to disk (build).
+    //
+    // CLEANUP PLAN (When Bun fixes #24599 / adds asset threshold / respects loader):
+    // 1. Remove `fontAssetMap` and `fontAssetPlugin`.
+    // 2. Remove `fontAssetPlugin` from Bun.build's `plugins` array.
+    // 3. Remove the manual `this.styleArtifacts_.set(...)` loop below.
+    // ────────────────────────────────────────────────────────────────────────
+    const fontAssetMap = new Map<string, string>();
+    const fontAssetPlugin: BunPlugin = {
+      name: 'weaver-font-asset',
+      setup(build) {
+        build.onResolve({filter: /\.(woff2?|ttf|eot|otf)$/}, (args) => {
+          const absPath = resolve(args.resolveDir, args.path);
+          const fileName = basename(args.path);
+          fontAssetMap.set(fileName, absPath);
+          return {path: './' + fileName, external: true};
+        });
+      },
+    };
+
     const built = await Bun.build({
       entrypoints: this.config_.styles,
       target: 'browser',
       packages: 'bundle',
-      plugins: [tailwindPlugin],
+      plugins: [tailwindPlugin, fontAssetPlugin],
       minify: this.prod_,
       sourcemap: this.prod_ ? 'none' : 'linked',
       banner: this.config_.banner,
@@ -251,6 +283,17 @@ export class Weaver {
       return;
     }
     this.styleArtifacts_ = this.collectArtifacts__(built.outputs);
+
+    // Register intercepted font assets as artifacts for disk write and dev serve.
+    for (const [fileName, filePath] of fontAssetMap) {
+      const blob = Bun.file(filePath);
+      const urlPath = '/' + fileName;
+      this.styleArtifacts_.set(urlPath, {
+        path: urlPath,
+        blob,
+        type: this.contentType__(urlPath),
+      });
+    }
     this.stylesMs_ = performance.now() - startTime;
   }
 
