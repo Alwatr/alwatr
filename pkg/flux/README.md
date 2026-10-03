@@ -435,6 +435,48 @@ In your HTML, bind properties using declarative attributes:
 
 ---
 
+### 📋 **Dynamic List Rendering (Zero-Boilerplate)**
+
+`@alwatr/bind` is intentionally limited to **surgical, flat-primitive** updates on _existing_ elements — it never creates, removes, or reorders DOM subtrees. The moment a list's cardinality changes at runtime (add / remove / reorder), you need keyed reconciliation, which is `lit-html`'s `repeat`.
+
+Doing that by hand means writing a `LitDirective` subclass per list: a `@state` accessor, an `init_()` that subscribes to the signal, and a `render_()` that calls `repeat(...)`. The only parts that ever change are the **signal**, the **key function**, and the **row template**. `createListDirective` captures exactly those three and hands you a ready-to-register directive — no per-list class:
+
+```typescript
+// directive/shop-list.ts — definition (zero side effects on import)
+import {createListDirective, html} from '@alwatr/flux';
+import {state_shop_list} from '../domain/state_shop_list.js';
+
+export const registerShopListDirective = createListDirective({
+  name: 'shop_list',
+  source: () => state_shop_list.instance, // thunk → preserves lazy `.instance`
+  key: (shop) => shop.meta.id, // stable identity for keyed reconciliation
+  row: (shop) => html`
+    <li on-click="ui_shop_clicked:${shop.meta.id}">${shop.content.title}</li>
+  `,
+  empty: () => html`<p class="muted">No shops to display.</p>`,
+});
+```
+
+```typescript
+// bootstrap.ts — registration (the only side effect)
+registerShopListDirective(true);
+```
+
+```html
+<!-- view — the whole list, surgically reconciled, with zero per-list code -->
+<ul shop_list></ul>
+```
+
+#### 🌟 Key Advantages
+
+- **No per-list boilerplate**: The repetitive subscribe / `@state` / `render_` cycle collapses into one config object.
+- **Keyed reconciliation under the hood**: Built on `lit-html`'s `repeat`, so only the rows whose key changed are created, removed, or moved — preserving focus, input state, scroll, and CSS transitions across reorders.
+- **Full row power**: Because `row` is a `lit-html` template function, per-row dynamic action payloads (`on-click="…:${item.id}"`), nested templates, and conditional structure all work.
+- **Headless & UDF-pure**: Ships no markup or styling tokens; data flows down from the source signal, intents fire up via `on-<event>` delegation. The directive never owns or mutates state.
+- **Tree-shakeable**: The `source` thunk is resolved inside `init_()`, never at import time, so the module has no import-time side effects and the signal's lazy `.instance` guarantee is honored.
+
+---
+
 ### 🤖 **Finite State Machine (FSM) & Actor Model**
 
 Flux natively aggregates `@alwatr/fsm` to eliminate ad-hoc state variables, boolean flags, and race conditions. Instead of writing unpredictable, disjointed spaghetti code, you model your application's lifecycle as a **declarative, type-safe statechart**.
@@ -1456,6 +1498,73 @@ const status = (isLoading: boolean) => html`
   </div>
 `;
 ```
+
+#### `repeat(items, keyFn, template)`
+
+Keyed list rendering. Unlike mapping an array directly (which re-renders by index), `repeat` uses the key returned by `keyFn` to **move** existing DOM rows on reorder instead of recreating them — preserving focus, input state, and CSS transitions.
+
+```typescript
+import {html, repeat} from '@alwatr/flux';
+
+const list = (items: {id: number; title: string}[]) => html`
+  <ul>
+    ${repeat(
+      items,
+      (item) => item.id, // stable key (never the array index for a mutable list)
+      (item) => html`
+        <li>${item.title}</li>
+      `,
+    )}
+  </ul>
+`;
+```
+
+> For a fully wired, signal-bound list with no per-list boilerplate, prefer [`createListDirective`](#dynamic-list-directive-createlistdirective), which builds on `repeat`.
+
+---
+
+### Dynamic List Directive (`createListDirective`)
+
+A factory that turns the repetitive "subscribe to a list signal and render its rows with `repeat`" pattern into a single declarative configuration object. Returns a registration function with the same contract as `lazyDirective`'s output.
+
+#### `createListDirective(config)`
+
+| Config field | Type | Description |
+| --- | --- | --- |
+| `name` | `string` | Attribute that activates the directive (e.g. `'shop_list'` → `<ul shop_list>`). Must be unique. |
+| `source` | `() => IReadonlySignal<readonly T[]>` | **Thunk** returning the source list signal. Invoked inside `init_()` so the signal's lazy `.instance` is preserved and the module stays side-effect-free at import. |
+| `key` | `KeyFn<T>` | Stable, unique identity per item for keyed reconciliation. Never the array index for a mutable list. |
+| `row` | `ItemTemplate<T>` | `lit-html` template for a single row. Supports per-row action payloads, nested templates, and conditionals. |
+| `empty?` | `() => unknown` | Optional template rendered when the list is empty. Omit to render nothing. |
+
+```typescript
+import {createListDirective, html} from '@alwatr/flux';
+import {state_basket_items} from '../domain/state_basket_items.js';
+
+export const registerBasketItemsDirective = createListDirective({
+  name: 'basket_items',
+  source: () => state_basket_items.instance,
+  key: (item) => item.id,
+  row: (item) => html`
+    <li class="basket-row">
+      <span>${item.title}</span>
+      <button on-click="ui_remove_item:${item.id}">remove</button>
+    </li>
+  `,
+  empty: () => html`<p class="muted">Your basket is empty.</p>`,
+});
+
+// Bootstrap phase — registers the directive (only side effect):
+registerBasketItemsDirective(true);
+```
+
+```html
+<ul basket_items></ul>
+```
+
+**Behavior:** subscribes to `source()` on `init_()`, mirrors the array, and on every emission re-runs `repeat(items, key, row)` through a batched `LitDirective` update. When the array is empty and `empty` is provided, the empty template is rendered instead. The subscription auto-unsubscribes when the directive is destroyed (e.g. `bfcache` teardown).
+
+**When _not_ to use it:** if the set of rows is fixed and only per-row fields or visibility change, prefer `@alwatr/bind` (`bind_text` / `bind_attrib` with `?hidden`) — it skips reconciliation entirely and is cheaper.
 
 ---
 
