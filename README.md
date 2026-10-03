@@ -1,58 +1,27 @@
-## Alwatr Developer Kit
+# Alwatr Developer Kit (archived)
 
-The Alwatr Developer Kit is a comprehensive ecosystem designed to facilitate your development process. It comprises a diverse range of tools and libraries, empowering you to construct robust applications with enhanced efficiency.
+> [!IMPORTANT]
+> This repository is archived and frozen at `v10.4.0`. Development continues as **Alwatr 11**.
+> For documentation and the latest news, visit **[alwatr.dev](https://alwatr.dev)**.
 
-## Introduction
+## What was here
 
-Alwatr is a comprehensive ecosystem designed to streamline your development process. It includes a variety of tools and libraries to help you build robust applications efficiently.
+The `@alwatr/*` packages, 2019–2026: signals, actions, directives, a client FSM, the Loom/Weaver static
+site toolchain, and a set of small ESM utilities. The published `10.x` versions stay on npm.
 
-## Installation
+## Moving to Alwatr 11
 
-To install the Alwatr package, use the following command:
+Several packages were renamed or merged in Alwatr 11:
 
-```sh
-yarn add alwatr
-```
+| 10.x                                      | Alwatr 11                                              |
+| ----------------------------------------- | ------------------------------------------------------ |
+| `@alwatr/flux`                            | `@alwatr/client`                                       |
+| `@alwatr/core`, `@alwatr/node`            | `@alwatr/nanolib`, `@alwatr/nanolib/node`              |
+| `@alwatr/has-own`, `@alwatr/deep-clone`   | removed — use `Object.hasOwn` and `structuredClone`    |
+| `@alwatr/dedupe`                          | removed                                                |
 
-## Usage
+Every other package keeps its name. See [alwatr.dev](https://alwatr.dev) for the current docs.
 
-To use Alwatr in your project, import the necessary modules as shown below:
+## License
 
-```typescript
-import { someFunction } from 'alwatr/nanolib';
-import { anotherFunction } from 'alwatr/flux';
-```
-
-## v2 Breaking Changes
-
-- **Exports all alwatr ecosystem packages as a single `alwatr` npm package.** This significantly changes how you install and import alwatr packages.
-
-Instead of installing individual packages like `@alwatr/resolve-url`, you now install the `alwatr` package:
-
-```bash
-npm install alwatr
-```
-
-And import modules like this:
-
-```ts
-import { resolveUrl } from 'alwatr/nanolib';
-```
-
-This change simplifies dependency management and reduces bundle size for projects using multiple alwatr packages.
-
-### Migration Guide
-
-1. **Uninstall individual `@alwatr/*` packages:**  Use `npm uninstall @alwatr/package-name` for each alwatr package you have installed.
-2. **Install the `alwatr` package:** `npm install alwatr`
-3. **Update imports:** Change your import statements to use the new format, e.g., `import { resolveUrl } from 'alwatr/nanolib';`
-
-This major release streamlines the alwatr ecosystem and improves the developer experience. Be sure to update your projects accordingly!
-
-## Sponsors
-
-The following companies, organizations, and individuals support Nitrobase ongoing maintenance and development. Become a Sponsor to get your logo on our README and website.
-
-### Contributing
-
-Contributions are welcome! Please read our [contribution guidelines](https://github.com/Alwatr/.github/blob/next/CONTRIBUTING.md) before submitting a pull request.
+[MIT](./LICENSE) © Ali Mihandoost
